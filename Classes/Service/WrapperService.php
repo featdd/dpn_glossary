@@ -95,30 +95,22 @@ class WrapperService implements \TYPO3\CMS\Core\SingletonInterface {
 	 * @return \string
 	 */
 	public function termWrapper(\Dpn\DpnGlossary\Domain\Model\Term $term) {
+		$linkConf = array(
+			'additionalParams' => '&tx_dpnglossary_main[action]=show&tx_dpnglossary_main[controller]=Term&tx_dpnglossary_main[term]='. $term->getUid() .'&tx_dpnglossary_main[pageuid]=' . $GLOBALS['TSFE']->id . '',
+			'useCacheHash' => 1
+		);
 		if (0 !== intval($this->tsConfig['settings']['detailsPid'])) {
-			$linkConf = array(
-				'additionalParams' => '&tx_dpnglossary_main[term]='. $term->getUid() .'&tx_dpnglossary_main[pageuid]=' . $GLOBALS['TSFE']->id . '&tx_dpnglossary_main[action]=show&tx_dpnglossary_main[controller]=Term',
-				'ATagParams' => 'class="glossarylink"',
-				'parameter' => $this->tsConfig['settings']['detailsPid'],
-				'useCacheHash' => 1
-			);
-
-			if (0 === intval($this->tsConfig['settings']['tooltips'])) {
-				//without tooltip
-				return $this->cObj->typoLink($term->getName(), $linkConf);
-			} else {
-				//with tooltip
-				$linkConf['ATagParams'] = 'class="glossarylink csstooltip"';
-				return $this->cObj->typoLink('<span>' . $term->getTooltiptext() . '</span>' . $term->getName(), $linkConf);
-			}
+			$linkConf['parameter'] = $this->tsConfig['settings']['detailsPid'];
 		} else {
-			if (1 === intval($this->tsConfig['settings']['tooltips'])) {
-				$linkConf['ATagParams'] = 'class="glossarylink csstooltip"';
-				$linkConf['parameter'] = '#' . $term->getName();
-				return $this->cObj->typoLink('<span>' . $term->getTooltiptext() . '</span>' . $term->getName(), $linkConf);
-			} else {
-				return $term->getName();
-			}
+			$linkConf['parameter'] = '#' . $term->getName();
+			$linkConf['additionalParams'] = '';
+		}
+		if (0 !== intval($this->tsConfig['settings']['tooltips'])) {
+			$linkConf['ATagParams'] = 'class="' . $this->tsConfig['settings']['linkClassName'] . ' ' . $this->tsConfig['settings']['tooltipClassName'] . '"';
+			return $this->cObj->typoLink('<span>' . $term->getTooltiptext() . '</span>' . $term->getName(), $linkConf);
+		} else {
+			$linkConf['ATagParams'] = 'class="' . $this->tsConfig['settings']['linkClassName'] . '"';
+			return $this->cObj->typoLink($term->getName(), $linkConf);
 		}
 	}
 }

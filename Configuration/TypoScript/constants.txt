@@ -18,5 +18,9 @@ plugin.tx_dpnglossary {
         detailsPid =
         # cat=plugin.tx_dpnglossary//a; type=string; label=Pages which should be parsed for glossary terms
         parsingPids =
+        # cat=plugin.tx_dpnglossary//a; type=string; label=Classnames the link gets if tooltips are enabled
+        tooltipClassName =
+        # cat=plugin.tx_dpnglossary//a; type=string; label=Classnames the link always gets
+        linkClassName =
     }
 }

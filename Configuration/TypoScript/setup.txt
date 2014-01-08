@@ -13,6 +13,8 @@ plugin.tx_dpnglossary {
 	}
 	settings {
         tooltips = {$plugin.tx_dpnglossary.settings.tooltips}
+        tooltipClassName = {$plugin.tx_dpnglossary.settings.tooltipClassName}
+        linkClassName = {$plugin.tx_dpnglossary.settings.linkClassName}
         detailsPid = {$plugin.tx_dpnglossary.settings.detailsPid}
         parsingPids = {$plugin.tx_dpnglossary.settings.parsingPids}
     }
