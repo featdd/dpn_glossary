@@ -1,0 +1,15 @@
+<h1><f:translate key="tx_dpnglossary_domain_model_term.listheadline" /></h1>
+
+<table  class="glossary-list" >
+	<tr>
+		<th><f:translate key="tx_dpnglossary_domain_model_term.name" /></th>
+		<th><f:translate key="tx_dpnglossary_domain_model_term.description" /></th>
+	</tr>
+
+	<f:for each="{terms}" as="term">
+		<tr>
+			<td><f:link.action action="show" arguments="{term : term}"> {term.name}</f:link.action></td>
+			<td>{term.description}</td>
+		</tr>
+	</f:for>
+</table>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<xliff version="1.0">
+	<file source-language="en" target-language="de" datatype="plaintext" original="messages" date="2013-12-16T14:16:05Z" product-name="dpn_glossary">
+		<header/>
+		<body>
+
+			<trans-unit id="tx_dpnglossary_domain_model_term">
+				<source>Term</source>
+				<target>Begriff</target>
+			</trans-unit>
+			<trans-unit id="tx_dpnglossary_domain_model_term.name">
+				<source>name of the term</source>
+				<target>Name des Begriffes</target>
+			</trans-unit>
+			<trans-unit id="tx_dpnglossary_domain_model_term.tooltiptext">
+				<source>text shown in the css tooltip</source>
+				<target>Text der im CSS Tooltip angezeigt wird</target>
+			</trans-unit>
+			<trans-unit id="tx_dpnglossary_domain_model_term.description">
+				<source>description of the term</source>
+				<target>Beschreibung des Begriffes</target>
+			</trans-unit>
+			<trans-unit id="tx_dpnglossary_domain_model_term.detailheadline">
+                <source>Detailview for term</source>
+                <target>Detailansicht für den Begriff</target>
+            </trans-unit>
+            <trans-unit id="tx_dpnglossary_domain_model_term.listheadline">
+                <source>Listview for the terms</source>
+                <target>Listenansicht für die Begriffe</target>
+            </trans-unit>
+
+            <trans-unit id="tx_dpnglossary.backtolastpage">
+                <source>Back to last page</source>
+                <target>Zurück zur letzten Seite</target>
+            </trans-unit>
+            <trans-unit id="tx_dpnglossary.backtolist">
+                <source>Back to list</source>
+                <target>Zurück zur Liste</target>
+            </trans-unit>
+			
+		</body>
+	</file>
+</xliff>

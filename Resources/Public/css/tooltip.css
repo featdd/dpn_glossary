@@ -1,0 +1,30 @@
+a.csstooltip {
+    outline:none;
+}
+a.csstooltip strong {
+    line-height:30px;
+}
+a.csstooltip:hover {
+    text-decoration:none;
+}
+a.csstooltip span {
+    z-index:10;
+    display:none;
+    padding:14px 20px;
+    margin: 30px 0 0;
+    width:240px;
+}
+a.csstooltip:hover span{
+    display:inline; position:absolute; color:#111;
+    border:1px solid #DCA; background:#fffAF0;}
+
+a.csstooltip span
+{
+    border-radius:4px;
+    -moz-border-radius: 4px;
+    -webkit-border-radius: 4px;
+
+    -moz-box-shadow: 5px 5px 8px #CCC;
+    -webkit-box-shadow: 5px 5px 8px #CCC;
+    box-shadow: 5px 5px 8px #CCC;
+}

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<xliff version="1.0">
+	<file source-language="en" datatype="plaintext" original="messages" date="2013-12-16T14:16:05Z" product-name="dpn_glossary">
+		<header/>
+		<body>
+
+			<trans-unit id="tx_dpnglossary_domain_model_term">
+				<source>Term</source>
+			</trans-unit>
+			<trans-unit id="tx_dpnglossary_domain_model_term.name">
+				<source>Name</source>
+			</trans-unit>
+			<trans-unit id="tx_dpnglossary_domain_model_term.tooltiptext">
+				<source>Tooltiptext</source>
+			</trans-unit>
+			<trans-unit id="tx_dpnglossary_domain_model_term.description">
+				<source>Description</source>
+			</trans-unit>
+
+		</body>
+	</file>
+</xliff>
