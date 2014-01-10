@@ -35,11 +35,6 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 class WrapperService implements \TYPO3\CMS\Core\SingletonInterface {
 
 	/**
-	 * @var \TYPO3\CMS\Extbase\Object\ObjectManager $objectManager
-	 */
-	protected $objectManager;
-
-	/**
 	 * @var \TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer $cObj
 	 */
 	protected $cObj;
@@ -54,23 +49,23 @@ class WrapperService implements \TYPO3\CMS\Core\SingletonInterface {
 	 */
 	public function contentParser() {
 		if (FALSE === $this->objectManager instanceof \TYPO3\CMS\Extbase\Object\ObjectManager) {
-			//Make instance of Object Manager
-			$this->objectManager = GeneralUtility::makeInstance('TYPO3\CMS\Extbase\Object\ObjectManager');
-			//Inject Configuration Manager
-			$configurationManager = $this->objectManager->get('TYPO3\CMS\Extbase\Configuration\ConfigurationManager');
-			//Inject Content Object Renderer
-			$this->cObj = $this->objectManager->get('TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer');
-			//Inject Query Settings
-			$querySettings = $this->objectManager->get('TYPO3\CMS\Extbase\Persistence\Generic\QuerySettingsInterface');
-			//Inject termRepository
-			$termRepository = $this->objectManager->get('Dpn\DpnGlossary\Domain\Repository\termRepository');
-			//Get Typoscript Configuration
+			// Make instance of Object Manager
+			$objectManager = GeneralUtility::makeInstance('TYPO3\CMS\Extbase\Object\ObjectManager');
+			// Get Configuration Manager
+			$configurationManager = $objectManager->get('TYPO3\CMS\Extbase\Configuration\ConfigurationManager');
+			// Inject Content Object Renderer
+			$this->cObj = $objectManager->get('TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer');
+			// Get Query Settings
+			$querySettings = $objectManager->get('TYPO3\CMS\Extbase\Persistence\Generic\QuerySettingsInterface');
+			// Get termRepository
+			$termRepository = $objectManager->get('Dpn\DpnGlossary\Domain\Repository\termRepository');
+			// Get Typoscript Configuration
 			$this->tsConfig = $configurationManager->getConfiguration(\TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface::CONFIGURATION_TYPE_FULL_TYPOSCRIPT);
-			//Reduce TS config to plugin and format the array
+			// Reduce TS config to plugin and format the array
 			$this->tsConfig = GeneralUtility::removeDotsFromTS($this->tsConfig)['plugin']['tx_dpnglossary'];
-			//Set StoragePid in the query settings object
+			// Set StoragePid in the query settings object
 			$querySettings->setStoragePageIds(GeneralUtility::trimExplode(',', $this->tsConfig['persistence']['storagePid']));
-			//refer the query settings object to the repository object
+			// Assign query settings object to repository
 			$termRepository->setDefaultQuerySettings($querySettings);
 		}
 
@@ -98,7 +93,7 @@ class WrapperService implements \TYPO3\CMS\Core\SingletonInterface {
 			$linkConf['parameter'] = '#' . $term->getName();
 		} else {
 			$linkConf['parameter'] = $this->tsConfig['settings']['detailsPid'];
-			$linkConf['additionalParams'] = '&tx_dpnglossary_main[action]=show&tx_dpnglossary_main[controller]=Term&tx_dpnglossary_main[term]='. $term->getUid() .'&tx_dpnglossary_main[pageuid]=' . $GLOBALS['TSFE']->id . '';
+			$linkConf['additionalParams'] = '&tx_dpnglossary_main[action]=show&tx_dpnglossary_main[controller]=Term&tx_dpnglossary_main[term]='. $term->getUid() .'&tx_dpnglossary_main[pageUid]=' . $GLOBALS['TSFE']->id . '';
 			$linkConf['useCacheHash'] = 1;
 		}
 
