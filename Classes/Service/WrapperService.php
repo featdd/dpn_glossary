@@ -98,7 +98,7 @@ class WrapperService implements \TYPO3\CMS\Core\SingletonInterface {
 			$linkConf['parameter'] = '#' . $term->getName();
 		} else {
 			$linkConf['parameter'] = $this->tsConfig['settings']['detailsPid'];
-			$linkConf['additionalParams'] = '&tx_dpnglossary_main[action]=show&tx_dpnglossary_main[controller]=Term&tx_dpnglossary_main[term]='. $term->getUid() .'&tx_dpnglossary_main[pageuid]=' . $GLOBALS['TSFE']->id . '';
+			$linkConf['additionalParams'] = '&tx_dpnglossary_main[action]=show&tx_dpnglossary_main[controller]=Term&tx_dpnglossary_main[term]='. $term->getUid() .'&tx_dpnglossary_main[pageUid]=' . $GLOBALS['TSFE']->id . '';
 			$linkConf['useCacheHash'] = 1;
 		}
 
