@@ -12,9 +12,8 @@ plugin.tx_dpnglossary {
 		# rewrittenPropertyMapper = 1
 	}
 	settings {
-        tooltips = {$plugin.tx_dpnglossary.settings.tooltips}
-        tooltipClassName = {$plugin.tx_dpnglossary.settings.tooltipClassName}
-        linkClassName = {$plugin.tx_dpnglossary.settings.linkClassName}
+        linkTextConf = {$plugin.tx_dpnglossary.settings.linkTextConf}
+        aTagParams = {$plugin.tx_dpnglossary.settings.aTagsParams}
         detailsPid = {$plugin.tx_dpnglossary.settings.detailsPid}
         parsingPids = {$plugin.tx_dpnglossary.settings.parsingPids}
     }

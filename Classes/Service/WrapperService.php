@@ -95,22 +95,24 @@ class WrapperService implements \TYPO3\CMS\Core\SingletonInterface {
 	 * @return \string
 	 */
 	public function termWrapper(\Dpn\DpnGlossary\Domain\Model\Term $term) {
-		$linkConf = array(
-			'additionalParams' => '&tx_dpnglossary_main[action]=show&tx_dpnglossary_main[controller]=Term&tx_dpnglossary_main[term]='. $term->getUid() .'&tx_dpnglossary_main[pageuid]=' . $GLOBALS['TSFE']->id . '',
-			'useCacheHash' => 1
-		);
 		if (0 !== intval($this->tsConfig['settings']['detailsPid'])) {
 			$linkConf['parameter'] = $this->tsConfig['settings']['detailsPid'];
+			$linkConf['additionalParams'] = '&tx_dpnglossary_main[action]=show&tx_dpnglossary_main[controller]=Term&tx_dpnglossary_main[term]='. $term->getUid() .'&tx_dpnglossary_main[pageuid]=' . $GLOBALS['TSFE']->id . '';
+			$linkConf['useCacheHash'] = 1;
 		} else {
 			$linkConf['parameter'] = '#' . $term->getName();
-			$linkConf['additionalParams'] = '';
 		}
-		if (0 !== intval($this->tsConfig['settings']['tooltips'])) {
-			$linkConf['ATagParams'] = 'class="' . $this->tsConfig['settings']['linkClassName'] . ' ' . $this->tsConfig['settings']['tooltipClassName'] . '"';
-			return $this->cObj->typoLink('<span>' . $term->getTooltiptext() . '</span>' . $term->getName(), $linkConf);
-		} else {
-			$linkConf['ATagParams'] = 'class="' . $this->tsConfig['settings']['linkClassName'] . '"';
-			return $this->cObj->typoLink($term->getName(), $linkConf);
-		}
+
+		$aTagParams = $this->tsConfig['settings']['aTagParams'];
+		$linkText = $this->tsConfig['settings']['linkTextConf'];
+
+		$aTagParams = preg_replace('/\bTEXT\b/i', $term->getTooltiptext(), $aTagParams);
+		$aTagParams = preg_replace('/\bNAME\b/i', $term->getName(), $aTagParams);
+		$linkText = preg_replace('/\bTEXT\b/i', $term->getTooltiptext(), $linkText);
+		$linkText = preg_replace('/\bNAME\b/i', $term->getName(), $linkText);
+
+		$linkConf['ATagParams'] = $aTagParams;
+
+		return $this->cObj->typoLink($linkText, $linkConf);
 	}
 }

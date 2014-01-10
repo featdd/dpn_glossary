@@ -12,15 +12,9 @@ plugin.tx_dpnglossary {
 		storagePid =
 	}
 	settings {
-        # cat=plugin.tx_dpnglossary//a; type=boolean; label=tooltips
-        tooltips = 0
         # cat=plugin.tx_dpnglossary//a; type=string; label=Page ID of the Extensionpage
         detailsPid =
         # cat=plugin.tx_dpnglossary//a; type=string; label=Pages which should be parsed for glossary terms
         parsingPids =
-        # cat=plugin.tx_dpnglossary//a; type=string; label=Classnames the link gets if tooltips are enabled
-        tooltipClassName =
-        # cat=plugin.tx_dpnglossary//a; type=string; label=Classnames the link always gets
-        linkClassName =
     }
 }
