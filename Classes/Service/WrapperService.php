@@ -106,10 +106,8 @@ class WrapperService implements \TYPO3\CMS\Core\SingletonInterface {
 		$aTagParams = $this->tsConfig['settings']['aTagParams'];
 		$linkText = $this->tsConfig['settings']['linkTextConf'];
 
-		$aTagParams = preg_replace('/\bTEXT\b/i', $term->getTooltiptext(), $aTagParams);
-		$aTagParams = preg_replace('/\bNAME\b/i', $term->getName(), $aTagParams);
-		$linkText = preg_replace('/\bTEXT\b/i', $term->getTooltiptext(), $linkText);
-		$linkText = preg_replace('/\bNAME\b/i', $term->getName(), $linkText);
+		$aTagParams = preg_replace(array('/\bTEXT\b/i', '/\bNAME\b/i'), array($term->getTooltiptext(), $term->getName()), $aTagParams);
+		$linkText = preg_replace(array('/\bTEXT\b/i', '/\bNAME\b/i'), array($term->getTooltiptext(), $term->getName()), $linkText);
 
 		$linkConf['ATagParams'] = $aTagParams;
 

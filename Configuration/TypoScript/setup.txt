@@ -18,28 +18,3 @@ plugin.tx_dpnglossary {
         parsingPids = {$plugin.tx_dpnglossary.settings.parsingPids}
     }
 }
-
-plugin.tx_dpnglossary._CSS_DEFAULT_STYLE (
-	textarea.f3-form-error {
-		background-color:#FF9F9F;
-		border: 1px #FF0000 solid;
-	}
-
-	input.f3-form-error {
-		background-color:#FF9F9F;
-		border: 1px #FF0000 solid;
-	}
-
-	.tx-dpn-glossary table {
-		border-collapse:separate;
-		border-spacing:10px;
-	}
-
-	.tx-dpn-glossary table th {
-		font-weight:bold;
-	}
-
-	.tx-dpn-glossary table td {
-		vertical-align:top;
-	}
-)
