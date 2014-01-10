@@ -1,8 +1,8 @@
 # dpn_glossary
 
-A Typo3 extension for a glossary and a contentparser to link terms to a detailpage.
+A TYPO3 extension for a glossary and a contentparser to link terms to a detailpage.
 
-This extension is all namespaced and is developed and tested in Typo3 6.1.7
+This extension is all namespaced and is developed and tested in TYPO3 6.1.7
 
 ## Contact
 <dorndorf@featdd.de>
@@ -22,33 +22,4 @@ Integrate the plugin in your root template, over the constant-editor you are abl
 ```TypoScript
 plugin.tx_dpnglossary.settings.linkTextConf = <span>TEXT</span>NAME
 plugin.tx_dpnglossary.settings.aTagParams = class="csstooltip"
-```
-
-###RealURL example
-```PHP
-$GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['realurl']['_DEFAULT']['postVarSets']['_DEFAULT'] = array(
-	'details' => array(
-		array(
-			'GETvar' => 'tx_dpnglossary_main[action]',
-		),
-		array(
-			'GETvar' => 'tx_dpnglossary_main[controller]',
-			'valueMap' => array(
-				'term' => 'Term'
-			)
-		),
-		array(
-			'GETvar' => 'tx_dpnglossary_main[term]',
-			'lookUpTable' => array(
-				'table' => 'tx_dpnglossary_domain_model_term',
-				'id_field' => 'uid',
-				'alias_field' => 'name',
-				'addWhereClause' => ' AND NOT deleted'
-			)
-		),
-		array(
-			'GETvar' => 'tx_dpnglossary_main[pageuid]'
-		)
-	)
-);
 ```
