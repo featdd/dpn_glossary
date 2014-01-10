@@ -25,6 +25,7 @@ namespace Dpn\DpnGlossary\Service;
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
+use Dpn\DpnGlossary\Domain\Model\Term;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 /**
  *
@@ -34,26 +35,24 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 class WrapperService implements \TYPO3\CMS\Core\SingletonInterface {
 
 	/**
-	 * @var \TYPO3\CMS\Extbase\Object\ObjectManager
+	 * @var \TYPO3\CMS\Extbase\Object\ObjectManager $objectManager
 	 */
 	protected $objectManager;
 
 	/**
-	 * @var \TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer
+	 * @var \TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer $cObj
 	 */
 	protected $cObj;
 
 	/**
-	 * @var \array
+	 * @var array $tsConfig
 	 */
 	protected  $tsConfig;
 
 	/**
-	 * @param \array
-	 * @param \mixed
-	 * @return \void
+	 * @return void
 	 */
-	public function contentParser(array &$parameters, $caller) {
+	public function contentParser() {
 		if (FALSE === $this->objectManager instanceof \TYPO3\CMS\Extbase\Object\ObjectManager) {
 			//Make instance of Object Manager
 			$this->objectManager = GeneralUtility::makeInstance('TYPO3\CMS\Extbase\Object\ObjectManager');
@@ -70,7 +69,7 @@ class WrapperService implements \TYPO3\CMS\Core\SingletonInterface {
 			//Reduce TS config to plugin and format the array
 			$this->tsConfig = GeneralUtility::removeDotsFromTS($this->tsConfig)['plugin']['tx_dpnglossary'];
 			//Set StoragePid in the query settings object
-			$querySettings->setStoragePageIds(explode(',', $this->tsConfig['persistence']['storagePid']));
+			$querySettings->setStoragePageIds(GeneralUtility::trimExplode(',', $this->tsConfig['persistence']['storagePid']));
 			//refer the query settings object to the repository object
 			$termRepository->setDefaultQuerySettings($querySettings);
 		}
@@ -92,15 +91,15 @@ class WrapperService implements \TYPO3\CMS\Core\SingletonInterface {
 
 	/**
 	 * @param \Dpn\DpnGlossary\Domain\Model\Term
-	 * @return \string
+	 * @return string
 	 */
-	public function termWrapper(\Dpn\DpnGlossary\Domain\Model\Term $term) {
-		if (0 !== intval($this->tsConfig['settings']['detailsPid'])) {
+	public function termWrapper(Term $term) {
+		if (0 === intval($this->tsConfig['settings']['detailsPid'])) {
+			$linkConf['parameter'] = '#' . $term->getName();
+		} else {
 			$linkConf['parameter'] = $this->tsConfig['settings']['detailsPid'];
 			$linkConf['additionalParams'] = '&tx_dpnglossary_main[action]=show&tx_dpnglossary_main[controller]=Term&tx_dpnglossary_main[term]='. $term->getUid() .'&tx_dpnglossary_main[pageuid]=' . $GLOBALS['TSFE']->id . '';
 			$linkConf['useCacheHash'] = 1;
-		} else {
-			$linkConf['parameter'] = '#' . $term->getName();
 		}
 
 		$aTagParams = $this->tsConfig['settings']['aTagParams'];

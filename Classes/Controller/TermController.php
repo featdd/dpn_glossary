@@ -24,6 +24,7 @@ namespace Dpn\DpnGlossary\Controller;
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
+use Dpn\DpnGlossary\Domain\Model\Term;
 
 /**
  *
@@ -54,10 +55,9 @@ class TermController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController 
 	 * action show
 	 *
 	 * @param \Dpn\DpnGlossary\Domain\Model\Term $term
-	 * @param integer
 	 * @return void
 	 */
-	public function showAction(\Dpn\DpnGlossary\Domain\Model\Term $term) {
+	public function showAction(Term $term) {
         if (TRUE === $this->request->hasArgument('pageuid')){
             $this->view->assign('pageUid', $this->request->getArgument('pageuid'));
         }

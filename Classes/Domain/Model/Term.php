@@ -37,7 +37,7 @@ class Term extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
 	/**
 	 * name of the term
 	 *
-	 * @var \string
+	 * @var string $name
 	 * @validate NotEmpty
 	 */
 	protected $name;
@@ -45,7 +45,7 @@ class Term extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
 	/**
 	 * text shown in the css tooltip
 	 *
-	 * @var \string
+	 * @var string $tooltiptext
 	 * @validate NotEmpty
 	 */
 	protected $tooltiptext;
@@ -53,7 +53,7 @@ class Term extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
 	/**
 	 * description of the term
 	 *
-	 * @var \string
+	 * @var string $description
 	 * @validate NotEmpty
 	 */
 	protected $description;
@@ -61,7 +61,7 @@ class Term extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
 	/**
 	 * Returns the name
 	 *
-	 * @return \string $name
+	 * @return string $name
 	 */
 	public function getName() {
 		return $this->name;
@@ -70,7 +70,7 @@ class Term extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
 	/**
 	 * Sets the name
 	 *
-	 * @param \string $name
+	 * @param string $name
 	 * @return void
 	 */
 	public function setName($name) {
@@ -80,7 +80,7 @@ class Term extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
 	/**
 	 * Returns the tooltiptext
 	 *
-	 * @return \string $tooltiptext
+	 * @return string $tooltiptext
 	 */
 	public function getTooltiptext() {
 		return $this->tooltiptext;
@@ -89,7 +89,7 @@ class Term extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
 	/**
 	 * Sets the tooltiptext
 	 *
-	 * @param \string $tooltiptext
+	 * @param string $tooltiptext
 	 * @return void
 	 */
 	public function setTooltiptext($tooltiptext) {
@@ -99,7 +99,7 @@ class Term extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
 	/**
 	 * Returns the description
 	 *
-	 * @return \string $description
+	 * @return string $description
 	 */
 	public function getDescription() {
 		return $this->description;
@@ -108,7 +108,7 @@ class Term extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
 	/**
 	 * Sets the description
 	 *
-	 * @param \string $description
+	 * @param string $description
 	 * @return void
 	 */
 	public function setDescription($description) {
