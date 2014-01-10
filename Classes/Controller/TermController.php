@@ -51,15 +51,15 @@ class TermController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController 
 		$this->view->assign('terms', $terms);
 	}
 
-    /**
-     * action show
-     *
-     * @param \Dpn\DpnGlossary\Domain\Model\Term $term
-     * @param integer $pageUid
-     * @return void
-     */
+	/**
+	 * action show
+	 *
+	 * @param \Dpn\DpnGlossary\Domain\Model\Term $term
+	 * @param integer $pageUid
+	 * @return void
+	 */
 	public function showAction(Term $term, $pageUid = NULL) {
-        $this->view->assign('pageUid', $pageUid);
+		$this->view->assign('pageUid', $pageUid);
 		$this->view->assign('term', $term);
 	}
 }
