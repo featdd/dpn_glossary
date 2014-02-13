@@ -58,7 +58,7 @@ class WrapperService implements \TYPO3\CMS\Core\SingletonInterface {
 			// Get Query Settings
 			$querySettings = $objectManager->get('TYPO3\CMS\Extbase\Persistence\Generic\QuerySettingsInterface');
 			// Get termRepository
-			$termRepository = $objectManager->get('Dpn\DpnGlossary\Domain\Repository\termRepository');
+			$termRepository = $objectManager->get('Dpn\DpnGlossary\Domain\Repository\TermRepository');
 			// Get Typoscript Configuration
 			$this->tsConfig = $configurationManager->getConfiguration(\TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface::CONFIGURATION_TYPE_FULL_TYPOSCRIPT);
 			// Reduce TS config to plugin and format the array
