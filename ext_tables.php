@@ -9,6 +9,12 @@ if (!defined('TYPO3_MODE')) {
 	'Dpn Glossary'
 );
 
+\TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerPlugin(
+	$_EXTKEY,
+	'Character',
+	'Dpn Glossary Character'
+);
+
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addStaticFile($_EXTKEY, 'Configuration/TypoScript', 'Dreipunktnull Glossar');
 
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addLLrefForTCAdescr('tx_dpnglossary_domain_model_term', 'EXT:dpn_glossary/Resources/Private/Language/locallang_csh_tx_dpnglossary_domain_model_term.xlf');
