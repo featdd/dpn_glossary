@@ -16,7 +16,30 @@
 			<trans-unit id="tx_dpnglossary_domain_model_term.description">
 				<source>Description</source>
 			</trans-unit>
-
+			<trans-unit id="tx_dpnglossary_domain_model_term.name_alternative">
+				<source>Alternative names</source>
+			</trans-unit>
+			<trans-unit id="tx_dpnglossary_domain_model_term.term_type">
+				<source>Type of term</source>
+			</trans-unit>
+			<trans-unit id="tx_dpnglossary_domain_model_term.term_type_acronym">
+				<source>Acronym (e.g. NATO)</source>
+			</trans-unit>
+			<trans-unit id="tx_dpnglossary_domain_model_term.term_type_abbrevation">
+				<source>Abbrevation (e.t.c.)</source>
+			</trans-unit>
+			<trans-unit id="tx_dpnglossary_domain_model_term.term_type_definition">
+				<source>Definition</source>
+			</trans-unit>
+			<trans-unit id="tx_dpnglossary_domain_model_term.term_type_none">
+				<source>None (Tooltip)</source>
+			</trans-unit>
+			<trans-unit id="tx_dpnglossary_domain_model_term.term_lang">
+				<source>Language of the term (2 char ISO code)</source>
+			</trans-unit>
+			<trans-unit id="tx_dpnglossary_domain_model_term.images">
+				<source>Images</source>
+			</trans-unit>
 		</body>
 	</file>
 </xliff>

@@ -16,5 +16,33 @@ plugin.tx_dpnglossary {
         aTagParams = {$plugin.tx_dpnglossary.settings.aTagsParams}
         detailsPid = {$plugin.tx_dpnglossary.settings.detailsPid}
         parsingPids = {$plugin.tx_dpnglossary.settings.parsingPids}
+
+        # max replacemnet per page, default = -1 (any matches)
+        maxReplacementPerPage = -1
+
+        termWraps = CASE
+        termWraps {
+            key.field = term_type
+            default = TEXT
+            default {
+                field = name
+                dataWrap = <span class="csstooltip" lang="{field:term_lang}" title="{field:tooltiptext}">|</span>
+                typolink.parameter = {$plugin.tx_dpnglossary.settings.detailsPid}
+                typolink.additionalParams = &tx_dpnglossary_main[action]=show&tx_dpnglossary_main[controller]=Term&tx_dpnglossary_main[term]={field:uid}&tx_dpnglossary_main[pageUid]={ global : TSFE | id}
+                typolink.additionalParams.insertData = 1
+            }
+            abbrevation < .default
+            abbrevation {
+                dataWrap = <abbr title="{field:tooltiptext}" lang="{field:term_lang}">|</abbr>
+            }
+            acronym < .default
+            acronym {
+                dataWrap = <acronym title="{field:tooltiptext}" lang="{field:term_lang}">|</acronym>
+            }
+            definition < .default
+            definition {
+                dataWrap = <dfn title="{field:tooltiptext}" lang="{field:term_lang}">|</dfn>
+            }
+        }
     }
 }
