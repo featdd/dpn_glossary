@@ -27,6 +27,8 @@ namespace Dpn\DpnGlossary\Service;
 
 use Dpn\DpnGlossary\Domain\Model\Term;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extbase\Utility\ArrayUtility;
+
 /**
  *
  * @package dpn_glossary
@@ -61,17 +63,18 @@ class WrapperService implements \TYPO3\CMS\Core\SingletonInterface {
 			$termRepository = $objectManager->get('Dpn\DpnGlossary\Domain\Repository\TermRepository');
 			// Get Typoscript Configuration
 			$this->tsConfig = $configurationManager->getConfiguration(\TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface::CONFIGURATION_TYPE_FULL_TYPOSCRIPT);
+			$this->tsConfig = $this->tsConfig['plugin.']['tx_dpnglossary.'];
 			// Reduce TS config to plugin and format the array
-			$this->tsConfig = GeneralUtility::removeDotsFromTS($this->tsConfig)['plugin']['tx_dpnglossary'];
+			// $this->tsConfig = GeneralUtility::removeDotsFromTS($this->tsConfig)['plugin']['tx_dpnglossary'];
 			// Set StoragePid in the query settings object
-			$querySettings->setStoragePageIds(GeneralUtility::trimExplode(',', $this->tsConfig['persistence']['storagePid']));
+			$querySettings->setStoragePageIds(GeneralUtility::trimExplode(',', $this->tsConfig['persistence.']['storagePid']));
 			// Assign query settings object to repository
 			$termRepository->setDefaultQuerySettings($querySettings);
 		}
 
-		$parsingPids = GeneralUtility::trimExplode(',', $this->tsConfig['settings']['parsingPids']);
+		$parsingPids = GeneralUtility::trimExplode(',', $this->tsConfig['settings.']['parsingPids']);
 
-		if ((TRUE === in_array($GLOBALS['TSFE']->id, $parsingPids) || TRUE === in_array('0', $parsingPids)) && $GLOBALS['TSFE']->id !== intval($this->tsConfig['settings']['detailsPid'])) {
+		if ((TRUE === in_array($GLOBALS['TSFE']->id, $parsingPids) || TRUE === in_array('0', $parsingPids)) && $GLOBALS['TSFE']->id !== intval($this->tsConfig['settings.']['detailsPid'])) {
 			//Find all Terms
 			$terms = $termRepository->findAll();
 
@@ -89,22 +92,9 @@ class WrapperService implements \TYPO3\CMS\Core\SingletonInterface {
 	 * @return string
 	 */
 	public function termWrapper(Term $term) {
-		if (0 === intval($this->tsConfig['settings']['detailsPid'])) {
-			$linkConf['parameter'] = '#' . $term->getName();
-		} else {
-			$linkConf['parameter'] = $this->tsConfig['settings']['detailsPid'];
-			$linkConf['additionalParams'] = '&tx_dpnglossary_main[action]=show&tx_dpnglossary_main[controller]=Term&tx_dpnglossary_main[term]='. $term->getUid() .'&tx_dpnglossary_main[pageUid]=' . $GLOBALS['TSFE']->id . '';
-			$linkConf['useCacheHash'] = 1;
-		}
-
-		$aTagParams = $this->tsConfig['settings']['aTagParams'];
-		$linkText = $this->tsConfig['settings']['linkTextConf'];
-
-		$aTagParams = preg_replace(array('/\bTEXT\b/i', '/\bNAME\b/i'), array($term->getTooltiptext(), $term->getName()), $aTagParams);
-		$linkText = preg_replace(array('/\bTEXT\b/i', '/\bNAME\b/i'), array($term->getTooltiptext(), $term->getName()), $linkText);
-
-		$linkConf['ATagParams'] = $aTagParams;
-
-		return $this->cObj->typoLink($linkText, $linkConf);
+		$ts         = $this->tsConfig['settings.']['termWraps'];
+		$tsArr      = $this->tsConfig['settings.']['termWraps.'];
+		$this->cObj->start($term->toArray());
+		return $this->cObj->cObjGetSingle($ts, $tsArr);
 	}
 }
