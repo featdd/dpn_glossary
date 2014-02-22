@@ -59,6 +59,72 @@ class Term extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
 	protected $description;
 
 	/**
+	 * alternative names for the termn
+	 *
+	 * @var string $nameAlternative
+	 */
+	protected $nameAlternative;
+
+	/**
+	 * the type of the term, must by empty or one of [abbrevation/description]
+	 *
+	 * @var string $termType
+	 */
+	protected $termType;
+
+	/**
+	 * the 2 char iso code of the term, can also be empty
+	 *
+	 * @var string $termLang
+	 */
+	protected $termLang;
+
+	/**
+	 * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\TYPO3\CMS\Extbase\Domain\Model\FileReference>
+	 * @lazy
+	 */
+	protected $images;
+
+	/**
+	 * Adds a FileReference
+	 *
+	 * @param \TYPO3\CMS\Extbase\Domain\Model\FileReference $image
+	 * @return void
+	 */
+	public function addImage(\TYPO3\CMS\Extbase\Domain\Model\FileReference $image) {
+		$this->images->attach($image);
+	}
+
+	/**
+	 * Removes a FileReference
+	 *
+	 * @param \TYPO3\CMS\Extbase\Domain\Model\FileReference $imageToRemove The FileReference to be removed
+	 * @return void
+	 */
+	public function removeImage(\TYPO3\CMS\Extbase\Domain\Model\FileReference $imageToRemove) {
+		$this->images->detach($imageToRemove);
+	}
+
+	/**
+	 * Returns the images
+	 *
+	 * @return \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\TYPO3\CMS\Extbase\Domain\Model\FileReference> $images
+	 */
+	public function getImages() {
+		return $this->images;
+	}
+
+	/**
+	 * Sets the images
+	 *
+	 * @param \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\TYPO3\CMS\Extbase\Domain\Model\FileReference> $images
+	 * @return void
+	 */
+	public function setImages(\TYPO3\CMS\Extbase\Persistence\ObjectStorage $images) {
+		$this->images = $images;
+	}
+
+	/**
 	 * Returns the name
 	 *
 	 * @return string $name
@@ -115,4 +181,73 @@ class Term extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
 		$this->description = $description;
 	}
 
+	/**
+	 * Sets the alternative names
+	 *
+	 * @param string $nameAlternative
+	 */
+	public function setNameAlternative($nameAlternative) {
+		$this->nameAlternative = $nameAlternative;
+	}
+
+	/**
+	 * Returns the alternaive names
+	 *
+	 * @return string
+	 */
+	public function getNameAlternative() {
+		return $this->nameAlternative;
+	}
+
+	/**
+	 * Sets the language of the term
+	 *
+	 * @param string $termLang
+	 */
+	public function setTermLang($termLang) {
+		$this->termLang = $termLang;
+	}
+
+	/**
+	 * Returns the language of the term
+	 *
+	 * @return string
+	 */
+	public function getTermLang() {
+		return $this->termLang;
+	}
+
+	/**
+	 * Sets the type of the term
+	 *
+	 * @param string $termType
+	 */
+	public function setTermType($termType) {
+		$this->termType = $termType;
+	}
+
+	/**
+	 * Returns the type of the term
+	 *
+	 * @return string
+	 */
+	public function getTermType() {
+		return $this->termType;
+	}
+
+	/**
+	 * @return array
+	 */
+	public function toArray() {
+		return array(
+			'uid'               => $this->getUid(),
+			'pid'               => $this->getPid(),
+			'name'              => $this->getName(),
+			'tooltiptext'       => $this->getTooltiptext(),
+			'description'       => $this->getDescription(),
+			'name_alternative'  => $this->getNameAlternative(),
+			'term_type'         => $this->getTermType(),
+			'term_lang'         => $this->getTermLang(),
+		);
+	}
 }
