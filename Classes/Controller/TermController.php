@@ -52,6 +52,16 @@ class TermController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController 
 	}
 
 	/**
+	 * action for a character navigation view
+	 *
+	 * @return void
+	 */
+	public function characterAction() {
+		$terms = $this->termRepository->findAllGroupedByFirstCharacter();
+		$this->view->assign('terms', $terms);
+	}
+
+	/**
 	 * action show
 	 *
 	 * @param \Dpn\DpnGlossary\Domain\Model\Term $term
