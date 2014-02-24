@@ -77,10 +77,12 @@ class WrapperService implements \TYPO3\CMS\Core\SingletonInterface {
 			//Find all Terms
 			$terms = $termRepository->findAll();
 
+			$maxReplacementPerPage = (int) $this->tsConfig['settings.']['maxReplacementPerPage'];
+
 			//Search whole content for Terms and replace them
 			foreach ($terms as $term) {
 				if (1 === preg_match('/\b' . $term->getName() . '\b/i', $GLOBALS['TSFE']->content)) {
-					$GLOBALS['TSFE']->content = preg_replace('/\b' . $term->getName() . '\b/i', $this->termWrapper($term), $GLOBALS['TSFE']->content);
+					$GLOBALS['TSFE']->content = preg_replace('/\b' . $term->getName() . '\b/i', $this->termWrapper($term), $GLOBALS['TSFE']->content, $maxReplacementPerPage);
 				}
 			}
 		}
