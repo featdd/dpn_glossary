@@ -28,6 +28,10 @@
                 <source>Listview for the terms</source>
                 <target>Listenansicht für die Begriffe</target>
             </trans-unit>
+            <trans-unit id="tx_dpnglossary_domain_model_term.characterheadline">
+            	<source>Character Navigation for the terms</source>
+                <target>Buchstaben-Navigation für die Begriffe</target>
+            </trans-unit>
 
             <trans-unit id="tx_dpnglossary.backtolastpage">
                 <source>Back to last page</source>

@@ -22,6 +22,10 @@
             <trans-unit id="tx_dpnglossary_domain_model_term.listheadline">
             	<source>Listview for then terms</source>
             </trans-unit>
+            <trans-unit id="tx_dpnglossary_domain_model_term.characterheadline">
+            	<source>Character Navigation for the terms</source>
+            </trans-unit>
+
 
             <trans-unit id="tx_dpnglossary.backtolastpage">
             	<source>Back to last page</source>

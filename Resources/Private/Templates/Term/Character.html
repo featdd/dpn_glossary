@@ -1,0 +1,12 @@
+<h1><f:translate key="tx_dpnglossary_domain_model_term.characterheadline" /></h1>
+
+<div>
+    <dl>
+        <f:for each="{terms}" as="groupTerms" key="firstChar">
+            <dt>{firstChar}</dt>
+            <f:for each="{groupTerms}" as="term" iteration="itemIteration">
+                <dd><f:link.action action="show" arguments="{term: term}">{term.name}</f:link.action></dd>
+            </f:for>
+        </f:for>
+    </dl>
+</div>
