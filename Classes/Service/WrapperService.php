@@ -77,7 +77,7 @@ class WrapperService implements \TYPO3\CMS\Core\SingletonInterface {
 			//Find all Terms
 			$terms = $termRepository->findAll();
 
-			$maxReplacementPerPage = (int) $this->tsConfig['settings.']['maxReplacementPerPage'];
+			$maxReplacementPerPage = (int)$this->tsConfig['settings.']['maxReplacementPerPage'];
 
 			//Search whole content for Terms and replace them
 			foreach ($terms as $term) {

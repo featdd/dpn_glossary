@@ -12,13 +12,12 @@ plugin.tx_dpnglossary {
 		# rewrittenPropertyMapper = 1
 	}
 	settings {
-        linkTextConf = {$plugin.tx_dpnglossary.settings.linkTextConf}
-        aTagParams = {$plugin.tx_dpnglossary.settings.aTagsParams}
+	    # Pid of the detailpage
         detailsPid = {$plugin.tx_dpnglossary.settings.detailsPid}
+        # pages where terms should be searched, 0 = all
         parsingPids = {$plugin.tx_dpnglossary.settings.parsingPids}
-
         # max replacemnet per page, default = -1 (any matches)
-        maxReplacementPerPage = -1
+        maxReplacementPerPage = {$plugin.tx_dpnglossary.settings.maxReplacementPerPage}
 
         termWraps = CASE
         termWraps {
