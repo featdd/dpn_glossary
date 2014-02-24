@@ -63,8 +63,8 @@ class WrapperService implements \TYPO3\CMS\Core\SingletonInterface {
 			$termRepository = $objectManager->get('Dpn\DpnGlossary\Domain\Repository\TermRepository');
 			// Get Typoscript Configuration
 			$this->tsConfig = $configurationManager->getConfiguration(\TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface::CONFIGURATION_TYPE_FULL_TYPOSCRIPT);
-            // Reduce TS config to plugin
-            $this->tsConfig = $this->tsConfig['plugin.']['tx_dpnglossary.'];
+			// Reduce TS config to plugin
+			$this->tsConfig = $this->tsConfig['plugin.']['tx_dpnglossary.'];
 			// Set StoragePid in the query settings object
 			$querySettings->setStoragePageIds(GeneralUtility::trimExplode(',', $this->tsConfig['persistence.']['storagePid']));
 			// Assign query settings object to repository
