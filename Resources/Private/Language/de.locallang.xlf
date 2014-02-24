@@ -20,6 +20,38 @@
 				<source>description of the term</source>
 				<target>Beschreibung des Begriffes</target>
 			</trans-unit>
+			<trans-unit id="tx_dpnglossary_domain_model_term.name_alternative">
+				<source>Alternative names</source>
+				<target>Alternative Namen</target>
+			</trans-unit>
+			<trans-unit id="tx_dpnglossary_domain_model_term.term_type">
+				<source>Type of term</source>
+				<target>Typ des Begriff</target>
+			</trans-unit>
+			<trans-unit id="tx_dpnglossary_domain_model_term.term_type_acronym">
+				<source>Acronym (e.g. NATO)</source>
+				<target>Kurzwort aus Anfangsbuchstaben (Beispiel: NATO)</target>
+			</trans-unit>
+			<trans-unit id="tx_dpnglossary_domain_model_term.term_type_abbrevation">
+				<source>Abbrevation (e.t.c.)</source>
+				<target>Abkürzung (Beispiel: u.s.w.)</target>
+			</trans-unit>
+			<trans-unit id="tx_dpnglossary_domain_model_term.term_type_definition">
+				<source>Definition</source>
+				<target>Definition</target>
+			</trans-unit>
+			<trans-unit id="tx_dpnglossary_domain_model_term.term_type_none">
+				<source>None (Tooltip)</source>
+				<target>Einfacher Tooltip</target>
+			</trans-unit>
+			<trans-unit id="tx_dpnglossary_domain_model_term.term_lang">
+				<source>Language of the term (2 char ISO code)</source>
+				<target>Sprache des Begriffs (2 Zeichen ISO Code)</target>
+			</trans-unit>
+			<trans-unit id="tx_dpnglossary_domain_model_term.images">
+				<source>Images</source>
+				<target>Bilder</target>
+			</trans-unit>
 			<trans-unit id="tx_dpnglossary_domain_model_term.detailheadline">
                 <source>Detailview for term</source>
                 <target>Detailansicht für den Begriff</target>
@@ -41,7 +73,6 @@
                 <source>Back to list</source>
                 <target>Zurück zur Liste</target>
             </trans-unit>
-			
 		</body>
 	</file>
 </xliff>
