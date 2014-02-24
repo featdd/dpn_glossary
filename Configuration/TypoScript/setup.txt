@@ -17,6 +17,9 @@ plugin.tx_dpnglossary {
         detailsPid = {$plugin.tx_dpnglossary.settings.detailsPid}
         parsingPids = {$plugin.tx_dpnglossary.settings.parsingPids}
 
+        # max replacemnet per page, default = -1 (any matches)
+        maxReplacementPerPage = -1
+
         termWraps = CASE
         termWraps {
             key.field = term_type
