@@ -29,6 +29,7 @@ plugin.tx_dpnglossary {
                 typolink.parameter = {$plugin.tx_dpnglossary.settings.detailsPid}
                 typolink.additionalParams = &tx_dpnglossary_main[term]={field:uid}&tx_dpnglossary_main[action]=show&tx_dpnglossary_main[controller]=Term&tx_dpnglossary_main[pageUid]={ global : TSFE | id}
                 typolink.additionalParams.insertData = 1
+                typolink.ATagParams.dataWrap = title="{field:name}" class="dpnglossary-link"
             }
             abbrevation < .default
             abbrevation {
