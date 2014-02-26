@@ -12,7 +12,7 @@ plugin.tx_dpnglossary {
 		storagePid =
 	}
 	settings {
-        # cat=plugin.tx_dpnglossary//a; type=string; label=Page ID of the Extensionpage
+        # cat=plugin.tx_dpnglossary//a; type=string; label=Page ID of the terms detailpage
         detailsPid =
         # cat=plugin.tx_dpnglossary//a; type=string; label=Pages which should be parsed for glossary terms
         parsingPids =
