@@ -2,10 +2,10 @@
 
 A TYPO3 extension for a glossary and a contentparser to link terms to a detailpage.
 
-This extension is all namespaced and is developed and tested in TYPO3 6.1.7
+This extension is all namespaced and is developed and tested in TYPO3 6.1.X
 
 ## Contact
-<dorndorf@featdd.de>
+<dorndorf@dreipunktnull.com>
 
 # Configuration
 
