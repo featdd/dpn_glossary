@@ -7,10 +7,6 @@ plugin.tx_dpnglossary {
 	persistence {
 		storagePid = {$plugin.tx_dpnglossary.persistence.storagePid}
 	}
-	features {
-		# uncomment the following line to enable the new Property Mapper.
-		# rewrittenPropertyMapper = 1
-	}
 	settings {
 	    # Pid of the detailpage
         detailsPid = {$plugin.tx_dpnglossary.settings.detailsPid}
@@ -25,11 +21,11 @@ plugin.tx_dpnglossary {
             default = TEXT
             default {
                 field = name
-                dataWrap = <span class="csstooltip" lang="{field:term_lang}" title="{field:tooltiptext}">|</span>
+                dataWrap = <span class="dpnglossary" lang="{field:term_lang}" title="{field:name}">|</span>
                 typolink.parameter = {$plugin.tx_dpnglossary.settings.detailsPid}
                 typolink.additionalParams = &tx_dpnglossary_main[term]={field:uid}&tx_dpnglossary_main[action]=show&tx_dpnglossary_main[controller]=Term&tx_dpnglossary_main[pageUid]={ global : TSFE | id}
                 typolink.additionalParams.insertData = 1
-                typolink.ATagParams.dataWrap = title="{field:name}" class="dpnglossary-link"
+                typolink.ATagParams.dataWrap = title="{field:tooltiptext}" class="dpnglossary-link"
                 typolink.useCacheHash = 1
             }
             abbrevation < .default

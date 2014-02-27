@@ -24,7 +24,8 @@ plugin.tx_dpnglossary {
     settings {
         termWraps {
             default {
-                dataWrap = <span class="csstooltip" lang="{field:term_lang}" title="{field:tooltiptext}">|</span>
+                dataWrap = <span class="dpnglossary" lang="{field:term_lang}" title="{field:name}">|</span>
+                typolink.ATagParams.dataWrap = title="{field:tooltiptext}" class="dpnglossary-link"
             }
             acronym {
                 datawrap = <acronym title="{field:tooltiptext}" lang="{field:term_lang}">|</acronym>
