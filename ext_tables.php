@@ -5,14 +5,14 @@ if (!defined('TYPO3_MODE')) {
 
 \TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerPlugin(
 	$_EXTKEY,
-	'Main',
-	'Dpn Glossary'
+	'GlossaryMainList',
+	'Dpn Glossary Main List'
 );
 
 \TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerPlugin(
 	$_EXTKEY,
-	'Character',
-	'Dpn Glossary Character'
+	'GlossaryCharacterList',
+	'Dpn Glossary Character List'
 );
 
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addStaticFile($_EXTKEY, 'Configuration/TypoScript', 'Dreipunktnull Glossar');

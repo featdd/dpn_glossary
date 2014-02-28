@@ -25,8 +25,6 @@ namespace Dpn\DpnGlossary\Domain\Repository;
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 use Dpn\DpnGlossary\Domain\Model\Term;
-use TYPO3\CMS\Core\Utility\StringUtility;
-use TYPO3\CMS\Documentation\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Persistence\QueryInterface;
 
 /**
