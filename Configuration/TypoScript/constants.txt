@@ -15,7 +15,7 @@ plugin.tx_dpnglossary {
         # cat=plugin.tx_dpnglossary//a; type=string; label=Page ID of the terms detailpage
         detailsPid =
         # cat=plugin.tx_dpnglossary//a; type=string; label=Pages which should be parsed for glossary terms
-        parsingPids =
+        parsingPids = 0
         # cat=plugin.tx_dpnglossary//a; type=string; label=Maximum replacements for each term (default: -1 = any)
         maxReplacementPerPage = -1
     }
