@@ -71,9 +71,14 @@ class WrapperService implements \TYPO3\CMS\Core\SingletonInterface {
 			$termRepository->setDefaultQuerySettings($querySettings);
 		}
 
-		$parsingPids = GeneralUtility::trimExplode(',', $this->tsConfig['settings.']['parsingPids']);
+		if (!isset($this->tsConfig['settings.']['parsingExcludePidList'])) {
+			$this->tsConfig['settings.']['parsingExcludePidList'] = '';
+		}
 
-		if ((TRUE === in_array($GLOBALS['TSFE']->id, $parsingPids) || TRUE === in_array('0', $parsingPids)) && $GLOBALS['TSFE']->id !== intval($this->tsConfig['settings.']['detailsPid'])) {
+		$parsingPids = GeneralUtility::trimExplode(',', $this->tsConfig['settings.']['parsingPids']);
+		$excludePids = GeneralUtility::trimExplode(',', $this->tsConfig['settings.']['parsingExcludePidList']);
+
+		if (FALSE === in_array($GLOBALS['TSFE']->id, $excludePids) && (TRUE === in_array($GLOBALS['TSFE']->id, $parsingPids) || TRUE === in_array('0', $parsingPids)) && $GLOBALS['TSFE']->id !== intval($this->tsConfig['settings.']['detailsPid'])) {
 			//Find all Terms
 			$terms = $termRepository->findAll();
 

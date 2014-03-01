@@ -12,6 +12,8 @@ plugin.tx_dpnglossary {
         detailsPid = {$plugin.tx_dpnglossary.settings.detailsPid}
         # pages where terms should be searched, 0 = all
         parsingPids = {$plugin.tx_dpnglossary.settings.parsingPids}
+        # pages where terms should NOT be searched
+        parsingExcludePidList = {$plugin.tx_dpnglossary.settings.parsingExcludePidList}
         # max replacemnet per page, default = -1 (any matches)
         maxReplacementPerPage = {$plugin.tx_dpnglossary.settings.maxReplacementPerPage}
 
