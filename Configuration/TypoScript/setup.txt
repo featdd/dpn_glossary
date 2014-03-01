@@ -22,11 +22,23 @@ plugin.tx_dpnglossary {
             default {
                 field = name
                 dataWrap = <span class="dpnglossary" lang="{field:term_lang}" title="{field:name}">|</span>
-                typolink.parameter = {$plugin.tx_dpnglossary.settings.detailsPid}
-                typolink.additionalParams = &tx_dpnglossary_main[term]={field:uid}&tx_dpnglossary_main[action]=show&tx_dpnglossary_main[controller]=Term&tx_dpnglossary_main[pageUid]={ global : TSFE | id}
-                typolink.additionalParams.insertData = 1
-                typolink.ATagParams.dataWrap = title="{field:tooltiptext}" class="dpnglossary-link"
-                typolink.useCacheHash = 1
+                typolink {
+                    parameter = #{field:name}
+                    parameter.insertData = 1
+                    parameter.override < plugin.tx_dpnglossary.settings.detailsPid
+                    parameter.override {
+                        if.value = 0
+                        if.isGreaterThan < plugin.tx_dpnglossary.settings.detailsPid
+                    }
+                    additionalParams = &tx_dpnglossary_main[term]={field:uid}&tx_dpnglossary_main[action]=show&tx_dpnglossary_main[controller]=Term&tx_dpnglossary_main[pageUid]={ global : TSFE | id}
+                    additionalParams {
+                        insertData = 1
+                        if.value = 0
+                        if.isGreaterThan < plugin.tx_dpnglossary.settings.detailsPid
+                    }
+                    ATagParams.dataWrap = title="{field:tooltiptext}" class="dpnglossary-link"
+                    useCacheHash = 1
+                }
             }
             abbrevation < .default
             abbrevation {
