@@ -8,52 +8,54 @@ plugin.tx_dpnglossary {
 		storagePid = {$plugin.tx_dpnglossary.persistence.storagePid}
 	}
 	settings {
-	    # Pid of the detailpage
-        detailsPid = {$plugin.tx_dpnglossary.settings.detailsPid}
-        # pages where terms should be searched, 0 = all
-        parsingPids = {$plugin.tx_dpnglossary.settings.parsingPids}
-        # pages where terms should NOT be searched
-        parsingExcludePidList = {$plugin.tx_dpnglossary.settings.parsingExcludePidList}
-        # max replacemnet per page, default = -1 (any matches)
-        maxReplacementPerPage = {$plugin.tx_dpnglossary.settings.maxReplacementPerPage}
+		# Pid of the detailpage
+		detailsPid = {$plugin.tx_dpnglossary.settings.detailsPid}
+		# pages where terms should be searched, 0 = all
+		parsingPids = {$plugin.tx_dpnglossary.settings.parsingPids}
+		# pages where terms should NOT be searched
+		parsingExcludePidList = {$plugin.tx_dpnglossary.settings.parsingExcludePidList}
+		# max replacemnet per page, default = -1 (any matches)
+		maxReplacementPerPage = {$plugin.tx_dpnglossary.settings.maxReplacementPerPage}
+		# Tags which content will be parsed for terms
+		parsingTags = {$plugin.tx_dpnglossary.settings.parsingTags}
 
-        termWraps = CASE
-        termWraps {
-            key.field = term_type
-            default = TEXT
-            default {
-                field = name
-                dataWrap = <span class="dpnglossary" lang="{field:term_lang}" title="{field:name}">|</span>
-                typolink {
-                    parameter = #{field:name}
-                    parameter.insertData = 1
-                    parameter.override < plugin.tx_dpnglossary.settings.detailsPid
-                    parameter.override {
-                        if.value = 0
-                        if.isGreaterThan < plugin.tx_dpnglossary.settings.detailsPid
-                    }
-                    additionalParams = &tx_dpnglossary_glossarymainlist[term]={field:uid}&tx_dpnglossary_glossarymainlist[action]=show&tx_dpnglossary_glossarymainlist[controller]=Term&tx_dpnglossary_glossarymainlist[pageUid]={ global : TSFE | id}
-                    additionalParams {
-                        insertData = 1
-                        if.value = 0
-                        if.isGreaterThan < plugin.tx_dpnglossary.settings.detailsPid
-                    }
-                    ATagParams.dataWrap = title="{field:tooltiptext}" class="dpnglossary-link"
-                    useCacheHash = 1
-                }
-            }
-            abbrevation < .default
-            abbrevation {
-                dataWrap = <abbr title="{field:tooltiptext}" lang="{field:term_lang}">|</abbr>
-            }
-            acronym < .default
-            acronym {
-                dataWrap = <acronym title="{field:tooltiptext}" lang="{field:term_lang}">|</acronym>
-            }
-            definition < .default
-            definition {
-                dataWrap = <dfn title="{field:tooltiptext}" lang="{field:term_lang}">|</dfn>
-            }
-        }
-    }
+		termWraps = CASE
+		termWraps {
+			key.field = term_type
+			default = TEXT
+			default {
+				field = name
+				dataWrap = <span class="dpnglossary" lang="{field:term_lang}" title="{field:name}">|</span>
+				typolink {
+					parameter = #{field:name}
+					parameter.insertData = 1
+					parameter.override < plugin.tx_dpnglossary.settings.detailsPid
+					parameter.override {
+						if.value = 0
+						if.isGreaterThan < plugin.tx_dpnglossary.settings.detailsPid
+					}
+					additionalParams = &tx_dpnglossary_glossarymainlist[term]={field:uid}&tx_dpnglossary_glossarymainlist[action]=show&tx_dpnglossary_glossarymainlist[controller]=Term&tx_dpnglossary_glossarymainlist[pageUid]={ global : TSFE | id}
+					additionalParams {
+						insertData = 1
+						if.value = 0
+						if.isGreaterThan < plugin.tx_dpnglossary.settings.detailsPid
+					}
+					ATagParams.dataWrap = title="{field:tooltiptext}" class="dpnglossary-link"
+					useCacheHash = 1
+				}
+			}
+			abbrevation < .default
+			abbrevation {
+				dataWrap = <abbr title="{field:tooltiptext}" lang="{field:term_lang}">|</abbr>
+			}
+			acronym < .default
+			acronym {
+				dataWrap = <acronym title="{field:tooltiptext}" lang="{field:term_lang}">|</acronym>
+			}
+			definition < .default
+			definition {
+				dataWrap = <dfn title="{field:tooltiptext}" lang="{field:term_lang}">|</dfn>
+			}
+		}
+	}
 }

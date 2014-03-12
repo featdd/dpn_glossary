@@ -26,15 +26,17 @@ namespace Dpn\DpnGlossary\Service;
  ***************************************************************/
 
 use Dpn\DpnGlossary\Domain\Model\Term;
+use Dpn\DpnGlossary\Domain\Repository\TermRepository;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Utility\ArrayUtility;
+use TYPO3\CMS\Core\SingletonInterface;
 
 /**
  *
  * @package dpn_glossary
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  */
-class WrapperService implements \TYPO3\CMS\Core\SingletonInterface {
+class WrapperService implements SingletonInterface {
 
 	/**
 	 * @var \TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer $cObj
@@ -45,6 +47,16 @@ class WrapperService implements \TYPO3\CMS\Core\SingletonInterface {
 	 * @var array $tsConfig
 	 */
 	protected  $tsConfig;
+
+	/**
+	 * @var TermRepository $termRepository
+	 */
+	protected $termRepository;
+
+	/**
+	 * @var integer $maxReplacementPerPage
+	 */
+	protected $maxReplacementPerPage;
 
 	/**
 	 * @return void
@@ -60,7 +72,7 @@ class WrapperService implements \TYPO3\CMS\Core\SingletonInterface {
 			// Get Query Settings
 			$querySettings = $objectManager->get('TYPO3\CMS\Extbase\Persistence\Generic\QuerySettingsInterface');
 			// Get termRepository
-			$termRepository = $objectManager->get('Dpn\DpnGlossary\Domain\Repository\TermRepository');
+			$this->termRepository = $objectManager->get('Dpn\DpnGlossary\Domain\Repository\TermRepository');
 			// Get Typoscript Configuration
 			$this->tsConfig = $configurationManager->getConfiguration(\TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface::CONFIGURATION_TYPE_FULL_TYPOSCRIPT);
 			// Reduce TS config to plugin
@@ -68,7 +80,7 @@ class WrapperService implements \TYPO3\CMS\Core\SingletonInterface {
 			// Set StoragePid in the query settings object
 			$querySettings->setStoragePageIds(GeneralUtility::trimExplode(',', $this->tsConfig['persistence.']['storagePid']));
 			// Assign query settings object to repository
-			$termRepository->setDefaultQuerySettings($querySettings);
+			$this->termRepository->setDefaultQuerySettings($querySettings);
 		}
 
 		if (!isset($this->tsConfig['settings.']['parsingExcludePidList'])) {
@@ -79,27 +91,61 @@ class WrapperService implements \TYPO3\CMS\Core\SingletonInterface {
 		$excludePids = GeneralUtility::trimExplode(',', $this->tsConfig['settings.']['parsingExcludePidList']);
 
 		if (FALSE === in_array($GLOBALS['TSFE']->id, $excludePids) && (TRUE === in_array($GLOBALS['TSFE']->id, $parsingPids) || TRUE === in_array('0', $parsingPids)) && $GLOBALS['TSFE']->id !== intval($this->tsConfig['settings.']['detailsPid'])) {
-			//Find all Terms
-			$terms = $termRepository->findAll();
+			//Get max number of replacements per page and term
+			$this->maxReplacementPerPage = (int)$this->tsConfig['settings.']['maxReplacementPerPage'];
+			//Get Tags which content should be parsed
+			$tags = GeneralUtility::trimExplode(',', $this->tsConfig['settings.']['parsingTags']);
+			//Create new DOMDocument
+			$DOM = new \DOMDocument();
+			//Load Page HTML in DOM
+			$DOM->loadHTML($GLOBALS['TSFE']->content);
+			$DOM->preserveWhiteSpace = false;
+			/** @var \DOMElement $DOMBody */
+			$DOMBody = $DOM->getElementsByTagName('body')->item(0);
 
-			$maxReplacementPerPage = (int)$this->tsConfig['settings.']['maxReplacementPerPage'];
-
-			//Search whole content for Terms and replace them
-			foreach ($terms as $term) {
-				if (1 === preg_match('/\b' . $term->getName() . '\b/i', $GLOBALS['TSFE']->content)) {
-					$GLOBALS['TSFE']->content = preg_replace('/\b' . $term->getName() . '\b/i', $this->termWrapper($term), $GLOBALS['TSFE']->content, $maxReplacementPerPage);
+			foreach ($tags as $tag) {
+				$DOMTags = $DOMBody->getElementsByTagName($tag);
+				foreach ($DOMTags as $DOMTag) {
+					$this->nodeReplacer($DOMTag);
 				}
 			}
+
+			$GLOBALS['TSFE']->content = $DOM->saveHTML();
 		}
+	}
+
+	/**
+	 * @param \DOMNode $DOMTag
+	 * @return void
+	 */
+	protected function nodeReplacer(\DOMNode $DOMTag) {
+		$tempDOM = new \DOMDocument();
+		$tempDOM->loadHTML($this->textParser($DOMTag->ownerDocument->saveHTML($DOMTag)));
+		$DOMTag->parentNode->replaceChild($DOMTag->ownerDocument->importNode($tempDOM->getElementsByTagName('body')->item(0)->childNodes->item(0), TRUE), $DOMTag);
+	}
+
+	/**
+	 * @param string
+	 * @return string
+	 */
+	protected function textParser($text) {
+		$terms = $this->termRepository->findAll();
+		//Search whole content for Terms and replace them
+		foreach ($terms as $term) {
+			if (1 === preg_match('#\b' . $term->getName() . '\b#i', $text)) {
+				$text = preg_replace('#\b' . $term->getName() . '\b#i', $this->termWrapper($term), $text, $this->maxReplacementPerPage);
+			}
+		}
+		return $text;
 	}
 
 	/**
 	 * @param \Dpn\DpnGlossary\Domain\Model\Term
 	 * @return string
 	 */
-	public function termWrapper(Term $term) {
-		$ts         = $this->tsConfig['settings.']['termWraps'];
-		$tsArr      = $this->tsConfig['settings.']['termWraps.'];
+	protected function termWrapper(Term $term) {
+		$ts = $this->tsConfig['settings.']['termWraps'];
+		$tsArr = $this->tsConfig['settings.']['termWraps.'];
 		$this->cObj->start($term->toArray());
 		return $this->cObj->cObjGetSingle($ts, $tsArr);
 	}

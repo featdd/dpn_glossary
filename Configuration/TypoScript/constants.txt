@@ -12,13 +12,15 @@ plugin.tx_dpnglossary {
 		storagePid =
 	}
 	settings {
-        # cat=plugin.tx_dpnglossary//a; type=string; label=Page ID of the terms detailpage
-        detailsPid =
-        # cat=plugin.tx_dpnglossary//a; type=string; label=Pages which should be parsed for glossary terms
-        parsingPids = 0
-        # cat=plugin.tx_dpnglossary//a; type=string; label=Pages (comma list) which should not be parsed for glossary terms
-        parsingExcludePidList =
-        # cat=plugin.tx_dpnglossary//a; type=string; label=Maximum replacements for each term (default: -1 = any)
-        maxReplacementPerPage = -1
-    }
+		# cat=plugin.tx_dpnglossary//a; type=string; label=Page ID of the terms detailpage
+		detailsPid =
+		# cat=plugin.tx_dpnglossary//a; type=string; label=Pages which should be parsed for glossary terms
+		parsingPids = 0
+		# cat=plugin.tx_dpnglossary//a; type=string; label=Pages (comma list) which should not be parsed for glossary terms
+		parsingExcludePidList =
+		# cat=plugin.tx_dpnglossary//a; type=integer; label=Maximum replacements for each term (default: -1 = any)
+		maxReplacementPerPage = -1
+		# cat=plugin.tx_dpnglossary//a; type=string; label=Tags which content will be parsed for terms
+		parsingTags = p
+	}
 }
