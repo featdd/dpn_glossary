@@ -67,12 +67,14 @@ class TermController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController 
 	 * action show
 	 *
 	 * @param \Dpn\DpnGlossary\Domain\Model\Term $term
-	 * @param integer $pageUid
 	 * @return void
 	 */
-	public function showAction(Term $term, $pageUid = NULL) {
+	public function showAction(Term $term) {
+		if(TRUE == $this->request->hasArgument('pageUid')) {
+			$pageUid = $this->request->getArgument('pageUid');
+			$this->view->assign('pageUid', $pageUid);
+		}
 		$this->view->assign('listPage', $this->settings['listPage']);
-		$this->view->assign('pageUid', $pageUid);
 		$this->view->assign('term', $term);
 	}
 }
