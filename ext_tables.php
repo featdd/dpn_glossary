@@ -5,17 +5,15 @@ if (!defined('TYPO3_MODE')) {
 
 \TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerPlugin(
 	$_EXTKEY,
-	'GlossaryMainList',
-	'Dpn Glossary Main List'
-);
-
-\TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerPlugin(
-	$_EXTKEY,
-	'GlossaryCharacterList',
-	'Dpn Glossary Character List'
+	'Glossary',
+	'Dpn Glossary'
 );
 
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addStaticFile($_EXTKEY, 'Configuration/TypoScript', 'Dreipunktnull Glossar');
+
+$pluginSignature = str_replace('_', '', $_EXTKEY) . '_glossary';
+$TCA['tt_content']['types']['list']['subtypes_addlist'][$pluginSignature] = 'pi_flexform';
+\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPiFlexFormValue($pluginSignature, 'FILE:EXT:' . $_EXTKEY . '/Configuration/FlexForms/flexform_Glossary.xml');
 
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addLLrefForTCAdescr('tx_dpnglossary_domain_model_term', 'EXT:dpn_glossary/Resources/Private/Language/locallang_csh_tx_dpnglossary_domain_model_term.xlf');
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::allowTableOnStandardPages('tx_dpnglossary_domain_model_term');
@@ -43,5 +41,5 @@ $TCA['tx_dpnglossary_domain_model_term'] = array(
 		'searchFields' => 'name,tooltiptext,description,',
 		'dynamicConfigFile' => \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath($_EXTKEY) . 'Configuration/TCA/Term.php',
 		'iconfile' => \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extRelPath($_EXTKEY) . 'Resources/Public/Icons/tx_dpnglossary_domain_model_term.gif'
-	),
+	)
 );

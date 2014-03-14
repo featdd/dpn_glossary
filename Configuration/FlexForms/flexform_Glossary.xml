@@ -1,0 +1,107 @@
+<T3DataStructure>
+	<meta>
+		<langDisable>1</langDisable>
+	</meta>
+	<sheets>
+		<sDEF>
+			<ROOT>
+				<TCEforms>
+					<sheetTitle>Configuration</sheetTitle>
+				</TCEforms>
+				<type>array</type>
+				<el>
+					<switchableControllerActions>
+						<TCEforms>
+							<label>Mode</label>
+							<onChange>reload</onChange>
+							<config>
+								<type>select</type>
+								<default>News->list</default>
+								<items>
+									<numIndex index="0">
+										<numIndex index="0">List</numIndex>
+										<numIndex index="1">Term->list</numIndex>
+									</numIndex>
+									<numIndex index="1">
+										<numIndex index="0">Character List</numIndex>
+										<numIndex index="1">Term->character</numIndex>
+									</numIndex>
+									<numIndex index="2">
+										<numIndex index="0">Details</numIndex>
+										<numIndex index="1">Term->show</numIndex>
+									</numIndex>
+								</items>
+							</config>
+						</TCEforms>
+					</switchableControllerActions>
+					<settings.detailPage>
+						<TCEforms>
+							<label>Detailpage</label>
+							<displayCond><![CDATA[FIELD:switchableControllerActions:=:Term->list]]></displayCond>
+							<config type="array">
+								<type>input</type>
+								<size>30</size>
+								<max>256</max>
+								<eval>trim</eval>
+								<wizards type="array">
+									<_PADDING type="integer">2</_PADDING>
+									<link type="array">
+										<type>popup</type>
+										<title>Link</title>
+										<icon>link_popup.gif</icon>
+										<script>browse_links.php?mode=wizard</script>
+										<JSopenParams>height=300,width=500,status=0,menubar=0,scrollbars=1</JSopenParams>
+									</link>
+								</wizards>
+							</config>
+						</TCEforms>
+					</settings.detailPage>
+					<settings.characterDetailPage>
+						<TCEforms>
+							<label>Detailpage</label>
+							<displayCond><![CDATA[FIELD:switchableControllerActions:=:Term->character]]></displayCond>
+							<config type="array">
+								<type>input</type>
+								<size>30</size>
+								<max>256</max>
+								<eval>trim</eval>
+								<wizards type="array">
+									<_PADDING type="integer">2</_PADDING>
+									<link type="array">
+										<type>popup</type>
+										<title>Link</title>
+										<icon>link_popup.gif</icon>
+										<script>browse_links.php?mode=wizard</script>
+										<JSopenParams>height=300,width=500,status=0,menubar=0,scrollbars=1</JSopenParams>
+									</link>
+								</wizards>
+							</config>
+						</TCEforms>
+					</settings.characterDetailPage>
+					<settings.listPage>
+						<TCEforms>
+							<label>Listpage</label>
+							<displayCond><![CDATA[FIELD:switchableControllerActions:=:Term->show]]></displayCond>
+							<config type="array">
+								<type>input</type>
+								<size>30</size>
+								<max>256</max>
+								<eval>trim</eval>
+								<wizards type="array">
+									<_PADDING type="integer">2</_PADDING>
+									<link type="array">
+										<type>popup</type>
+										<title>Link</title>
+										<icon>link_popup.gif</icon>
+										<script>browse_links.php?mode=wizard</script>
+										<JSopenParams>height=300,width=500,status=0,menubar=0,scrollbars=1</JSopenParams>
+									</link>
+								</wizards>
+							</config>
+						</TCEforms>
+					</settings.listPage>
+				</el>
+			</ROOT>
+		</sDEF>
+	</sheets>
+</T3DataStructure>

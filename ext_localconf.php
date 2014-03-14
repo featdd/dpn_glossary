@@ -5,20 +5,9 @@ if (!defined('TYPO3_MODE')) {
 
 \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
 	'Dpn.' . $_EXTKEY,
-	'GlossaryMainList',
+	'Glossary',
 	array(
-		'Term' => 'list, show'
-	),
-	// non-cacheable actions
-	array(
-		'Term' => ''
-	)
-);
-\TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
-	'Dpn.' . $_EXTKEY,
-	'GlossaryCharacterList',
-	array(
-		'Term' => 'character, show'
+		'Term' => 'list, character, show'
 	),
 	// non-cacheable actions
 	array(

@@ -48,6 +48,7 @@ class TermController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController 
 	 */
 	public function listAction() {
 		$terms = $this->termRepository->findAll();
+		$this->view->assign('detailPage', $this->settings['detailPage']);
 		$this->view->assign('terms', $terms);
 	}
 
@@ -58,6 +59,7 @@ class TermController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController 
 	 */
 	public function characterAction() {
 		$terms = $this->termRepository->findAllGroupedByFirstCharacter();
+		$this->view->assign('detailPage', $this->settings['characterDetailPage']);
 		$this->view->assign('terms', $terms);
 	}
 
@@ -69,6 +71,7 @@ class TermController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController 
 	 * @return void
 	 */
 	public function showAction(Term $term, $pageUid = NULL) {
+		$this->view->assign('listPage', $this->settings['listPage']);
 		$this->view->assign('pageUid', $pageUid);
 		$this->view->assign('term', $term);
 	}

@@ -5,7 +5,7 @@
         <f:for each="{terms}" as="groupTerms" key="firstChar">
             <dt>{firstChar}</dt>
             <f:for each="{groupTerms}" as="term" iteration="itemIteration">
-                <dd><f:link.action action="show" arguments="{term: term}">{term.name}</f:link.action></dd>
+                <dd><f:link.action action="show" pageUid="{detailPage}" arguments="{term: term}">{term.name}</f:link.action></dd>
             </f:for>
         </f:for>
     </dl>

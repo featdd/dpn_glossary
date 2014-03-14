@@ -3,7 +3,7 @@
 <div>
     <dl>
         <f:for each="{terms}" as="term">
-            <dt><f:link.action action="show" arguments="{term: term}">{term.name}</f:link.action></dt>
+            <dt><f:link.action action="show" pageUid="{detailPage}" arguments="{term: term}">{term.name}</f:link.action></dt>
             <dd>{term.description}</dd>
         </f:for>
     </dl>

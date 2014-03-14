@@ -34,7 +34,7 @@ plugin.tx_dpnglossary {
 						if.value = 0
 						if.isGreaterThan < plugin.tx_dpnglossary.settings.detailsPid
 					}
-					additionalParams = &tx_dpnglossary_glossarymainlist[term]={field:uid}&tx_dpnglossary_glossarymainlist[action]=show&tx_dpnglossary_glossarymainlist[controller]=Term&tx_dpnglossary_glossarymainlist[pageUid]={ global : TSFE | id}
+					additionalParams = &tx_dpnglossary_glossary[controller]=Term&tx_dpnglossary_glossary[action]=show&tx_dpnglossary_glossary[term]={field:uid}&tx_dpnglossary_glossary[pageUid]={ global : TSFE | id}
 					additionalParams {
 						insertData = 1
 						if.value = 0
