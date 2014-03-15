@@ -132,8 +132,8 @@ class WrapperService implements SingletonInterface {
 		$terms = $this->termRepository->findAll();
 		//Search whole content for Terms and replace them
 		foreach ($terms as $term) {
-			if (1 === preg_match('#\b' . $term->getName() . '\b#i', $text)) {
-				$text = preg_replace('#\b' . $term->getName() . '\b#i', $this->termWrapper($term), $text, $this->maxReplacementPerPage);
+			if (1 === preg_match('#(\b' . $term->getName() . '\b)(?!<\/a)#i', $text)) {
+				$text = preg_replace('#(\b' . $term->getName() . '\b)(?!<\/a)#i', $this->termWrapper($term), $text, $this->maxReplacementPerPage);
 			}
 		}
 		return $text;
