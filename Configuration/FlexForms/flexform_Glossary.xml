@@ -16,7 +16,7 @@
 							<onChange>reload</onChange>
 							<config>
 								<type>select</type>
-								<default>News->list</default>
+								<default>Term->list</default>
 								<items>
 									<numIndex index="0">
 										<numIndex index="0">List</numIndex>
