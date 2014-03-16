@@ -98,7 +98,7 @@ class WrapperService implements SingletonInterface {
 			//Create new DOMDocument
 			$DOM = new \DOMDocument();
 			//Load Page HTML in DOM
-			$DOM->loadHTML($GLOBALS['TSFE']->content);
+			$DOM->loadHTML(utf8_decode($GLOBALS['TSFE']->content));
 			$DOM->preserveWhiteSpace = false;
 			/** @var \DOMElement $DOMBody */
 			$DOMBody = $DOM->getElementsByTagName('body')->item(0);
@@ -120,7 +120,7 @@ class WrapperService implements SingletonInterface {
 	 */
 	protected function nodeReplacer(\DOMNode $DOMTag) {
 		$tempDOM = new \DOMDocument();
-		$tempDOM->loadHTML($this->textParser($DOMTag->ownerDocument->saveHTML($DOMTag)));
+		$tempDOM->loadHTML(utf8_decode($this->textParser($DOMTag->ownerDocument->saveHTML($DOMTag))));
 		$DOMTag->parentNode->replaceChild($DOMTag->ownerDocument->importNode($tempDOM->getElementsByTagName('body')->item(0)->childNodes->item(0), TRUE), $DOMTag);
 	}
 
