@@ -4,7 +4,7 @@ namespace Dpn\DpnGlossary\Controller;
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2013 Daniel Dorndorf <dorndorf@dreipunktnull.com>, Dreipunktnull
+ *  (c) 2014 Daniel Dorndorf <dorndorf@dreipunktnull.com>, Dreipunktnull
  *
  *  All rights reserved
  *
@@ -25,6 +25,7 @@ namespace Dpn\DpnGlossary\Controller;
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 use Dpn\DpnGlossary\Domain\Model\Term;
+use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 
 /**
  *
@@ -33,7 +34,7 @@ use Dpn\DpnGlossary\Domain\Model\Term;
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  *
  */
-class TermController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController {
+class TermController extends ActionController {
 
 	/**
 	 * @var \Dpn\DpnGlossary\Domain\Repository\TermRepository
@@ -70,7 +71,7 @@ class TermController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController 
 	 * @return void
 	 */
 	public function showAction(Term $term) {
-		if(TRUE == $this->request->hasArgument('pageUid')) {
+		if(TRUE === $this->request->hasArgument('pageUid')) {
 			$pageUid = $this->request->getArgument('pageUid');
 			$this->view->assign('pageUid', $pageUid);
 		}

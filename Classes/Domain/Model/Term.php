@@ -4,7 +4,7 @@ namespace Dpn\DpnGlossary\Domain\Model;
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2013 Daniel Dorndorf <dorndorf@dreipunktnull.com>, Dreipunktnull
+ *  (c) 2014 Daniel Dorndorf <dorndorf@dreipunktnull.com>, Dreipunktnull
  *  
  *  All rights reserved
  *
@@ -24,7 +24,9 @@ namespace Dpn\DpnGlossary\Domain\Model;
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
-
+use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
+use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
+use TYPO3\CMS\Extbase\Domain\Model\FileReference;
 /**
  *
  *
@@ -32,7 +34,7 @@ namespace Dpn\DpnGlossary\Domain\Model;
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  *
  */
-class Term extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
+class Term extends AbstractEntity {
 
 	/**
 	 * name of the term
@@ -91,7 +93,7 @@ class Term extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
 	 * @param \TYPO3\CMS\Extbase\Domain\Model\FileReference $image
 	 * @return void
 	 */
-	public function addImage(\TYPO3\CMS\Extbase\Domain\Model\FileReference $image) {
+	public function addImage(FileReference $image) {
 		$this->images->attach($image);
 	}
 
@@ -101,7 +103,7 @@ class Term extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
 	 * @param \TYPO3\CMS\Extbase\Domain\Model\FileReference $imageToRemove The FileReference to be removed
 	 * @return void
 	 */
-	public function removeImage(\TYPO3\CMS\Extbase\Domain\Model\FileReference $imageToRemove) {
+	public function removeImage(FileReference $imageToRemove) {
 		$this->images->detach($imageToRemove);
 	}
 
@@ -120,7 +122,7 @@ class Term extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
 	 * @param \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\TYPO3\CMS\Extbase\Domain\Model\FileReference> $images
 	 * @return void
 	 */
-	public function setImages(\TYPO3\CMS\Extbase\Persistence\ObjectStorage $images) {
+	public function setImages(ObjectStorage $images) {
 		$this->images = $images;
 	}
 

@@ -167,5 +167,3 @@ $TCA['tx_dpnglossary_domain_model_term'] = array(
 		),
 	),
 );
-
-?>

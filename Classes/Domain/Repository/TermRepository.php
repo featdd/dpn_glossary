@@ -4,7 +4,7 @@ namespace Dpn\DpnGlossary\Domain\Repository;
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2013 Daniel Dorndorf <dorndorf@dreipunktnull.com>, dreipunktnull
+ *  (c) 2014 Daniel Dorndorf <dorndorf@dreipunktnull.com>, dreipunktnull
  *
  *  All rights reserved
  *
@@ -26,13 +26,14 @@ namespace Dpn\DpnGlossary\Domain\Repository;
  ***************************************************************/
 use Dpn\DpnGlossary\Domain\Model\Term;
 use TYPO3\CMS\Extbase\Persistence\QueryInterface;
+use TYPO3\CMS\Extbase\Persistence\Repository;
 
 /**
  *
  * @package dpn_glossary
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  */
-class TermRepository extends \TYPO3\CMS\Extbase\Persistence\Repository {
+class TermRepository extends Repository {
 
 	/**
 	 * find all terms ordered by name

@@ -1,6 +1,3 @@
-#
-# Table structure for table 'tx_dpnglossary_domain_model_term'
-#
 CREATE TABLE tx_dpnglossary_domain_model_term (
 
 	uid int(11) NOT NULL auto_increment,

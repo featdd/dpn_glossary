@@ -4,7 +4,7 @@ namespace Dpn\DpnGlossary\Service;
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2013 Daniel Dorndorf <dorndorf@dreipunktnull.com>, Dreipunktnull
+ *  (c) 2014 Daniel Dorndorf <dorndorf@dreipunktnull.com>, Dreipunktnull
  *
  *  All rights reserved
  *
@@ -30,6 +30,8 @@ use Dpn\DpnGlossary\Domain\Repository\TermRepository;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Utility\ArrayUtility;
 use TYPO3\CMS\Core\SingletonInterface;
+use TYPO3\CMS\Extbase\Object\ObjectManager;
+use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
 
 /**
  *
@@ -62,7 +64,7 @@ class WrapperService implements SingletonInterface {
 	 * @return void
 	 */
 	public function contentParser() {
-		if (FALSE === $this->objectManager instanceof \TYPO3\CMS\Extbase\Object\ObjectManager) {
+		if (FALSE === $this->objectManager instanceof ObjectManager) {
 			// Make instance of Object Manager
 			$objectManager = GeneralUtility::makeInstance('TYPO3\CMS\Extbase\Object\ObjectManager');
 			// Get Configuration Manager
@@ -74,7 +76,7 @@ class WrapperService implements SingletonInterface {
 			// Get termRepository
 			$this->termRepository = $objectManager->get('Dpn\DpnGlossary\Domain\Repository\TermRepository');
 			// Get Typoscript Configuration
-			$this->tsConfig = $configurationManager->getConfiguration(\TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface::CONFIGURATION_TYPE_FULL_TYPOSCRIPT);
+			$this->tsConfig = $configurationManager->getConfiguration(ConfigurationManagerInterface::CONFIGURATION_TYPE_FULL_TYPOSCRIPT);
 			// Reduce TS config to plugin
 			$this->tsConfig = $this->tsConfig['plugin.']['tx_dpnglossary.'];
 			// Set StoragePid in the query settings object
