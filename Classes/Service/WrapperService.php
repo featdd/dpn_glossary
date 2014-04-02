@@ -122,20 +122,40 @@ class WrapperService implements SingletonInterface {
 	 */
 	protected function nodeReplacer(\DOMNode $DOMTag) {
 		$tempDOM = new \DOMDocument();
-		$tempDOM->loadHTML(utf8_decode($this->textParser($DOMTag->ownerDocument->saveHTML($DOMTag))));
+		$tempDOM->loadHTML(utf8_decode($this->htmlTagParser($DOMTag->ownerDocument->saveHTML($DOMTag))));
 		$DOMTag->parentNode->replaceChild($DOMTag->ownerDocument->importNode($tempDOM->getElementsByTagName('body')->item(0)->childNodes->item(0), TRUE), $DOMTag);
 	}
 
 	/**
-	 * @param string
+	 * @param string $html
+	 * @return string
+	 */
+	protected function htmlTagParser($html) {
+
+		//Start of content to be parsed
+		$start = stripos($html, '>') + 1;
+		//End of content to be parsed
+		$end = strripos($html, '<');
+		//Length of the content
+		$length = stripos($html, '<', $start) - $start;
+		//Paste everything between to textparser
+		$parsed = $this->textParser(substr($html, $start, $length));
+		//Replacing with parsed content
+		$html = substr_replace($html, $parsed, $start, $length);
+
+		return $html;
+	}
+
+	/**
+	 * @param string $text
 	 * @return string
 	 */
 	protected function textParser($text) {
 		$terms = $this->termRepository->findAll();
 		//Search whole content for Terms and replace them
 		foreach ($terms as $term) {
-			if (1 === preg_match('#(\b' . $term->getName() . '\b)(?!<\/a)#i', $text)) {
-				$text = preg_replace('#(\b' . $term->getName() . '\b)(?!<\/a)#i', $this->termWrapper($term), $text, $this->maxReplacementPerPage);
+			if (1 === preg_match('#(\b' . $term->getName() . '\b)#i', $text)) {
+				$text = preg_replace('#(\b' . $term->getName() . '\b)#i', $this->termWrapper($term), $text, $this->maxReplacementPerPage);
 			}
 		}
 		return $text;
