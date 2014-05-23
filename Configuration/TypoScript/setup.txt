@@ -44,8 +44,8 @@ plugin.tx_dpnglossary {
 					useCacheHash = 1
 				}
 			}
-			abbrevation < .default
-			abbrevation {
+			abbreviation < .default
+			abbreviation {
 				dataWrap = <abbr title="{field:tooltiptext}" lang="{field:term_lang}">|</abbr>
 			}
 			acronym < .default

@@ -30,7 +30,7 @@ plugin.tx_dpnglossary {
             acronym {
                 datawrap = <acronym title="{field:tooltiptext}" lang="{field:term_lang}">|</acronym>
             }
-            abbrevation {
+            abbreviation {
                 dataWrap = <abbr title="{field:tooltiptext}" lang="{field:term_lang}">|</abbr>
             }
             acronym {
