@@ -100,7 +100,9 @@ class WrapperService implements SingletonInterface {
 			//Create new DOMDocument
 			$DOM = new \DOMDocument();
 			//Load Page HTML in DOM
+			libxml_use_internal_errors(true);
 			$DOM->loadHTML(utf8_decode($GLOBALS['TSFE']->content));
+			libxml_use_internal_errors(false);
 			$DOM->preserveWhiteSpace = false;
 			/** @var \DOMElement $DOMBody */
 			$DOMBody = $DOM->getElementsByTagName('body')->item(0);
@@ -122,7 +124,9 @@ class WrapperService implements SingletonInterface {
 	 */
 	protected function nodeReplacer(\DOMNode $DOMTag) {
 		$tempDOM = new \DOMDocument();
+		libxml_use_internal_errors(true);
 		$tempDOM->loadHTML(utf8_decode($this->htmlTagParser($DOMTag->ownerDocument->saveHTML($DOMTag))));
+		libxml_use_internal_errors(false);
 		$DOMTag->parentNode->replaceChild($DOMTag->ownerDocument->importNode($tempDOM->getElementsByTagName('body')->item(0)->childNodes->item(0), TRUE), $DOMTag);
 	}
 
@@ -153,6 +157,7 @@ class WrapperService implements SingletonInterface {
 	protected function textParser($text) {
 		$terms = $this->termRepository->findAll();
 		//Search whole content for Terms and replace them
+		/** @var Term $term */
 		foreach ($terms as $term) {
 			if (1 === preg_match('#(\b' . $term->getName() . '\b)#i', $text)) {
 				$text = preg_replace('#(\b' . $term->getName() . '\b)#i', $this->termWrapper($term), $text, $this->maxReplacementPerPage);
