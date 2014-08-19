@@ -157,10 +157,9 @@ class WrapperService implements SingletonInterface {
 	protected function textParser($text) {
 		$terms = $this->termRepository->findAll();
 		//Search whole content for Terms and replace them
-		/** @var Term $term */
 		foreach ($terms as $term) {
-			if (1 === preg_match('#(\b' . $term->getName() . '\b)#i', $text)) {
-				$text = preg_replace('#(\b' . $term->getName() . '\b)#i', $this->termWrapper($term), $text, $this->maxReplacementPerPage);
+			if (1 === preg_match('#(\b\s' . $term->getName() . '\s\b)#is', $text)) {
+				$text = preg_replace('#(\b\s' . $term->getName() . '\s\b)#is', ' ' . $this->termWrapper($term) . ' ', $text, $this->maxReplacementPerPage);
 			}
 		}
 		return $text;
