@@ -64,57 +64,59 @@ class WrapperService implements SingletonInterface {
 	 * @return void
 	 */
 	public function contentParser() {
-		if (FALSE === $this->objectManager instanceof ObjectManager) {
-			// Make instance of Object Manager
-			$objectManager = GeneralUtility::makeInstance('TYPO3\CMS\Extbase\Object\ObjectManager');
-			// Get Configuration Manager
-			$configurationManager = $objectManager->get('TYPO3\CMS\Extbase\Configuration\ConfigurationManager');
-			// Inject Content Object Renderer
-			$this->cObj = $objectManager->get('TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer');
-			// Get Query Settings
-			$querySettings = $objectManager->get('TYPO3\CMS\Extbase\Persistence\Generic\QuerySettingsInterface');
-			// Get termRepository
-			$this->termRepository = $objectManager->get('Dpn\DpnGlossary\Domain\Repository\TermRepository');
-			// Get Typoscript Configuration
-			$this->tsConfig = $configurationManager->getConfiguration(ConfigurationManagerInterface::CONFIGURATION_TYPE_FULL_TYPOSCRIPT);
-			// Reduce TS config to plugin
-			$this->tsConfig = $this->tsConfig['plugin.']['tx_dpnglossary.'];
-			// Set StoragePid in the query settings object
-			$querySettings->setStoragePageIds(GeneralUtility::trimExplode(',', $this->tsConfig['persistence.']['storagePid']));
-			// Assign query settings object to repository
-			$this->termRepository->setDefaultQuerySettings($querySettings);
-		}
-
-		if (!isset($this->tsConfig['settings.']['parsingExcludePidList'])) {
-			$this->tsConfig['settings.']['parsingExcludePidList'] = '';
-		}
-
-		$parsingPids = GeneralUtility::trimExplode(',', $this->tsConfig['settings.']['parsingPids']);
-		$excludePids = GeneralUtility::trimExplode(',', $this->tsConfig['settings.']['parsingExcludePidList']);
-
-		if (FALSE === in_array($GLOBALS['TSFE']->id, $excludePids) && (TRUE === in_array($GLOBALS['TSFE']->id, $parsingPids) || TRUE === in_array('0', $parsingPids)) && $GLOBALS['TSFE']->id !== intval($this->tsConfig['settings.']['detailsPid'])) {
-			//Get max number of replacements per page and term
-			$this->maxReplacementPerPage = (int)$this->tsConfig['settings.']['maxReplacementPerPage'];
-			//Get Tags which content should be parsed
-			$tags = GeneralUtility::trimExplode(',', $this->tsConfig['settings.']['parsingTags']);
-			//Create new DOMDocument
-			$DOM = new \DOMDocument();
-			//Load Page HTML in DOM
-			libxml_use_internal_errors(true);
-			$DOM->loadHTML(utf8_decode($GLOBALS['TSFE']->content));
-			libxml_use_internal_errors(false);
-			$DOM->preserveWhiteSpace = false;
-			/** @var \DOMElement $DOMBody */
-			$DOMBody = $DOM->getElementsByTagName('body')->item(0);
-
-			foreach ($tags as $tag) {
-				$DOMTags = $DOMBody->getElementsByTagName($tag);
-				foreach ($DOMTags as $DOMTag) {
-					$this->nodeReplacer($DOMTag);
-				}
+		if (0 === $GLOBALS['TSFE']->type) {
+			if (FALSE === $this->objectManager instanceof ObjectManager) {
+				// Make instance of Object Manager
+				$objectManager = GeneralUtility::makeInstance('TYPO3\CMS\Extbase\Object\ObjectManager');
+				// Get Configuration Manager
+				$configurationManager = $objectManager->get('TYPO3\CMS\Extbase\Configuration\ConfigurationManager');
+				// Inject Content Object Renderer
+				$this->cObj = $objectManager->get('TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer');
+				// Get Query Settings
+				$querySettings = $objectManager->get('TYPO3\CMS\Extbase\Persistence\Generic\QuerySettingsInterface');
+				// Get termRepository
+				$this->termRepository = $objectManager->get('Dpn\DpnGlossary\Domain\Repository\TermRepository');
+				// Get Typoscript Configuration
+				$this->tsConfig = $configurationManager->getConfiguration(ConfigurationManagerInterface::CONFIGURATION_TYPE_FULL_TYPOSCRIPT);
+				// Reduce TS config to plugin
+				$this->tsConfig = $this->tsConfig['plugin.']['tx_dpnglossary.'];
+				// Set StoragePid in the query settings object
+				$querySettings->setStoragePageIds(GeneralUtility::trimExplode(',', $this->tsConfig['persistence.']['storagePid']));
+				// Assign query settings object to repository
+				$this->termRepository->setDefaultQuerySettings($querySettings);
 			}
 
-			$GLOBALS['TSFE']->content = $DOM->saveHTML();
+			if (!isset($this->tsConfig['settings.']['parsingExcludePidList'])) {
+				$this->tsConfig['settings.']['parsingExcludePidList'] = '';
+			}
+
+			$parsingPids = GeneralUtility::trimExplode(',', $this->tsConfig['settings.']['parsingPids']);
+			$excludePids = GeneralUtility::trimExplode(',', $this->tsConfig['settings.']['parsingExcludePidList']);
+
+			if (FALSE === in_array($GLOBALS['TSFE']->id, $excludePids) && (TRUE === in_array($GLOBALS['TSFE']->id, $parsingPids) || TRUE === in_array('0', $parsingPids)) && $GLOBALS['TSFE']->id !== intval($this->tsConfig['settings.']['detailsPid'])) {
+				//Get max number of replacements per page and term
+				$this->maxReplacementPerPage = (int)$this->tsConfig['settings.']['maxReplacementPerPage'];
+				//Get Tags which content should be parsed
+				$tags = GeneralUtility::trimExplode(',', $this->tsConfig['settings.']['parsingTags']);
+				//Create new DOMDocument
+				$DOM = new \DOMDocument();
+				//Load Page HTML in DOM
+				libxml_use_internal_errors(true);
+				$DOM->loadHTML(utf8_decode($GLOBALS['TSFE']->content));
+				libxml_use_internal_errors(false);
+				$DOM->preserveWhiteSpace = false;
+				/** @var \DOMElement $DOMBody */
+				$DOMBody = $DOM->getElementsByTagName('body')->item(0);
+
+				foreach ($tags as $tag) {
+					$DOMTags = $DOMBody->getElementsByTagName($tag);
+					foreach ($DOMTags as $DOMTag) {
+						$this->nodeReplacer($DOMTag);
+					}
+				}
+
+				$GLOBALS['TSFE']->content = $DOM->saveHTML();
+			}
 		}
 	}
 
@@ -158,8 +160,8 @@ class WrapperService implements SingletonInterface {
 		$terms = $this->termRepository->findAll();
 		//Search whole content for Terms and replace them
 		foreach ($terms as $term) {
-			if (1 === preg_match('#(\b\s' . $term->getName() . '\s\b)#is', $text)) {
-				$text = preg_replace('#(\b\s' . $term->getName() . '\s\b)#is', ' ' . $this->termWrapper($term) . ' ', $text, $this->maxReplacementPerPage);
+			if (1 === preg_match('#([\s\>]?)(\b' . $term->getName() . '\b)([\s\<]?)#is', $text)) {
+				$text = preg_replace('#([\s\>]?)(\b' . $term->getName() . '\b)([\s\<]?)#is', ' ' . $this->termWrapper($term) . ' ', $text, $this->maxReplacementPerPage);
 			}
 		}
 		return $text;
