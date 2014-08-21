@@ -80,6 +80,10 @@ class WrapperService implements SingletonInterface {
 				$this->tsConfig = $configurationManager->getConfiguration(ConfigurationManagerInterface::CONFIGURATION_TYPE_FULL_TYPOSCRIPT);
 				// Reduce TS config to plugin
 				$this->tsConfig = $this->tsConfig['plugin.']['tx_dpnglossary.'];
+				// Exit if no termStorage is setted
+				if (TRUE === empty($this->tsConfig['persistence.']['storagePid'])) {
+					return;
+				}
 				// Set StoragePid in the query settings object
 				$querySettings->setStoragePageIds(GeneralUtility::trimExplode(',', $this->tsConfig['persistence.']['storagePid']));
 				// Assign query settings object to repository
@@ -98,6 +102,10 @@ class WrapperService implements SingletonInterface {
 				$this->maxReplacementPerPage = (int)$this->tsConfig['settings.']['maxReplacementPerPage'];
 				//Get Tags which content should be parsed
 				$tags = GeneralUtility::trimExplode(',', $this->tsConfig['settings.']['parsingTags']);
+				// Exit if no Terms were set
+				if (TRUE === empty($tags)) {
+					return;
+				}
 				//Create new DOMDocument
 				$DOM = new \DOMDocument();
 				//Load Page HTML in DOM
@@ -159,6 +167,7 @@ class WrapperService implements SingletonInterface {
 	protected function textParser($text) {
 		$terms = $this->termRepository->findAll();
 		//Search whole content for Terms and replace them
+		/** @var Term $term */
 		foreach ($terms as $term) {
 			if (1 === preg_match('#([\s\>]?)(\b' . $term->getName() . '\b)([\s\<]?)#is', $text)) {
 				$text = preg_replace('#([\s\>]?)(\b' . $term->getName() . '\b)([\s\<]?)#is', ' ' . $this->termWrapper($term) . ' ', $text, $this->maxReplacementPerPage);
