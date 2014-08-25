@@ -169,8 +169,14 @@ class WrapperService implements SingletonInterface {
 		//Search whole content for Terms and replace them
 		/** @var Term $term */
 		foreach ($terms as $term) {
-			if (1 === preg_match('#([\s\>]?)(\b' . preg_quote($term->getName()) . ')([\s\<]?)#is', $text)) {
-				$text = preg_replace('#([\s\>]?)(\b' . preg_quote($term->getName()) . ')([\s\<]?)#is', ' ' . $this->termWrapper($term) . ' ', $text, $this->maxReplacementPerPage);
+			$regex = '#(^|[\s]|[>]|[[:punct:]])(' . preg_quote($term->getName()) . ')($|[\s]|[<]|[[:punct:]])#is';
+			if (1 === preg_match($regex, $text)) {
+				$text = preg_replace_callback(
+					$regex,
+					function($match) use ($term) {
+						return $match[1] . $this->termWrapper($term) . $match[3];
+					},
+					$text, $this->maxReplacementPerPage);
 			}
 		}
 		return $text;
