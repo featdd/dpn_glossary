@@ -151,7 +151,7 @@ class WrapperService implements SingletonInterface {
 		//End of content to be parsed
 		$end = strripos($html, '<');
 		//Length of the content
-		$length = stripos($html, '<', $start) - $start;
+		$length = $end - $start;
 		//Paste everything between to textparser
 		$parsed = $this->textParser(substr($html, $start, $length));
 		//Replacing with parsed content
@@ -169,14 +169,15 @@ class WrapperService implements SingletonInterface {
 		//Search whole content for Terms and replace them
 		/** @var Term $term */
 		foreach ($terms as $term) {
-			$regex = '#(^|[\s]|[>]|[[:punct:]])(' . preg_quote($term->getName()) . ')($|[\s]|[<]|[[:punct:]])#is';
+			$regex = '#(^|[\s\>[:punct:]])(' . preg_quote($term->getName()) . ')($|[\s\<[:punct:]])(?![^<]*>|[^<>]*<\/)#is';
 			if (1 === preg_match($regex, $text)) {
 				$text = preg_replace_callback(
 					$regex,
 					function($match) use ($term) {
 						return $match[1] . $this->termWrapper($term) . $match[3];
 					},
-					$text, $this->maxReplacementPerPage);
+					$text, $this->maxReplacementPerPage
+				);
 			}
 		}
 		return $text;
