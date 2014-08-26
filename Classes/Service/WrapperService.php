@@ -27,11 +27,14 @@ namespace Dpn\DpnGlossary\Service;
 
 use Dpn\DpnGlossary\Domain\Model\Term;
 use Dpn\DpnGlossary\Domain\Repository\TermRepository;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Extbase\Utility\ArrayUtility;
 use TYPO3\CMS\Core\SingletonInterface;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extbase\Persistence\Generic\QuerySettingsInterface;
+use TYPO3\CMS\Extbase\Utility\ArrayUtility;
 use TYPO3\CMS\Extbase\Object\ObjectManager;
+use TYPO3\CMS\Extbase\Configuration\ConfigurationManager;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
+use TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer;
 
 /**
  *
@@ -41,14 +44,19 @@ use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
 class WrapperService implements SingletonInterface {
 
 	/**
-	 * @var \TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer $cObj
+	 * @var ContentObjectRenderer $cObj
 	 */
 	protected $cObj;
 
 	/**
 	 * @var array $tsConfig
 	 */
-	protected  $tsConfig;
+	protected $tsConfig;
+
+	/**
+	 * @var objectManager $objectManager
+	 */
+	protected $objectManager;
 
 	/**
 	 * @var TermRepository $termRepository
@@ -69,10 +77,12 @@ class WrapperService implements SingletonInterface {
 				// Make instance of Object Manager
 				$objectManager = GeneralUtility::makeInstance('TYPO3\CMS\Extbase\Object\ObjectManager');
 				// Get Configuration Manager
+				/** @var ConfigurationManager $configurationManager */
 				$configurationManager = $objectManager->get('TYPO3\CMS\Extbase\Configuration\ConfigurationManager');
 				// Inject Content Object Renderer
 				$this->cObj = $objectManager->get('TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer');
 				// Get Query Settings
+				/** @var QuerySettingsInterface $querySettings */
 				$querySettings = $objectManager->get('TYPO3\CMS\Extbase\Persistence\Generic\QuerySettingsInterface');
 				// Get termRepository
 				$this->termRepository = $objectManager->get('Dpn\DpnGlossary\Domain\Repository\TermRepository');
@@ -108,10 +118,10 @@ class WrapperService implements SingletonInterface {
 				}
 				//Create new DOMDocument
 				$DOM = new \DOMDocument();
-				//Load Page HTML in DOM
+				//Prevent crashes caused by HTML5 entities with internal errors
 				libxml_use_internal_errors(true);
-				$DOM->loadHTML(utf8_decode($GLOBALS['TSFE']->content));
-				libxml_use_internal_errors(false);
+				//Load Page HTML in DOM and check if HTML is valid else abort
+				if (FALSE === $DOM->loadHTML(utf8_decode($GLOBALS['TSFE']->content))) {return;}
 				$DOM->preserveWhiteSpace = false;
 				/** @var \DOMElement $DOMBody */
 				$DOMBody = $DOM->getElementsByTagName('body')->item(0);
@@ -122,8 +132,8 @@ class WrapperService implements SingletonInterface {
 						$this->nodeReplacer($DOMTag);
 					}
 				}
-
-				$GLOBALS['TSFE']->content = $DOM->saveHTML();
+				//Return parsed html with decoded html entities and UTF-8 encoding
+				$GLOBALS['TSFE']->content = html_entity_decode(utf8_encode($DOM->saveHTML()));
 			}
 		}
 	}
@@ -134,9 +144,7 @@ class WrapperService implements SingletonInterface {
 	 */
 	protected function nodeReplacer(\DOMNode $DOMTag) {
 		$tempDOM = new \DOMDocument();
-		libxml_use_internal_errors(true);
 		$tempDOM->loadHTML(utf8_decode($this->htmlTagParser($DOMTag->ownerDocument->saveHTML($DOMTag))));
-		libxml_use_internal_errors(false);
 		$DOMTag->parentNode->replaceChild($DOMTag->ownerDocument->importNode($tempDOM->getElementsByTagName('body')->item(0)->childNodes->item(0), TRUE), $DOMTag);
 	}
 
@@ -145,7 +153,6 @@ class WrapperService implements SingletonInterface {
 	 * @return string
 	 */
 	protected function htmlTagParser($html) {
-
 		//Start of content to be parsed
 		$start = stripos($html, '>') + 1;
 		//End of content to be parsed
