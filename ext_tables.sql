@@ -9,7 +9,7 @@ CREATE TABLE tx_dpnglossary_domain_model_term (
 	name_alternative varchar(255) DEFAULT '' NOT NULL,
 	term_type varchar(255) DEFAULT '' NOT NULL,
 	term_lang char(2) DEFAULT '' NOT NULL,
-	images text NOT NULL,
+	images int(11) unsigned DEFAULT '0',
 
 	tstamp int(11) unsigned DEFAULT '0' NOT NULL,
 	crdate int(11) unsigned DEFAULT '0' NOT NULL,

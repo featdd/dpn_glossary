@@ -15,7 +15,7 @@
             <dd>
                 <f:translate key="tx_dpnglossary_domain_model_term.images" />:<br/>
                 <f:for each="{term.images}" as="image">
-                    <a href="{f:uri.image(src:'{image.image.originalResource.originalFile}')}" title="{image.title}" rel="lightbox[t{term.uid}]"><f:image src="{image.image.originalResource.originalFile.uid}" width="150" height="150" alt="{term.title}" treatIdAsReference="TRUE" /></a>
+                    <a href="{f:uri.image(src:'{image.originalResource.publicUrl}')}" title="{image.title}" rel="lightbox[t{term.uid}]"><f:image src="{image.uid}" width="150" height="150" alt="{term.title}" treatIdAsReference="TRUE" /></a>
                 </f:for>
             </dd>
         </f:if>

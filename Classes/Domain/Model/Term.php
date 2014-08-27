@@ -24,9 +24,11 @@ namespace Dpn\DpnGlossary\Domain\Model;
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
+
 use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
 use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
 use TYPO3\CMS\Extbase\Domain\Model\FileReference;
+
 /**
  *
  *
@@ -88,6 +90,15 @@ class Term extends AbstractEntity {
 	protected $images;
 
 	/**
+	 * sets the Images
+	 * @param \TYPO3\CMS\Extbase\Persistence\ObjectStorage $images
+	 * @return void
+	 */
+	public function setImages($images) {
+		$this->images = $images;
+	}
+
+	/**
 	 * Adds a FileReference
 	 *
 	 * @param \TYPO3\CMS\Extbase\Domain\Model\FileReference $image
@@ -100,30 +111,19 @@ class Term extends AbstractEntity {
 	/**
 	 * Removes a FileReference
 	 *
-	 * @param \TYPO3\CMS\Extbase\Domain\Model\FileReference $imageToRemove The FileReference to be removed
+	 * @param \TYPO3\CMS\Extbase\Domain\Model\FileReference $image
 	 * @return void
 	 */
-	public function removeImage(FileReference $imageToRemove) {
-		$this->images->detach($imageToRemove);
+	public function removeImage(FileReference $image) {
+		$this->images->detach($image);
 	}
 
 	/**
-	 * Returns the images
-	 *
-	 * @return \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\TYPO3\CMS\Extbase\Domain\Model\FileReference> $images
+	 * get the Images
+	 * @return \TYPO3\CMS\Extbase\Persistence\ObjectStorage
 	 */
 	public function getImages() {
 		return $this->images;
-	}
-
-	/**
-	 * Sets the images
-	 *
-	 * @param \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\TYPO3\CMS\Extbase\Domain\Model\FileReference> $images
-	 * @return void
-	 */
-	public function setImages(ObjectStorage $images) {
-		$this->images = $images;
 	}
 
 	/**
