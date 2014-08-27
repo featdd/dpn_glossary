@@ -144,7 +144,13 @@ class WrapperService implements SingletonInterface {
 	 */
 	protected function nodeReplacer(\DOMNode $DOMTag) {
 		$tempDOM = new \DOMDocument();
-		$tempDOM->loadHTML(utf8_decode($this->htmlTagParser($DOMTag->ownerDocument->saveHTML($DOMTag))));
+		$tempDOM->loadHTML(
+			utf8_decode(
+				$this->htmlTagParser(
+					$DOMTag->ownerDocument->saveHTML($DOMTag)
+				)
+			)
+		);
 		$DOMTag->parentNode->replaceChild($DOMTag->ownerDocument->importNode($tempDOM->getElementsByTagName('body')->item(0)->childNodes->item(0), TRUE), $DOMTag);
 	}
 
@@ -181,6 +187,8 @@ class WrapperService implements SingletonInterface {
 				$text = preg_replace_callback(
 					$regex,
 					function($match) use ($term) {
+						// Use term match to keep lowercase etc.
+						$term->setName($match[2]);
 						return $match[1] . $this->termWrapper($term) . $match[3];
 					},
 					$text, $this->maxReplacementPerPage
