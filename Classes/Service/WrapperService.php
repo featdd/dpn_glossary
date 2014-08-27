@@ -121,7 +121,7 @@ class WrapperService implements SingletonInterface {
 				//Prevent crashes caused by HTML5 entities with internal errors
 				libxml_use_internal_errors(true);
 				//Load Page HTML in DOM and check if HTML is valid else abort
-				if (FALSE === $DOM->loadHTML(utf8_decode($GLOBALS['TSFE']->content))) {return;}
+				if (FALSE === $DOM->loadHTML('<?xml encoding="UTF-8">' . $GLOBALS['TSFE']->content)) {return;}
 				$DOM->preserveWhiteSpace = false;
 				/** @var \DOMElement $DOMBody */
 				$DOMBody = $DOM->getElementsByTagName('body')->item(0);
@@ -133,7 +133,7 @@ class WrapperService implements SingletonInterface {
 					}
 				}
 				//Return parsed html with decoded html entities and UTF-8 encoding
-				$GLOBALS['TSFE']->content = html_entity_decode(utf8_encode($DOM->saveHTML()));
+				$GLOBALS['TSFE']->content = html_entity_decode(str_replace('<?xml encoding="UTF-8">', '', $DOM->saveHTML()));
 			}
 		}
 	}
@@ -145,10 +145,9 @@ class WrapperService implements SingletonInterface {
 	protected function nodeReplacer(\DOMNode $DOMTag) {
 		$tempDOM = new \DOMDocument();
 		$tempDOM->loadHTML(
-			utf8_decode(
-				$this->htmlTagParser(
-					$DOMTag->ownerDocument->saveHTML($DOMTag)
-				)
+			'<?xml encoding="UTF-8">' .
+			$this->htmlTagParser(
+				$DOMTag->ownerDocument->saveHTML($DOMTag)
 			)
 		);
 		$DOMTag->parentNode->replaceChild($DOMTag->ownerDocument->importNode($tempDOM->getElementsByTagName('body')->item(0)->childNodes->item(0), TRUE), $DOMTag);
