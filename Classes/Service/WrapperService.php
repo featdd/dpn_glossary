@@ -54,11 +54,6 @@ class WrapperService implements SingletonInterface {
 	protected $tsConfig;
 
 	/**
-	 * @var objectManager $objectManager
-	 */
-	protected $objectManager;
-
-	/**
 	 * @var TermRepository $termRepository
 	 */
 	protected $termRepository;
@@ -69,48 +64,51 @@ class WrapperService implements SingletonInterface {
 	protected $maxReplacementPerPage;
 
 	/**
+	 * Main function called by hook 'contentPostProc-all'
+	 * Boots up:
+	 *  - objectManager to get class instances
+	 *  - configuration manager for ts settings
+	 *  - contentObjectRenderer for generating links etc.
+	 *  - termRepository to get the Terms
+	 *
 	 * @return void
 	 */
 	public function contentParser() {
 		if (0 === $GLOBALS['TSFE']->type) {
-			if (FALSE === $this->objectManager instanceof ObjectManager) {
-				// Make instance of Object Manager
-				$objectManager = GeneralUtility::makeInstance('TYPO3\CMS\Extbase\Object\ObjectManager');
-				// Get Configuration Manager
-				/** @var ConfigurationManager $configurationManager */
-				$configurationManager = $objectManager->get('TYPO3\CMS\Extbase\Configuration\ConfigurationManager');
-				// Inject Content Object Renderer
-				$this->cObj = $objectManager->get('TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer');
-				// Get Query Settings
-				/** @var QuerySettingsInterface $querySettings */
-				$querySettings = $objectManager->get('TYPO3\CMS\Extbase\Persistence\Generic\QuerySettingsInterface');
-				// Get termRepository
-				$this->termRepository = $objectManager->get('Dpn\DpnGlossary\Domain\Repository\TermRepository');
-				// Get Typoscript Configuration
-				$this->tsConfig = $configurationManager->getConfiguration(ConfigurationManagerInterface::CONFIGURATION_TYPE_FULL_TYPOSCRIPT);
-				// Reduce TS config to plugin
-				$this->tsConfig = $this->tsConfig['plugin.']['tx_dpnglossary.'];
-				// Exit if no termStorage is setted
-				if (TRUE === empty($this->tsConfig['persistence.']['storagePid'])) {
-					return;
-				}
-				// Set StoragePid in the query settings object
-				$querySettings->setStoragePageIds(GeneralUtility::trimExplode(',', $this->tsConfig['persistence.']['storagePid']));
-				// Assign query settings object to repository
-				$this->termRepository->setDefaultQuerySettings($querySettings);
+			// Make instance of Object Manager
+			$objectManager = GeneralUtility::makeInstance('TYPO3\CMS\Extbase\Object\ObjectManager');
+			// Get Configuration Manager
+			/** @var ConfigurationManager $configurationManager */
+			$configurationManager = $objectManager->get('TYPO3\CMS\Extbase\Configuration\ConfigurationManager');
+			// Inject Content Object Renderer
+			$this->cObj = $objectManager->get('TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer');
+			// Get Query Settings
+			/** @var QuerySettingsInterface $querySettings */
+			$querySettings = $objectManager->get('TYPO3\CMS\Extbase\Persistence\Generic\QuerySettingsInterface');
+			// Get termRepository
+			$this->termRepository = $objectManager->get('Dpn\DpnGlossary\Domain\Repository\TermRepository');
+			// Get Typoscript Configuration
+			$this->tsConfig = $configurationManager->getConfiguration(ConfigurationManagerInterface::CONFIGURATION_TYPE_FULL_TYPOSCRIPT);
+			// Reduce TS config to plugin
+			$this->tsConfig = $this->tsConfig['plugin.']['tx_dpnglossary.'];
+			// Exit if no termStorage is setted
+			if (TRUE === empty($this->tsConfig['persistence.']['storagePid'])) {
+				return;
 			}
-
-			if (!isset($this->tsConfig['settings.']['parsingExcludePidList'])) {
-				$this->tsConfig['settings.']['parsingExcludePidList'] = '';
-			}
-
+			// Set StoragePid in the query settings object
+			$querySettings->setStoragePageIds(GeneralUtility::trimExplode(',', $this->tsConfig['persistence.']['storagePid']));
+			// Assign query settings object to repository
+			$this->termRepository->setDefaultQuerySettings($querySettings);
+			// extract Pids which should be parsed
 			$parsingPids = GeneralUtility::trimExplode(',', $this->tsConfig['settings.']['parsingPids']);
+			// extract Pids which should NOT be parsed
 			$excludePids = GeneralUtility::trimExplode(',', $this->tsConfig['settings.']['parsingExcludePidList']);
 
+			//Check if current page is in- or excluded nor the detailpage of the glossary plugin
 			if (FALSE === in_array($GLOBALS['TSFE']->id, $excludePids) && (TRUE === in_array($GLOBALS['TSFE']->id, $parsingPids) || TRUE === in_array('0', $parsingPids)) && $GLOBALS['TSFE']->id !== intval($this->tsConfig['settings.']['detailsPid'])) {
-				//Get max number of replacements per page and term
+				// Get max number of replacements per page and term
 				$this->maxReplacementPerPage = (int)$this->tsConfig['settings.']['maxReplacementPerPage'];
-				//Get Tags which content should be parsed
+				// Get Tags which content should be parsed
 				$tags = GeneralUtility::trimExplode(',', $this->tsConfig['settings.']['parsingTags']);
 				// Exit if no Terms were set
 				if (TRUE === empty($tags)) {
@@ -118,75 +116,129 @@ class WrapperService implements SingletonInterface {
 				}
 				//Create new DOMDocument
 				$DOM = new \DOMDocument();
-				//Prevent crashes caused by HTML5 entities with internal errors
+				// Prevent crashes caused by HTML5 entities with internal errors
 				libxml_use_internal_errors(true);
-				//Load Page HTML in DOM and check if HTML is valid else abort
+				// Load Page HTML in DOM and check if HTML is valid else abort
+				// use XHTML tag for avoiding UTF-8 encoding problems
 				if (FALSE === $DOM->loadHTML('<?xml encoding="UTF-8">' . $GLOBALS['TSFE']->content)) {return;}
 				$DOM->preserveWhiteSpace = false;
 				/** @var \DOMElement $DOMBody */
 				$DOMBody = $DOM->getElementsByTagName('body')->item(0);
-
+				// iterate over tags which are defined to be parsed
 				foreach ($tags as $tag) {
+					// extract the tags
 					$DOMTags = $DOMBody->getElementsByTagName($tag);
+					// call the nodereplacer for each node to parse its content
 					foreach ($DOMTags as $DOMTag) {
 						$this->nodeReplacer($DOMTag);
 					}
 				}
-				//Return parsed html with decoded html entities and UTF-8 encoding
-				$GLOBALS['TSFE']->content = html_entity_decode(str_replace('<?xml encoding="UTF-8">', '', $DOM->saveHTML()));
+				// set the parsed html page and remove XHTML tag which is not needed anymore
+				$GLOBALS['TSFE']->content = str_replace('<?xml encoding="UTF-8">', '', $DOM->saveHTML());
 			}
 		}
 	}
 
 	/**
+	 * Extract the DOMNodes html and
+	 * replace it with the parsed html
+	 * injected in a temp DOMDocument
+	 *
 	 * @param \DOMNode $DOMTag
 	 * @return void
 	 */
 	protected function nodeReplacer(\DOMNode $DOMTag) {
 		$tempDOM = new \DOMDocument();
+		// use XHTML tag for avoiding UTF-8 encoding problems
 		$tempDOM->loadHTML(
 			'<?xml encoding="UTF-8">' .
 			$this->htmlTagParser(
 				$DOMTag->ownerDocument->saveHTML($DOMTag)
 			)
 		);
-		$DOMTag->parentNode->replaceChild($DOMTag->ownerDocument->importNode($tempDOM->getElementsByTagName('body')->item(0)->childNodes->item(0), TRUE), $DOMTag);
+		// Replaces the original Node with the
+		// new node containing the parsed content
+		$DOMTag->parentNode->replaceChild(
+			$DOMTag
+				->ownerDocument
+				->importNode(
+					$tempDOM
+						->getElementsByTagName('body')
+						->item(0)->childNodes
+						->item(0),
+					TRUE
+				),
+			$DOMTag
+		);
 	}
 
 	/**
+	 * Extracts and replaces the
+	 * inner content of the html tag
+	 *
 	 * @param string $html
 	 * @return string
 	 */
 	protected function htmlTagParser($html) {
-		//Start of content to be parsed
+		// Start of content to be parsed
 		$start = stripos($html, '>') + 1;
-		//End of content to be parsed
+		// End of content to be parsed
 		$end = strripos($html, '<');
-		//Length of the content
+		// Length of the content
 		$length = $end - $start;
-		//Paste everything between to textparser
+		// Paste everything between to textparser
 		$parsed = $this->textParser(substr($html, $start, $length));
-		//Replacing with parsed content
+		// Replacing with parsed content
 		$html = substr_replace($html, $parsed, $start, $length);
 
 		return $html;
 	}
 
 	/**
+	 * Parse the extracted html for terms with a regex
+	 *
 	 * @param string $text
 	 * @return string
 	 */
 	protected function textParser($text) {
 		$terms = $this->termRepository->findAll();
-		//Search whole content for Terms and replace them
+		// Iterate over terms and search matches for each of them
 		/** @var Term $term */
 		foreach ($terms as $term) {
-			$regex = '#(^|[\s\>[:punct:]])(' . preg_quote($term->getName()) . ')($|[\s\<[:punct:]])(?![^<]*>|[^<>]*<\/)#is';
+			/*
+			 * Regex Explanation:
+			 * Group 1: (^|[\s\>[:punct:]])
+			 *  ^         = can be begin of the string
+			 *  \s        = can have space before term
+			 *  \>        = can have a > before term (end of some tag)
+			 *  [:punct:] = can have punctuation characters like .,?!& etc. before term
+			 *
+			 * Group 2: (' . preg_quote($term->getName()) . ')
+			 *  The term to find, preg_quote() escapes special chars
+			 *
+			 * Group 3: ($|[\s\<[:punct:]])
+			 *  Same as Group 1 but with end of string and < (start of some tag)
+			 *
+			 * Group 4: (?![^<]*>|[^<>]*<\/)
+			 *  This Group protects any children element of the tag which should be parsed
+			 *  ?!        = negative lookahead
+			 *  [^<]*>    = match is between < & > and some other character
+			 *              avoids parsing terms in self closing tags
+			 *              example: <TERM> will work <TERM > not
+			 *  [^<>]*<\/ = match is between some tag and tag ending
+			 *              example: < or >TERM</>
+			 *
+			 * Flags:
+			 * i = ignores camel case
+			 */
+			$regex = '#(^|[\s\>[:punct:]])(' . preg_quote($term->getName()) . ')($|[\s\<[:punct:]])(?![^<]*>|[^<>]*<\/)#i';
+			// Only call replace function if there are any matches
 			if (1 === preg_match($regex, $text)) {
+				// Use callback to keep allowed chars around the term and his camel case
 				$text = preg_replace_callback(
 					$regex,
 					function($match) use ($term) {
-						// Use term match to keep lowercase etc.
+						// Use term match to keep original camel case
 						$term->setName($match[2]);
 						return $match[1] . $this->termWrapper($term) . $match[3];
 					},
@@ -198,6 +250,8 @@ class WrapperService implements SingletonInterface {
 	}
 
 	/**
+	 * Renders the wrapped term using the plugin settings
+	 *
 	 * @param \Dpn\DpnGlossary\Domain\Model\Term
 	 * @return string
 	 */
