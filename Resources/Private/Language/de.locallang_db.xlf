@@ -32,8 +32,8 @@
 				<source>Acronym (e.g. NATO)</source>
 				<target>Kurzwort aus Anfangsbuchstaben (Beispiel: NATO)</target>
 			</trans-unit>
-			<trans-unit id="tx_dpnglossary_domain_model_term.term_type_abbrevation">
-				<source>Abbrevation (e.t.c.)</source>
+			<trans-unit id="tx_dpnglossary_domain_model_term.term_type_abbreviation">
+				<source>Abbreviation (e.t.c.)</source>
 				<target>Abkürzung (Beispiel: u.s.w.)</target>
 			</trans-unit>
 			<trans-unit id="tx_dpnglossary_domain_model_term.term_type_definition">

@@ -25,8 +25,8 @@
 			<trans-unit id="tx_dpnglossary_domain_model_term.term_type_acronym">
 				<source>Acronym (e.g. NATO)</source>
 			</trans-unit>
-			<trans-unit id="tx_dpnglossary_domain_model_term.term_type_abbrevation">
-				<source>Abbrevation (e.t.c.)</source>
+			<trans-unit id="tx_dpnglossary_domain_model_term.term_type_abbreviation">
+				<source>Abbreviation (e.t.c.)</source>
 			</trans-unit>
 			<trans-unit id="tx_dpnglossary_domain_model_term.term_type_definition">
 				<source>Definition</source>

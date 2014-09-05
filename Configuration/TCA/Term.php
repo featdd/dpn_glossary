@@ -138,7 +138,7 @@ $TCA['tx_dpnglossary_domain_model_term'] = array(
 				'items' => array(
 					array('LLL:EXT:dpn_glossary/Resources/Private/Language/locallang_db.xlf:tx_dpnglossary_domain_model_term.term_type_none', ''),
 					array('LLL:EXT:dpn_glossary/Resources/Private/Language/locallang_db.xlf:tx_dpnglossary_domain_model_term.term_type_definition', 'definition'),
-					array('LLL:EXT:dpn_glossary/Resources/Private/Language/locallang_db.xlf:tx_dpnglossary_domain_model_term.term_type_abbrevation', 'abbrevation'),
+					array('LLL:EXT:dpn_glossary/Resources/Private/Language/locallang_db.xlf:tx_dpnglossary_domain_model_term.term_type_abbreviation', 'abbreviation'),
 					array('LLL:EXT:dpn_glossary/Resources/Private/Language/locallang_db.xlf:tx_dpnglossary_domain_model_term.term_type_acronym', 'acronym'),
 				),
 				'default' => ''
