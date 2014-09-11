@@ -57,6 +57,12 @@
             <trans-unit id="tx_dpnglossary.backtolist">
             	<source>Back to list</source>
             </trans-unit>
+			<trans-unit id="tx_dpnglossary.wizard_title">
+				<source>Dreipunktnull Glossary</source>
+			</trans-unit>
+			<trans-unit id="tx_dpnglossary.wizard_description">
+				<source>Glossary plugin for the output of the terms</source>
+			</trans-unit>
 			
 		</body>
 	</file>

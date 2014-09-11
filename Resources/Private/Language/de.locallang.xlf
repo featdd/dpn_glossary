@@ -73,6 +73,14 @@
                 <source>Back to list</source>
                 <target>Zurück zur Liste</target>
             </trans-unit>
+			<trans-unit id="tx_dpnglossary.wizard_title">
+				<source>Dreipunktnull Glossary</source>
+				<target>Dreipunktnull Glossar</target>
+			</trans-unit>
+			<trans-unit id="tx_dpnglossary.wizard_description">
+				<source>Glossary plugin for the output of the terms</source>
+				<target>Glossar Plugin zur Ausgabe der Begriffe</target>
+			</trans-unit>
 		</body>
 	</file>
 </xliff>
