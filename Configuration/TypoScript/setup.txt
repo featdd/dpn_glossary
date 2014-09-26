@@ -18,6 +18,8 @@ plugin.tx_dpnglossary {
 		maxReplacementPerPage = {$plugin.tx_dpnglossary.settings.maxReplacementPerPage}
 		# Tags which content will be parsed for terms
 		parsingTags = {$plugin.tx_dpnglossary.settings.parsingTags}
+		# Listmode normal or character grouped list
+		listmode = {$plugin.tx_dpnglossary.settings.listmode}
 
 		termWraps = CASE
 		termWraps {

@@ -57,19 +57,14 @@ class TermController extends ActionController {
 	 * @return void
 	 */
 	public function listAction() {
-		$terms = $this->termRepository->findAll();
+		if ('character' === $this->settings['listmode']) {
+			$terms = $this->termRepository->findAllGroupedByFirstCharacter();
+			$this->view->assign('characterList', TRUE);
+		} else {
+			$terms = $this->termRepository->findAll();
+			$this->view->assign('characterList', FALSE);
+		}
 		$this->view->assign('detailPage', $this->settings['detailPage']);
-		$this->view->assign('terms', $terms);
-	}
-
-	/**
-	 * action for a character navigation view
-	 *
-	 * @return void
-	 */
-	public function characterAction() {
-		$terms = $this->termRepository->findAllGroupedByFirstCharacter();
-		$this->view->assign('detailPage', $this->settings['characterDetailPage']);
 		$this->view->assign('terms', $terms);
 	}
 

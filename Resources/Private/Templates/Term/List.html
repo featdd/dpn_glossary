@@ -1,10 +1,30 @@
 <h1><f:translate key="tx_dpnglossary_domain_model_term.listheadline" /></h1>
 
-<div>
-    <dl>
-        <f:for each="{terms}" as="term">
-            <dt><f:link.action action="show" pageUid="{detailPage}" arguments="{term: term}">{term.name}</f:link.action></dt>
-            <dd>{term.description}</dd>
-        </f:for>
-    </dl>
-</div>
+<f:if condition="{characterList}">
+	<f:then>
+
+		<div>
+			<dl>
+				<f:for each="{terms}" as="groupTerms" key="firstChar">
+					<dt>{firstChar}</dt>
+					<f:for each="{groupTerms}" as="term" iteration="itemIteration">
+						<dd><f:link.action action="show" arguments="{term: term}">{term.name}</f:link.action></dd>
+					</f:for>
+				</f:for>
+			</dl>
+		</div>
+
+	</f:then>
+	<f:else>
+
+		<div>
+			<dl>
+				<f:for each="{terms}" as="term">
+					<dt><f:link.action action="show" arguments="{term: term}">{term.name}</f:link.action></dt>
+					<dd>{term.description}</dd>
+				</f:for>
+			</dl>
+		</div>
+
+	</f:else>
+</f:if>
