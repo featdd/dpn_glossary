@@ -24,7 +24,9 @@ namespace Dpn\DpnGlossary\Controller;
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
+
 use Dpn\DpnGlossary\Domain\Model\Term;
+use Dpn\DpnGlossary\Domain\Repository\TermRepository;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 
 /**
@@ -37,10 +39,17 @@ use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 class TermController extends ActionController {
 
 	/**
-	 * @var \Dpn\DpnGlossary\Domain\Repository\TermRepository
-	 * @inject
+	 * @var TermRepository
 	 */
 	protected $termRepository;
+
+	/**
+	 * @param TermRepository $termRepository
+	 * @return void
+	 */
+	public function injectTermRepository(TermRepository $termRepository) {
+		$this->termRepository = $termRepository;
+	}
 
 	/**
 	 * action list
@@ -67,7 +76,7 @@ class TermController extends ActionController {
 	/**
 	 * action show
 	 *
-	 * @param \Dpn\DpnGlossary\Domain\Model\Term $term
+	 * @param Term $term
 	 * @return void
 	 */
 	public function showAction(Term $term) {

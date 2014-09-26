@@ -24,8 +24,10 @@ namespace Dpn\DpnGlossary\Domain\Repository;
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
+
 use Dpn\DpnGlossary\Domain\Model\Term;
 use TYPO3\CMS\Extbase\Persistence\QueryInterface;
+use TYPO3\CMS\Extbase\Persistence\QueryResultInterface;
 use TYPO3\CMS\Extbase\Persistence\Repository;
 
 /**
@@ -36,14 +38,26 @@ use TYPO3\CMS\Extbase\Persistence\Repository;
 class TermRepository extends Repository {
 
 	/**
+	 * find all terms (respect sys_language_uid)
+	 *
+	 * @return array|QueryResultInterface
+	 */
+	public function findAll() {
+		$query = $this->createQuery();
+		$query->matching($query->equals('sys_language_uid', $GLOBALS['TSFE']->sys_language_uid));
+		return $query->execute();
+	}
+
+	/**
 	 * find all terms ordered by name
 	 *
 	 * @param string $orderField
 	 *
-	 * @return array|\TYPO3\CMS\Extbase\Persistence\QueryResultInterface
+	 * @return array|QueryResultInterface
 	 */
 	public function findAllOrderedByName($orderField = 'name') {
 		$query = $this->createQuery();
+		$query->matching($query->equals('sys_language_uid', $GLOBALS['TSFE']->sys_language_uid));
 		$query->setOrderings(array($orderField => QueryInterface::ORDER_ASCENDING));
 		return $query->execute();
 	}
