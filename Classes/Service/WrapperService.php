@@ -97,6 +97,8 @@ class WrapperService implements SingletonInterface {
 			}
 			// Set StoragePid in the query settings object
 			$querySettings->setStoragePageIds(GeneralUtility::trimExplode(',', $this->tsConfig['persistence.']['storagePid']));
+			// Set current language uid
+			$querySettings->setLanguageUid($GLOBALS['TSFE']->sys_language_uid);
 			// Assign query settings object to repository
 			$this->termRepository->setDefaultQuerySettings($querySettings);
 			// extract Pids which should be parsed

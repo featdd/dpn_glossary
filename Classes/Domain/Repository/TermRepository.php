@@ -38,29 +38,13 @@ use TYPO3\CMS\Extbase\Persistence\Repository;
 class TermRepository extends Repository {
 
 	/**
-	 * find all terms (respect sys_language_uid)
+	 * Default orderings ascending by name
 	 *
-	 * @return array|QueryResultInterface
+	 * @var array $defaultOrderings
 	 */
-	public function findAll() {
-		$query = $this->createQuery();
-		$query->matching($query->equals('sys_language_uid', $GLOBALS['TSFE']->sys_language_uid));
-		return $query->execute();
-	}
-
-	/**
-	 * find all terms ordered by name
-	 *
-	 * @param string $orderField
-	 *
-	 * @return array|QueryResultInterface
-	 */
-	public function findAllOrderedByName($orderField = 'name') {
-		$query = $this->createQuery();
-		$query->matching($query->equals('sys_language_uid', $GLOBALS['TSFE']->sys_language_uid));
-		$query->setOrderings(array($orderField => QueryInterface::ORDER_ASCENDING));
-		return $query->execute();
-	}
+	protected $defaultOrderings = array(
+		'name' => QueryInterface::ORDER_ASCENDING,
+	);
 
 	/**
 	 * find all terms ordered by name and grouped by first character
@@ -68,7 +52,7 @@ class TermRepository extends Repository {
 	 * @return array
 	 */
 	public function findAllGroupedByFirstCharacter() {
-		$terms          = $this->findAllOrderedByName();
+		$terms          = $this->findAll();
 		$numbers        = array('0', '1', '2', '3', '4', '5', '6', '7', '8', '9');
 		$normalChars    = array('a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z');
 		$sortedTerms    = array();
