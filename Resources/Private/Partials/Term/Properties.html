@@ -1,7 +1,15 @@
 <div class="glossary-details">
     <dl>
         <dt><f:translate key="tx_dpnglossary_domain_model_term.name" />: {term.name}</dt>
-        <dd><f:translate key="tx_dpnglossary_domain_model_term.description" />: {term.description}</dd>
+        <dd><strong><f:translate key="tx_dpnglossary_domain_model_term.descriptions" />:</strong>
+			<f:for each="{term.descriptions}" as="description">
+				<div class="description">
+					<strong>{description.meaning}</strong>
+					<br />
+					{description.text}
+				</div>
+			</f:for>
+		</dd>
         <f:if condition="{term.nameAlternative}">
             <dd><f:translate key="tx_dpnglossary_domain_model_term.name_alternative" />: {term.nameAlternative}</dd>
         </f:if>

@@ -13,8 +13,8 @@
 			<trans-unit id="tx_dpnglossary_domain_model_term.tooltiptext">
 				<source>text shown in the css tooltip</source>
 			</trans-unit>
-			<trans-unit id="tx_dpnglossary_domain_model_term.description">
-				<source>description of the term</source>
+			<trans-unit id="tx_dpnglossary_domain_model_term.descriptions">
+				<source>descriptions of the term</source>
 			</trans-unit>
 			<trans-unit id="tx_dpnglossary_domain_model_term.name_alternative">
 				<source>Alternative names</source>
@@ -49,6 +49,16 @@
             <trans-unit id="tx_dpnglossary_domain_model_term.characterheadline">
             	<source>Character Navigation for the terms</source>
             </trans-unit>
+
+			<trans-unit id="tx_dpnglossary_domain_model_description">
+				<source>Description</source>
+			</trans-unit>
+			<trans-unit id="tx_dpnglossary_domain_model_description.meaning">
+				<source>Meaning</source>
+			</trans-unit>
+			<trans-unit id="tx_dpnglossary_domain_model_description.text">
+				<source>Text</source>
+			</trans-unit>
 
 
             <trans-unit id="tx_dpnglossary.backtolastpage">
