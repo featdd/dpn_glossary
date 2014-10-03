@@ -61,6 +61,9 @@
 			</trans-unit>
 
 
+			<trans-unit id="tx_dpnglossary.new_description">
+				<target>Neue Beschreibung</target>
+			</trans-unit>
             <trans-unit id="tx_dpnglossary.backtolastpage">
                 <target>Zurück zur letzten Seite</target>
             </trans-unit>

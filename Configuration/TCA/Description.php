@@ -8,10 +8,10 @@ $TCA['tx_dpnglossary_domain_model_description']['ctrl']['hideTable'] = true;
 $TCA['tx_dpnglossary_domain_model_description'] = array(
 	'ctrl' => $TCA['tx_dpnglossary_domain_model_description']['ctrl'],
 	'interface' => array(
-		'showRecordFieldList' => 'sys_language_uid, l10n_diffsource, hidden, meaning, text',
+		'showRecordFieldList' => 'hidden, meaning, text',
 	),
 	'types' => array(
-		'1' => array('showitem' => 'l10n_diffsource, meaning, text;;;richtext:rte_transform[mode=ts_links]'),
+		'1' => array('showitem' => 'meaning, text;;;richtext:rte_transform[mode=ts_links]'),
 	),
 	'palettes' => array(
 		'1' => array('showitem' => ''),

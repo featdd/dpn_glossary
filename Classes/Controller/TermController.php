@@ -72,11 +72,11 @@ class TermController extends ActionController {
 	 * action show
 	 *
 	 * @param Term $term
+	 * @param integer $pageUid
 	 * @return void
 	 */
-	public function showAction(Term $term) {
-		if(TRUE === $this->request->hasArgument('pageUid')) {
-			$pageUid = $this->request->getArgument('pageUid');
+	public function showAction(Term $term, $pageUid = NULL) {
+		if(NULL !== $pageUid) {
 			$this->view->assign('pageUid', $pageUid);
 		}
 		$this->view->assign('listPage', $this->settings['listPage']);

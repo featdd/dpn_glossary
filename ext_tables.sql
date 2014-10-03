@@ -46,7 +46,7 @@ CREATE TABLE tx_dpnglossary_domain_model_description (
 	uid int(11) NOT NULL auto_increment,
 	pid int(11) DEFAULT '0' NOT NULL,
 
-	term int(11) DEFAULT '0' NOT NULL,
+	term int(11) unsigned DEFAULT '0' NOT NULL,
 	meaning varchar(255) DEFAULT '' NOT NULL,
 	text text NOT NULL,
 

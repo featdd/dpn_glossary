@@ -9,7 +9,7 @@ $TCA['tx_dpnglossary_domain_model_term'] = array(
 		'showRecordFieldList' => 'sys_language_uid, l10n_diffsource, hidden, name, name_alternative, tooltiptext, descriptions, term_type, term_lang, images',
 	),
 	'types' => array(
-		'1' => array('showitem' => 'sys_language_uid;;;;1-1-1, l10n_diffsource, hidden;;1, name, name_alternative, tooltiptext, descriptions, term_type, term_lang, images'),
+		'1' => array('showitem' => 'hidden;;1, name, name_alternative, tooltiptext, descriptions, term_type, term_lang, images'),
 	),
 	'palettes' => array(
 		'1' => array('showitem' => ''),
@@ -88,6 +88,10 @@ $TCA['tx_dpnglossary_domain_model_term'] = array(
 				'foreign_field' => 'term',
 				'foreign_label' => 'meaning',
 				'minitems'		=> 1,
+				'maxitems'      => 9999,
+				'appearance' => array(
+					'newRecordLinkTitle' => 'LLL:EXT:dpn_glossary/Resources/Private/Language/locallang.xlf:tx_dpnglossary.new_description',
+				),
 				'behaviour' => array(
 					'localizationMode' => 'select',
 					'localizeChildrenAtParentLocalization' => TRUE,
