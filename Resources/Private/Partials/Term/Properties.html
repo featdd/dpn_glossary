@@ -1,12 +1,13 @@
-<div class="glossary-details">
+<div class="term-details">
     <dl>
         <dt><f:translate key="tx_dpnglossary_domain_model_term.name" />: {term.name}</dt>
         <dd><strong><f:translate key="tx_dpnglossary_domain_model_term.descriptions" />:</strong>
 			<f:for each="{term.descriptions}" as="description">
 				<div class="description">
-					<strong>{description.meaning}</strong>
-					<br />
-					{description.text}
+					<h3>{description.meaning}</h3>
+					<div class="text">
+						{description.text}
+					</div>
 				</div>
 			</f:for>
 		</dd>

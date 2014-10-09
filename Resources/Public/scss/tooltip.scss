@@ -27,3 +27,10 @@
     }
   }
 }
+
+.term-details {
+	.description {
+		h3 {cursor: pointer}
+		.text {display: none}
+	}
+}

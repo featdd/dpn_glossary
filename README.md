@@ -2,7 +2,7 @@
 
 A TYPO3 extension for a glossary and a contentparser to link terms to a detailpage.
 
-This extension is all namespaced and is developed and tested in TYPO3 6.1.X
+This extension is all namespaced and is developed and tested in TYPO3 6.2.X
 
 ## Contact
 <dorndorf@dreipunktnull.com>
@@ -12,7 +12,7 @@ This extension is all namespaced and is developed and tested in TYPO3 6.1.X
 Integrate the plugin in your root template.
 Over the constant-editor you will be able to make some configurations.
 - Set the pageIds which should be parsed for terms (1,n | 0 for all)
-- PageId where a detailpage is aviable, for the the parsed terms
+- PageId where plugin is avialable, for the the parsed terms
  - Otherwise if tooltips are turned on the link will be an anchor
 - The StoragePids where the terms are stored
 - Link configuration:

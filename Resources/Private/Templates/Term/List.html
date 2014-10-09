@@ -6,9 +6,10 @@
 		<div>
 			<dl>
 				<f:for each="{terms}" as="groupTerms" key="firstChar">
-					<dt>{firstChar}</dt>
+					<strong>{firstChar}</strong>
 					<f:for each="{groupTerms}" as="term" iteration="itemIteration">
-						<dd><f:link.action action="show" arguments="{term: term}">{term.name}</f:link.action></dd>
+						<dt><f:link.action action="show" arguments="{term: term}">{term.name}</f:link.action></dt>
+						<dd>{term.tooltiptext}</dd>
 					</f:for>
 				</f:for>
 			</dl>
@@ -21,7 +22,7 @@
 			<dl>
 				<f:for each="{terms}" as="term">
 					<dt><f:link.action action="show" arguments="{term: term}">{term.name}</f:link.action></dt>
-					<dd>{term.description}</dd>
+					<dd>{term.tooltiptext}</dd>
 				</f:for>
 			</dl>
 		</div>

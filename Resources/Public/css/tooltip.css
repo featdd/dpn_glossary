@@ -1,7 +1,7 @@
 .dpnglossary-link {
-    display: inline;
-    position: relative; }
-.dpnglossary-link:hover:after {
+  display: inline;
+  position: relative; }
+  .dpnglossary-link:hover:after {
     background: #333;
     background: rgba(0, 0, 0, 0.8);
     border-radius: 5px;
@@ -13,7 +13,7 @@
     position: absolute;
     z-index: 98;
     width: 220px; }
-.dpnglossary-link:hover:before {
+  .dpnglossary-link:hover:before {
     border: solid;
     border-color: #333 transparent;
     border-width: 6px 6px 0 6px;
@@ -22,3 +22,10 @@
     left: 50%;
     position: absolute;
     z-index: 99; }
+
+.term-details .description h3 {
+  cursor: pointer; }
+.term-details .description .text {
+  display: none; }
+
+/*# sourceMappingURL=tooltip.css.map */
