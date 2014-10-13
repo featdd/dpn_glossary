@@ -204,6 +204,7 @@ class WrapperService implements SingletonInterface {
 	 */
 	protected function textParser($text) {
 		$terms = $this->termRepository->findAll();
+		$text = preg_replace('~\x{00a0}~siu', '&nbsp;', $text);
 		// Iterate over terms and search matches for each of them
 		/** @var Term $term */
 		foreach ($terms as $term) {
