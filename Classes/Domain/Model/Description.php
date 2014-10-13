@@ -1,5 +1,5 @@
 <?php
-namespace Dpn\DpnGlossary\Controller;
+namespace Dpn\DpnGlossary\Domain\Model;
 
 /***************************************************************
  *  Copyright notice
@@ -25,9 +25,7 @@ namespace Dpn\DpnGlossary\Controller;
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
-use Dpn\DpnGlossary\Domain\Model\Term;
-use Dpn\DpnGlossary\Domain\Repository\TermRepository;
-use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
+use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
 
 /**
  *
@@ -36,50 +34,57 @@ use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  *
  */
-class TermController extends ActionController {
+class Description extends AbstractEntity {
 
 	/**
-	 * @var TermRepository
+	 * meaning of the terms description
+	 *
+	 * @var string $meaning
 	 */
-	protected $termRepository;
+	protected $meaning;
 
 	/**
-	 * @param TermRepository $termRepository
-	 * @return void
+	 * text of the term
+	 *
+	 * @var string $text
 	 */
-	public function injectTermRepository(TermRepository $termRepository) {
-		$this->termRepository = $termRepository;
+	protected $text;
+
+	/**
+	 * Returns the meaning
+	 *
+	 * @return string
+	 */
+	public function getMeaning() {
+		return $this->meaning;
 	}
 
 	/**
-	 * action list
+	 * Sets the meaning
 	 *
+	 * @param string $meaning
 	 * @return void
 	 */
-	public function listAction() {
-		if ('character' === $this->settings['listmode']) {
-			$terms = $this->termRepository->findAllGroupedByFirstCharacter();
-			$this->view->assign('characterList', TRUE);
-		} else {
-			$terms = $this->termRepository->findAll();
-			$this->view->assign('characterList', FALSE);
-		}
-		$this->view->assign('detailPage', $this->settings['detailPage']);
-		$this->view->assign('terms', $terms);
+	public function setMeaning($meaning) {
+		$this->meaning = $meaning;
 	}
 
 	/**
-	 * action show
+	 * Returns the text
 	 *
-	 * @param Term $term
-	 * @param integer $pageUid
+	 * @return string
+	 */
+	public function getText() {
+		return $this->text;
+	}
+
+	/**
+	 * Sets the text
+	 *
+	 * @param string $texts
 	 * @return void
 	 */
-	public function showAction(Term $term, $pageUid = NULL) {
-		if(NULL !== $pageUid) {
-			$this->view->assign('pageUid', $pageUid);
-		}
-		$this->view->assign('listPage', $this->settings['listPage']);
-		$this->view->assign('term', $term);
+	public function setText($text) {
+		$this->text = $text;
 	}
 }

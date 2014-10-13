@@ -7,7 +7,7 @@ if (!defined('TYPO3_MODE')) {
 	'Dpn.' . $_EXTKEY,
 	'Glossary',
 	array(
-		'Term' => 'list, character, show'
+		'Term' => 'list, show'
 	),
 	// non-cacheable actions
 	array(

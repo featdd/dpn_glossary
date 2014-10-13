@@ -25,6 +25,7 @@ namespace Dpn\DpnGlossary\Domain\Model;
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
+use Dpn\DpnGlossary\Domain\Model\Description;
 use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
 use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
 use TYPO3\CMS\Extbase\Domain\Model\FileReference;
@@ -57,10 +58,9 @@ class Term extends AbstractEntity {
 	/**
 	 * description of the term
 	 *
-	 * @var string $description
-	 * @validate NotEmpty
+	 * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\Dpn\DpnGlossary\Domain\Model\Description> $descriptions
 	 */
-	protected $description;
+	protected $descriptions;
 
 	/**
 	 * alternative names for the termn
@@ -91,7 +91,7 @@ class Term extends AbstractEntity {
 
 	/**
 	 * sets the Images
-	 * @param \TYPO3\CMS\Extbase\Persistence\ObjectStorage $images
+	 * @param ObjectStorage $images
 	 * @return void
 	 */
 	public function setImages($images) {
@@ -101,7 +101,7 @@ class Term extends AbstractEntity {
 	/**
 	 * Adds a FileReference
 	 *
-	 * @param \TYPO3\CMS\Extbase\Domain\Model\FileReference $image
+	 * @param FileReference $image
 	 * @return void
 	 */
 	public function addImage(FileReference $image) {
@@ -111,7 +111,7 @@ class Term extends AbstractEntity {
 	/**
 	 * Removes a FileReference
 	 *
-	 * @param \TYPO3\CMS\Extbase\Domain\Model\FileReference $image
+	 * @param FileReference $image
 	 * @return void
 	 */
 	public function removeImage(FileReference $image) {
@@ -120,7 +120,7 @@ class Term extends AbstractEntity {
 
 	/**
 	 * get the Images
-	 * @return \TYPO3\CMS\Extbase\Persistence\ObjectStorage
+	 * @return ObjectStorage
 	 */
 	public function getImages() {
 		return $this->images;
@@ -165,22 +165,40 @@ class Term extends AbstractEntity {
 	}
 
 	/**
-	 * Returns the description
+	 * Returns the descriptions
 	 *
-	 * @return string $description
+	 * @return string $descriptions
 	 */
-	public function getDescription() {
-		return $this->description;
+	public function getDescriptions() {
+		return $this->descriptions;
 	}
 
 	/**
-	 * Sets the description
+	 * Adds the description
 	 *
-	 * @param string $description
+	 * @param Description $description
+	 */
+	public function addDescription(Description $description) {
+		$this->descriptions->attach($description);
+	}
+
+	/**
+	 * removes the description
+	 *
+	 * @param Description $description
+	 */
+	public function removeDescription(Description $description) {
+		$this->descriptions->detach($description);
+	}
+
+	/**
+	 * Sets the descriptions
+	 *
+	 * @param string $descriptions
 	 * @return void
 	 */
-	public function setDescription($description) {
-		$this->description = $description;
+	public function setDescriptions($descriptions) {
+		$this->descriptions = $descriptions;
 	}
 
 	/**
@@ -242,14 +260,14 @@ class Term extends AbstractEntity {
 	 */
 	public function toArray() {
 		return array(
-			'uid'               => $this->getUid(),
-			'pid'               => $this->getPid(),
-			'name'              => $this->getName(),
-			'tooltiptext'       => $this->getTooltiptext(),
-			'description'       => $this->getDescription(),
-			'name_alternative'  => $this->getNameAlternative(),
-			'term_type'         => $this->getTermType(),
-			'term_lang'         => $this->getTermLang(),
+			'uid'				=> $this->getUid(),
+			'pid'				=> $this->getPid(),
+			'name'				=> $this->getName(),
+			'tooltiptext'		=> $this->getTooltiptext(),
+			'descriptions'		=> $this->getDescriptions(),
+			'name_alternative'	=> $this->getNameAlternative(),
+			'term_type'			=> $this->getTermType(),
+			'term_lang'			=> $this->getTermLang(),
 		);
 	}
 }
