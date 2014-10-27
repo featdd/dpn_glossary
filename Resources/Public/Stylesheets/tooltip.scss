@@ -1,10 +1,11 @@
 .dpnglossary-link {
   display: inline;
   position: relative;
+
   &:hover {
     &:after {
       background: #333;
-      background: rgba(0, 0, 0, 0.8);
+      background: rgba(0, 0, 0, .8);
       border-radius: 5px;
       bottom: 26px;
       color: #fff;
@@ -12,15 +13,16 @@
       left: 20%;
       padding: 5px 15px;
       position: absolute;
-      z-index: 98;
       width: 220px;
+      z-index: 98;
     }
+
     &:before {
       border: solid;
       border-color: #333 transparent;
-      border-width: 6px 6px 0 6px;
+      border-width: 6px 6px 0;
       bottom: 20px;
-      content: "";
+      content: '';
       left: 50%;
       position: absolute;
       z-index: 99;
@@ -29,8 +31,8 @@
 }
 
 .term-details {
-	.description {
-		h3 {cursor: pointer}
-		.text {display: none}
+  .description {
+    h3 {cursor: pointer;}
+    .text {display: none;}
 	}
 }

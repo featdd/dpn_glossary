@@ -15,7 +15,6 @@ if (TYPO3_MODE == 'BE') {
 );
 
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addStaticFile($_EXTKEY, 'Configuration/TypoScript', 'Dreipunktnull Glossar');
-\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addLLrefForTCAdescr('tx_dpnglossary_domain_model_term', 'EXT:dpn_glossary/Resources/Private/Language/locallang.xlf');
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::allowTableOnStandardPages('tx_dpnglossary_domain_model_term');
 $TCA['tx_dpnglossary_domain_model_term'] = array(
 	'ctrl' => array(
@@ -53,7 +52,7 @@ $TCA['tx_dpnglossary_domain_model_description'] = array(
 		'crdate' => 'crdate',
 		'cruser_id' => 'cruser_id',
 		'dividers2tabs' => TRUE,
-
+		'hideTable' => true,
 		'versioningWS' => 2,
 		'versioning_followPages' => TRUE,
 		'origUid' => 't3_origuid',

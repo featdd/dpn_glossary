@@ -3,8 +3,6 @@ if (!defined ('TYPO3_MODE')) {
 	die ('Access denied.');
 }
 
-$TCA['tx_dpnglossary_domain_model_description']['ctrl']['hideTable'] = true;
-
 $TCA['tx_dpnglossary_domain_model_description'] = array(
 	'ctrl' => $TCA['tx_dpnglossary_domain_model_description']['ctrl'],
 	'interface' => array(
