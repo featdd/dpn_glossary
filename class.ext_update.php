@@ -3,7 +3,7 @@
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2014 Daniel Dorndorf <dorndorf@dreipunktnull.com>, Dreipunktnull
+ *  (c) 2014 Daniel Dorndorf <dorndorf@dreipunktnull.com>, dreipunktnull
  *
  *  All rights reserved
  *

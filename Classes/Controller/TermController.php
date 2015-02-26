@@ -4,7 +4,7 @@ namespace Dpn\DpnGlossary\Controller;
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2014 Daniel Dorndorf <dorndorf@dreipunktnull.com>, Dreipunktnull
+ *  (c) 2014 Daniel Dorndorf <dorndorf@dreipunktnull.com>, dreipunktnull
  *
  *  All rights reserved
  *
@@ -64,7 +64,6 @@ class TermController extends ActionController {
 			$terms = $this->termRepository->findAll();
 			$this->view->assign('characterList', FALSE);
 		}
-		$this->view->assign('detailPage', $this->settings['detailPage']);
 		$this->view->assign('terms', $terms);
 	}
 
@@ -79,7 +78,6 @@ class TermController extends ActionController {
 		if(NULL !== $pageUid) {
 			$this->view->assign('pageUid', $pageUid);
 		}
-		$this->view->assign('listPage', $this->settings['listPage']);
 		$this->view->assign('term', $term);
 	}
 }

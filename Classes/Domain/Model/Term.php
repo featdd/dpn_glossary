@@ -4,7 +4,7 @@ namespace Dpn\DpnGlossary\Domain\Model;
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2014 Daniel Dorndorf <dorndorf@dreipunktnull.com>, Dreipunktnull
+ *  (c) 2014 Daniel Dorndorf <dorndorf@dreipunktnull.com>, dreipunktnull
  *  
  *  All rights reserved
  *
@@ -167,7 +167,7 @@ class Term extends AbstractEntity {
 	/**
 	 * Returns the descriptions
 	 *
-	 * @return string $descriptions
+	 * @return ObjectStorage<\Dpn\DpnGlossary\Domain\Model\Description> $descriptions
 	 */
 	public function getDescriptions() {
 		return $this->descriptions;
@@ -194,7 +194,7 @@ class Term extends AbstractEntity {
 	/**
 	 * Sets the descriptions
 	 *
-	 * @param string $descriptions
+	 * @param ObjectStorage<\Dpn\DpnGlossary\Domain\Model\Description> $descriptions
 	 * @return void
 	 */
 	public function setDescriptions($descriptions) {

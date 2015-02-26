@@ -11,23 +11,23 @@
  ***************************************************************/
 
 $EM_CONF[$_EXTKEY] = array(
-	'title' => 'Dreipunktnull Glossar',
+	'title' => 'dreipunktnull Glossar',
 	'description' => 'Modern Extbase and namespaced Glossary extension',
 	'category' => 'plugin',
 	'author' => 'Daniel Dorndorf',
 	'author_email' => 'dorndorf@dreipunktnull.com',
-	'author_company' => 'Dreipunktnull',
+	'author_company' => 'dreipunktnull',
 	'shy' => '',
 	'priority' => '',
 	'module' => '',
-	'state' => 'beta',
+	'state' => 'stable',
 	'internal' => '',
 	'uploadfolder' => '0',
 	'createDirs' => '',
 	'modify_tables' => '',
 	'clearCacheOnLoad' => 0,
 	'lockType' => '',
-	'version' => '2.1.0',
+	'version' => '2.1.1',
 	'constraints' => array(
 		'depends' => array(
 			'extbase' => '6.0',

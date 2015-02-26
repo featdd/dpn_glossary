@@ -44,48 +44,17 @@ plugin.tx_dpnglossary {
 }
 ```
 
-##Example RealURL Configuration
+##RealURL Configuration
+
+The configuration for realUrl is now integrated into the localconf.
+If you want to use it set the detailpage in the extension settings.
+
+But if you prefer to it manually or use more than one glossary plugins,
+you can use the configuration in your realurl_conf.php.
+
+- Add the id of your detailpage as the key and "dpn_glossary_RealUrlConfig" as it's value.
 ```PHP
-$GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['realurl']['_DEFAULT'] = array(
-	'fixedPostVars' => array(
-		'dpn_glossary' => array(
-			array(
-				'GETvar' => 'tx_dpnglossary_glossary[controller]',
-				'noMatch' => 'bypass'
-			),
-			array(
-				'GETvar' => 'tx_dpnglossary_glossary[action]',
-				'valueMap' => array(
-					'detail' => 'show',
-				),
-				'valueDefault' => 'list',
-				'noMatch' => 'bypass'
-			),
-			array(
-				'GETvar' => 'tx_dpnglossary_glossary[term]',
-				'lookUpTable' => array(
-					'table' => 'tx_dpnglossary_domain_model_term',
-					'id_field' => 'uid',
-					'alias_field' => 'name',
-					'addWhereClause' => ' AND NOT deleted',
-					'useUniqueCache' => 1,
-					'useUniqueCache_conf' => array(
-						'strtolower' => 1,
-						'spaceCharacter' => '-'
-					),
-					'languageGetVar' => 'L',
-					'languageExceptionUids' => '',
-					'languageField' => 'sys_language_uid',
-					'transOrigPointerField' => 'l10n_parent',
-					'autoUpdate' => 1,
-					'expireDays' => 180
-				),
-			),
-			array(
-				'GETvar' => 'tx_dpnglossary_glossary[pageUid]'
-			),
-		),
-		'DETAILPAGE_ID' => 'dpn_glossary',
-	),
-);
+'fixedPostVars' => array(
+	'9' => 'dpn_glossary_RealUrlConfig',
+),
 ```

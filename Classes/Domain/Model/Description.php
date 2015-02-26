@@ -4,7 +4,7 @@ namespace Dpn\DpnGlossary\Domain\Model;
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2014 Daniel Dorndorf <dorndorf@dreipunktnull.com>, Dreipunktnull
+ *  (c) 2014 Daniel Dorndorf <dorndorf@dreipunktnull.com>, dreipunktnull
  *
  *  All rights reserved
  *
@@ -81,7 +81,7 @@ class Description extends AbstractEntity {
 	/**
 	 * Sets the text
 	 *
-	 * @param string $texts
+	 * @param string $text
 	 * @return void
 	 */
 	public function setText($text) {
