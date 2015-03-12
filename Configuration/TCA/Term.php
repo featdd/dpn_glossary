@@ -67,7 +67,7 @@ $TCA['tx_dpnglossary_domain_model_term'] = array(
 			'config' => array(
 				'type' => 'input',
 				'size' => 30,
-				'eval' => 'trim,required,nospace'
+				'eval' => 'trim,required'
 			),
 		),
 		'tooltiptext' => array(
@@ -76,7 +76,7 @@ $TCA['tx_dpnglossary_domain_model_term'] = array(
 			'config' => array(
 				'type' => 'input',
 				'size' => 30,
-				'eval' => 'trim,required'
+				'eval' => 'trim,required',
 			),
 		),
 		'descriptions' => array(

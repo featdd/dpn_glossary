@@ -49,6 +49,11 @@ class WrapperService implements SingletonInterface {
 	protected $cObj;
 
 	/**
+	 * @var array $terms
+	 */
+	protected $terms;
+
+	/**
 	 * @var array $tsConfig
 	 */
 	protected $tsConfig;
@@ -116,6 +121,8 @@ class WrapperService implements SingletonInterface {
 				if (TRUE === empty($tags)) {
 					return;
 				}
+				//Find all terms
+				$this->terms = $terms = $this->termRepository->findByNameLength();
 				//Create new DOMDocument
 				$DOM = new \DOMDocument();
 				// Prevent crashes caused by HTML5 entities with internal errors
@@ -203,11 +210,10 @@ class WrapperService implements SingletonInterface {
 	 * @return string
 	 */
 	protected function textParser($text) {
-		$terms = $this->termRepository->findAll();
 		$text = preg_replace('~\x{00a0}~siu', '&nbsp;', $text);
 		// Iterate over terms and search matches for each of them
 		/** @var Term $term */
-		foreach ($terms as $term) {
+		foreach ($this->terms as $term) {
 			/*
 			 * Regex Explanation:
 			 * Group 1: (^|[\s\>[:punct:]])

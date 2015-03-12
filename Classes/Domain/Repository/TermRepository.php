@@ -47,6 +47,20 @@ class TermRepository extends Repository {
 	);
 
 	/**
+	 * @return array|QueryResultInterface
+	 */
+	public function findByNameLength() {
+		$query = $this->createQuery();
+		$query->statement('
+			SELECT *
+			FROM tx_dpnglossary_domain_model_term
+			ORDER BY CHAR_LENGTH(name) DESC, name ASC
+		');
+
+		return $query->execute();
+	}
+
+	/**
 	 * find all terms ordered by name and grouped by first character
 	 *
 	 * @return array

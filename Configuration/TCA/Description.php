@@ -72,7 +72,7 @@ $TCA['tx_dpnglossary_domain_model_description'] = array(
 			'config' => array(
 				'type' => 'input',
 				'size' => 30,
-				'eval' => 'trim,required,nospace',
+				'eval' => 'trim,required',
 			),
 		),
 		'text' => array(
