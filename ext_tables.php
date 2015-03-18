@@ -37,7 +37,7 @@ $TCA['tx_dpnglossary_domain_model_term'] = array(
 			'starttime' => 'starttime',
 			'endtime' => 'endtime',
 		),
-		'searchFields' => 'name,tooltiptext,descriptions,',
+		'searchFields' => 'name,tooltiptext,descriptions,name_alternative,term_type,term_lang,images,',
 		'dynamicConfigFile' => \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath($_EXTKEY) . 'Configuration/TCA/Term.php',
 		'iconfile' => \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extRelPath($_EXTKEY) . 'Resources/Public/Icons/term.gif'
 	)

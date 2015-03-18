@@ -55,6 +55,6 @@ you can use the configuration in your realurl_conf.php.
 - Add the id of your detailpage as the key and "dpn_glossary_RealUrlConfig" as it's value.
 ```PHP
 'fixedPostVars' => array(
-	'9' => 'dpn_glossary_RealUrlConfig',
+	'PAGEUID' => 'dpn_glossary_RealUrlConfig',
 ),
 ```
