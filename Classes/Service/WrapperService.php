@@ -115,6 +115,8 @@ class WrapperService implements SingletonInterface {
 			if (FALSE === in_array($GLOBALS['TSFE']->id, $excludePids) && (TRUE === in_array($GLOBALS['TSFE']->id, $parsingPids) || TRUE === in_array('0', $parsingPids)) && $GLOBALS['TSFE']->id !== intval($this->tsConfig['settings.']['detailsPid'])) {
 				// Get max number of replacements per page and term
 				$this->maxReplacementPerPage = (int)$this->tsConfig['settings.']['maxReplacementPerPage'];
+				// Tags which are not allowed as direct parent for a parsingTag
+				$forbiddenParentTags = GeneralUtility::trimExplode(',', $this->tsConfig['settings.']['forbiddenParentTags']);
 				// Get Tags which content should be parsed
 				$tags = GeneralUtility::trimExplode(',', $this->tsConfig['settings.']['parsingTags']);
 				// Exit if no Terms were set
@@ -138,8 +140,13 @@ class WrapperService implements SingletonInterface {
 					// extract the tags
 					$DOMTags = $DOMBody->getElementsByTagName($tag);
 					// call the nodereplacer for each node to parse its content
+					/** @var \DOMNode $DOMTag */
 					foreach ($DOMTags as $DOMTag) {
-						$this->nodeReplacer($DOMTag);
+						$parentTags = explode('/', preg_replace('#\[([^\]]*)\]#i', '', substr($DOMTag->parentNode->getNodePath(), 1)));
+
+						if(FALSE === in_array($parentTags, $forbiddenParentTags)) {
+							$this->nodeReplacer($DOMTag);
+						}
 					}
 				}
 				// set the parsed html page and remove XHTML tag which is not needed anymore

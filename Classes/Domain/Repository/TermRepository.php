@@ -70,13 +70,14 @@ class TermRepository extends Repository {
 		$numbers        = array('0', '1', '2', '3', '4', '5', '6', '7', '8', '9');
 		$normalChars    = array('a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z');
 		$sortedTerms    = array();
+
+		/** @var Term $term */
 		foreach ($terms as $term) {
-			/** @var Term $term */
-			mb_internal_encoding("UTF-8");
-			$firstCharacter = mb_strtolower(mb_substr($term->getName(), 0, 1));
+			$firstCharacter = strtolower(substr($term->getName(), 0, 1));
+
 			if (in_array($firstCharacter, $numbers)) {
 				$firstCharacter = '0-9';
-			} else if (!in_array($firstCharacter, $normalChars)) {
+			} else if (FALSE === in_array($firstCharacter, $normalChars)) {
 				switch ($firstCharacter) {
 					case 'ä':
 						$firstCharacter = 'a';
@@ -91,13 +92,18 @@ class TermRepository extends Repository {
 						$firstCharacter = '_';
 					break;
 				}
+
 			}
+
 			$firstCharacter = strtoupper($firstCharacter);
-			if (!isset($sortedTerms[$firstCharacter])) {
+
+			if (FALSE === isset($sortedTerms[$firstCharacter])) {
 				$sortedTerms[$firstCharacter] = array();
 			}
+
 			$sortedTerms[$firstCharacter][] = $term;
 		}
+
 		return $sortedTerms;
 	}
 }

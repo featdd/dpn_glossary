@@ -22,6 +22,8 @@ plugin.tx_dpnglossary {
 		maxReplacementPerPage = -1
 		# cat=plugin.tx_dpnglossary//a; type=string; label=Tags which content will be parsed for terms
 		parsingTags = p
+		# cat=plugin.tx_dpnglossary//a; type=string; label=Tags which are not allowed as direct parent for a parsingTag
+		forbiddenParentTags = a
 		# cat=plugin.tx_dpnglossary//a; type=options[normal,character]; label=Listmode: normal or character grouped list
 		listmode = normal
 	}
