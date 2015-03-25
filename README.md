@@ -11,10 +11,16 @@ This extension is all namespaced and is developed and tested in TYPO3 6.2.X
 
 Integrate the plugin in your root template.
 Over the constant-editor you will be able to make some configurations.
-- Set the pageIds which should be parsed for terms (1,n | 0 for all)
-- PageId where plugin is avialable, for the the parsed terms
+- (storagePid) Pids of storages containing terms
+- (detailsPid) PageId where plugin is avialable, for the the parsed terms
  - Otherwise if tooltips are turned on the link will be an anchor
-- The StoragePids where the terms are stored
+- (parsingPids) Set the pageIds which should be parsed for terms (0 for all)
+- (parsingPidsExcludePidList) Set the pageIds which should "not" be parsed for terms (0 for none)
+- (maxReplacementPerPage) Configure the max replacement for each terms
+- (parsingTags) The tags whish should be parsed for terms
+- (forbiddenParentTags) The tags which are not allowed as a parent for a parsingTag
+- (listmode) Sets the listmode for the plugin, you may want to use a character ordered list
+
 - Link configuration:
  - The generated Link is whole configurable over TypoScript (see example).
 
