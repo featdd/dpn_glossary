@@ -114,6 +114,18 @@ class ext_update {
 			return $GLOBALS['TYPO3_DB']->sql_affected_rows() . ' rows have been updated. System object caches cleared.';
 		}
 
+		/** @var mysqli_result $checkSortingColumn */
+		$checkSortingColumn = $GLOBALS['TYPO3_DB']->sql_query("SHOW COLUMNS FROM tx_dpnglossary_domain_model_description LIKE 'sorting'");
+
+		if (0 === $checkSortingColumn->num_rows) {
+			$GLOBALS['TYPO3_DB']->sql_query("
+				ALTER TABLE tx_dpnglossary_domain_model_description
+				ADD sorting int(11) unsigned DEFAULT '0' NOT NULL
+			");
+
+			return 'The missing sorting column was added to descriptions';
+		}
+
 		return 'Extension is already updated!';
 	}
 }

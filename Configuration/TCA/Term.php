@@ -91,6 +91,7 @@ $TCA['tx_dpnglossary_domain_model_term'] = array(
 				'maxitems'      => 9999,
 				'appearance' => array(
 					'newRecordLinkTitle' => 'LLL:EXT:dpn_glossary/Resources/Private/Language/locallang.xlf:tx_dpnglossary.new_description',
+					'useSortable' => 1,
 				),
 				'behaviour' => array(
 					'localizationMode' => 'select',
