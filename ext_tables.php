@@ -24,6 +24,7 @@ $TCA['tx_dpnglossary_domain_model_term'] = array(
 		'crdate' => 'crdate',
 		'cruser_id' => 'cruser_id',
 		'dividers2tabs' => TRUE,
+        'default_sortby' => 'ORDER BY name ASC',
 
 		'versioningWS' => 2,
 		'versioning_followPages' => TRUE,
