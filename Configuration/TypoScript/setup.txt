@@ -45,6 +45,10 @@ plugin.tx_dpnglossary {
 						if.isGreaterThan < plugin.tx_dpnglossary.settings.detailsPid
 					}
 					ATagParams.dataWrap = title="{field:tooltiptext}" class="dpnglossary-link"
+                    ATagParams.dataWrap {
+                        override = title="{field:name}" class="dpnglossary-link"
+                        override.if.isFalse.data = field:tooltiptext
+                    }
 					useCacheHash = 1
 				}
 			}
