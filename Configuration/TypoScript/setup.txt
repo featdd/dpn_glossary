@@ -23,13 +23,20 @@ plugin.tx_dpnglossary {
 		# Listmode normal or character grouped list
 		listmode = {$plugin.tx_dpnglossary.settings.listmode}
 
+		# Pagination settings
+		pagination {
+			characters = A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z
+			insertAbove = 1
+			insertBelow = 0
+		}
+
 		termWraps = CASE
 		termWraps {
 			key.field = term_type
 			default = TEXT
 			default {
 				field = name
-				dataWrap = <span class="dpnglossary" lang="{field:term_lang}" title="{field:name}">|</span>
+				dataWrap = |
 				typolink {
 					parameter = #{field:name}
 					parameter.insertData = 1
@@ -44,9 +51,9 @@ plugin.tx_dpnglossary {
 						if.value = 0
 						if.isGreaterThan < plugin.tx_dpnglossary.settings.detailsPid
 					}
-					ATagParams.dataWrap = title="{field:tooltiptext}" class="dpnglossary-link"
+					ATagParams.dataWrap = title="{field:tooltiptext}" class="dpnglossary link"
                     ATagParams.dataWrap {
-                        override = title="{field:name}" class="dpnglossary-link"
+                        override = title="{field:name}" class="dpnglossary link"
                         override.if.isFalse.data = field:tooltiptext
                     }
 					useCacheHash = 1
