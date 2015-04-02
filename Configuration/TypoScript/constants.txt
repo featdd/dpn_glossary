@@ -24,7 +24,7 @@ plugin.tx_dpnglossary {
 		parsingTags = p
 		# cat=plugin.tx_dpnglossary//a; type=string; label=Tags which are not allowed as direct parent for a parsingTag
 		forbiddenParentTags = a
-		# cat=plugin.tx_dpnglossary//a; type=options[normal,character]; label=Listmode: normal or character grouped list
+		# cat=plugin.tx_dpnglossary//a; type=options[normal,character,pagination]; label=Listmode: normal, character or paginated by characters
 		listmode = normal
 	}
 }

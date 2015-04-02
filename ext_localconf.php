@@ -17,8 +17,6 @@ if (!defined('TYPO3_MODE')) {
 
 $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['tslib/class.tslib_fe.php']['contentPostProc-all'][] = 'Dpn\DpnGlossary\Service\WrapperService->contentParser';
 
-$GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['dpn_glossary']['setup'] = unserialize($_EXTCONF);
-
 if (TRUE === is_array($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['realurl'])) {
 
 	if (FALSE === is_array($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['realurl']['_DEFAULT']['fixedPostVars'])) {
@@ -60,9 +58,11 @@ if (TRUE === is_array($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['realurl'])) {
 				),
 			),
 			array(
+				'GETvar' => 'tx_dpnglossary_glossary[@widget_0][character]',
+			),
+			array(
 				'GETvar' => 'tx_dpnglossary_glossary[pageUid]'
 			),
 		),
-		$GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['dpn_glossary']['setup']['glossaryDetailPage'] => $_EXTKEY . '_RealUrlConfig',
 	);
 }

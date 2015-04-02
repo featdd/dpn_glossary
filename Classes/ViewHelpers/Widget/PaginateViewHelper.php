@@ -1,5 +1,5 @@
 <?php
-namespace Dpn\DpnGlossary\Controller;
+namespace Dpn\DpnGlossary\ViewHelpers\Widget;
 
 /***************************************************************
  *  Copyright notice
@@ -25,57 +25,39 @@ namespace Dpn\DpnGlossary\Controller;
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
-use Dpn\DpnGlossary\Domain\Model\Term;
-use Dpn\DpnGlossary\Domain\Repository\TermRepository;
-use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
+use Dpn\DpnGlossary\ViewHelpers\Widget\Controller\PaginateController;
+use TYPO3\CMS\Extbase\Mvc\ResponseInterface;
+use TYPO3\CMS\Extbase\Persistence\QueryResultInterface;
+use TYPO3\CMS\Fluid\Core\Widget\AbstractWidgetViewHelper;
 
 /**
  *
- *
  * @package dpn_glossary
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
- *
  */
-class TermController extends ActionController {
+class PaginateViewHelper extends AbstractWidgetViewHelper {
+
+    /**
+     * @var PaginateController
+     */
+    protected $controller;
+
+    /**
+     * @param PaginateController $paginateController
+     * @return void
+     */
+    public function injectPaginateController(PaginateController $paginateController) {
+        $this->controller = $paginateController;
+    }
 
 	/**
-	 * @var TermRepository
-	 */
-	protected $termRepository;
-
-	/**
-	 * @param TermRepository $termRepository
-	 * @return void
-	 */
-	public function injectTermRepository(TermRepository $termRepository) {
-		$this->termRepository = $termRepository;
-	}
-
-	/**
-	 * action list
+	 * @param QueryResultInterface $terms
+	 * @param string $as
 	 *
-	 * @return void
+	 * @return ResponseInterface
 	 */
-	public function listAction() {
-        $terms = 'character' === $this->settings['listmode'] ?
-            $this->termRepository->findAllGroupedByFirstCharacter() :
-            $this->termRepository->findAll();
+    public function render(QueryResultInterface $terms, $as) {
+        return $this->initiateSubRequest();
+    }
 
-        $this->view->assign('listmode', $this->settings['listmode']);
-		$this->view->assign('terms', $terms);
-	}
-
-	/**
-	 * action show
-	 *
-	 * @param Term $term
-	 * @param integer $pageUid
-	 * @return void
-	 */
-	public function showAction(Term $term, $pageUid = NULL) {
-		if(NULL !== $pageUid) {
-			$this->view->assign('pageUid', $pageUid);
-		}
-		$this->view->assign('term', $term);
-	}
 }

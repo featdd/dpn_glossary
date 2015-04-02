@@ -1,32 +1,43 @@
-<div class="term-details">
-    <dl>
-        <dt><f:translate key="tx_dpnglossary_domain_model_term.name" />: {term.name}</dt>
-        <dd><strong><f:translate key="tx_dpnglossary_domain_model_term.descriptions" />:</strong>
-			<f:for each="{term.descriptions}" as="description">
-				<div class="description">
-					<h3>{description.meaning}</h3>
-					<div class="text">
-						<f:format.html>{description.text}</f:format.html>
-					</div>
-				</div>
-			</f:for>
-		</dd>
-        <f:if condition="{term.nameAlternative}">
-            <dd><f:translate key="tx_dpnglossary_domain_model_term.name_alternative" />: {term.nameAlternative}</dd>
-        </f:if>
-        <f:if condition="{term.termType}">
-            <dd><f:translate key="tx_dpnglossary_domain_model_term.term_type" />: {term.termType}</dd>
-        </f:if>
-        <f:if condition="{term.termType}">
-            <dd><f:translate key="tx_dpnglossary_domain_model_term.term_lang" />: {term.termLang}</dd>
-        </f:if>
-        <f:if condition="{term.images}">
-            <dd>
-                <f:translate key="tx_dpnglossary_domain_model_term.images" />:<br/>
-                <f:for each="{term.images}" as="image">
-                    <a href="{f:uri.image(src:'{image.originalResource.publicUrl}')}" title="{image.title}" rel="lightbox[t{term.uid}]"><f:image src="{image.uid}" width="150" height="150" alt="{term.title}" treatIdAsReference="TRUE" /></a>
-                </f:for>
-            </dd>
-        </f:if>
-    </dl>
+<div xmlns="http://www.w3.org/1999/xhtml" lang="en"
+     xmlns:f="http://typo3.org/ns/fluid/ViewHelpers">
+
+    <f:layout name="Default"/>
+
+    <f:section name="Main">
+
+        <div class="dpnglossary details">
+            <dl>
+                <dt><f:translate key="tx_dpnglossary_domain_model_term.name" />: {term.name}</dt>
+                <dd><strong><f:translate key="tx_dpnglossary_domain_model_term.descriptions" />:</strong>
+                    <f:for each="{term.descriptions}" as="description">
+                        <div class="description">
+                            <h3>{description.meaning}</h3>
+                            <div class="text">
+                                <f:format.html>{description.text}</f:format.html>
+                            </div>
+                        </div>
+                    </f:for>
+                </dd>
+                <f:if condition="{term.nameAlternative}">
+                    <dd><f:translate key="tx_dpnglossary_domain_model_term.name_alternative" />: {term.nameAlternative}</dd>
+                </f:if>
+                <f:if condition="{term.termType}">
+                    <dd><f:translate key="tx_dpnglossary_domain_model_term.term_type" />: {term.termType}</dd>
+                </f:if>
+                <f:if condition="{term.termType}">
+                    <dd><f:translate key="tx_dpnglossary_domain_model_term.term_lang" />: {term.termLang}</dd>
+                </f:if>
+                <f:if condition="{term.images}">
+                    <dd>
+                        <f:translate key="tx_dpnglossary_domain_model_term.images" />:<br/>
+                        <f:for each="{term.images}" as="image">
+                            <a href="{f:uri.image(src:'{image.originalResource.publicUrl}')}" title="{image.title}" rel="lightbox[t{term.uid}]"><f:image src="{image.uid}" width="150" height="150" alt="{term.title}" treatIdAsReference="TRUE" /></a>
+                        </f:for>
+                    </dd>
+                </f:if>
+            </dl>
+        </div>
+
+    </f:section>
+
 </div>

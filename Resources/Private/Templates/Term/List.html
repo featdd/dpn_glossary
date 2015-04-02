@@ -1,31 +1,57 @@
-<h1><f:translate key="tx_dpnglossary_domain_model_term.listheadline" /></h1>
+<div xmlns="http://www.w3.org/1999/xhtml" lang="en"
+     xmlns:dpn="http://typo3.org/ns/Dpn/DpnGlossary/ViewHelpers"
+     xmlns:f="http://typo3.org/ns/fluid/ViewHelpers">
 
-<f:if condition="{characterList}">
-	<f:then>
+    <f:layout name="Default"/>
 
-		<div>
-			<dl>
-				<f:for each="{terms}" as="groupTerms" key="firstChar">
-					<strong>{firstChar}</strong>
-					<f:for each="{groupTerms}" as="term" iteration="itemIteration">
-						<dt><f:link.action action="show" arguments="{term: term}">{term.name}</f:link.action></dt>
-						<dd>{term.tooltiptext}</dd>
-					</f:for>
-				</f:for>
-			</dl>
-		</div>
+    <f:section name="Main">
 
-	</f:then>
-	<f:else>
+        <h1><f:translate key="tx_dpnglossary_domain_model_term.listheadline" /></h1>
 
-		<div>
-			<dl>
-				<f:for each="{terms}" as="term">
-					<dt><f:link.action action="show" arguments="{term: term}">{term.name}</f:link.action></dt>
-					<dd>{term.tooltiptext}</dd>
-				</f:for>
-			</dl>
-		</div>
+        <f:if condition="{listmode} == 'character'">
 
-	</f:else>
-</f:if>
+            <div>
+                <dl>
+                    <f:for each="{terms}" as="groupTerms" key="firstChar">
+                        <strong>{firstChar}</strong>
+                        <f:for each="{groupTerms}" as="term" iteration="itemIteration">
+                            <dt><f:link.action action="show" arguments="{term: term}">{term.name}</f:link.action></dt>
+                            <dd>{term.tooltiptext}</dd>
+                        </f:for>
+                    </f:for>
+                </dl>
+            </div>
+
+        </f:if>
+
+        <f:if condition="{listmode} == 'normal'">
+
+            <div>
+                <dl>
+                    <f:for each="{terms}" as="term">
+                        <dt><f:link.action action="show" arguments="{term: term}">{term.name}</f:link.action></dt>
+                        <dd>{term.tooltiptext}</dd>
+                    </f:for>
+                </dl>
+            </div>
+
+        </f:if>
+
+		<f:if condition="{listmode} == 'pagination'">
+
+			<dpn:widget.paginate terms="{terms}" as="paginatedTerms">
+				<div>
+					<dl>
+						<f:for each="{paginatedTerms}" as="term">
+							<dt><f:link.action action="show" arguments="{term: term}">{term.name}</f:link.action></dt>
+							<dd>{term.tooltiptext}</dd>
+						</f:for>
+					</dl>
+				</div>
+			</dpn:widget.paginate>
+
+		</f:if>
+
+    </f:section>
+
+</div>
