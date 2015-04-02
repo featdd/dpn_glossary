@@ -88,9 +88,9 @@ class PaginateController extends AbstractWidgetController {
      * @return void
      */
     public function indexAction($character = 'A') {
-		$this->currentCharacter = $character;
+		$this->currentCharacter = FALSE === empty($character) ? $character : $this->characters[0];
 
-        $this->query->matching($this->query->like('name', $character . '%'));
+        $this->query->matching($this->query->like('name', $this->currentCharacter . '%'));
         $terms = $this->query->execute()->toArray();
 
 		$this->view->assign('configuration', $this->configuration);
