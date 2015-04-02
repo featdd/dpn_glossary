@@ -51,7 +51,6 @@ class Term extends AbstractEntity {
 	 * text shown in the css tooltip
 	 *
 	 * @var string $tooltiptext
-	 * @validate NotEmpty
 	 */
 	protected $tooltiptext;
 
