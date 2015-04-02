@@ -119,8 +119,8 @@ class PaginateController extends AbstractWidgetController {
 			'pages'             => $pages,
 			'current'           => $this->currentCharacter,
 			'numberOfPages'     => $numberOfCharacters,
-			'displayRangeStart' => $this->characters[0],
-			'displayRangeEnd'   => $this->characters[count($this->characters) + 1]
+			'startCharacter'    => $this->characters[0],
+			'endCharacter'      => $this->characters[count($this->characters) + 1]
 		);
 
 		return $pagination;
