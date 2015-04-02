@@ -57,13 +57,11 @@ class TermController extends ActionController {
 	 * @return void
 	 */
 	public function listAction() {
-		if ('character' === $this->settings['listmode']) {
-			$terms = $this->termRepository->findAllGroupedByFirstCharacter();
-			$this->view->assign('characterList', TRUE);
-		} else {
-			$terms = $this->termRepository->findAll();
-			$this->view->assign('characterList', FALSE);
-		}
+        $terms = 'character' === $this->settings['listmode'] ?
+            $this->termRepository->findAllGroupedByFirstCharacter() :
+            $this->termRepository->findAll();
+
+        $this->view->assign('listmode', $this->settings['listmode']);
 		$this->view->assign('terms', $terms);
 	}
 
