@@ -13,6 +13,9 @@ This extension is all namespaced and is tested in TYPO3 6.2.X & 7.1.X
 - Over the constant-editor you will be able to make some configurations.
 - You must set the listPage and detailPage to have the list- and detailplugin working.
  - If you just want some wrapped terms and no list- & detailpage you can keep it empty.
+- There are also example styles and scripts for the views and a tiny CSS3 Tooltip
+ - CSS: EXT:dpn_glossary/Resources/Public/css/styles.min.css
+ - JS:  EXT:dpn_glossary/Resources/Public/js/scripts.min.css
 
 ## Settings
 
@@ -30,8 +33,9 @@ This extension is all namespaced and is tested in TYPO3 6.2.X & 7.1.X
  - Character: lists all terms grouped by their beginning characters
  - Pagination: lists terms by characters with a pagination
   - You can override the characters in TypoScript used in the pagination (see example).
-  - Hint: if you want to add umlauts to the pagination you have to check the terms table collation.
-    Normal utf8 will not differ between Ä and A, you have to use "utf8_german2_ci" which would make a difference
+    - Hint: if you want to add umlauts to the pagination you have to check the terms table collation.
+      - Normal utf8 will not differ between Ä and A, you have to use "utf8_german2_ci" which would make a difference
+      - See [MySQL reference](http://dev.mysql.com/doc/refman/5.7/en/charset-collation-effect.html) for more info
 
 - Link configuration:
  - The generated Link is whole configurable over TypoScript (see example).

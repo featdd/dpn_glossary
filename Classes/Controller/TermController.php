@@ -1,5 +1,5 @@
 <?php
-namespace Dpn\DpnGlossary\Controller;
+namespace DPN\DpnGlossary\Controller;
 
 /***************************************************************
  *  Copyright notice
@@ -74,10 +74,9 @@ class TermController extends ActionController {
 	 * @return void
 	 */
 	public function showAction(Term $term, $pageUid = NULL) {
-		if(NULL !== $pageUid) {
-			$this->view->assign('pageUid', $pageUid);
-		}
+		$pageUid = FALSE === empty($pageUid) ? $pageUid : FALSE;
 
+		$this->view->assign('pageUid', $pageUid);
 		$this->view->assign('listPage', $this->settings['listPage']);
 		$this->view->assign('term', $term);
 	}
