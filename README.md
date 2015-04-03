@@ -2,24 +2,36 @@
 
 A TYPO3 extension for a glossary and a contentparser to link terms to a detailpage.
 
-This extension is all namespaced and is developed and tested in TYPO3 6.2.X
+This extension is all namespaced and is tested in TYPO3 6.2.X & 7.1.X
 
 ## Contact
 <dorndorf@dreipunktnull.com>
 
 # Configuration
 
-Integrate the plugin in your root template.
-Over the constant-editor you will be able to make some configurations.
+- Integrate the plugin in your root template.
+- Over the constant-editor you will be able to make some configurations.
+- You must set the listPage and detailPage to have the list- and detailplugin working.
+ - If you just want some wrapped terms and no list- & detailpage you can keep it empty.
+
+## Settings
+
 - (storagePid) Pids of storages containing terms
-- (detailsPid) PageId where plugin is avialable, for the the parsed terms
+- (listPage) PageId of the listpage plugin
+- (detailPage) PageId of the detailpage plugin (parser will link to this)
  - Otherwise if tooltips are turned on the link will be an anchor
 - (parsingPids) Set the pageIds which should be parsed for terms (0 for all)
 - (parsingPidsExcludePidList) Set the pageIds which should "not" be parsed for terms (0 for none)
 - (maxReplacementPerPage) Configure the max replacement for each terms
 - (parsingTags) The tags whish should be parsed for terms
 - (forbiddenParentTags) The tags which are not allowed as a parent for a parsingTag
-- (listmode) Sets the listmode for the plugin, you may want to use a character ordered list
+- (listmode) Sets the listmode for the plugin
+ - Normal: lists all terms in alphabetical order
+ - Character: lists all terms grouped by their beginning characters
+ - Pagination: lists terms by characters with a pagination
+  - You can override the characters in TypoScript used in the pagination (see example).
+  - Hint: if you want to add umlauts to the pagination you have to check the terms table collation.
+    Normal utf8 will not differ between Ä and A, you have to use "utf8_german2_ci" which would make a difference
 
 - Link configuration:
  - The generated Link is whole configurable over TypoScript (see example).
@@ -28,39 +40,50 @@ Over the constant-editor you will be able to make some configurations.
 ```TypoScript
 plugin.tx_dpnglossary {
     settings {
-        termWraps {
-            default {
-                dataWrap = <span class="dpnglossary" lang="{field:term_lang}" title="{field:name}">|</span>
-                typolink.ATagParams.dataWrap = title="{field:tooltiptext}" class="dpnglossary-link"
-            }
-            acronym {
-                datawrap = <acronym title="{field:tooltiptext}" lang="{field:term_lang}">|</acronym>
-            }
-            abbreviation {
-                dataWrap = <abbr title="{field:tooltiptext}" lang="{field:term_lang}">|</abbr>
-            }
-            acronym {
-                dataWrap = <acronym title="{field:tooltiptext}" lang="{field:term_lang}">|</acronym>
-            }
-            definition {
-                dataWrap = <dfn title="{field:tooltiptext}" lang="{field:term_lang}">|</dfn>
-            }
-        }
-    }
+		pagination {
+			characters = A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z
+			insertAbove = 1
+			insertBelow = 0
+		}
+
+		termWraps = CASE
+		termWraps {
+			key.field = term_type
+			default = TEXT
+			default {
+				field = name
+				dataWrap = |
+				typolink {
+					ATagParams.dataWrap = title="{field:tooltiptext}" class="dpnglossary link"
+					ATagParams.dataWrap {
+						override = title="{field:name}" class="dpnglossary link"
+						override.if.isFalse.data = field:tooltiptext
+					}
+					useCacheHash = 1
+				}
+			}
+			abbreviation {
+				dataWrap = <abbr title="{field:tooltiptext}" lang="{field:term_lang}">|</abbr>
+			}
+			acronym {
+				dataWrap = <acronym title="{field:tooltiptext}" lang="{field:term_lang}">|</acronym>
+			}
+			definition {
+				dataWrap = <dfn title="{field:tooltiptext}" lang="{field:term_lang}">|</dfn>
+			}
+		}
+	}
 }
 ```
 
 ##RealURL Configuration
 
 The configuration for realUrl is now integrated into the localconf.
-If you want to use it set the detailpage in the extension settings.
-
-But if you prefer to it manually or use more than one glossary plugins,
-you can use the configuration in your realurl_conf.php.
-
-- Add the id of your detailpage as the key and "dpn_glossary_RealUrlConfig" as it's value.
+If you want to use it set the list & detailpage in your RealUrl configuration.
+- Add the id of your list & detailpage as the key (see example below).
 ```PHP
 'fixedPostVars' => array(
-	'PAGEUID' => 'dpn_glossary_RealUrlConfig',
+	'LISTPAGEUID' => 'dpn_glossary_list_RealUrlConfig',
+	'DETAILPAGEUID' => 'dpn_glossary_detail_RealUrlConfig',
 ),
 ```
