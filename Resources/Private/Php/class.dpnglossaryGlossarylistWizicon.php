@@ -29,7 +29,7 @@
  * @package dpn_glossary
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  */
-class dpn_glossary_glossary_wizicon {
+class dpnglossaryGlossarylistWizicon {
 
 	/**
 	 * Processing the wizard items array
@@ -38,11 +38,18 @@ class dpn_glossary_glossary_wizicon {
 	 * @return array Modified array with wizard items
 	 */
 	function proc($wizardItems)     {
-		$wizardItems['plugins_tx_examples_pierror'] = array(
+		$wizardItems['plugins_tx_dpnglossary_glossarylist'] = array(
 			'icon' => \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extRelPath('dpn_glossary') . 'Resources/Public/Icons/plugin.png',
-			'title' => $GLOBALS['LANG']->sL('LLL:EXT:dpn_glossary/Resources/Private/Language/locallang.xlf:tx_dpnglossary.wizard_title'),
-			'description' => $GLOBALS['LANG']->sL('LLL:EXT:dpn_glossary/Resources/Private/Language/locallang.xlf:tx_dpnglossary.wizard_description'),
-			'params' => '&defVals[tt_content][CType]=list&&defVals[tt_content][list_type]=dpnglossary_glossary'
+			'title' => $GLOBALS['LANG']->sL('LLL:EXT:dpn_glossary/Resources/Private/Language/locallang.xlf:tx_dpnglossary.wizard_list_title'),
+			'description' => $GLOBALS['LANG']->sL('LLL:EXT:dpn_glossary/Resources/Private/Language/locallang.xlf:tx_dpnglossary.wizard_list_description'),
+			'params' => '&defVals[tt_content][CType]=list&&defVals[tt_content][list_type]=dpnglossary_glossarylist'
+		);
+
+		$wizardItems['plugins_tx_dpnglossary_glossarydetails'] = array(
+			'icon' => \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extRelPath('dpn_glossary') . 'Resources/Public/Icons/plugin.png',
+			'title' => $GLOBALS['LANG']->sL('LLL:EXT:dpn_glossary/Resources/Private/Language/locallang.xlf:tx_dpnglossary.wizard_detail_title'),
+			'description' => $GLOBALS['LANG']->sL('LLL:EXT:dpn_glossary/Resources/Private/Language/locallang.xlf:tx_dpnglossary.wizard_detail_description'),
+			'params' => '&defVals[tt_content][CType]=list&&defVals[tt_content][list_type]=dpnglossary_glossarydetail'
 		);
 
 		return $wizardItems;

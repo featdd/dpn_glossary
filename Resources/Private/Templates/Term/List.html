@@ -43,7 +43,7 @@
 				<div>
 					<dl>
 						<f:for each="{paginatedTerms}" as="term">
-							<dt><f:link.action action="show" arguments="{term: term}">{term.name}</f:link.action></dt>
+							<dt><f:link.action pageUid="{detailPage}" action="show" arguments="{term: term}">{term.name}</f:link.action></dt>
 							<dd>{term.tooltiptext}</dd>
 						</f:for>
 					</dl>

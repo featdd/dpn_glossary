@@ -12,8 +12,10 @@ plugin.tx_dpnglossary {
 		storagePid =
 	}
 	settings {
-		# cat=plugin.tx_dpnglossary//a; type=string; label=Page ID of the detailpage for parsed terms
-		detailsPid =
+		# cat=plugin.tx_dpnglossary//a; type=integer; label=Page ID of the detailpage for parsed terms
+		detailPage =
+		# cat=plugin.tx_dpnglossary//a; type=integer; label=Page ID of the listpage for parsed terms
+		listPage =
 		# cat=plugin.tx_dpnglossary//a; type=string; label=Pages which should be parsed for glossary terms
 		parsingPids = 0
 		# cat=plugin.tx_dpnglossary//a; type=string; label=Pages (comma list) which should not be parsed for glossary terms

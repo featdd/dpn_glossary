@@ -70,11 +70,17 @@
             <trans-unit id="tx_dpnglossary.backtolist">
             	<source>Back to list</source>
             </trans-unit>
-			<trans-unit id="tx_dpnglossary.wizard_title">
-				<source>Dreipunktnull Glossary</source>
+			<trans-unit id="tx_dpnglossary.wizard_list_title">
+				<source>dreipunktnull Glossary List</source>
 			</trans-unit>
-			<trans-unit id="tx_dpnglossary.wizard_description">
-				<source>Glossary plugin for the output of the terms</source>
+			<trans-unit id="tx_dpnglossary.wizard_list_description">
+				<source>Listview of the dpn_glossary extension</source>
+			</trans-unit>
+			<trans-unit id="tx_dpnglossary.wizard_detail_title">
+				<source>dreipunktnull Glossary Detail</source>
+			</trans-unit>
+			<trans-unit id="tx_dpnglossary.wizard_detail_description">
+				<source>Detailview of the dpn_glossary extension</source>
 			</trans-unit>
 			
 		</body>

@@ -61,6 +61,7 @@ class TermController extends ActionController {
             $this->termRepository->findAllGroupedByFirstCharacter() :
             $this->termRepository->findAll();
 
+		$this->view->assign('detailPage', $this->settings['detailPage']);
         $this->view->assign('listmode', $this->settings['listmode']);
 		$this->view->assign('terms', $terms);
 	}
@@ -76,6 +77,8 @@ class TermController extends ActionController {
 		if(NULL !== $pageUid) {
 			$this->view->assign('pageUid', $pageUid);
 		}
+
+		$this->view->assign('listPage', $this->settings['listPage']);
 		$this->view->assign('term', $term);
 	}
 }

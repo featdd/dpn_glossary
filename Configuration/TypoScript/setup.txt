@@ -9,7 +9,9 @@ plugin.tx_dpnglossary {
 	}
 	settings {
 		# Pid of the detailpage
-		detailsPid = {$plugin.tx_dpnglossary.settings.detailsPid}
+		detailPage = {$plugin.tx_dpnglossary.settings.detailPage}
+		# Pid of the listpage
+		listPage = {$plugin.tx_dpnglossary.settings.listPage}
 		# pages where terms should be searched, 0 = all
 		parsingPids = {$plugin.tx_dpnglossary.settings.parsingPids}
 		# pages where terms should NOT be searched
@@ -40,16 +42,16 @@ plugin.tx_dpnglossary {
 				typolink {
 					parameter = #{field:name}
 					parameter.insertData = 1
-					parameter.override < plugin.tx_dpnglossary.settings.detailsPid
+					parameter.override < plugin.tx_dpnglossary.settings.detailPage
 					parameter.override {
 						if.value = 0
-						if.isGreaterThan < plugin.tx_dpnglossary.settings.detailsPid
+						if.isGreaterThan < plugin.tx_dpnglossary.settings.detailPage
 					}
-					additionalParams = &tx_dpnglossary_glossary[controller]=Term&tx_dpnglossary_glossary[action]=show&tx_dpnglossary_glossary[term]={field:uid}&tx_dpnglossary_glossary[pageUid]={ global : TSFE | id}
+					additionalParams = &tx_dpnglossary_glossarydetail[controller]=Term&tx_dpnglossary_glossarydetail[action]=show&tx_dpnglossary_glossarydetail[term]={field:uid}&tx_dpnglossary_glossarydetail[pageUid]={ global : TSFE | id}
 					additionalParams {
 						insertData = 1
 						if.value = 0
-						if.isGreaterThan < plugin.tx_dpnglossary.settings.detailsPid
+						if.isGreaterThan < plugin.tx_dpnglossary.settings.detailPage
 					}
 					ATagParams.dataWrap = title="{field:tooltiptext}" class="dpnglossary link"
                     ATagParams.dataWrap {

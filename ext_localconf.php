@@ -5,9 +5,21 @@ if (!defined('TYPO3_MODE')) {
 
 \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
 	'Dpn.' . $_EXTKEY,
-	'Glossary',
+	'Glossarylist',
 	array(
-		'Term' => 'list, show'
+		'Term' => 'list'
+	),
+	// non-cacheable actions
+	array(
+		'Term' => ''
+	)
+);
+
+\TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
+	'Dpn.' . $_EXTKEY,
+	'Glossarydetail',
+	array(
+		'Term' => 'show'
 	),
 	// non-cacheable actions
 	array(
@@ -24,21 +36,30 @@ if (TRUE === is_array($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['realurl'])) {
 	}
 
 	$GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['realurl']['_DEFAULT']['fixedPostVars'] += array(
-		$_EXTKEY . '_RealUrlConfig' => array(
+		$_EXTKEY . '_list_RealUrlConfig' => array(
 			array(
-				'GETvar' => 'tx_dpnglossary_glossary[controller]',
+				'GETvar' => 'tx_dpnglossary_glossarylist[controller]',
 				'noMatch' => 'bypass'
 			),
 			array(
-				'GETvar' => 'tx_dpnglossary_glossary[action]',
-				'valueMap' => array(
-					'detail' => 'show',
-				),
-				'valueDefault' => 'list',
+				'GETvar' => 'tx_dpnglossary_glossarylist[action]',
 				'noMatch' => 'bypass'
 			),
 			array(
-				'GETvar' => 'tx_dpnglossary_glossary[term]',
+				'GETvar' => 'tx_dpnglossary_glossarylist[@widget_0][character]'
+			),
+		),
+		$_EXTKEY . '_detail_RealUrlConfig' => array(
+			array(
+				'GETvar' => 'tx_dpnglossary_glossarydetail[controller]',
+				'noMatch' => 'bypass'
+			),
+			array(
+				'GETvar' => 'tx_dpnglossary_glossarydetail[action]',
+				'noMatch' => 'bypass'
+			),
+			array(
+				'GETvar' => 'tx_dpnglossary_glossarydetail[term]',
 				'lookUpTable' => array(
 					'table' => 'tx_dpnglossary_domain_model_term',
 					'id_field' => 'uid',
@@ -58,10 +79,7 @@ if (TRUE === is_array($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['realurl'])) {
 				),
 			),
 			array(
-				'GETvar' => 'tx_dpnglossary_glossary[@widget_0][character]',
-			),
-			array(
-				'GETvar' => 'tx_dpnglossary_glossary[pageUid]'
+				'GETvar' => 'tx_dpnglossary_glossarydetail[pageUid]'
 			),
 		),
 	);
