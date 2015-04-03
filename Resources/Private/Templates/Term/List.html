@@ -39,7 +39,7 @@
 
 		<f:if condition="{listmode} == 'pagination'">
 
-			<dpn:widget.paginate terms="{terms}" as="paginatedTerms">
+			<dpn:widget.paginate objects="{terms}" field="name" as="paginatedTerms">
 				<div>
 					<dl>
 						<f:for each="{paginatedTerms}" as="term">

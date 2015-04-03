@@ -51,12 +51,16 @@ class PaginateViewHelper extends AbstractWidgetViewHelper {
     }
 
 	/**
-	 * @param QueryResultInterface $terms
+	 * Gets the objects and "as" value also
+	 * the fieldname for what to sort for
+	 *
+	 * @param QueryResultInterface $objects
 	 * @param string $as
+	 * @param string $field
 	 *
 	 * @return ResponseInterface
 	 */
-    public function render(QueryResultInterface $terms, $as) {
+    public function render(QueryResultInterface $objects, $as, $field = 'name') {
         return $this->initiateSubRequest();
     }
 

@@ -48,26 +48,44 @@ class PaginateController extends AbstractWidgetController {
     );
 
     /**
+	 * Objects to sort
+	 *
      * @var QueryResultInterface
      */
-    protected $terms;
+    protected $objects;
 
 	/**
+	 * Query object to sort and count terms
+	 *
 	 * @var QueryInterface
 	 */
 	protected $query;
 
     /**
+	 * Sorting fieldname of the object model
+	 * what was passed by in objects
+	 *
      * @var string
      */
-    protected $currentCharacter = 'A';
+    protected $field = '';
 
 	/**
+	 * Current page character
+	 *
+     * @var string
+     */
+    protected $currentCharacter = '';
+
+	/**
+	 * Characters used in the pagination
+	 *
 	 * @var array
 	 */
 	protected $characters = array();
 
     /**
+	 * Init action of the controller
+	 *
      * @return void
      */
     public function initializeAction() {
@@ -77,12 +95,16 @@ class PaginateController extends AbstractWidgetController {
 			TRUE
 		);
 
-		$this->terms = $this->widgetConfiguration['terms'];
-		$this->query = $this->terms->getQuery();
+		$this->field = FALSE === empty($this->widgetConfiguration['field']) ? $this->widgetConfiguration['field'] : 'name';
+		$this->objects = $this->widgetConfiguration['objects'];
+		$this->query = $this->objects->getQuery();
 		$this->characters = explode(',', $this->configuration['characters']);
     }
 
     /**
+	 * Main action terms will be sorted
+	 * by the currentCharacter
+	 *
      * @param string $character
      *
      * @return void
@@ -90,28 +112,34 @@ class PaginateController extends AbstractWidgetController {
     public function indexAction($character = 'A') {
 		$this->currentCharacter = FALSE === empty($character) ? $character : $this->characters[0];
 
-        $this->query->matching($this->query->like('name', $this->currentCharacter . '%'));
-        $terms = $this->query->execute()->toArray();
+        $this->query->matching($this->query->like($this->field, $this->currentCharacter . '%'));
+        $objects = $this->query->execute()->toArray();
 
 		$this->view->assign('configuration', $this->configuration);
 		$this->view->assign('pagination', $this->buildPagination());
         $this->view->assign('contentArguments', array(
-            $this->widgetConfiguration['as'] => $terms
+            $this->widgetConfiguration['as'] => $objects
         ));
     }
 
 	/**
+	 * Pagination array gets build up
+	 *
 	 * @return array
 	 */
 	protected function buildPagination() {
 		$pages = array();
 		$numberOfCharacters = count($this->characters);
 
+		/*
+		 * Generates the pages and also checks if
+		 * the page has no objects
+		 */
 		for ($i = 0; $i < $numberOfCharacters; $i++) {
 			$pages[] = array(
 				'character' => $this->characters[$i],
 				'isCurrent' => $this->characters[$i] === $this->currentCharacter,
-				'isEmpty'   => 0 === $this->query->matching($this->query->like('name', $this->characters[$i] . '%'))->execute()->count()
+				'isEmpty'   => 0 === $this->query->matching($this->query->like($this->field, $this->characters[$i] . '%'))->execute()->count()
 			);
 		}
 
