@@ -112,7 +112,7 @@ class WrapperService implements SingletonInterface {
 			$excludePids = GeneralUtility::trimExplode(',', $this->tsConfig['settings.']['parsingExcludePidList']);
 
 			//Check if current page is in- or excluded nor the detailpage of the glossary plugin
-			if (FALSE === in_array($GLOBALS['TSFE']->id, $excludePids) && (TRUE === in_array($GLOBALS['TSFE']->id, $parsingPids) || TRUE === in_array('0', $parsingPids)) && $GLOBALS['TSFE']->id !== intval($this->tsConfig['settings.']['detailsPid'])) {
+			if (FALSE === in_array($GLOBALS['TSFE']->id, $excludePids) && (TRUE === in_array($GLOBALS['TSFE']->id, $parsingPids) || TRUE === in_array('0', $parsingPids)) && $GLOBALS['TSFE']->id !== intval($this->tsConfig['settings.']['detailPage']) && $GLOBALS['TSFE']->id !== intval($this->tsConfig['settings.']['listPage'])) {
 				// Get max number of replacements per page and term
 				$this->maxReplacementPerPage = (int)$this->tsConfig['settings.']['maxReplacementPerPage'];
 				// Tags which are not allowed as direct parent for a parsingTag
