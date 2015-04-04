@@ -73,7 +73,7 @@ class TermRepository extends Repository {
 
 		/** @var Term $term */
 		foreach ($terms as $term) {
-			$firstCharacter = strtolower(substr($term->getName(), 0, 1));
+			$firstCharacter = mb_strtolower(mb_substr($term->getName(), 0, 1, 'UTF-8'), 'UTF-8');
 
 			if (in_array($firstCharacter, $numbers)) {
 				$firstCharacter = '0-9';
@@ -95,7 +95,7 @@ class TermRepository extends Repository {
 
 			}
 
-			$firstCharacter = strtoupper($firstCharacter);
+			$firstCharacter = mb_strtoupper($firstCharacter, 'UTF-8');
 
 			if (FALSE === isset($sortedTerms[$firstCharacter])) {
 				$sortedTerms[$firstCharacter] = array();

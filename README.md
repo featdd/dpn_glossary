@@ -35,6 +35,7 @@ This extension is all namespaced and is tested in TYPO3 6.2.X & 7.1.X
   - You can override the characters in TypoScript used in the pagination (see example).
     - Hint: if you want to add umlauts to the pagination you have to check the terms table collation.
       - Normal utf8 will not differ between Ä and A, you have to use "utf8_german2_ci" which would make a difference
+      - You could change the 'name' column collation and add Ä,Ö,Ü to the comma list over typoscript (see example)
       - See [MySQL reference](http://dev.mysql.com/doc/refman/5.7/en/charset-collation-effect.html) for more info
 
 - Link configuration:

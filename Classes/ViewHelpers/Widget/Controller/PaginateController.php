@@ -112,6 +112,12 @@ class PaginateController extends AbstractWidgetController {
     public function indexAction($character = 'A') {
 		$this->currentCharacter = FALSE === empty($character) ? $character : $this->characters[0];
 
+		$this->currentCharacter = str_replace(
+			array('AE', 'OE', 'UE'),
+			array('Ä', 'Ö', 'Ü'),
+			$this->currentCharacter
+		);
+
         $this->query->matching($this->query->like($this->field, $this->currentCharacter . '%'));
         $objects = $this->query->execute()->toArray();
 
@@ -137,6 +143,11 @@ class PaginateController extends AbstractWidgetController {
 		 */
 		for ($i = 0; $i < $numberOfCharacters; $i++) {
 			$pages[] = array(
+				'linkCharacter' => str_replace(
+					array('Ä', 'Ö', 'Ü'),
+					array('AE', 'OE', 'UE'),
+					$this->characters[$i]
+				),
 				'character' => $this->characters[$i],
 				'isCurrent' => $this->characters[$i] === $this->currentCharacter,
 				'isEmpty'   => 0 === $this->query->matching($this->query->like($this->field, $this->characters[$i] . '%'))->execute()->count()

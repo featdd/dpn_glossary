@@ -14,7 +14,14 @@
                 <p><f:link.page pageUid="{pageUid}"><f:translate key="tx_dpnglossary.backtolastpage" /></f:link.page></p>
             </f:then>
             <f:else>
-                <p><f:link.action pageUid="{listPage}" action="list"><f:translate key="tx_dpnglossary.backtolist" /></f:link.action></p>
+				<f:if condition="{paginateLink}">
+					<f:then>
+						<p><f:link.action pageUid="{listPage}" action="list" arguments="{paginateLink}"><f:translate key="tx_dpnglossary.backtolist" /></f:link.action></p>
+					</f:then>
+					<f:else>
+						<p><f:link.action pageUid="{listPage}" action="list"><f:translate key="tx_dpnglossary.backtolist" /></f:link.action></p>
+					</f:else>
+				</f:if>
             </f:else>
         </f:if>
 

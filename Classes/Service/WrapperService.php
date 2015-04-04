@@ -262,6 +262,7 @@ class WrapperService implements SingletonInterface {
 				);
 			}
 		}
+
 		return $text;
 	}
 
@@ -275,6 +276,7 @@ class WrapperService implements SingletonInterface {
 		$ts = $this->tsConfig['settings.']['termWraps'];
 		$tsArr = $this->tsConfig['settings.']['termWraps.'];
 		$this->cObj->start($term->toArray());
+
 		return $this->cObj->cObjGetSingle($ts, $tsArr);
 	}
 }

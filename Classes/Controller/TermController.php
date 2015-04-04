@@ -76,8 +76,56 @@ class TermController extends ActionController {
 	public function showAction(Term $term, $pageUid = NULL) {
 		$pageUid = FALSE === empty($pageUid) ? $pageUid : FALSE;
 
+		if ('pagination' === $this->settings['listmode']) {
+			$this->view->assign('paginateLink', $this->paginationArguments($term->getName()));
+		}
+
 		$this->view->assign('pageUid', $pageUid);
 		$this->view->assign('listPage', $this->settings['listPage']);
 		$this->view->assign('term', $term);
+	}
+
+	/**
+	 * If the pagination is used this function
+	 * will prepare the link arguments to get
+	 * back to the last pagination page
+	 *
+	 * @param string $termname
+	 * @return array
+	 */
+	private function paginationArguments($termname) {
+		$termCharacter = mb_strtoupper(mb_substr($termname,0,1,'UTF-8'), 'UTF-8');
+		$characters = array_change_key_case(explode(',',$this->settings['pagination']['characters']), CASE_UPPER);
+
+		/*
+		 * Replace umlauts if they are in characters
+		 * else use A,O,U
+		 */
+		$hasUmlauts = array_intersect(array('Ä', 'Ö', 'Ü'), $characters);
+		$umlautReplacement = FALSE === empty($hasUmlauts) ?
+			array('AE', 'OE', 'UE') :
+			array('A', 'O', 'U');
+
+		$termCharacter = str_replace(
+			array('Ä', 'Ö', 'Ü'),
+			$umlautReplacement,
+			$termCharacter
+		);
+
+		$characters = str_replace(
+			array('Ä', 'Ö', 'Ü'),
+			$umlautReplacement,
+			$characters
+		);
+
+		$character = TRUE === in_array($termCharacter, $characters) ?
+			$termCharacter :
+			FALSE;
+
+		return array(
+			'@widget_0' => array(
+				'character' => $character
+			)
+		);
 	}
 }

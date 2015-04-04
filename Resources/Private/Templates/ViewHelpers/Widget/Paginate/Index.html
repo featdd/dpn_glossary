@@ -36,7 +36,7 @@
 								</f:then>
 								<f:else>
 									<li class="character{f:if(condition: iterator.isFirst, then: ' first')}{f:if(condition: iterator.isLast, then: ' last')}">
-										<f:widget.link arguments="{character: page.character}">{page.character}</f:widget.link>
+										<f:widget.link arguments="{character: page.linkCharacter}">{page.character}</f:widget.link>
 									</li>
 								</f:else>
 							</f:if>
