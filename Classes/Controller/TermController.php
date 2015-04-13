@@ -25,8 +25,8 @@ namespace DPN\DpnGlossary\Controller;
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
-use Dpn\DpnGlossary\Domain\Model\Term;
-use Dpn\DpnGlossary\Domain\Repository\TermRepository;
+use DPN\DpnGlossary\Domain\Model\Term;
+use DPN\DpnGlossary\Domain\Repository\TermRepository;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 
 /**
