@@ -46,7 +46,8 @@ if (TRUE === is_array($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['realurl']['_DEFAUL
 				'noMatch' => 'bypass'
 			),
 			array(
-				'GETvar' => 'tx_dpnglossary_glossarylist[@widget_0][character]'
+				'GETvar' => 'tx_dpnglossary_glossarylist[@widget_0][character]',
+				'noMatch' => 'bypass'
 			),
 		),
 		$_EXTKEY . '_detail_RealUrlConfig' => array(
