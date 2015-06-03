@@ -70,6 +70,9 @@
             <trans-unit id="tx_dpnglossary.backtolist">
             	<source>Back to list</source>
             </trans-unit>
+			<trans-unit id="tx_dpnglossary.no_objects_found">
+				<source>No objects were found</source>
+			</trans-unit>
 			<trans-unit id="tx_dpnglossary.wizard_list_title">
 				<source>dreipunktnull Glossary List</source>
 			</trans-unit>

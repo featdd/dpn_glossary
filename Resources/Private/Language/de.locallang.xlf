@@ -70,6 +70,9 @@
             <trans-unit id="tx_dpnglossary.backtolist">
                 <target>Zurück zur Liste</target>
             </trans-unit>
+			<trans-unit id="tx_dpnglossary.no_objects_found">
+				<target>Es wurden keine Objekte gefunden</target>
+			</trans-unit>
 			<trans-unit id="tx_dpnglossary.wizard_list_title">
 				<target>dreipunktnull Glossar Liste</target>
 			</trans-unit>
@@ -82,6 +85,7 @@
 			<trans-unit id="tx_dpnglossary.wizard_detail_description">
 				<target>Detailansicht der dpn_glossary Extension</target>
 			</trans-unit>
+
 		</body>
 	</file>
 </xliff>

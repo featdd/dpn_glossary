@@ -9,7 +9,14 @@
 			<f:render section="Pagination" arguments="{pagination: pagination}" />
 		</f:if>
 
-		<f:renderChildren arguments="{contentArguments}" />
+		<f:if condition="{noObjects}">
+			<f:then>
+				<p><f:translate key="tx_dpnglossary.no_objects_found"/></p>
+			</f:then>
+			<f:else>
+				<f:renderChildren arguments="{contentArguments}" />
+			</f:else>
+		</f:if>
 
 		<f:if condition="{configuration.insertBelow}">
 			<f:render section="Pagination" arguments="{pagination: pagination}" />
@@ -32,7 +39,7 @@
 						<f:else>
 							<f:if condition="{page.isEmpty}">
 								<f:then>
-									<li class="character empty{f:if(condition: iterator.isFirst, then: 'first')}{f:if(condition: iterator.isLast, then: ' last')}">{page.character}</li>
+									<li class="character empty{f:if(condition: iterator.isFirst, then: ' first')}{f:if(condition: iterator.isLast, then: ' last')}">{page.character}</li>
 								</f:then>
 								<f:else>
 									<li class="character{f:if(condition: iterator.isFirst, then: ' first')}{f:if(condition: iterator.isLast, then: ' last')}">
