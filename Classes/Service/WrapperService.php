@@ -91,7 +91,7 @@ class WrapperService implements SingletonInterface {
 			/** @var QuerySettingsInterface $querySettings */
 			$querySettings = $objectManager->get('TYPO3\CMS\Extbase\Persistence\Generic\QuerySettingsInterface');
 			// Get termRepository
-			$this->termRepository = $objectManager->get('Dpn\DpnGlossary\Domain\Repository\TermRepository');
+			$this->termRepository = $objectManager->get('DPN\DpnGlossary\Domain\Repository\TermRepository');
 			// Get Typoscript Configuration
 			$this->tsConfig = $configurationManager->getConfiguration(ConfigurationManagerInterface::CONFIGURATION_TYPE_FULL_TYPOSCRIPT);
 			// Reduce TS config to plugin
@@ -119,7 +119,7 @@ class WrapperService implements SingletonInterface {
 				$forbiddenParentTags = GeneralUtility::trimExplode(',', $this->tsConfig['settings.']['forbiddenParentTags']);
 				// Get Tags which content should be parsed
 				$tags = GeneralUtility::trimExplode(',', $this->tsConfig['settings.']['parsingTags']);
-				// Exit if no Terms were set
+				// Exit if no HTML tags to parse were set
 				if (TRUE === empty($tags)) {
 					return;
 				}

@@ -145,9 +145,7 @@ class PaginateController extends AbstractWidgetController {
 
 		$this->view->assign('configuration', $this->configuration);
 		$this->view->assign('pagination', $this->buildPagination());
-		$this->view->assign('contentArguments', array(
-			$this->widgetConfiguration['as'] => $objects
-		));
+		$this->view->assign('contentArguments', array($this->widgetConfiguration['as'] => $objects));
 	}
 
 	/**
@@ -177,11 +175,11 @@ class PaginateController extends AbstractWidgetController {
 		}
 
 		$pagination = array(
-			'pages'			 => $pages,
-			'current'		   => $this->currentCharacter,
-			'numberOfPages'	 => $numberOfCharacters,
-			'startCharacter'	=> $this->characters[0],
-			'endCharacter'	  => $this->characters[count($this->characters) + 1]
+			'pages'          => $pages,
+			'current'        => $this->currentCharacter,
+			'numberOfPages'  => $numberOfCharacters,
+			'startCharacter' => $this->characters[0],
+			'endCharacter'   => $this->characters[count($this->characters) + 1]
 		);
 
 		return $pagination;
@@ -193,7 +191,7 @@ class PaginateController extends AbstractWidgetController {
 	 * back to the last pagination page
 	 *
 	 * @param string $field
-	 * @param $paginationCharacters
+	 * @param string $paginationCharacters
 	 * @return array
 	 */
 	static function paginationArguments($field, $paginationCharacters) {
