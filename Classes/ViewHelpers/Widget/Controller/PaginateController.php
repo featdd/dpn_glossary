@@ -187,4 +187,49 @@ class PaginateController extends AbstractWidgetController {
 		return $pagination;
 	}
 
+	/**
+	 * If the pagination is used this function
+	 * will prepare the link arguments to get
+	 * back to the last pagination page
+	 *
+	 * @param string $field
+	 * @param $paginationCharacters
+	 * @return array
+	 */
+	static function paginationArguments($field, $paginationCharacters) {
+		$firstCharacter = mb_strtoupper(mb_substr($field,0,1,'UTF-8'), 'UTF-8');
+		$characters = array_change_key_case(explode(',',$paginationCharacters), CASE_UPPER);
+
+		/*
+		 * Replace umlauts if they are in characters
+		 * else use A,O,U
+		 */
+		$hasUmlauts = array_intersect(array('Ä', 'Ö', 'Ü'), $characters);
+		$umlautReplacement = FALSE === empty($hasUmlauts) ?
+			array('AE', 'OE', 'UE') :
+			array('A', 'O', 'U');
+
+		$firstCharacter = str_replace(
+			array('Ä', 'Ö', 'Ü'),
+			$umlautReplacement,
+			$firstCharacter
+		);
+
+		$characters = str_replace(
+			array('Ä', 'Ö', 'Ü'),
+			$umlautReplacement,
+			$characters
+		);
+
+		$character = TRUE === in_array($firstCharacter, $characters) ?
+			$firstCharacter :
+			FALSE;
+
+		return array(
+			'@widget_0' => array(
+				'character' => $character
+			)
+		);
+	}
+
 }
