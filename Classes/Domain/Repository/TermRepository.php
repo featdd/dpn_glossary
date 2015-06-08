@@ -54,6 +54,7 @@ class TermRepository extends Repository {
 		$query->statement('
 			SELECT *
 			FROM tx_dpnglossary_domain_model_term
+			WHERE hidden = 0
 			ORDER BY CHAR_LENGTH(name) DESC, name ASC
 		');
 
