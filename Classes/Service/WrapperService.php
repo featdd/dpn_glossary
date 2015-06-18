@@ -116,9 +116,19 @@ class WrapperService implements SingletonInterface {
 				// Get max number of replacements per page and term
 				$this->maxReplacementPerPage = (int)$this->tsConfig['settings.']['maxReplacementPerPage'];
 				// Tags which are not allowed as direct parent for a parsingTag
-				$forbiddenParentTags = GeneralUtility::trimExplode(',', $this->tsConfig['settings.']['forbiddenParentTags']);
+				$forbiddenParentTags = array_filter(GeneralUtility::trimExplode(',', $this->tsConfig['settings.']['forbiddenParentTags']));
+				// Add "a" if unknowingly deleted to prevent errors
+				if (FALSE === in_array('a', $forbiddenParentTags)) {
+					$forbiddenParentTags[] = 'a';
+				}
+
 				// Get Tags which content should be parsed
 				$tags = GeneralUtility::trimExplode(',', $this->tsConfig['settings.']['parsingTags']);
+				// Remove "a" from parsingTags if it was added unknowingly
+				if (TRUE === in_array('a', $tags)) {
+					$tags = array_diff($tags, array('a'));
+				}
+
 				// Exit if no HTML tags to parse were set
 				if (TRUE === empty($tags)) {
 					return;
