@@ -69,12 +69,24 @@ plugin.tx_dpnglossary {
 			}
 			abbreviation {
 				dataWrap = <abbr title="{field:tooltiptext}" lang="{field:term_lang}">|</abbr>
+				dataWrap {
+					override = <abbr title="{field:name}" lang="{field:term_lang}">|</abbr>
+					override.if.isFalse.data = field:tooltiptext
+				}
 			}
 			acronym {
 				dataWrap = <acronym title="{field:tooltiptext}" lang="{field:term_lang}">|</acronym>
+				dataWrap {
+					override = <acronym title="{field:name}" lang="{field:term_lang}">|</acronym>
+					override.if.isFalse.data = field:tooltiptext
+				}
 			}
 			definition {
 				dataWrap = <dfn title="{field:tooltiptext}" lang="{field:term_lang}">|</dfn>
+				dataWrap {
+					override = <dfn title="{field:name}" lang="{field:term_lang}">|</dfn>
+					override.if.isFalse.data = field:tooltiptext
+				}
 			}
 		}
 	}
