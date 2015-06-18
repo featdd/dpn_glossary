@@ -15,7 +15,7 @@ This extension is all namespaced and is tested in TYPO3 6.2.X & 7.2.X
  - If you just want some wrapped terms and no list- & detailpage you can keep it empty.
 - There are also example styles and scripts for the views and a tiny CSS3 Tooltip
  - CSS: EXT:dpn_glossary/Resources/Public/css/styles.min.css
- - JS:  EXT:dpn_glossary/Resources/Public/js/scripts.min.css
+ - JS:  EXT:dpn_glossary/Resources/Public/js/scripts.min.js
 
 ## Settings
 
