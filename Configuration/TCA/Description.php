@@ -94,6 +94,7 @@ $TCA['tx_dpnglossary_domain_model_description'] = array(
 					),
 				),
 			),
+			'defaultExtras' => 'richtext[]'
 		),
 	),
 );

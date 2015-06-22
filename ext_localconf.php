@@ -27,7 +27,7 @@ if (!defined('TYPO3_MODE')) {
 	)
 );
 
-$GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['tslib/class.tslib_fe.php']['contentPostProc-all'][] = 'Dpn\DpnGlossary\Service\WrapperService->contentParser';
+$GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['tslib/class.tslib_fe.php']['contentPostProc-all'][] = 'DPN\DpnGlossary\Service\WrapperService->contentParser';
 
 if (TRUE === is_array($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['realurl']['_DEFAULT'])) {
 
