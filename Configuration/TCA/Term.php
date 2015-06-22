@@ -129,7 +129,7 @@ $TCA['tx_dpnglossary_domain_model_term'] = array(
 				'type' => 'input',
 				'size' => 2,
 				'max' => 2,
-				'eval' => 'trim'
+				'eval' => 'trim,lower,nospace,alpha'
 			),
 		),
 		'images' => array(

@@ -1,4 +1,5 @@
 <?php
+namespace DPN\DpnGlossary\Domain\Repository;
 
 /***************************************************************
  *  Copyright notice
@@ -24,32 +25,24 @@
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
-$EM_CONF[$_EXTKEY] = array(
-	'title' => 'dreipunktnull Glossar',
-	'description' => 'Modern Extbase and namespaced Glossary extension',
-	'category' => 'plugin',
-	'author' => 'Daniel Dorndorf',
-	'author_email' => 'dorndorf@dreipunktnull.com',
-	'author_company' => 'dreipunktnull',
-	'shy' => '',
-	'priority' => '',
-	'module' => '',
-	'state' => 'stable',
-	'internal' => '',
-	'uploadfolder' => '0',
-	'createDirs' => '',
-	'modify_tables' => '',
-	'clearCacheOnLoad' => 1,
-	'lockType' => '',
-	'version' => '2.2.5',
-	'constraints' => array(
-		'depends' => array(
-			'extbase' => '6.0',
-			'fluid' => '6.0',
-			'typo3' => '6.1.0-7.2.99',
-			'php' => '5.4.0'
-		),
-		'conflicts' => array(),
-		'suggests' => array()
-	)
-);
+use DPN\DpnGlossary\Domain\Model\Term;
+use TYPO3\CMS\Extbase\Persistence\QueryInterface;
+use TYPO3\CMS\Extbase\Persistence\QueryResultInterface;
+use TYPO3\CMS\Extbase\Persistence\Repository;
+
+/**
+ *
+ * @package dpn_glossary
+ * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
+ */
+class DescriptionRepository extends Repository {
+
+	/**
+	 * Default orderings ascending by name
+	 *
+	 * @var array $defaultOrderings
+	 */
+	protected $defaultOrderings = array(
+		'sorting' => QueryInterface::ORDER_ASCENDING,
+	);
+}
