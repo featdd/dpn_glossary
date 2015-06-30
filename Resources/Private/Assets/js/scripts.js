@@ -1,4 +1,4 @@
-jQuery(function ($) {
+(function ($) {
   $('.dpnglossary.details .description h3').on('click', function () {
     if (!$(this).parents('.description').hasClass('open')) {
       $('.dpnglossary.details .description.open .text').slideUp('slow');
@@ -10,4 +10,4 @@ jQuery(function ($) {
       $('.dpnglossary.details .description.open').removeClass('open');
     }
   });
-});
+})(jQuery);
