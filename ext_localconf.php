@@ -4,7 +4,7 @@ if (!defined('TYPO3_MODE')) {
 }
 
 \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
-	'Dpn.' . $_EXTKEY,
+	'DPN.' . $_EXTKEY,
 	'Glossarylist',
 	array(
 		'Term' => 'list'
@@ -16,7 +16,7 @@ if (!defined('TYPO3_MODE')) {
 );
 
 \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
-	'Dpn.' . $_EXTKEY,
+	'DPN.' . $_EXTKEY,
 	'Glossarydetail',
 	array(
 		'Term' => 'show'
