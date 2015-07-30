@@ -41,14 +41,14 @@
 				<source>Images</source>
 			</trans-unit>
 			<trans-unit id="tx_dpnglossary_domain_model_term.detailheadline">
-            	<source>Detailview for term</source>
-            </trans-unit>
-            <trans-unit id="tx_dpnglossary_domain_model_term.listheadline">
-            	<source>Listview for the terms</source>
-            </trans-unit>
-            <trans-unit id="tx_dpnglossary_domain_model_term.characterheadline">
-            	<source>Character Navigation for the terms</source>
-            </trans-unit>
+				<source>Detailview for term</source>
+			</trans-unit>
+			<trans-unit id="tx_dpnglossary_domain_model_term.listheadline">
+				<source>Listview for the terms</source>
+			</trans-unit>
+			<trans-unit id="tx_dpnglossary_domain_model_term.characterheadline">
+				<source>Character Navigation for the terms</source>
+			</trans-unit>
 
 			<trans-unit id="tx_dpnglossary_domain_model_description">
 				<source>Description</source>
@@ -61,15 +61,15 @@
 			</trans-unit>
 
 
-            <trans-unit id="tx_dpnglossary.new_description">
-            	<source>New description</source>
-            </trans-unit>
+			<trans-unit id="tx_dpnglossary.new_description">
+				<source>New description</source>
+			</trans-unit>
 			<trans-unit id="tx_dpnglossary.backtolastpage">
-            	<source>Back to last page</source>
-            </trans-unit>
-            <trans-unit id="tx_dpnglossary.backtolist">
-            	<source>Back to list</source>
-            </trans-unit>
+				<source>Back to last page</source>
+			</trans-unit>
+			<trans-unit id="tx_dpnglossary.backtolist">
+				<source>Back to list</source>
+			</trans-unit>
 			<trans-unit id="tx_dpnglossary.no_objects_found">
 				<source>No objects were found</source>
 			</trans-unit>

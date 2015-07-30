@@ -41,14 +41,15 @@
 				<target>Bilder</target>
 			</trans-unit>
 			<trans-unit id="tx_dpnglossary_domain_model_term.detailheadline">
-                <target>Detailansicht für den Begriff</target>
-            </trans-unit>
-            <trans-unit id="tx_dpnglossary_domain_model_term.listheadline">
-                <target>Listenansicht für die Begriffe</target>
-            </trans-unit>
-            <trans-unit id="tx_dpnglossary_domain_model_term.characterheadline">
-                <target>Buchstaben-Navigation für die Begriffe</target>
-            </trans-unit>
+					<target>Detailansicht für den Begriff</target>
+			</trans-unit>
+			<trans-unit id="tx_dpnglossary_domain_model_term.listheadline">
+					<target>Listenansicht für die Begriffe</target>
+			</trans-unit>
+			<trans-unit id="tx_dpnglossary_domain_model_term.characterheadline">
+					<target>Buchstaben-Navigation für die Begriffe</target>
+			</trans-unit>
+
 
 			<trans-unit id="tx_dpnglossary_domain_model_description">
 				<target>Beschreibung</target>
@@ -64,12 +65,12 @@
 			<trans-unit id="tx_dpnglossary.new_description">
 				<target>Neue Beschreibung</target>
 			</trans-unit>
-            <trans-unit id="tx_dpnglossary.backtolastpage">
-                <target>Zurück zur letzten Seite</target>
-            </trans-unit>
-            <trans-unit id="tx_dpnglossary.backtolist">
-                <target>Zurück zur Liste</target>
-            </trans-unit>
+			<trans-unit id="tx_dpnglossary.backtolastpage">
+					<target>Zurück zur letzten Seite</target>
+			</trans-unit>
+			<trans-unit id="tx_dpnglossary.backtolist">
+					<target>Zurück zur Liste</target>
+			</trans-unit>
 			<trans-unit id="tx_dpnglossary.no_objects_found">
 				<target>Es wurden keine Objekte gefunden</target>
 			</trans-unit>

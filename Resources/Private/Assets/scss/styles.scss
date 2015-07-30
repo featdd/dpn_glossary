@@ -1,55 +1,57 @@
 .dpnglossary {
-	&.pagination ul {
-		list-style: none;
-		margin: 0;
-		padding: 0;
-		li {
-			float: left;
-			margin-right: 5px;
-			margin-left: 5px;
-			a {text-decoration: none;}
-			&.first {margin-left: 0;}
-			&.last {margin-right: 0;}
-			&.empty {color: red;}
-		}
-	}
+  &.pagination ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
 
-	&.details {
-		.description {
-			h3 {cursor: pointer;}
-			.text {display: none;}
-		}
-	}
+    li {
+      float: left;
+      margin-left: 5px;
+      margin-right: 5px;
 
-	&.link {
-		display: inline;
-		position: relative;
+      a {text-decoration: none;}
+      &.first {margin-left: 0;}
+      &.last {margin-right: 0;}
+      &.empty {color: #f00;}
+    }
+  }
 
-		&:hover {
-			&:after {
-				background: #333;
-				background: rgba(0, 0, 0, .8);
-				border-radius: 5px;
-				bottom: 26px;
-				color: #fff;
-				content: attr(title);
-				left: 20%;
-				padding: 5px 15px;
-				position: absolute;
-				width: 220px;
-				z-index: 98;
-			}
+  &.details {
+    .description {
+      h3 {cursor: pointer;}
+      .text {display: none;}
+    }
+  }
 
-			&:before {
-				border: solid;
-				border-color: #333 transparent;
-				border-width: 6px 6px 0;
-				bottom: 20px;
-				content: '';
-				left: 50%;
-				position: absolute;
-				z-index: 99;
-			}
-		}
-	}
+  &.link {
+    display: inline;
+    position: relative;
+
+    &:hover {
+      &:after {
+        background: #333;
+        background: rgba(0, 0, 0, .8);
+        border-radius: 5px;
+        bottom: 26px;
+        color: #fff;
+        content: attr(title);
+        left: 20%;
+        padding: 5px 15px;
+        position: absolute;
+        width: 220px;
+        z-index: 98;
+      }
+
+      &:before {
+        border: solid;
+        border-color: #333 transparent;
+        border-width: 6px 6px 0;
+        bottom: 20px;
+        content: '';
+        left: 50%;
+        position: absolute;
+        z-index: 99;
+      }
+    }
+  }
 }

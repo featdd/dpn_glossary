@@ -37,18 +37,18 @@ use TYPO3\CMS\Fluid\Core\Widget\AbstractWidgetViewHelper;
  */
 class PaginateViewHelper extends AbstractWidgetViewHelper {
 
-    /**
-     * @var PaginateController
-     */
-    protected $controller;
+	/**
+	 * @var PaginateController
+	 */
+	protected $controller;
 
-    /**
-     * @param PaginateController $paginateController
-     * @return void
-     */
-    public function injectPaginateController(PaginateController $paginateController) {
-        $this->controller = $paginateController;
-    }
+	/**
+	 * @param PaginateController $paginateController
+	 * @return void
+	 */
+	public function injectPaginateController(PaginateController $paginateController) {
+		$this->controller = $paginateController;
+	}
 
 	/**
 	 * Gets the objects and "as" value also
@@ -60,8 +60,8 @@ class PaginateViewHelper extends AbstractWidgetViewHelper {
 	 *
 	 * @return ResponseInterface
 	 */
-    public function render(QueryResultInterface $objects, $as, $field = 'name') {
-        return $this->initiateSubRequest();
-    }
+	public function render(QueryResultInterface $objects, $as, $field = 'name') {
+		return $this->initiateSubRequest();
+	}
 
 }

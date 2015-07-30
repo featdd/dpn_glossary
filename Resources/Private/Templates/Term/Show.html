@@ -1,19 +1,19 @@
 <div xmlns="http://www.w3.org/1999/xhtml" lang="en"
-     xmlns:f="http://typo3.org/ns/fluid/ViewHelpers">
+	 xmlns:f="http://typo3.org/ns/fluid/ViewHelpers">
 
-    <f:layout name="Default"/>
+	<f:layout name="Default"/>
 
-    <f:section name="Main">
+	<f:section name="Main">
 
-        <h1><f:translate key="tx_dpnglossary_domain_model_term.detailheadline" /></h1>
+		<h1><f:translate key="tx_dpnglossary_domain_model_term.detailheadline" /></h1>
 
-        <f:render partial="Term/Properties" section="Main" arguments="{term: term}" />
+		<f:render partial="Term/Properties" section="Main" arguments="{term: term}" />
 
-        <f:if condition="{pageUid}">
-            <f:then>
-                <p><f:link.page pageUid="{pageUid}"><f:translate key="tx_dpnglossary.backtolastpage" /></f:link.page></p>
-            </f:then>
-            <f:else>
+		<f:if condition="{pageUid}">
+			<f:then>
+				<p><f:link.page pageUid="{pageUid}"><f:translate key="tx_dpnglossary.backtolastpage" /></f:link.page></p>
+			</f:then>
+			<f:else>
 				<f:if condition="{paginateLink}">
 					<f:then>
 						<p><f:link.action pageUid="{listPage}" action="list" arguments="{paginateLink}"><f:translate key="tx_dpnglossary.backtolist" /></f:link.action></p>
@@ -22,9 +22,9 @@
 						<p><f:link.action pageUid="{listPage}" action="list"><f:translate key="tx_dpnglossary.backtolist" /></f:link.action></p>
 					</f:else>
 				</f:if>
-            </f:else>
-        </f:if>
+			</f:else>
+		</f:if>
 
-    </f:section>
+	</f:section>
 
 </div>
