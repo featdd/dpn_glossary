@@ -2,7 +2,7 @@
 
 A TYPO3 extension for a glossary and a contentparser to link terms to a detailpage.
 
-This extension is all namespaced and is tested in TYPO3 6.2.X & 7.3.X
+This extension is all namespaced and is tested in TYPO3 6.2.X & 7.4.X
 
 ## Contact
 <dorndorf@dreipunktnull.com>

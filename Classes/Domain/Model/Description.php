@@ -1,5 +1,5 @@
 <?php
-namespace DPN\DpnGlossary\Domain\Model;
+namespace Dpn\DpnGlossary\Domain\Model;
 
 /***************************************************************
  *  Copyright notice

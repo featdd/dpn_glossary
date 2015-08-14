@@ -1,5 +1,5 @@
 <?php
-namespace DPN\DpnGlossary\Domain\Model;
+namespace Dpn\DpnGlossary\Domain\Model;
 
 /***************************************************************
  *  Copyright notice
@@ -25,7 +25,7 @@ namespace DPN\DpnGlossary\Domain\Model;
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
-use DPN\DpnGlossary\Domain\Model\Description;
+use Dpn\DpnGlossary\Domain\Model\Description;
 use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
 use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
 use TYPO3\CMS\Extbase\Domain\Model\FileReference;

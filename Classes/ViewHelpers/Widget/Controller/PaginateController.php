@@ -1,5 +1,5 @@
 <?php
-namespace DPN\DpnGlossary\ViewHelpers\Widget\Controller;
+namespace Dpn\DpnGlossary\ViewHelpers\Widget\Controller;
 
 /***************************************************************
  *  Copyright notice
@@ -194,7 +194,7 @@ class PaginateController extends AbstractWidgetController {
 	 * @param string $paginationCharacters
 	 * @return array
 	 */
-	static function paginationArguments($field, $paginationCharacters) {
+	static public function paginationArguments($field, $paginationCharacters) {
 		$firstCharacter = mb_strtoupper(mb_substr($field,0,1,'UTF-8'), 'UTF-8');
 		$characters = array_change_key_case(explode(',',$paginationCharacters), CASE_UPPER);
 

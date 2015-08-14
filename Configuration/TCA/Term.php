@@ -6,10 +6,10 @@ if (!defined ('TYPO3_MODE')) {
 $TCA['tx_dpnglossary_domain_model_term'] = array(
 	'ctrl' => $TCA['tx_dpnglossary_domain_model_term']['ctrl'],
 	'interface' => array(
-		'showRecordFieldList' => 'sys_language_uid, l10n_diffsource, hidden, name, name_alternative, tooltiptext, descriptions, term_type, term_lang, images',
+		'showRecordFieldList' => 'sys_language_uid, hidden, name, name_alternative, tooltiptext, descriptions, term_type, term_lang, images, starttime, endtime',
 	),
 	'types' => array(
-		'1' => array('showitem' => 'hidden;;1, name, name_alternative, tooltiptext, descriptions, term_type, term_lang, images'),
+		'1' => array('showitem' => 'sys_language_uid, hidden;;1, name, name_alternative, tooltiptext, descriptions, term_type, term_lang, images, --div--;LLL:EXT:cms/locallang_ttc.xml:tabs.access,starttime, endtime'),
 	),
 	'palettes' => array(
 		'1' => array('showitem' => ''),
@@ -28,24 +28,6 @@ $TCA['tx_dpnglossary_domain_model_term'] = array(
 				),
 			),
 		),
-		'l10n_parent' => array(
-			'displayCond' => 'FIELD:sys_language_uid:>:0',
-			'exclude' => 1,
-			'label' => 'LLL:EXT:lang/locallang_general.xlf:LGL.l18n_parent',
-			'config' => array(
-				'type' => 'select',
-				'items' => array(
-					array('', 0),
-				),
-				'foreign_table' => 'tx_dpnglossary_domain_model_term',
-				'foreign_table_where' => 'AND tx_dpnglossary_domain_model_term.pid=###CURRENT_PID### AND tx_dpnglossary_domain_model_term.sys_language_uid IN (-1,0)',
-			),
-		),
-		'l10n_diffsource' => array(
-			'config' => array(
-				'type' => 'passthrough',
-			),
-		),
 		't3ver_label' => array(
 			'label' => 'LLL:EXT:lang/locallang_general.xlf:LGL.versionLabel',
 			'config' => array(
@@ -53,6 +35,36 @@ $TCA['tx_dpnglossary_domain_model_term'] = array(
 				'size' => 30,
 				'max' => 255,
 			)
+		),
+		'starttime' => array(
+			'exclude' => 1,
+			'label' => 'LLL:EXT:lang/locallang_general.xml:LGL.starttime',
+			'config' => array(
+				'type' => 'input',
+				'size' => 13,
+				'max' => 20,
+				'eval' => 'datetime',
+				'checkbox' => 0,
+				'default' => 0,
+				'range' => array(
+					'lower' => mktime(0, 0, 0, date('m'), date('d'), date('Y'))
+				),
+			),
+		),
+		'endtime' => array(
+			'exclude' => 1,
+			'label' => 'LLL:EXT:lang/locallang_general.xml:LGL.endtime',
+			'config' => array(
+				'type' => 'input',
+				'size' => 13,
+				'max' => 20,
+				'eval' => 'datetime',
+				'checkbox' => 0,
+				'default' => 0,
+				'range' => array(
+					'lower' => mktime(0, 0, 0, date('m'), date('d'), date('Y'))
+				),
+			),
 		),
 		'hidden' => array(
 			'exclude' => 1,

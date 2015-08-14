@@ -1,5 +1,5 @@
 <?php
-namespace DPN\DpnGlossary\Domain\Repository;
+namespace Dpn\DpnGlossary\Domain\Repository;
 
 /***************************************************************
  *  Copyright notice
@@ -25,7 +25,7 @@ namespace DPN\DpnGlossary\Domain\Repository;
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
-use DPN\DpnGlossary\Domain\Model\Term;
+use Dpn\DpnGlossary\Domain\Model\Term;
 use TYPO3\CMS\Extbase\Persistence\QueryInterface;
 use TYPO3\CMS\Extbase\Persistence\QueryResultInterface;
 use TYPO3\CMS\Extbase\Persistence\Repository;
@@ -55,6 +55,8 @@ class TermRepository extends Repository {
 			SELECT *
 			FROM tx_dpnglossary_domain_model_term
 			WHERE hidden = 0
+			AND deleted = 0
+			AND sys_language_uid = ' . $GLOBALS['TSFE']->sys_language_uid . '
 			ORDER BY CHAR_LENGTH(name) DESC, name ASC
 		');
 

@@ -1,5 +1,5 @@
 <?php
-namespace DPN\DpnGlossary\Controller;
+namespace Dpn\DpnGlossary\Controller;
 
 /***************************************************************
  *  Copyright notice
@@ -25,10 +25,11 @@ namespace DPN\DpnGlossary\Controller;
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
-use DPN\DpnGlossary\Domain\Model\Term;
-use DPN\DpnGlossary\Domain\Repository\TermRepository;
-use DPN\DpnGlossary\ViewHelpers\Widget\Controller\PaginateController;
+use Dpn\DpnGlossary\Domain\Model\Term;
+use Dpn\DpnGlossary\Domain\Repository\TermRepository;
+use Dpn\DpnGlossary\ViewHelpers\Widget\Controller\PaginateController;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
+use TYPO3\CMS\Extbase\Persistence\Generic\QueryResult;
 
 /**
  *
@@ -58,6 +59,7 @@ class TermController extends ActionController {
 	 * @return void
 	 */
 	public function listAction() {
+		/** @var array|QueryResult $terms */
 		$terms = 'character' === $this->settings['listmode'] ?
 			$this->termRepository->findAllGroupedByFirstCharacter() :
 			$this->termRepository->findAll();

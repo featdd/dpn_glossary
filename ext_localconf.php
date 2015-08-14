@@ -4,7 +4,7 @@ if (!defined('TYPO3_MODE')) {
 }
 
 \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
-	'DPN.' . $_EXTKEY,
+	'Dpn.' . $_EXTKEY,
 	'Glossarylist',
 	array(
 		'Term' => 'list'
@@ -16,7 +16,7 @@ if (!defined('TYPO3_MODE')) {
 );
 
 \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
-	'DPN.' . $_EXTKEY,
+	'Dpn.' . $_EXTKEY,
 	'Glossarydetail',
 	array(
 		'Term' => 'show'
@@ -27,7 +27,7 @@ if (!defined('TYPO3_MODE')) {
 	)
 );
 
-$GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['tslib/class.tslib_fe.php']['contentPostProc-all'][] = 'DPN\DpnGlossary\Service\WrapperService->contentParser';
+$GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['tslib/class.tslib_fe.php']['contentPostProc-all'][] = 'Dpn\DpnGlossary\Service\WrapperService->contentParser';
 
 if (TRUE === is_array($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['realurl']['_DEFAULT'])) {
 

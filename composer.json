@@ -1,16 +1,16 @@
 {
-	"name": "DPN/dpn_glossary",
+	"name": "Dpn/dpn_glossary",
 	"type": "typo3-cms-extension",
 	"description": "Modern Extbase and namespaced Glossary extension",
 	"homepage": "http://dreipunktnull.com",
 	"license": ["GPL-2.0+"],
-	"version": "2.2.8",
+	"version": "2.3.0",
 	"require": {
-		"typo3/cms-core": ">=6.2.0,<7.4.0"
+		"typo3/cms-core": ">=6.2.0,<7.5.0"
 	},
 	"autoload": {
 		"psr-4": {
-			"DPN\\dpn_glossary\\": "Classes"
+			"Dpn\\DpnGlossary\\": "Classes"
 		}
 	},
 	"replace": {

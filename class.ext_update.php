@@ -44,7 +44,11 @@ class ext_update {
 	 * @return string
 	 */
 	public function main() {
-		//Check if changes already applied by checking existence of the descriptions column
+
+		/*
+		 * Check if changes already applied by checking existence of the descriptions column
+		 */
+
 		/** @var mysqli_result $check */
 		$check = $GLOBALS['TYPO3_DB']->sql_query("SHOW COLUMNS FROM tx_dpnglossary_domain_model_term LIKE 'descriptions'");
 
@@ -111,8 +115,12 @@ class ext_update {
 				CHANGE description zzz_deleted_description text NOT NULL
 			");
 
-			return $GLOBALS['TYPO3_DB']->sql_affected_rows() . ' rows have been updated. System object caches cleared.';
+			return $GLOBALS['TYPO3_DB']->sql_affected_rows() . ' rows have been updated.';
 		}
+
+		/*
+		 * Add the missing sorting column
+		 */
 
 		/** @var mysqli_result $checkSortingColumn */
 		$checkSortingColumn = $GLOBALS['TYPO3_DB']->sql_query("SHOW COLUMNS FROM tx_dpnglossary_domain_model_description LIKE 'sorting'");
@@ -125,6 +133,10 @@ class ext_update {
 
 			return 'The missing sorting column was added to descriptions';
 		}
+
+		/*
+		 * Nothing to change then exit
+		 */
 
 		return 'Extension is already updated!';
 	}
