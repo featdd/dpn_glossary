@@ -99,14 +99,17 @@ class WrapperService implements SingletonInterface {
 		$this->tsConfig = $configurationManager->getConfiguration(ConfigurationManagerInterface::CONFIGURATION_TYPE_FULL_TYPOSCRIPT);
 		// Reduce TS config to plugin
 		$this->tsConfig = $this->tsConfig['plugin.']['tx_dpnglossary.'];
-		// Save extension settings without ts dots
-		$this->settings = GeneralUtility::removeDotsFromTS($this->tsConfig['settings.']);
-		// Set StoragePid in the query settings object
-		$querySettings->setStoragePageIds(GeneralUtility::trimExplode(',', $this->tsConfig['persistence.']['storagePid']));
-		// Set current language uid
-		$querySettings->setLanguageUid($GLOBALS['TSFE']->sys_language_uid);
-		// Assign query settings object to repository
-		$this->termRepository->setDefaultQuerySettings($querySettings);
+
+		if (NULL === empty($this->tsConfig)) {
+			// Save extension settings without ts dots
+			$this->settings = GeneralUtility::removeDotsFromTS($this->tsConfig['settings.']);
+			// Set StoragePid in the query settings object
+			$querySettings->setStoragePageIds(GeneralUtility::trimExplode(',', $this->tsConfig['persistence.']['storagePid']));
+			// Set current language uid
+			$querySettings->setLanguageUid($GLOBALS['TSFE']->sys_language_uid);
+			// Assign query settings object to repository
+			$this->termRepository->setDefaultQuerySettings($querySettings);
+		}
 	}
 
 	/**
@@ -130,6 +133,7 @@ class WrapperService implements SingletonInterface {
 		 * Abort if:
 		 *  - Parsing tags are empty
 		 *  - Page type is not 0
+		 *  - tsConfig is empty
 		 *  - no storagePid is set
 		 *  - parsingPids doesn't contains 0 and
 		 *    + current page is excluded
@@ -140,6 +144,7 @@ class WrapperService implements SingletonInterface {
 		if (
 			TRUE === empty($tags)
 			|| 0 !== $GLOBALS['TSFE']->type
+			|| TRUE === empty($this->tsConfig)
 			|| TRUE === empty($this->tsConfig['persistence.']['storagePid'])
 			|| FALSE === in_array('0', $parsingPids)
 			&& (TRUE === in_array($GLOBALS['TSFE']->id, $excludePids) || FALSE === in_array($GLOBALS['TSFE']->id, $parsingPids))
