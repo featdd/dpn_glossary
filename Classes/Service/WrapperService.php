@@ -100,7 +100,7 @@ class WrapperService implements SingletonInterface {
 		// Reduce TS config to plugin
 		$this->tsConfig = $this->tsConfig['plugin.']['tx_dpnglossary.'];
 
-		if (NULL === empty($this->tsConfig)) {
+		if (FALSE === empty($this->tsConfig)) {
 			// Save extension settings without ts dots
 			$this->settings = GeneralUtility::removeDotsFromTS($this->tsConfig['settings.']);
 			// Set StoragePid in the query settings object
