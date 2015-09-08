@@ -31,7 +31,6 @@ use TYPO3\CMS\Extbase\Persistence\QueryInterface;
 use TYPO3\CMS\Extbase\Persistence\QueryResultInterface;
 use TYPO3\CMS\Fluid\Core\Widget\AbstractWidgetController;
 use TYPO3\CMS\Fluid\Core\Widget\Exception;
-use TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer;
 
 /**
  *
@@ -86,22 +85,13 @@ class PaginateController extends AbstractWidgetController {
 	protected $characters = array();
 
 	/**
-	 * @var ContentObjectRenderer $cObj
-	 */
-	protected $cObj = NULL;
-
-	/**
 	 * Init action of the controller
 	 *
 	 * @return void
 	 */
 	public function initializeAction() {
-
-		// Inject Content Object Renderer
-		if ($this->cObj === NULL) {
-			$this->cObj = $this->objectManager->get('TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer');
-		}
-
+		/** @var \TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer $cObj */
+		$cObj = $this->objectManager->get('TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer');
 
 		ArrayUtility::mergeRecursiveWithOverrule(
 			$this->configuration,
@@ -115,7 +105,7 @@ class PaginateController extends AbstractWidgetController {
 
 		// Apply stdWrap
 		if (is_array($this->configuration['characters'])) {
-			$this->configuration['characters'] = $this->cObj->cObjGetSingle($this->configuration['characters']['_typoScriptNodeValue'], $this->configuration['characters']);
+			$this->configuration['characters'] = $cObj->cObjGetSingle($this->configuration['characters']['_typoScriptNodeValue'], $this->configuration['characters']);
 		}
 
 		$this->characters = explode(',', $this->configuration['characters']);
@@ -206,25 +196,26 @@ class PaginateController extends AbstractWidgetController {
 	/**
 	 * This function builds the matchings.
 	 * It enables matchings like:
-	 * * single character: 'B'
-	 * * multiple characters: 'BDEFG'
-	 * * range of characters: 'B-G'
+	 * - single character: 'B'
+	 * - multiple characters: 'BDEFG'
+	 * - range of characters: 'B-G'
 	 *
 	 * @param string $characters
 	 * @return QueryInterface
 	 */
 	protected function getMatchings($characters = NULL) {
 		$matching = array();
+
 		if ($characters === NULL) {
 			$characters = $this->currentCharacter;
 		}
-		$characterLength = mb_strlen($characters);
+
+		$characterLength = strlen($characters);
 
 		if ($characterLength === 1) {
 			// single character B
 			$matching = $this->query->like($this->field, $characters . '%');
-		}
-		else {
+		} else {
 			if ($characterLength === 3 && $characters[1] === '-') {
 				// range B-G
 				// Build the characters like multiple characters B-G => BCDEFG
@@ -241,6 +232,7 @@ class PaginateController extends AbstractWidgetController {
 
 				// Build the new String
 				$characters = '';
+
 				for ($char = $firstCharacter; $char <= $lastCharacter; ++$char) {
 					$characters .= chr($char);
 				}
@@ -248,16 +240,16 @@ class PaginateController extends AbstractWidgetController {
 
 			// multiple characters BDEFG
 			$characters = str_split($characters);
+
 			foreach ($characters as $char) {
 				$matching[] = $this->query->like($this->field, $char . '%');
 			}
+
 			$matching = $this->query->logicalOr($matching);
 		}
 
-
 		return $this->query->matching($matching);
 	}
-
 
 	/**
 	 * If the pagination is used this function
@@ -303,5 +295,4 @@ class PaginateController extends AbstractWidgetController {
 			)
 		);
 	}
-
 }
