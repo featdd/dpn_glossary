@@ -140,8 +140,7 @@ class PaginateController extends AbstractWidgetController {
 			$this->currentCharacter
 		);
 
-		$this->query->matching($this->query->like($this->field, $this->currentCharacter . '%'));
-		$objects = $this->query->execute()->toArray();
+		$objects = $this->getMatchings()->execute()->toArray();
 
 		$this->view->assign('configuration', $this->configuration);
 		$this->view->assign('pagination', $this->buildPagination());
@@ -170,7 +169,7 @@ class PaginateController extends AbstractWidgetController {
 				),
 				'character' => $this->characters[$i],
 				'isCurrent' => $this->characters[$i] === $this->currentCharacter,
-				'isEmpty'   => 0 === $this->query->matching($this->query->like($this->field, $this->characters[$i] . '%'))->execute()->count()
+				'isEmpty'   => 0 === $this->getMatchings()->execute()->count()
 			);
 		}
 
@@ -184,6 +183,58 @@ class PaginateController extends AbstractWidgetController {
 
 		return $pagination;
 	}
+
+	/**
+	 * This function builds the matchings.
+	 * It enables matchings like:
+	 * * single character: 'B'
+	 * * multiple characters: 'BDEFG'
+	 * * range characters: 'B-G'
+	 *
+	 * @return QueryInterface
+	 */
+	protected function getMatchings() {
+		$matching = array();
+		$characterLength = mb_strlen($this->currentCharacter);
+
+		if ($characterLength === 1) {
+			// single character B
+			$matching = $this->query->like($this->field, $this->currentCharacter . '%');
+		}
+		else {
+			if ($characterLength === 3 && $this->currentCharacter[1] === '-') {
+				// range B-G
+				// Build the characters like multiple characters B-G => BCDEFG
+
+				// Fix orderings
+				$firstCharacter = ord($this->currentCharacter[0]);
+				$lastCharacter = ord($this->currentCharacter[2]);
+
+				if ($firstCharacter - $lastCharacter > 0) {
+					$tmp = $firstCharacter;
+					$firstCharacter = $lastCharacter;
+					$lastCharacter = $tmp;
+				}
+
+				// Build the new String
+				$this->currentCharacter = '';
+				for ($char = $firstCharacter; $char <= $lastCharacter; ++$char) {
+					$this->currentCharacter .= chr($char);
+				}
+			}
+
+			// multiple characters BDEFG
+			$currentCharacters = str_split($this->currentCharacter);
+			foreach ($currentCharacters as $_currentCharacter) {
+				$matching[] = $this->query->like($this->field, $_currentCharacter . '%');
+			}
+			$matching = $this->query->logicalOr($matching);
+		}
+
+
+		return $this->query->matching($matching);
+	}
+
 
 	/**
 	 * If the pagination is used this function
