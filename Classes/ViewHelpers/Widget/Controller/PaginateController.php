@@ -31,6 +31,7 @@ use TYPO3\CMS\Extbase\Persistence\QueryInterface;
 use TYPO3\CMS\Extbase\Persistence\QueryResultInterface;
 use TYPO3\CMS\Fluid\Core\Widget\AbstractWidgetController;
 use TYPO3\CMS\Fluid\Core\Widget\Exception;
+use TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer;
 
 /**
  *
@@ -85,11 +86,23 @@ class PaginateController extends AbstractWidgetController {
 	protected $characters = array();
 
 	/**
+	 * @var ContentObjectRenderer $cObj
+	 */
+	protected $cObj = NULL;
+
+	/**
 	 * Init action of the controller
 	 *
 	 * @return void
 	 */
 	public function initializeAction() {
+
+		// Inject Content Object Renderer
+		if ($this->cObj === NULL) {
+			$this->cObj = $this->objectManager->get('TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer');
+		}
+
+
 		ArrayUtility::mergeRecursiveWithOverrule(
 			$this->configuration,
 			(array)$this->settings['pagination'],
@@ -99,6 +112,12 @@ class PaginateController extends AbstractWidgetController {
 		$this->field = FALSE === empty($this->widgetConfiguration['field']) ? $this->widgetConfiguration['field'] : 'name';
 		$this->objects = $this->widgetConfiguration['objects'];
 		$this->query = $this->objects->getQuery();
+
+		// Apply stdWrap
+		if (is_array($this->configuration['characters'])) {
+			$this->configuration['characters'] = $this->cObj->cObjGetSingle($this->configuration['characters']['_typoScriptNodeValue'], $this->configuration['characters']);
+		}
+
 		$this->characters = explode(',', $this->configuration['characters']);
 	}
 
