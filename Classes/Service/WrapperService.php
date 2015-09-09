@@ -171,7 +171,7 @@ class WrapperService implements SingletonInterface {
 		libxml_use_internal_errors(true);
 		// Load Page HTML in DOM and check if HTML is valid else abort
 		// use XHTML tag for avoiding UTF-8 encoding problems
-		if (FALSE === $DOM->loadHTML('<?xml encoding="UTF-8">' . $GLOBALS['TSFE']->content)) {
+		if (FALSE === $DOM->loadHTML('<?xml encoding="UTF-8">' . $this->protectInlineJavascript($GLOBALS['TSFE']->content))) {
 			return;
 		}
 
@@ -196,8 +196,36 @@ class WrapperService implements SingletonInterface {
 		}
 
 		// set the parsed html page and remove XHTML tag which is not needed anymore
-		$GLOBALS['TSFE']->content = str_replace('<?xml encoding="UTF-8">', '', $DOM->saveHTML());
+		$GLOBALS['TSFE']->content = str_replace('<?xml encoding="UTF-8">', '', $this->reverseProtectInlineJavascript($DOM->saveHTML()));
 
+	}
+
+	/**
+	 * Protect inline JavaScript from DOM Manipulation with HTML comments
+	 *
+	 * @param string $html
+	 * @return string
+	 */
+	protected function protectInlineJavascript($html) {
+		$callback = function($match) {
+			return '<!--DPNGLOSSARY' . $match[1] . $match[2] . $match[3] . '-->';
+		};
+
+		return preg_replace_callback('#(<script[^>]*>)(.*?)(<\/script>)#is', $callback, $html);
+	}
+
+	/**
+	 * Inverse inline JavaScript protection
+	 *
+	 * @param string $html
+	 * @return string
+	 */
+	protected function reverseProtectInlineJavascript($html) {
+		$callback = function($match) {
+			return $match[2];
+		};
+
+		return preg_replace_callback('#(<!--DPNGLOSSARY)(.*?)(-->)#is', $callback, $html);
 	}
 
 	/**
