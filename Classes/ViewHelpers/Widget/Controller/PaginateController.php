@@ -105,12 +105,12 @@ class PaginateController extends AbstractWidgetController {
 
 		// Apply stdWrap
 		if (is_array($this->configuration['characters'])) {
-			/** @var TYPO3\CMS\Extbase\Service\TypoScriptService */
-			$tsService = $this->objectManager->get('TYPO3\CMS\Extbase\Service\TypoScriptService');
+			/** @var \TYPO3\CMS\Extbase\Service\TypoScriptService */
+			$typoScriptService = $this->objectManager->get('TYPO3\CMS\Extbase\Service\TypoScriptService');
 
 			// It's required to convert the "new" array to dot notation one before we can use `cObjGetSingle`
-			$this->configuration['characters'] = $tsService->convertPlainArrayToTypoScriptArray($this->configuration['characters']);
-			$this->configuration['characters'] = $this->cObj->cObjGetSingle($this->configuration['characters']['_typoScriptNodeValue'], $this->configuration['characters']);
+			$this->configuration['characters'] = $typoScriptService->convertPlainArrayToTypoScriptArray($this->configuration['characters']);
+			$this->configuration['characters'] = $cObj->cObjGetSingle($this->configuration['characters']['_typoScriptNodeValue'], $this->configuration['characters']);
 		}
 
 		$this->characters = explode(',', $this->configuration['characters']);
