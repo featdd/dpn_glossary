@@ -1,5 +1,5 @@
 <?php
-namespace DPN\DpnGlossary\Tests\ViewHelpers\Widget\Controller;
+namespace Dpn\DpnGlossary\Tests\ViewHelpers\Widget\Controller;
 
 /***************************************************************
  *  Copyright notice

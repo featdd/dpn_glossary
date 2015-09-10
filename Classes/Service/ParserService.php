@@ -27,8 +27,10 @@ namespace Dpn\DpnGlossary\Service;
 
 use Dpn\DpnGlossary\Domain\Model\Term;
 use Dpn\DpnGlossary\Domain\Repository\TermRepository;
+use Dpn\DpnGlossary\Utility\ParserUtility;
 use TYPO3\CMS\Core\SingletonInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extbase\Persistence\Generic\QueryResult;
 use TYPO3\CMS\Extbase\Persistence\Generic\QuerySettingsInterface;
 use TYPO3\CMS\Extbase\Object\ObjectManager;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManager;
@@ -40,7 +42,7 @@ use TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer;
  * @package dpn_glossary
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  */
-class WrapperService implements SingletonInterface {
+class ParserService implements SingletonInterface {
 
 	/**
 	 * @var ContentObjectRenderer $cObj
@@ -48,7 +50,7 @@ class WrapperService implements SingletonInterface {
 	protected $cObj;
 
 	/**
-	 * @var array $terms
+	 * @var array|QueryResult $terms
 	 */
 	protected $terms;
 
@@ -63,11 +65,6 @@ class WrapperService implements SingletonInterface {
 	protected $settings;
 
 	/**
-	 * @var TermRepository $termRepository
-	 */
-	protected $termRepository;
-
-	/**
 	 * @var integer $maxReplacementPerPage
 	 */
 	protected $maxReplacementPerPage;
@@ -79,7 +76,7 @@ class WrapperService implements SingletonInterface {
 	 *  - contentObjectRenderer for generating links etc.
 	 *  - termRepository to get the Terms
 	 *
-	 * @return WrapperService
+	 * @return ParserService
 	 */
 	public function __construct() {
 		// Make instance of Object Manager
@@ -94,7 +91,8 @@ class WrapperService implements SingletonInterface {
 		/** @var QuerySettingsInterface $querySettings */
 		$querySettings = $objectManager->get('TYPO3\CMS\Extbase\Persistence\Generic\QuerySettingsInterface');
 		// Get termRepository
-		$this->termRepository = $objectManager->get('Dpn\DpnGlossary\Domain\Repository\TermRepository');
+		/** @var TermRepository $termRepository */
+		$termRepository = $objectManager->get('Dpn\DpnGlossary\Domain\Repository\TermRepository');
 		// Get Typoscript Configuration
 		$this->tsConfig = $configurationManager->getConfiguration(ConfigurationManagerInterface::CONFIGURATION_TYPE_FULL_TYPOSCRIPT);
 		// Reduce TS config to plugin
@@ -108,7 +106,9 @@ class WrapperService implements SingletonInterface {
 			// Set current language uid
 			$querySettings->setLanguageUid($GLOBALS['TSFE']->sys_language_uid);
 			// Assign query settings object to repository
-			$this->termRepository->setDefaultQuerySettings($querySettings);
+			$termRepository->setDefaultQuerySettings($querySettings);
+			//Find all terms
+			$this->terms = $terms = $termRepository->findByNameLength();
 		}
 	}
 
@@ -117,7 +117,7 @@ class WrapperService implements SingletonInterface {
 	 *
 	 * @return void
 	 */
-	public function contentParser() {
+	public function pageParser() {
 		// extract Pids which should be parsed
 		$parsingPids = GeneralUtility::trimExplode(',', $this->settings['parsingPids']);
 		// extract Pids which should NOT be parsed
@@ -133,6 +133,7 @@ class WrapperService implements SingletonInterface {
 		 * Abort if:
 		 *  - Parsing tags are empty
 		 *  - Page type is not 0
+		 *  - Terms array is empty
 		 *  - tsConfig is empty
 		 *  - no storagePid is set
 		 *  - parsingPids doesn't contains 0 and
@@ -144,6 +145,7 @@ class WrapperService implements SingletonInterface {
 		if (
 			TRUE === empty($tags)
 			|| 0 !== $GLOBALS['TSFE']->type
+			|| TRUE === empty($this->terms)
 			|| TRUE === empty($this->tsConfig)
 			|| TRUE === empty($this->tsConfig['persistence.']['storagePid'])
 			|| FALSE === in_array('0', $parsingPids)
@@ -163,15 +165,13 @@ class WrapperService implements SingletonInterface {
 			$forbiddenParentTags[] = 'a';
 		}
 
-		//Find all terms
-		$this->terms = $terms = $this->termRepository->findByNameLength();
 		//Create new DOMDocument
 		$DOM = new \DOMDocument();
 		// Prevent crashes caused by HTML5 entities with internal errors
 		libxml_use_internal_errors(true);
 		// Load Page HTML in DOM and check if HTML is valid else abort
 		// use XHTML tag for avoiding UTF-8 encoding problems
-		if (FALSE === $DOM->loadHTML('<?xml encoding="UTF-8">' . $this->protectInlineJavascript($GLOBALS['TSFE']->content))) {
+		if (FALSE === $DOM->loadHTML('<?xml encoding="UTF-8">' . ParserUtility::protectInlineJSFromDOM($GLOBALS['TSFE']->content))) {
 			return;
 		}
 
@@ -190,97 +190,19 @@ class WrapperService implements SingletonInterface {
 				$parentTags = explode('/', preg_replace('#\[([^\]]*)\]#i', '', substr($DOMTag->parentNode->getNodePath(), 1)));
 				// check if element is children of a forbidden parent
 				if(FALSE === in_array($parentTags, $forbiddenParentTags)) {
-					$this->nodeReplacer($DOMTag);
+					ParserUtility::domNodeContentReplacer(
+						$DOMTag,
+						ParserUtility::getAndSetInnerTagContent(
+							$DOMTag->ownerDocument->saveHTML($DOMTag),
+							array($this, 'textParser')
+						)
+					);
 				}
 			}
 		}
 
 		// set the parsed html page and remove XHTML tag which is not needed anymore
-		$GLOBALS['TSFE']->content = str_replace('<?xml encoding="UTF-8">', '', $this->reverseProtectInlineJavascript($DOM->saveHTML()));
-
-	}
-
-	/**
-	 * Protect inline JavaScript from DOM Manipulation with HTML comments
-	 *
-	 * @param string $html
-	 * @return string
-	 */
-	protected function protectInlineJavascript($html) {
-		$callback = function($match) {
-			return '<!--DPNGLOSSARY' . $match[1] . $match[2] . $match[3] . '-->';
-		};
-
-		return preg_replace_callback('#(<script[^>]*>)(.*?)(<\/script>)#is', $callback, $html);
-	}
-
-	/**
-	 * Inverse inline JavaScript protection
-	 *
-	 * @param string $html
-	 * @return string
-	 */
-	protected function reverseProtectInlineJavascript($html) {
-		$callback = function($match) {
-			return $match[2];
-		};
-
-		return preg_replace_callback('#(<!--DPNGLOSSARY)(.*?)(-->)#is', $callback, $html);
-	}
-
-	/**
-	 * Extract the DOMNodes html and
-	 * replace it with the parsed html
-	 * injected in a temp DOMDocument
-	 *
-	 * @param \DOMNode $DOMTag
-	 * @return void
-	 */
-	protected function nodeReplacer(\DOMNode $DOMTag) {
-		$tempDOM = new \DOMDocument();
-		// use XHTML tag for avoiding UTF-8 encoding problems
-		$tempDOM->loadHTML(
-			'<?xml encoding="UTF-8">' .
-			$this->htmlTagParser(
-				$DOMTag->ownerDocument->saveHTML($DOMTag)
-			)
-		);
-		// Replaces the original Node with the
-		// new node containing the parsed content
-		$DOMTag->parentNode->replaceChild(
-			$DOMTag
-				->ownerDocument
-				->importNode(
-					$tempDOM
-						->getElementsByTagName('body')
-						->item(0)->childNodes
-						->item(0),
-					TRUE
-				),
-			$DOMTag
-		);
-	}
-
-	/**
-	 * Extracts and replaces the
-	 * inner content of the html tag
-	 *
-	 * @param string $html
-	 * @return string
-	 */
-	protected function htmlTagParser($html) {
-		// Start of content to be parsed
-		$start = stripos($html, '>') + 1;
-		// End of content to be parsed
-		$end = strripos($html, '<');
-		// Length of the content
-		$length = $end - $start;
-		// Paste everything between to textparser
-		$parsed = $this->textParser(substr($html, $start, $length));
-		// Replacing with parsed content
-		$html = substr_replace($html, $parsed, $start, $length);
-
-		return $html;
+		$GLOBALS['TSFE']->content = str_replace('<?xml encoding="UTF-8">', '', ParserUtility::protectInlineJSFromDOMReverse($DOM->saveHTML()));
 	}
 
 	/**
@@ -289,7 +211,7 @@ class WrapperService implements SingletonInterface {
 	 * @param string $text
 	 * @return string
 	 */
-	protected function textParser($text) {
+	public function textParser($text) {
 		$text = preg_replace('~\x{00a0}~siu', '&nbsp;', $text);
 		// Iterate over terms and search matches for each of them
 		/** @var Term $term */
@@ -330,11 +252,8 @@ class WrapperService implements SingletonInterface {
 				return $match[1] . $this->termWrapper($term) . $match[3];
 			};
 
-			// Only call replace function if there are any matches
-			if (1 === preg_match($regex, $text)) {
-				// Use callback to keep allowed chars around the term and his camel case
-				$text = preg_replace_callback($regex, $callback, $text, $this->maxReplacementPerPage);
-			}
+			// Use callback to keep allowed chars around the term and his camel case
+			$text = preg_replace_callback($regex, $callback, $text, $this->maxReplacementPerPage);
 		}
 
 		return $text;
