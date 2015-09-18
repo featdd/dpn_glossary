@@ -222,6 +222,7 @@ class ParserService implements SingletonInterface {
 				 * Regex Explanation:
 				 * Group 1: (^|[\s\>[:punct:]])
 				 *  ^         = can be begin of the string
+				 *  \G        = can match an other matchs end
 				 *  \s        = can have space before term
 				 *  \>        = can have a > before term (end of some tag)
 				 *  [:punct:] = can have punctuation characters like .,?!& etc. before term
@@ -244,7 +245,7 @@ class ParserService implements SingletonInterface {
 				 * Flags:
 				 * i = ignores camel case
 				 */
-				$regex = '#(^|[\s\>[:punct:]])(' . preg_quote($term['term']->getName()) . ')($|[\s\<[:punct:]])(?![^<]*>|[^<>]*<\/)#i';
+				$regex = '#(^|\G|[\s\>[:punct:]])(' . preg_quote($term['term']->getName()) . ')($|[\s\<[:punct:]])(?![^<]*>|[^<>]*<\/)#i';
 
 				// replace callback
 				$callback = function($match) use ($term) {
