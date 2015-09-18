@@ -47,27 +47,22 @@ class ParserService implements SingletonInterface {
 	/**
 	 * @var ContentObjectRenderer $cObj
 	 */
-	protected $cObj;
+	protected $cObj = NULL;
 
 	/**
-	 * @var array|QueryResult $terms
+	 * @var array $terms
 	 */
-	protected $terms;
+	protected $terms = array();
 
 	/**
 	 * @var array $tsConfig
 	 */
-	protected $tsConfig;
+	protected $tsConfig = array();
 
 	/**
 	 * @var array $settings
 	 */
-	protected $settings;
-
-	/**
-	 * @var integer $maxReplacementPerPage
-	 */
-	protected $maxReplacementPerPage;
+	protected $settings = array();
 
 	/**
 	 * Boots up:
@@ -108,7 +103,15 @@ class ParserService implements SingletonInterface {
 			// Assign query settings object to repository
 			$termRepository->setDefaultQuerySettings($querySettings);
 			//Find all terms
-			$this->terms = $terms = $termRepository->findByNameLength();
+			$terms = $terms = $termRepository->findByNameLength();
+			//Sort terms with an individual counter for max replacement per page
+			/** @var Term $term */
+			foreach ($terms as $term) {
+				$this->terms[] = array(
+					'term'         => $term,
+					'replacements' => (int)$this->settings['maxReplacementPerPage'],
+				);
+			}
 		}
 	}
 
@@ -156,8 +159,6 @@ class ParserService implements SingletonInterface {
 			return;
 		}
 
-		// Get max number of replacements per page and term
-		$this->maxReplacementPerPage = (int)$this->settings['maxReplacementPerPage'];
 		// Tags which are not allowed as direct parent for a parsingTag
 		$forbiddenParentTags = array_filter(GeneralUtility::trimExplode(',', $this->settings['forbiddenParentTags']));
 		// Add "a" if unknowingly deleted to prevent errors
@@ -214,46 +215,52 @@ class ParserService implements SingletonInterface {
 	public function textParser($text) {
 		$text = preg_replace('~\x{00a0}~siu', '&nbsp;', $text);
 		// Iterate over terms and search matches for each of them
-		/** @var Term $term */
 		foreach ($this->terms as $term) {
-			/*
-			 * Regex Explanation:
-			 * Group 1: (^|[\s\>[:punct:]])
-			 *  ^         = can be begin of the string
-			 *  \s        = can have space before term
-			 *  \>        = can have a > before term (end of some tag)
-			 *  [:punct:] = can have punctuation characters like .,?!& etc. before term
-			 *
-			 * Group 2: (' . preg_quote($term->getName()) . ')
-			 *  The term to find, preg_quote() escapes special chars
-			 *
-			 * Group 3: ($|[\s\<[:punct:]])
-			 *  Same as Group 1 but with end of string and < (start of some tag)
-			 *
-			 * Group 4: (?![^<]*>|[^<>]*<\/)
-			 *  This Group protects any children element of the tag which should be parsed
-			 *  ?!        = negative lookahead
-			 *  [^<]*>    = match is between < & > and some other character
-			 *              avoids parsing terms in self closing tags
-			 *              example: <TERM> will work <TERM > not
-			 *  [^<>]*<\/ = match is between some tag and tag ending
-			 *              example: < or >TERM</>
-			 *
-			 * Flags:
-			 * i = ignores camel case
-			 */
-			$regex = '#(^|[\s\>[:punct:]])(' . preg_quote($term->getName()) . ')($|[\s\<[:punct:]])(?![^<]*>|[^<>]*<\/)#i';
+			//Check replacement counter
+			if (0 !== $term['replacements']) {
+				/*
+				 * Regex Explanation:
+				 * Group 1: (^|[\s\>[:punct:]])
+				 *  ^         = can be begin of the string
+				 *  \s        = can have space before term
+				 *  \>        = can have a > before term (end of some tag)
+				 *  [:punct:] = can have punctuation characters like .,?!& etc. before term
+				 *
+				 * Group 2: (' . preg_quote($term->getName()) . ')
+				 *  The term to find, preg_quote() escapes special chars
+				 *
+				 * Group 3: ($|[\s\<[:punct:]])
+				 *  Same as Group 1 but with end of string and < (start of some tag)
+				 *
+				 * Group 4: (?![^<]*>|[^<>]*<\/)
+				 *  This Group protects any children element of the tag which should be parsed
+				 *  ?!        = negative lookahead
+				 *  [^<]*>    = match is between < & > and some other character
+				 *              avoids parsing terms in self closing tags
+				 *              example: <TERM> will work <TERM > not
+				 *  [^<>]*<\/ = match is between some tag and tag ending
+				 *              example: < or >TERM</>
+				 *
+				 * Flags:
+				 * i = ignores camel case
+				 */
+				$regex = '#(^|[\s\>[:punct:]])(' . preg_quote($term['term']->getName()) . ')($|[\s\<[:punct:]])(?![^<]*>|[^<>]*<\/)#i';
 
-			// replace callback
-			$callback = function($match) use ($term) {
-				// Use term match to keep original camel case
-				$term->setName($match[2]);
-				// Wrap replacement with original chars
-				return $match[1] . $this->termWrapper($term) . $match[3];
-			};
+				// replace callback
+				$callback = function($match) use ($term) {
+					//decrease replacement counter
+					if (0 < $term['replacements']) {
+						$term['replacements']--;
+					}
+					// Use term match to keep original camel case
+					$term['term']->setName($match[2]);
+					// Wrap replacement with original chars
+					return $match[1] . $this->termWrapper($term['term']) . $match[3];
+				};
 
-			// Use callback to keep allowed chars around the term and his camel case
-			$text = preg_replace_callback($regex, $callback, $text, $this->maxReplacementPerPage);
+				// Use callback to keep allowed chars around the term and his camel case
+				$text = preg_replace_callback($regex, $callback, $text, $term['replacements']);
+			}
 		}
 
 		return $text;
