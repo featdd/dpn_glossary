@@ -47,20 +47,28 @@ class TermRepository extends Repository {
 	);
 
 	/**
-	 * @return array|QueryResultInterface
+	 * find all terms sorted by name length
+	 *
+	 * @return array
 	 */
 	public function findByNameLength() {
-		$query = $this->createQuery();
-		$query->statement('
-			SELECT *
-			FROM tx_dpnglossary_domain_model_term
-			WHERE hidden = 0
-			AND deleted = 0
-			AND sys_language_uid = ' . $GLOBALS['TSFE']->sys_language_uid . '
-			ORDER BY CHAR_LENGTH(name) DESC, name ASC
-		');
+		$terms = $this->findAll()->toArray();
 
-		return $query->execute();
+		/**
+		 * Sorting Callback
+		 *
+		 * @param Term $termA
+		 * @param Term $termB
+		 * @return int
+		 */
+		$sortingCallback = function($termA, $termB) {
+			return strlen($termB->getName()) - strlen($termA->getName());
+		};
+
+		// Sort terms
+		usort($terms, $sortingCallback);
+
+		return $terms;
 	}
 
 	/**
