@@ -25,7 +25,7 @@ namespace Dpn\DpnGlossary\Tests\ViewHelpers\Widget\Controller;
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
-use DPN\DpnGlossary\ViewHelpers\Widget\Controller\PaginateController;
+use Dpn\DpnGlossary\ViewHelpers\Widget\Controller\PaginateController;
 use TYPO3\CMS\Core\Tests\AccessibleObjectInterface;
 use TYPO3\CMS\Core\Tests\UnitTestCase;
 

@@ -1,4 +1,5 @@
 <?php
+namespace Dpn\DpnGlossary\ViewHelpers\Widget\Controller;
 
 /***************************************************************
  *  Copyright notice
@@ -24,32 +25,4 @@
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
-$EM_CONF[$_EXTKEY] = array(
-	'title' => 'dreipunktnull Glossar',
-	'description' => 'Modern Extbase and namespaced Glossary extension',
-	'category' => 'plugin',
-	'author' => 'Daniel Dorndorf',
-	'author_email' => 'dorndorf@dreipunktnull.com',
-	'author_company' => 'dreipunktnull',
-	'shy' => '',
-	'priority' => '',
-	'module' => '',
-	'state' => 'stable',
-	'internal' => '',
-	'uploadfolder' => '0',
-	'createDirs' => '',
-	'modify_tables' => '',
-	'clearCacheOnLoad' => 1,
-	'lockType' => '',
-	'version' => '2.3.9',
-	'constraints' => array(
-		'depends' => array(
-			'extbase' => '6.2.0',
-			'fluid' => '6.2.0',
-			'typo3' => '6.2.0-7.4.99',
-			'php' => '5.4.0'
-		),
-		'conflicts' => array(),
-		'suggests' => array()
-	)
-);
+class Exception extends \TYPO3\CMS\Fluid\Core\Widget\Exception {}
