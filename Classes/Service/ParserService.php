@@ -215,7 +215,7 @@ class ParserService implements SingletonInterface {
 	public function textParser($text) {
 		$text = preg_replace('~\x{00a0}~siu', '&nbsp;', $text);
 		// Iterate over terms and search matches for each of them
-		foreach ($this->terms as $term) {
+		foreach ($this->terms as &$term) {
 			//Check replacement counter
 			if (0 !== $term['replacements']) {
 				/*
@@ -248,7 +248,7 @@ class ParserService implements SingletonInterface {
 				$regex = '#(^|\G|[\s\>[:punct:]])(' . preg_quote($term['term']->getName()) . ')($|[\s\<[:punct:]])(?![^<]*>|[^<>]*<\/)#i';
 
 				// replace callback
-				$callback = function($match) use ($term) {
+				$callback = function($match) use (&$term) {
 					//decrease replacement counter
 					if (0 < $term['replacements']) {
 						$term['replacements']--;
