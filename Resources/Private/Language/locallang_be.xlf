@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<xliff version="1.0">
+	<file source-language="en" datatype="plaintext" original="messages" date="2015-11-17T20:29:15Z" product-name="dpn_glossary">
+		<header/>
+		<body>
+			<trans-unit id="extmng.enable.contentProc">
+				<source>Enable site-wide glossary?</source>
+			</trans-unit>
+		</body>
+	</file>
+</xliff>
