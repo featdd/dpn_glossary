@@ -17,19 +17,23 @@ $TCA['tx_dpnglossary_domain_model_description'] = array(
 	'columns' => array(
 		'sys_language_uid' => array(
 			'exclude' => 1,
-			'label' => 'LLL:EXT:lang/locallang_general.xlf:LGL.language',
-			'config' => array(
-				'type' => 'select',
-				'foreign_table' => 'sys_language',
-				'foreign_table_where' => 'ORDER BY sys_language.title',
-				'items' => array(
-					array('LLL:EXT:lang/locallang_general.xlf:LGL.allLanguages', -1),
-					array('LLL:EXT:lang/locallang_general.xlf:LGL.default_value', 0),
+			'label'   => 'LLL:EXT:lang/locallang_general.xlf:LGL.language',
+			'config'  => array(
+				'type'       => 'select',
+				'renderType' => 'selectSingle',
+				'special'    => 'languages',
+				'items'      => array(
+					array(
+						'LLL:EXT:lang/locallang_general.xlf:LGL.allLanguages',
+						-1,
+						'flags-multiple'
+					),
 				),
+				'default' => 0,
 			),
 		),
 		't3ver_label' => array(
-			'label' => 'LLL:EXT:lang/locallang_general.xlf:LGL.versionLabel',
+			'label'  => 'LLL:EXT:lang/locallang_general.xlf:LGL.versionLabel',
 			'config' => array(
 				'type' => 'input',
 				'size' => 30,
@@ -38,8 +42,8 @@ $TCA['tx_dpnglossary_domain_model_description'] = array(
 		),
 		'hidden' => array(
 			'exclude' => 1,
-			'label' => 'LLL:EXT:lang/locallang_general.xlf:LGL.hidden',
-			'config' => array(
+			'label'   => 'LLL:EXT:lang/locallang_general.xlf:LGL.hidden',
+			'config'  => array(
 				'type' => 'check',
 			),
 		),
@@ -50,8 +54,8 @@ $TCA['tx_dpnglossary_domain_model_description'] = array(
 		),
 		'meaning' => array(
 			'exclude' => 0,
-			'label' => 'LLL:EXT:dpn_glossary/Resources/Private/Language/locallang.xlf:tx_dpnglossary_domain_model_description.meaning',
-			'config' => array(
+			'label'   => 'LLL:EXT:dpn_glossary/Resources/Private/Language/locallang.xlf:tx_dpnglossary_domain_model_description.meaning',
+			'config'  => array(
 				'type' => 'input',
 				'size' => 30,
 				'eval' => 'trim,required',
@@ -59,26 +63,30 @@ $TCA['tx_dpnglossary_domain_model_description'] = array(
 		),
 		'text' => array(
 			'exclude' => 1,
-			'label' => 'LLL:EXT:dpn_glossary/Resources/Private/Language/locallang.xlf:tx_dpnglossary_domain_model_description.text',
-			'config' => array(
+			'label'   => 'LLL:EXT:dpn_glossary/Resources/Private/Language/locallang.xlf:tx_dpnglossary_domain_model_description.text',
+			'defaultExtras' => 'richtext[]',
+			'config'  => array(
 				'type' => 'text',
 				'cols' => 40,
 				'rows' => 15,
 				'eval' => 'trim',
 				'wizards' => array(
 					'RTE' => array(
-						'icon' => 'wizard_rte2.gif',
-						'notNewRecords' => 1,
-						'RTEonly' => 1,
-						'module' => array(
-							'name' => 'wizard_rte'
-						),
 						'title' => 'LLL:EXT:cms/locallang_ttc.xlf:bodytext.W.RTE',
 						'type' => 'script',
-					),
-				),
+						'icon' => 'EXT:backend/Resources/Public/Images/FormFieldWizard/wizard_rte.gif',
+						'notNewRecords'=> 1,
+						'RTEonly' => 1,
+						'module' => array(
+							'name' => 'wizard_rich_text_editor',
+							'urlParameters' => array(
+								'mode' => 'wizard',
+								'act' => 'wizard_rte.php'
+							)
+						)
+					)
+				)
 			),
-			'defaultExtras' => 'richtext[]'
 		),
 	),
 );

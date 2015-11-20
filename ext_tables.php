@@ -20,6 +20,12 @@ if (TYPO3_MODE == 'BE') {
 	'Glossary Detailview'
 );
 
+if (TRUE === version_compare(TYPO3_version, '7.5', '>=')) {
+	$iconFile = 'EXT:dpn_glossary/Resources/Public/Icons/term.gif';
+} else {
+	$iconFile = \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extRelPath($_EXTKEY) . 'Resources/Public/Icons/term.gif';
+}
+
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addStaticFile($_EXTKEY, 'Configuration/TypoScript', 'Dreipunktnull Glossar');
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::allowTableOnStandardPages('tx_dpnglossary_domain_model_term');
 $TCA['tx_dpnglossary_domain_model_term'] = array(
@@ -44,7 +50,7 @@ $TCA['tx_dpnglossary_domain_model_term'] = array(
 		),
 		'searchFields' => 'name,tooltiptext,descriptions,name_alternative,term_type,term_lang,images,',
 		'dynamicConfigFile' => \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath($_EXTKEY) . 'Configuration/TCA/Term.php',
-		'iconfile' => \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extRelPath($_EXTKEY) . 'Resources/Public/Icons/term.gif'
+		'iconfile' => $iconFile
 	)
 );
 
@@ -69,6 +75,6 @@ $TCA['tx_dpnglossary_domain_model_description'] = array(
 		),
 		'searchFields' => 'meaning,text,',
 		'dynamicConfigFile' => \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath($_EXTKEY) . 'Configuration/TCA/Description.php',
-		'iconfile' => \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extRelPath($_EXTKEY) . 'Resources/Public/Icons/term.gif'
+		'iconfile' => $iconFile
 	)
 );
