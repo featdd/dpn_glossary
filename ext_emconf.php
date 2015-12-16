@@ -41,7 +41,7 @@ $EM_CONF[$_EXTKEY] = array(
 	'modify_tables' => '',
 	'clearCacheOnLoad' => 1,
 	'lockType' => '',
-	'version' => '2.3.13',
+	'version' => '2.3.14',
 	'constraints' => array(
 		'depends' => array(
 			'extbase' => '6.2.0',
@@ -50,6 +50,8 @@ $EM_CONF[$_EXTKEY] = array(
 			'php' => '5.4.0'
 		),
 		'conflicts' => array(),
-		'suggests' => array()
+		'suggests' => array(
+			'realurl' => '1.10.0-0.0.0'
+		)
 	)
 );
