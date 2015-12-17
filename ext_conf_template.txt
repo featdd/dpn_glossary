@@ -1,0 +1,2 @@
+# cat=basic/enable/100; type=boolean; label=LLL:EXT:dpn_glossary/Resources/Private/Language/locallang_be.xlf:extmng.enable.contentProc
+contentProc = 1
