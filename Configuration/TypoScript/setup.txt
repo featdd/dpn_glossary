@@ -24,6 +24,8 @@ plugin.tx_dpnglossary {
     forbiddenParentTags = {$plugin.tx_dpnglossary.settings.forbiddenParentTags}
     # Listmode normal or character grouped list
     listmode = {$plugin.tx_dpnglossary.settings.listmode}
+    # Disable Parser option
+    disableParser = {$plugin.tx_dpnglossary.settings.disableParser}
 
     # Pagination settings
     pagination {

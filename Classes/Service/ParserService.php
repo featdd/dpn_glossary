@@ -155,6 +155,7 @@ class ParserService implements SingletonInterface {
 			&& (TRUE === in_array($GLOBALS['TSFE']->id, $excludePids) || FALSE === in_array($GLOBALS['TSFE']->id, $parsingPids))
 			|| $GLOBALS['TSFE']->id === intval($this->settings['detailPage'])
 			|| $GLOBALS['TSFE']->id === intval($this->settings['listPage'])
+			|| TRUE === (boolean) $this->settings['disableParser']
 		) {
 			return;
 		}

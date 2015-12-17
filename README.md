@@ -2,7 +2,7 @@
 
 A TYPO3 extension for a glossary and a contentparser to link terms to a detailpage.
 
-This extension is all namespaced and is tested in TYPO3 6.2.X & 7.5.X
+This extension is all namespaced and is tested in TYPO3 6.2.X & 7.6.X
 
 ## Contact
 <dorndorf@dreipunktnull.com>
@@ -28,6 +28,7 @@ This extension is all namespaced and is tested in TYPO3 6.2.X & 7.5.X
 - (maxReplacementPerPage) Configure the max replacement for each terms
 - (parsingTags) The tags whish should be parsed for terms
 - (forbiddenParentTags) The tags which are not allowed as a parent for a parsingTag
+- (disableParser) Disables the term parser
 - (listmode) Sets the listmode for the plugin
  - Normal: lists all terms in alphabetical order
  - Character: lists all terms grouped by their beginning characters

@@ -28,5 +28,7 @@ plugin.tx_dpnglossary {
     forbiddenParentTags = a,script
     # cat=plugin.tx_dpnglossary//a; type=options[normal,character,pagination]; label=Listmode: normal, character or paginated by characters
     listmode = normal
+    # cat=plugin.tx_dpnglossary//a; type=boolean; label=Disable parser
+    disableParser = 0
   }
 }
