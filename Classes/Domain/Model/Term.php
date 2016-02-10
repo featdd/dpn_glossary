@@ -4,7 +4,7 @@ namespace Dpn\DpnGlossary\Domain\Model;
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2015 Daniel Dorndorf <dorndorf@dreipunktnull.com>, dreipunktnull
+ *  (c) 2016 Daniel Dorndorf <dorndorf@dreipunktnull.com>, dreipunktnull
  *  
  *  All rights reserved
  *
@@ -31,11 +31,8 @@ use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
 use TYPO3\CMS\Extbase\Domain\Model\FileReference;
 
 /**
- *
- *
  * @package dpn_glossary
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
- *
  */
 class Term extends AbstractEntity {
 
@@ -58,6 +55,7 @@ class Term extends AbstractEntity {
 	 * description of the term
 	 *
 	 * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\Dpn\DpnGlossary\Domain\Model\Description> $descriptions
+	 * @cascade remove
 	 */
 	protected $descriptions;
 

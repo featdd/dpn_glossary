@@ -1,8 +1,17 @@
 plugin.tx_dpnglossary {
   view {
-    templateRootPath = {$plugin.tx_dpnglossary.view.templateRootPath}
-    partialRootPath = {$plugin.tx_dpnglossary.view.partialRootPath}
-    layoutRootPath = {$plugin.tx_dpnglossary.view.layoutRootPath}
+    templateRootPaths {
+      0 = EXT:dpn_glossary/Resources/Private/Templates/
+      1 = {$plugin.tx_dpnglossary.view.templateRootPath}
+    }
+    partialRootPaths {
+      0 = EXT:dpn_glossary/Resources/Private/Partials/
+      1 = {$plugin.tx_dpnglossary.view.partialRootPath}
+    }
+    layoutRootPaths {
+      0 = EXT:dpn_glossary/Resources/Private/Layouts/
+      1 = {$plugin.tx_dpnglossary.view.layoutRootPath}
+    }
   }
   persistence {
     storagePid = {$plugin.tx_dpnglossary.persistence.storagePid}

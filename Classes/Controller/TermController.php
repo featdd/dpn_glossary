@@ -4,7 +4,7 @@ namespace Dpn\DpnGlossary\Controller;
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2015 Daniel Dorndorf <dorndorf@dreipunktnull.com>, dreipunktnull
+ *  (c) 2016 Daniel Dorndorf <dorndorf@dreipunktnull.com>, dreipunktnull
  *
  *  All rights reserved
  *
@@ -32,16 +32,13 @@ use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 use TYPO3\CMS\Extbase\Persistence\Generic\QueryResult;
 
 /**
- *
- *
  * @package dpn_glossary
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
- *
  */
 class TermController extends ActionController {
 
 	/**
-	 * @var TermRepository
+	 * @var \Dpn\DpnGlossary\Domain\Repository\TermRepository
 	 */
 	protected $termRepository;
 
@@ -77,8 +74,6 @@ class TermController extends ActionController {
 	 * @return void
 	 */
 	public function showAction(Term $term, $pageUid = NULL) {
-		$pageUid = FALSE === empty($pageUid) ? $pageUid : FALSE;
-
 		if ('pagination' === $this->settings['listmode']) {
 			$this->view->assign(
 				'paginateLink',
