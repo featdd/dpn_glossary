@@ -1,5 +1,5 @@
 <?php
-namespace Dpn\DpnGlossary\Domain\Model;
+namespace Featdd\DpnGlossary\Domain\Model;
 
 /***************************************************************
  *  Copyright notice
@@ -53,7 +53,7 @@ class Term extends AbstractEntity {
 	/**
 	 * description of the term
 	 *
-	 * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\Dpn\DpnGlossary\Domain\Model\Description> $descriptions
+	 * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\Featdd\DpnGlossary\Domain\Model\Description> $descriptions
 	 * @cascade remove
 	 */
 	protected $descriptions;
@@ -126,7 +126,7 @@ class Term extends AbstractEntity {
 	/**
 	 * Returns the descriptions
 	 *
-	 * @return ObjectStorage<\Dpn\DpnGlossary\Domain\Model\Description> $descriptions
+	 * @return ObjectStorage<\Featdd\DpnGlossary\Domain\Model\Description> $descriptions
 	 */
 	public function getDescriptions() {
 		return $this->descriptions;
@@ -153,7 +153,7 @@ class Term extends AbstractEntity {
 	/**
 	 * Sets the descriptions
 	 *
-	 * @param ObjectStorage<\Dpn\DpnGlossary\Domain\Model\Description> $descriptions
+	 * @param ObjectStorage<\Featdd\DpnGlossary\Domain\Model\Description> $descriptions
 	 * @return void
 	 */
 	public function setDescriptions($descriptions) {

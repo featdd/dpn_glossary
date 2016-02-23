@@ -1,5 +1,5 @@
 <?php
-namespace Dpn\DpnGlossary\Tests\ViewHelpers\Widget\Controller;
+namespace Featdd\DpnGlossary\Tests\ViewHelpers\Widget\Controller;
 
 /***************************************************************
  *  Copyright notice
@@ -25,7 +25,7 @@ namespace Dpn\DpnGlossary\Tests\ViewHelpers\Widget\Controller;
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
-use Dpn\DpnGlossary\ViewHelpers\Widget\Controller\PaginateController;
+use Featdd\DpnGlossary\ViewHelpers\Widget\Controller\PaginateController;
 use TYPO3\CMS\Core\Tests\AccessibleObjectInterface;
 use TYPO3\CMS\Core\Tests\UnitTestCase;
 
@@ -47,7 +47,7 @@ class PaginateContollerTest extends UnitTestCase {
 	protected $characters = 'A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z';
 
 	public function setUp() {
-		$this->controller = $this->getAccessibleMock('DPN\\DpnGlossary\\ViewHelpers\\Widget\\Controller\\PaginateController');
+		$this->controller = $this->getAccessibleMock(PaginateController::class);
 	}
 
 	public function tearDown() {

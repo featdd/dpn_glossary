@@ -1,5 +1,5 @@
 <?php
-namespace Dpn\DpnGlossary\Tests\Service;
+namespace Featdd\DpnGlossary\Tests\Service;
 
 /***************************************************************
  *  Copyright notice
@@ -25,7 +25,7 @@ namespace Dpn\DpnGlossary\Tests\Service;
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
-use Dpn\DpnGlossary\Utility\ParserUtility;
+use Featdd\DpnGlossary\Utility\ParserUtility;
 use TYPO3\CMS\Core\Tests\UnitTestCase;
 
 /**

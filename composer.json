@@ -1,8 +1,8 @@
 {
-	"name": "Dpn/dpn_glossary",
+	"name": "Featdd/dpn_glossary",
 	"type": "typo3-cms-extension",
 	"description": "Modern Extbase and namespaced Glossary extension",
-	"homepage": "http://dreipunktnull.com",
+	"homepage": "http://featdd.de",
 	"license": ["GPL-2.0+"],
 	"version": "2.3.19",
 	"require": {
@@ -10,7 +10,7 @@
 	},
 	"autoload": {
 		"psr-4": {
-			"Dpn\\DpnGlossary\\": "Classes"
+			"Featdd\\DpnGlossary\\": "Classes"
 		}
 	},
 	"replace": {

@@ -1,5 +1,5 @@
 <?php
-namespace Dpn\DpnGlossary\Utility;
+namespace Featdd\DpnGlossary\Utility;
 
 /***************************************************************
  *  Copyright notice

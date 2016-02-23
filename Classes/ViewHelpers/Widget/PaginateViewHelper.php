@@ -1,5 +1,5 @@
 <?php
-namespace Dpn\DpnGlossary\ViewHelpers\Widget;
+namespace Featdd\DpnGlossary\ViewHelpers\Widget;
 
 /***************************************************************
  *  Copyright notice
@@ -25,7 +25,7 @@ namespace Dpn\DpnGlossary\ViewHelpers\Widget;
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
-use Dpn\DpnGlossary\ViewHelpers\Widget\Controller\PaginateController;
+use Featdd\DpnGlossary\ViewHelpers\Widget\Controller\PaginateController;
 use TYPO3\CMS\Extbase\Mvc\ResponseInterface;
 use TYPO3\CMS\Extbase\Persistence\QueryResultInterface;
 use TYPO3\CMS\Fluid\Core\Widget\AbstractWidgetViewHelper;

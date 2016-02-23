@@ -1,5 +1,5 @@
 <?php
-namespace Dpn\DpnGlossary\Controller;
+namespace Featdd\DpnGlossary\Controller;
 
 /***************************************************************
  *  Copyright notice
@@ -25,9 +25,8 @@ namespace Dpn\DpnGlossary\Controller;
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
-use Dpn\DpnGlossary\Domain\Model\Term;
-use Dpn\DpnGlossary\Domain\Repository\TermRepository;
-use Dpn\DpnGlossary\ViewHelpers\Widget\Controller\PaginateController;
+use Featdd\DpnGlossary\Domain\Model\Term;
+use Featdd\DpnGlossary\ViewHelpers\Widget\Controller\PaginateController;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 use TYPO3\CMS\Extbase\Persistence\Generic\QueryResult;
 
@@ -38,17 +37,10 @@ use TYPO3\CMS\Extbase\Persistence\Generic\QueryResult;
 class TermController extends ActionController {
 
 	/**
-	 * @var \Dpn\DpnGlossary\Domain\Repository\TermRepository
+	 * @var \Featdd\DpnGlossary\Domain\Repository\TermRepository
+	 * @inject
 	 */
 	protected $termRepository;
-
-	/**
-	 * @param TermRepository $termRepository
-	 * @return void
-	 */
-	public function injectTermRepository(TermRepository $termRepository) {
-		$this->termRepository = $termRepository;
-	}
 
 	/**
 	 * action list

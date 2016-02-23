@@ -1,5 +1,5 @@
 <?php
-namespace Dpn\DpnGlossary\Service;
+namespace Featdd\DpnGlossary\Service;
 
 /***************************************************************
  *  Copyright notice
@@ -25,9 +25,9 @@ namespace Dpn\DpnGlossary\Service;
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
-use Dpn\DpnGlossary\Domain\Model\Term;
-use Dpn\DpnGlossary\Domain\Repository\TermRepository;
-use Dpn\DpnGlossary\Utility\ParserUtility;
+use Featdd\DpnGlossary\Domain\Model\Term;
+use Featdd\DpnGlossary\Domain\Repository\TermRepository;
+use Featdd\DpnGlossary\Utility\ParserUtility;
 use TYPO3\CMS\Core\SingletonInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Persistence\Generic\QuerySettingsInterface;
@@ -83,18 +83,18 @@ class ParserService implements SingletonInterface {
 	public function __construct() {
 		// Make instance of Object Manager
 		/** @var ObjectManager $objectManager */
-		$objectManager = GeneralUtility::makeInstance('TYPO3\CMS\Extbase\Object\ObjectManager');
+		$objectManager = GeneralUtility::makeInstance(ObjectManager::class);
 		// Get Configuration Manager
 		/** @var ConfigurationManager $configurationManager */
-		$configurationManager = $objectManager->get('TYPO3\CMS\Extbase\Configuration\ConfigurationManager');
+		$configurationManager = $objectManager->get(ConfigurationManager::class);
 		// Inject Content Object Renderer
-		$this->cObj = $objectManager->get('TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer');
+		$this->cObj = $objectManager->get(ContentObjectRenderer::class);
 		// Get Query Settings
 		/** @var QuerySettingsInterface $querySettings */
-		$querySettings = $objectManager->get('TYPO3\CMS\Extbase\Persistence\Generic\QuerySettingsInterface');
+		$querySettings = $objectManager->get(QuerySettingsInterface::class);
 		// Get termRepository
 		/** @var TermRepository $termRepository */
-		$termRepository = $objectManager->get('Dpn\DpnGlossary\Domain\Repository\TermRepository');
+		$termRepository = $objectManager->get(TermRepository::class);
 		// Get Typoscript Configuration
 		$this->tsConfig = $configurationManager->getConfiguration(ConfigurationManagerInterface::CONFIGURATION_TYPE_FULL_TYPOSCRIPT);
 		// Reduce TS config to plugin
@@ -301,7 +301,7 @@ class ParserService implements SingletonInterface {
 	/**
 	 * Renders the wrapped term using the plugin settings
 	 *
-	 * @param \Dpn\DpnGlossary\Domain\Model\Term
+	 * @param \Featdd\DpnGlossary\Domain\Model\Term
 	 * @return string
 	 */
 	protected function termWrapper(Term $term) {
