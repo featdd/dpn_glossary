@@ -42,12 +42,20 @@ class ParserUtility implements SingletonInterface {
 	 * @param string $tag
 	 * @return string
 	 */
-	public static function protectInlineJSFromDOM($html, $tag = 'DPNGLOSSARY') {
+	public static function protectScrtiptsAndCommentsFromDOM($html, $tag = 'DPNGLOSSARY') {
 		$callback = function($match) use ($tag) {
-			return '<!--' . $tag . $match[1] . $match[2] . $match[3] . '-->';
+			return '<!--' . $tag . htmlentities($match[1] . $match[2] . $match[3]) . '-->';
 		};
 
-		return preg_replace_callback('#(<script[^>]*>)(.*?)(<\/script>)#is', $callback, $html);
+		return preg_replace_callback(
+			'#(<script[^>]*>)(.*?)(<\/script>)#is',
+			$callback,
+			preg_replace_callback(
+				'#(<!--)(.*?)(-->)#s',
+				$callback,
+				$html
+			)
+		);
 	}
 
 	/**
@@ -57,9 +65,9 @@ class ParserUtility implements SingletonInterface {
 	 * @param string $tag
 	 * @return string
 	 */
-	public static function protectInlineJSFromDOMReverse($html, $tag = 'DPNGLOSSARY') {
+	public static function protectScriptsAndCommentsFromDOMReverse($html, $tag = 'DPNGLOSSARY') {
 		$callback = function($match) {
-			return $match[2];
+			return html_entity_decode($match[2], ENT_QUOTES, 'UTF-8');
 		};
 
 		return preg_replace_callback('#(<!--' . preg_quote($tag) . ')(.*?)(-->)#is', $callback, $html);
