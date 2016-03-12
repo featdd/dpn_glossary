@@ -55,8 +55,8 @@ class PaginateViewHelper extends AbstractWidgetViewHelper {
 	 * the fieldname for what to sort for
 	 *
 	 * @param QueryResultInterface $objects
-	 * @param string $as
-	 * @param string $field
+	 * @param string               $as
+	 * @param string               $field
 	 *
 	 * @return ResponseInterface
 	 */

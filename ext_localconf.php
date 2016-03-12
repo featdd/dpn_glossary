@@ -27,7 +27,7 @@ if (!defined('TYPO3_MODE')) {
 	)
 );
 
-$GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['tslib/class.tslib_fe.php']['contentPostProc-all'][] = 'Dpn\DpnGlossary\Service\ParserService->pageParser';
+$GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['tslib/class.tslib_fe.php']['contentPostProc-all'][] = \Dpn\DpnGlossary\Service\ParserService::class . '->pageParser';
 
 if (TRUE === is_array($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['realurl'])) {
 	if (TRUE === is_array($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['realurl']['_DEFAULT'])) {

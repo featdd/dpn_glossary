@@ -4,18 +4,22 @@ plugin.tx_dpnglossary {
       0 = EXT:dpn_glossary/Resources/Private/Templates/
       1 = {$plugin.tx_dpnglossary.view.templateRootPath}
     }
+
     partialRootPaths {
       0 = EXT:dpn_glossary/Resources/Private/Partials/
       1 = {$plugin.tx_dpnglossary.view.partialRootPath}
     }
+
     layoutRootPaths {
       0 = EXT:dpn_glossary/Resources/Private/Layouts/
       1 = {$plugin.tx_dpnglossary.view.layoutRootPath}
     }
   }
+
   persistence {
     storagePid = {$plugin.tx_dpnglossary.persistence.storagePid}
   }
+
   settings {
     # Pid of the detailpage
     detailPage = {$plugin.tx_dpnglossary.settings.detailPage}
@@ -58,20 +62,24 @@ plugin.tx_dpnglossary {
             if.value = 0
             if.isGreaterThan < plugin.tx_dpnglossary.settings.detailPage
           }
+
           additionalParams = &tx_dpnglossary_glossarydetail[controller]=Term&tx_dpnglossary_glossarydetail[action]=show&tx_dpnglossary_glossarydetail[term]={field:uid}&tx_dpnglossary_glossarydetail[pageUid]={ global : TSFE | id}
           additionalParams {
             insertData = 1
             if.value = 0
             if.isGreaterThan < plugin.tx_dpnglossary.settings.detailPage
           }
+
           ATagParams.dataWrap = title="{field:tooltiptext}" class="dpnglossary link"
           ATagParams.dataWrap {
             override = title="{field:name}" class="dpnglossary link"
             override.if.isFalse.data = field:tooltiptext
           }
+
           useCacheHash = 1
         }
       }
+
       abbreviation < .default
       abbreviation {
         dataWrap = <abbr title="{field:tooltiptext}" lang="{field:term_lang}">|</abbr>
@@ -80,6 +88,7 @@ plugin.tx_dpnglossary {
           override.if.isFalse.data = field:tooltiptext
         }
       }
+
       acronym < .default
       acronym {
         dataWrap = <acronym title="{field:tooltiptext}" lang="{field:term_lang}">|</acronym>
@@ -88,6 +97,7 @@ plugin.tx_dpnglossary {
           override.if.isFalse.data = field:tooltiptext
         }
       }
+
       definition < .default
       definition {
         dataWrap = <dfn title="{field:tooltiptext}" lang="{field:term_lang}">|</dfn>

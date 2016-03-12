@@ -69,7 +69,7 @@ class TermController extends ActionController {
 	/**
 	 * action show
 	 *
-	 * @param Term $term
+	 * @param Term    $term
 	 * @param integer $pageUid
 	 * @return void
 	 */

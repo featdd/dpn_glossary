@@ -42,9 +42,9 @@ class PaginateController extends AbstractWidgetController {
 	 * @var array
 	 */
 	protected $configuration = array(
-		'characters'   => 'A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z',
-		'insertAbove'  => TRUE,
-		'insertBelow'  => FALSE
+		'characters'  => 'A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z',
+		'insertAbove' => TRUE,
+		'insertBelow' => FALSE,
 	);
 
 	/**
@@ -94,7 +94,7 @@ class PaginateController extends AbstractWidgetController {
 
 		ArrayUtility::mergeRecursiveWithOverrule(
 			$this->configuration,
-			(array)$this->settings['pagination'],
+			(array) $this->settings['pagination'],
 			TRUE
 		);
 
@@ -173,16 +173,16 @@ class PaginateController extends AbstractWidgetController {
 		 * Generates the pages and also checks if
 		 * the page has no objects
 		 */
-		for ($i = 0; $i < $numberOfCharacters; $i++) {
+		foreach ($this->characters as $character) {
 			$pages[] = array(
 				'linkCharacter' => str_replace(
 					array('Ä', 'Ö', 'Ü'),
 					array('AE', 'OE', 'UE'),
-					$this->characters[$i]
+					$character
 				),
-				'character' => $this->characters[$i],
-				'isCurrent' => $this->characters[$i] === $this->currentCharacter,
-				'isEmpty'   => 0 === $this->getMatchings($this->characters[$i])->execute()->count()
+				'character'     => $character,
+				'isCurrent'     => $character === $this->currentCharacter,
+				'isEmpty'       => 0 === $this->getMatchings($character)->execute()->count(),
 			);
 		}
 
@@ -191,7 +191,7 @@ class PaginateController extends AbstractWidgetController {
 			'current'        => $this->currentCharacter,
 			'numberOfPages'  => $numberOfCharacters,
 			'startCharacter' => $this->characters[0],
-			'endCharacter'   => $this->characters[count($this->characters) + 1]
+			'endCharacter'   => $this->characters[count($this->characters) + 1],
 		);
 
 		return $pagination;
@@ -265,15 +265,15 @@ class PaginateController extends AbstractWidgetController {
 	 * @return array
 	 */
 	static public function paginationArguments($field, $paginationCharacters) {
-		$firstCharacter = mb_strtoupper(mb_substr($field,0,1,'UTF-8'), 'UTF-8');
-		$characters = array_change_key_case(explode(',',$paginationCharacters), CASE_UPPER);
+		$firstCharacter = mb_strtoupper(mb_substr($field, 0, 1, 'UTF-8'), 'UTF-8');
+		$characters = array_change_key_case(explode(',', $paginationCharacters), CASE_UPPER);
 
 		/*
 		 * Replace umlauts if they are in characters
 		 * else use A,O,U
 		 */
 		$hasUmlauts = array_intersect(array('Ä', 'Ö', 'Ü'), $characters);
-		$umlautReplacement = FALSE === empty($hasUmlauts) ?
+		$umlautReplacement = 0 < count($hasUmlauts) ?
 			array('AE', 'OE', 'UE') :
 			array('A', 'O', 'U');
 
@@ -289,14 +289,14 @@ class PaginateController extends AbstractWidgetController {
 			$characters
 		);
 
-		$character = TRUE === in_array($firstCharacter, $characters) ?
+		$character = TRUE === in_array($firstCharacter, $characters, TRUE) ?
 			$firstCharacter :
 			FALSE;
 
 		return array(
 			'@widget_0' => array(
-				'character' => $character
-			)
+				'character' => $character,
+			),
 		);
 	}
 }

@@ -77,7 +77,7 @@ class ParserUtility implements SingletonInterface {
 	 * Extracts and replaces the
 	 * inner content of the html tag
 	 *
-	 * @param string $html
+	 * @param string   $html
 	 * @param callable $callback receives the inner tag contents and has to return the parsed content
 	 * @return string
 	 */
@@ -95,7 +95,7 @@ class ParserUtility implements SingletonInterface {
 	 * injected in a temp DOMDocument
 	 *
 	 * @param \DOMNode $DOMNode
-	 * @param string $replacement
+	 * @param string   $replacement
 	 * @return void
 	 */
 	public static function domNodeContentReplacer(\DOMNode $DOMNode, $replacement) {
