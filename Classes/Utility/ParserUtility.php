@@ -44,14 +44,14 @@ class ParserUtility implements SingletonInterface {
 	 */
 	public static function protectScrtiptsAndCommentsFromDOM($html, $tag = 'DPNGLOSSARY') {
 		$callback = function($match) use ($tag) {
-			return '<!--' . $tag . htmlentities($match[1] . $match[2] . $match[3]) . '-->';
+			return '<!--' . $tag . base64_encode($match[1] . $match[2] . $match[3]) . '-->';
 		};
 
 		return preg_replace_callback(
 			'#(<script[^>]*>)(.*?)(<\/script>)#is',
 			$callback,
 			preg_replace_callback(
-				'#(<!--)(.*?)(-->)#s',
+				'#(<!--\[[^<]*>|<!--)(.*?)(<!\[[^<]*>|-->)#s',
 				$callback,
 				$html
 			)
@@ -67,7 +67,7 @@ class ParserUtility implements SingletonInterface {
 	 */
 	public static function protectScriptsAndCommentsFromDOMReverse($html, $tag = 'DPNGLOSSARY') {
 		$callback = function($match) {
-			return html_entity_decode($match[2], ENT_QUOTES, 'UTF-8');
+			return base64_decode($match[2]);
 		};
 
 		return preg_replace_callback('#(<!--' . preg_quote($tag) . ')(.*?)(-->)#is', $callback, $html);
