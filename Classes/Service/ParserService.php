@@ -46,7 +46,10 @@ class ParserService implements SingletonInterface {
 	/**
 	 * tags to be always ignored by parsing
 	 */
-	const ALWAYS_IGNORE_PARENT_TAGS = array('a', 'script');
+	public static $alwaysIgnoreParentTags = array(
+		'a',
+		'script',
+	);
 
 	/**
 	 * @var ContentObjectRenderer $cObj
@@ -97,7 +100,7 @@ class ParserService implements SingletonInterface {
 		// Reduce TS config to plugin
 		$this->tsConfig = $this->tsConfig['plugin.']['tx_dpnglossary.'];
 
-		if (0 < count($this->tsConfig)) {
+		if (NULL !== $this->tsConfig && 0 < count($this->tsConfig)) {
 			// Save extension settings without ts dots
 			$this->settings = GeneralUtility::removeDotsFromTS($this->tsConfig['settings.']);
 			// Set StoragePid in the query settings object
@@ -129,8 +132,8 @@ class ParserService implements SingletonInterface {
 		// Get Tags which content should be parsed
 		$tags = GeneralUtility::trimExplode(',', $this->settings['parsingTags']);
 		// Remove "a" & "script" from parsingTags if it was added unknowingly
-		if (TRUE === in_array(self::ALWAYS_IGNORE_PARENT_TAGS, $tags, TRUE)) {
-			$tags = array_diff($tags, self::ALWAYS_IGNORE_PARENT_TAGS);
+		if (TRUE === in_array(self::$alwaysIgnoreParentTags, $tags, TRUE)) {
+			$tags = array_diff($tags, self::$alwaysIgnoreParentTags);
 		}
 
 		// Abort parser...
@@ -166,9 +169,9 @@ class ParserService implements SingletonInterface {
 		// Tags which are not allowed as direct parent for a parsingTag
 		$forbiddenParentTags = array_filter(GeneralUtility::trimExplode(',', $this->settings['forbiddenParentTags']));
 		// Add "a" if unknowingly deleted to prevent errors
-		if (FALSE === in_array(self::ALWAYS_IGNORE_PARENT_TAGS, $forbiddenParentTags, TRUE)) {
+		if (FALSE === in_array(self::$alwaysIgnoreParentTags, $forbiddenParentTags, TRUE)) {
 			$forbiddenParentTags = array_unique(
-				array_merge($forbiddenParentTags, self::ALWAYS_IGNORE_PARENT_TAGS)
+				array_merge($forbiddenParentTags, self::$alwaysIgnoreParentTags)
 			);
 		}
 
@@ -217,7 +220,11 @@ class ParserService implements SingletonInterface {
 		}
 
 		// set the parsed html page and remove XHTML tag which is not needed anymore
-		$GLOBALS['TSFE']->content = str_replace('<?xml encoding="UTF-8">', '', ParserUtility::protectScriptsAndCommentsFromDOMReverse($DOM->saveHTML()));
+		$GLOBALS['TSFE']->content = str_replace(
+			'<?xml encoding="UTF-8">',
+			'',
+			ParserUtility::protectScriptsAndCommentsFromDOMReverse($DOM->saveHTML())
+		);
 	}
 
 	/**
@@ -229,7 +236,11 @@ class ParserService implements SingletonInterface {
 	public function textParser($text) {
 		$text = preg_replace('#\x{00a0}#iu', '&nbsp;', $text);
 		// Iterate over terms and search matches for each of them
-		foreach ($this->terms as &$term) {
+		foreach ($this->terms as $term) {
+			/** @var Term $termObject */
+			$termObject = $term['term'];
+			$replacements = &$term['replacements'];
+
 			//Check replacement counter
 			if (0 !== $term['replacements']) {
 				/*
@@ -259,23 +270,28 @@ class ParserService implements SingletonInterface {
 				 * Flags:
 				 * i = ignores camel case
 				 */
-				$regex = '#(^|\G|[\s\>[:punct:]])(' . preg_quote($term['term']->getName()) . ')($|[\s\<[:punct:]])(?![^<]*>|[^<>]*<\/)#i';
+				$regex = '#' .
+						 '(^|\G|[\s\>[:punct:]])' .
+						 '(' . preg_quote($termObject->getName()) . ')' .
+						 '($|[\s\<[:punct:]])' .
+						 '(?![^<]*>|[^<>]*<\/)' .
+						 '#i';
 
 				// replace callback
-				$callback = function($match) use (&$term) {
+				$callback = function($match) use ($termObject, &$replacements) {
 					//decrease replacement counter
-					if (0 < $term['replacements']) {
-						$term['replacements']--;
+					if (0 < $replacements) {
+						$replacements--;
 					}
 					// Use term match to keep original camel case
-					$term['term']->setName($match[2]);
+					$termObject->setName($match[2]);
 
 					// Wrap replacement with original chars
-					return $match[1] . $this->termWrapper($term['term']) . $match[3];
+					return $match[1] . $this->termWrapper($termObject) . $match[3];
 				};
 
 				// Use callback to keep allowed chars around the term and his camel case
-				$text = preg_replace_callback($regex, $callback, $text, $term['replacements']);
+				$text = preg_replace_callback($regex, $callback, $text, $replacements);
 			}
 		}
 
