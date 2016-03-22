@@ -1,10 +1,32 @@
 <?php
-if (!defined ('TYPO3_MODE')) {
-	die ('Access denied.');
+
+if (TRUE === version_compare(TYPO3_version, '7.5', '>=')) {
+	$iconFile = 'EXT:dpn_glossary/Resources/Public/Icons/description.png';
+} else {
+	$iconFile = \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extRelPath($_EXTKEY) . 'Resources/Public/Icons/description.png	';
 }
 
-$TCA['tx_dpnglossary_domain_model_description'] = array(
-	'ctrl' => $TCA['tx_dpnglossary_domain_model_description']['ctrl'],
+return array(
+	'ctrl' => array(
+		'title'	=> 'LLL:EXT:dpn_glossary/Resources/Private/Language/locallang.xlf:tx_dpnglossary_domain_model_description',
+		'label' => 'meaning',
+		'sortby' => 'sorting',
+		'tstamp' => 'tstamp',
+		'crdate' => 'crdate',
+		'cruser_id' => 'cruser_id',
+		'dividers2tabs' => TRUE,
+		'hideTable' => TRUE,
+		'versioningWS' => 2,
+		'versioning_followPages' => TRUE,
+		'origUid' => 't3_origuid',
+		'languageField' => 'sys_language_uid',
+		'delete' => 'deleted',
+		'enablecolumns' => array(
+			'disabled' => 'hidden',
+		),
+		'searchFields' => 'meaning,text,',
+		'iconfile' => $iconFile
+	),
 	'interface' => array(
 		'showRecordFieldList' => 'hidden, meaning, text',
 	),

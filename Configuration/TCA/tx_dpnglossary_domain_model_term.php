@@ -1,10 +1,34 @@
 <?php
-if (!defined ('TYPO3_MODE')) {
-	die ('Access denied.');
+
+if (TRUE === version_compare(TYPO3_version, '7.5', '>=')) {
+	$iconFile = 'EXT:dpn_glossary/Resources/Public/Icons/term.png';
+} else {
+	$iconFile = \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extRelPath($_EXTKEY) . 'Resources/Public/Icons/term.png';
 }
 
-$TCA['tx_dpnglossary_domain_model_term'] = array(
-	'ctrl' => $TCA['tx_dpnglossary_domain_model_term']['ctrl'],
+return array(
+	'ctrl' => array(
+		'title'	=> 'LLL:EXT:dpn_glossary/Resources/Private/Language/locallang.xlf:tx_dpnglossary_domain_model_term',
+		'label' => 'name',
+		'tstamp' => 'tstamp',
+		'crdate' => 'crdate',
+		'cruser_id' => 'cruser_id',
+		'dividers2tabs' => TRUE,
+		'default_sortby' => 'ORDER BY name ASC',
+
+		'versioningWS' => 2,
+		'versioning_followPages' => TRUE,
+		'origUid' => 't3_origuid',
+		'languageField' => 'sys_language_uid',
+		'delete' => 'deleted',
+		'enablecolumns' => array(
+			'disabled' => 'hidden',
+			'starttime' => 'starttime',
+			'endtime' => 'endtime',
+		),
+		'searchFields' => 'name,tooltiptext,descriptions,name_alternative,term_type,term_lang,images,',
+		'iconfile' => $iconFile
+	),
 	'interface' => array(
 		'showRecordFieldList' => 'sys_language_uid, hidden, name, name_alternative, tooltiptext, descriptions, term_type, term_lang, media, starttime, endtime',
 	),
