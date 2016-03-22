@@ -27,11 +27,13 @@
 				<f:if condition="{term.termLang}">
 					<dd><f:translate key="tx_dpnglossary_domain_model_term.term_lang" />: {term.termLang}</dd>
 				</f:if>
-				<f:if condition="{term.images}">
-					<dd>
-						<f:translate key="tx_dpnglossary_domain_model_term.images" />:<br/>
-						<f:for each="{term.images}" as="image">
-							<a href="{f:uri.image(src:'{image.originalResource.publicUrl}')}" title="{image.title}" rel="lightbox[t{term.uid}]"><f:image src="{image.uid}" width="150" height="150" alt="{term.title}" treatIdAsReference="TRUE" /></a>
+				<f:if condition="{term.media}">
+					<dd class="media">
+						<f:translate key="tx_dpnglossary_domain_model_term.media" />:<br/>
+						<f:for each="{term.media}" as="media">
+							<div class="mediafile">
+								<f:media file="{media}" title="{media.title}" alt="{media.alt}" width="700" height="m300"/>
+							</div>
 						</f:for>
 					</dd>
 				</f:if>

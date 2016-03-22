@@ -6,10 +6,10 @@ if (!defined ('TYPO3_MODE')) {
 $TCA['tx_dpnglossary_domain_model_term'] = array(
 	'ctrl' => $TCA['tx_dpnglossary_domain_model_term']['ctrl'],
 	'interface' => array(
-		'showRecordFieldList' => 'sys_language_uid, hidden, name, name_alternative, tooltiptext, descriptions, term_type, term_lang, images, starttime, endtime',
+		'showRecordFieldList' => 'sys_language_uid, hidden, name, name_alternative, tooltiptext, descriptions, term_type, term_lang, media, starttime, endtime',
 	),
 	'types' => array(
-		'1' => array('showitem' => 'sys_language_uid, hidden;;1, name, name_alternative, tooltiptext, descriptions, term_type, term_lang, images, --div--;LLL:EXT:cms/locallang_ttc.xml:tabs.access,starttime, endtime'),
+		'1' => array('showitem' => 'sys_language_uid, hidden;;1, name, name_alternative, tooltiptext, descriptions, term_type, term_lang, media, --div--;LLL:EXT:cms/locallang_ttc.xml:tabs.access,starttime, endtime'),
 	),
 	'palettes' => array(
 		'1' => array('showitem' => ''),
@@ -161,16 +161,51 @@ $TCA['tx_dpnglossary_domain_model_term'] = array(
 				'eval' => 'trim,lower,nospace,alpha'
 			),
 		),
-		'images' => array(
-			'exclude' => 0,
-			'label'   => 'LLL:EXT:dpn_glossary/Resources/Private/Language/locallang.xlf:tx_dpnglossary_domain_model_term.images',
-			'config'  => \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::getFileFieldTCAConfig('images', array(
-				'minitems'   => 0,
-				'maxitems'   => 10,
-				'appearance' => array(
-					'createNewRelationLinkTitle' => 'LLL:EXT:cms/locallang_ttc.xlf:images.addFileReference'
+		'media' => array(
+			'exclude' => 1,
+			'label'   => 'LLL:EXT:dpn_glossary/Resources/Private/Language/locallang.xlf:tx_dpnglossary_domain_model_term.media',
+			'config' => \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::getFileFieldTCAConfig(
+				'media',
+				array(
+					'appearance' => array(
+						'createNewRelationLinkTitle' => 'LLL:EXT:cms/locallang_ttc.xlf:media.addFileReference'
+					),
+					'foreign_types' => array(
+						'0' => array(
+							'showitem' => '
+							--palette--;LLL:EXT:lang/locallang_tca.xlf:sys_file_reference.imageoverlayPalette;imageoverlayPalette,
+							--palette--;;filePalette'
+						),
+						\TYPO3\CMS\Core\Resource\File::FILETYPE_TEXT => array(
+							'showitem' => '
+							--palette--;LLL:EXT:lang/locallang_tca.xlf:sys_file_reference.imageoverlayPalette;imageoverlayPalette,
+							--palette--;;filePalette'
+						),
+						\TYPO3\CMS\Core\Resource\File::FILETYPE_IMAGE => array(
+							'showitem' => '
+							--palette--;LLL:EXT:lang/locallang_tca.xlf:sys_file_reference.imageoverlayPalette;imageoverlayPalette,
+							--palette--;;filePalette'
+						),
+						\TYPO3\CMS\Core\Resource\File::FILETYPE_AUDIO => array(
+							'showitem' => '
+							--palette--;LLL:EXT:lang/locallang_tca.xlf:sys_file_reference.imageoverlayPalette;imageoverlayPalette,
+							--palette--;;filePalette'
+						),
+						\TYPO3\CMS\Core\Resource\File::FILETYPE_VIDEO => array(
+							'showitem' => '
+							--palette--;LLL:EXT:lang/locallang_tca.xlf:sys_file_reference.imageoverlayPalette;imageoverlayPalette,
+							--palette--;;filePalette'
+						),
+						\TYPO3\CMS\Core\Resource\File::FILETYPE_APPLICATION => array(
+							'showitem' => '
+							--palette--;LLL:EXT:lang/locallang_tca.xlf:sys_file_reference.imageoverlayPalette;imageoverlayPalette,
+							--palette--;;filePalette'
+						)
+					),
+					'maxitems' => 999
 				),
-			), $GLOBALS['TYPO3_CONF_VARS']['GFX']['imagefile_ext']),
+				$GLOBALS['TYPO3_CONF_VARS']['GFX']['imagefile_ext'] . ',webm,mp4,ogg,mp3,wav'
+			),
 		),
 	),
 );

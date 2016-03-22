@@ -21,6 +21,12 @@
       h3 {cursor: pointer;}
       .text {display: none;}
     }
+
+    .mediafile {
+      display: inline-block;
+      margin-bottom: 10px;
+      &:last-child {margin-bottom: 0;}
+    }
   }
 
   &.link {

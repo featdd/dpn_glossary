@@ -37,8 +37,8 @@
 			<trans-unit id="tx_dpnglossary_domain_model_term.term_lang">
 				<source>Language of the term (2 char ISO code)</source>
 			</trans-unit>
-			<trans-unit id="tx_dpnglossary_domain_model_term.images">
-				<source>Images</source>
+			<trans-unit id="tx_dpnglossary_domain_model_term.media">
+				<source>Media Files</source>
 			</trans-unit>
 			<trans-unit id="tx_dpnglossary_domain_model_term.detailheadline">
 				<source>Detailview for term</source>

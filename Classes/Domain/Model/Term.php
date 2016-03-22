@@ -25,7 +25,6 @@ namespace Dpn\DpnGlossary\Domain\Model;
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
-use Dpn\DpnGlossary\Domain\Model\Description;
 use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
 use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
 use TYPO3\CMS\Extbase\Domain\Model\FileReference;
@@ -84,44 +83,7 @@ class Term extends AbstractEntity {
 	 * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\TYPO3\CMS\Extbase\Domain\Model\FileReference>
 	 * @lazy
 	 */
-	protected $images;
-
-	/**
-	 * sets the Images
-	 * @param ObjectStorage $images
-	 * @return void
-	 */
-	public function setImages($images) {
-		$this->images = $images;
-	}
-
-	/**
-	 * Adds a FileReference
-	 *
-	 * @param FileReference $image
-	 * @return void
-	 */
-	public function addImage(FileReference $image) {
-		$this->images->attach($image);
-	}
-
-	/**
-	 * Removes a FileReference
-	 *
-	 * @param FileReference $image
-	 * @return void
-	 */
-	public function removeImage(FileReference $image) {
-		$this->images->detach($image);
-	}
-
-	/**
-	 * get the Images
-	 * @return ObjectStorage
-	 */
-	public function getImages() {
-		return $this->images;
-	}
+	protected $media;
 
 	/**
 	 * Returns the name
@@ -250,6 +212,43 @@ class Term extends AbstractEntity {
 	 */
 	public function getTermType() {
 		return $this->termType;
+	}
+
+	/**
+	 * sets the Media
+	 * @param ObjectStorage $media
+	 * @return void
+	 */
+	public function setMedias($media) {
+		$this->media = $media;
+	}
+
+	/**
+	 * Adds a FileReference
+	 *
+	 * @param FileReference $file
+	 * @return void
+	 */
+	public function addMedia(FileReference $file) {
+		$this->media->attach($file);
+	}
+
+	/**
+	 * Removes a FileReference
+	 *
+	 * @param FileReference $file
+	 * @return void
+	 */
+	public function removeMedia(FileReference $file) {
+		$this->media->detach($file);
+	}
+
+	/**
+	 * get the Media
+	 * @return ObjectStorage
+	 */
+	public function getMedia() {
+		return $this->media;
 	}
 
 	/**

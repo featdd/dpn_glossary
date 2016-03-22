@@ -37,8 +37,8 @@
 			<trans-unit id="tx_dpnglossary_domain_model_term.term_lang">
 				<target>Sprache des Begriffs (2 Zeichen ISO Code)</target>
 			</trans-unit>
-			<trans-unit id="tx_dpnglossary_domain_model_term.images">
-				<target>Bilder</target>
+			<trans-unit id="tx_dpnglossary_domain_model_term.media">
+				<target>Media Dateien</target>
 			</trans-unit>
 			<trans-unit id="tx_dpnglossary_domain_model_term.detailheadline">
 					<target>Detailansicht für den Begriff</target>
