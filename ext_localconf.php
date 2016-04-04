@@ -59,6 +59,10 @@ if (TRUE === is_array($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['realurl'])) {
 					'noMatch' => 'bypass'
 				),
 				array(
+					'GETvar' => 'tx_dpnglossary_glossarydetail[pageUid]',
+					'noMatch' => 'bypass'
+				),
+				array(
 					'GETvar' => 'tx_dpnglossary_glossarydetail[term]',
 					'lookUpTable' => array(
 						'table' => 'tx_dpnglossary_domain_model_term',
