@@ -4,7 +4,7 @@ namespace Featdd\DpnGlossary\Domain\Model;
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2016 Daniel Dorndorf <dorndorf@dreipunktnull.com>, dreipunktnull
+ *  (c) 2016 Daniel Dorndorf <dorndorf@featdd.de>
  *  
  *  All rights reserved
  *
