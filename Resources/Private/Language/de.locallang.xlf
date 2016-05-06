@@ -16,8 +16,8 @@
 			<trans-unit id="tx_dpnglossary_domain_model_term.descriptions">
 				<target>Beschreibungen des Begriffes</target>
 			</trans-unit>
-			<trans-unit id="tx_dpnglossary_domain_model_term.name_alternative">
-				<target>Alternative Namen</target>
+			<trans-unit id="tx_dpnglossary_domain_model_term.synonyms">
+				<target>Synonyme</target>
 			</trans-unit>
 			<trans-unit id="tx_dpnglossary_domain_model_term.term_type">
 				<target>Typ des Begriff</target>
@@ -51,6 +51,14 @@
 			</trans-unit>
 
 
+			<trans-unit id="tx_dpnglossary_domain_model_synonym">
+				<target>Synonym</target>
+			</trans-unit>
+			<trans-unit id="tx_dpnglossary_domain_model_synonym.name">
+				<target>Name</target>
+			</trans-unit>
+
+
 			<trans-unit id="tx_dpnglossary_domain_model_description">
 				<target>Beschreibung</target>
 			</trans-unit>
@@ -64,6 +72,9 @@
 
 			<trans-unit id="tx_dpnglossary.new_description">
 				<target>Neue Beschreibung</target>
+			</trans-unit>
+			<trans-unit id="tx_dpnglossary.new_synonym">
+				<target>Neues Synonym</target>
 			</trans-unit>
 			<trans-unit id="tx_dpnglossary.backtolastpage">
 					<target>Zurück zur letzten Seite</target>

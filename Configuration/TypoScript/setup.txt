@@ -31,6 +31,8 @@ plugin.tx_dpnglossary {
     parsingExcludePidList = {$plugin.tx_dpnglossary.settings.parsingExcludePidList}
     # max replacemnet per page, default = -1 (any matches)
     maxReplacementPerPage = {$plugin.tx_dpnglossary.settings.maxReplacementPerPage}
+    # respect max replacement when parsing synonyms
+    maxReplacementPerPageRespectSynonyms = {$plugin.tx_dpnglossary.settings.maxReplacementPerPageRespectSynonyms}
     # Tags which content will be parsed for terms
     parsingTags = {$plugin.tx_dpnglossary.settings.parsingTags}
     # Tags which are not allowed as direct parent for a parsingTag

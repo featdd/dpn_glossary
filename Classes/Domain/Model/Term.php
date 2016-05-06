@@ -59,11 +59,11 @@ class Term extends AbstractEntity {
 	protected $descriptions;
 
 	/**
-	 * alternative names for the termn
+	 * synonyms for the term
 	 *
-	 * @var string $nameAlternative
+	 * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\Featdd\DpnGlossary\Domain\Model\Synonym> $synonyms
 	 */
-	protected $nameAlternative;
+	protected $synonyms;
 
 	/**
 	 * the type of the term, must by empty or one of [abbrevation/description]
@@ -84,6 +84,29 @@ class Term extends AbstractEntity {
 	 * @lazy
 	 */
 	protected $media;
+
+	/**
+	 * @return Term
+	 */
+	public function __construct()
+	{
+		//Do not remove the next line: It would break the functionality
+		$this->initStorageObjects();
+	}
+
+	/**
+	 * Initializes all ObjectStorage properties
+	 * Do not modify this method!
+	 * It will be rewritten on each save in the extension builder
+	 * You may modify the constructor of this class instead
+	 *
+	 * @return void
+	 */
+	protected function initStorageObjects()
+	{
+		$this->descriptions = new ObjectStorage();
+		$this->synonyms     = new ObjectStorage();
+	}
 
 	/**
 	 * Returns the name
@@ -161,21 +184,40 @@ class Term extends AbstractEntity {
 	}
 
 	/**
-	 * Sets the alternative names
+	 * Returns the synonyms
 	 *
-	 * @param string $nameAlternative
+	 * @return \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\Featdd\DpnGlossary\Domain\Model\Synonym> $synonyms
 	 */
-	public function setNameAlternative($nameAlternative) {
-		$this->nameAlternative = $nameAlternative;
+	public function getSynonyms() {
+		return $this->synonyms;
 	}
 
 	/**
-	 * Returns the alternaive names
+	 * Adds the synonym
 	 *
-	 * @return string
+	 * @param Synonym $synonym
 	 */
-	public function getNameAlternative() {
-		return $this->nameAlternative;
+	public function addSynonym(Synonym $synonym) {
+		$this->synonyms->attach($synonym);
+	}
+
+	/**
+	 * removes the synonym
+	 *
+	 * @param Synonym $synonym
+	 */
+	public function removeSynonym(Synonym $synonym) {
+		$this->synonyms->detach($synonym);
+	}
+
+	/**
+	 * Sets the synonyms
+	 *
+	 * @param \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\Featdd\DpnGlossary\Domain\Model\Synonym> $synonyms
+	 * @return void
+	 */
+	public function setSynonyms($synonyms) {
+		$this->synonyms = $synonyms;
 	}
 
 	/**
@@ -261,7 +303,7 @@ class Term extends AbstractEntity {
 			'name'				=> $this->getName(),
 			'tooltiptext'		=> $this->getTooltiptext(),
 			'descriptions'		=> $this->getDescriptions(),
-			'name_alternative'	=> $this->getNameAlternative(),
+			'synonyms'			=> $this->getSynonyms(),
 			'term_type'			=> $this->getTermType(),
 			'term_lang'			=> $this->getTermLang(),
 		);

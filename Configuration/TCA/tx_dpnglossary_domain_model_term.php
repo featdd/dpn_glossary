@@ -26,14 +26,14 @@ return array(
 			'starttime' => 'starttime',
 			'endtime' => 'endtime',
 		),
-		'searchFields' => 'name,tooltiptext,descriptions,name_alternative,term_type,term_lang,images,',
+		'searchFields' => 'name,tooltiptext,descriptions,synonyms,term_type,term_lang,images,',
 		'iconfile' => $iconFile
 	),
 	'interface' => array(
-		'showRecordFieldList' => 'sys_language_uid, hidden, name, name_alternative, tooltiptext, descriptions, term_type, term_lang, media, starttime, endtime',
+		'showRecordFieldList' => 'sys_language_uid, hidden, name, tooltiptext, synonyms, descriptions, term_type, term_lang, media, starttime, endtime',
 	),
 	'types' => array(
-		'1' => array('showitem' => 'sys_language_uid, hidden;;1, name, name_alternative, tooltiptext, descriptions, term_type, term_lang, media, --div--;LLL:EXT:cms/locallang_ttc.xml:tabs.access,starttime, endtime'),
+		'1' => array('showitem' => 'sys_language_uid, hidden;;1, name, tooltiptext, synonyms, descriptions, term_type, term_lang, media, --div--;LLL:EXT:cms/locallang_ttc.xml:tabs.access,starttime, endtime'),
 	),
 	'palettes' => array(
 		'1' => array('showitem' => ''),
@@ -139,13 +139,24 @@ return array(
 				),
 			),
 		),
-		'name_alternative' => array(
+		'synonyms' => array(
 			'exclude' => 0,
-			'label'   => 'LLL:EXT:dpn_glossary/Resources/Private/Language/locallang.xlf:tx_dpnglossary_domain_model_term.name_alternative',
+			'label'   => 'LLL:EXT:dpn_glossary/Resources/Private/Language/locallang.xlf:tx_dpnglossary_domain_model_term.synonyms',
 			'config'  => array(
-				'type' => 'input',
-				'size' => 30,
-				'eval' => 'trim'
+				'type' => 'inline',
+				'foreign_table' => 'tx_dpnglossary_domain_model_synonym',
+				'foreign_field' => 'term',
+				'foreign_label' => 'name',
+				'minitems'		=> 1,
+				'maxitems'      => 9999,
+				'appearance' => array(
+					'newRecordLinkTitle' => 'LLL:EXT:dpn_glossary/Resources/Private/Language/locallang.xlf:tx_dpnglossary.new_synonym',
+					'useSortable' => 1,
+				),
+				'behaviour' => array(
+					'localizationMode' => 'select',
+					'localizeChildrenAtParentLocalization' => TRUE,
+				),
 			),
 		),
 		'term_type' => array(

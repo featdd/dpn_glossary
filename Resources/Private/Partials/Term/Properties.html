@@ -18,8 +18,12 @@
 						</div>
 					</f:for>
 				</dd>
-				<f:if condition="{term.nameAlternative}">
-					<dd><f:translate key="tx_dpnglossary_domain_model_term.name_alternative" />: {term.nameAlternative}</dd>
+				<f:if condition="{term.synonyms}">
+					<dd><f:translate key="tx_dpnglossary_domain_model_term.synonyms" />:
+						<f:for each="{term.synonyms}" as="synonym" iteration="synonymIterator">
+							{synonym.name}{f:if(condition: synonymIterator.isLast, else: ', ')}
+						</f:for>
+					</dd>
 				</f:if>
 				<f:if condition="{term.termType}">
 					<dd><f:translate key="tx_dpnglossary_domain_model_term.term_type" />: {term.termType}</dd>

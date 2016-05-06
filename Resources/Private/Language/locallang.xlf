@@ -16,8 +16,8 @@
 			<trans-unit id="tx_dpnglossary_domain_model_term.descriptions">
 				<source>descriptions of the term</source>
 			</trans-unit>
-			<trans-unit id="tx_dpnglossary_domain_model_term.name_alternative">
-				<source>Alternative names</source>
+			<trans-unit id="tx_dpnglossary_domain_model_term.synonyms">
+				<source>Synonyms</source>
 			</trans-unit>
 			<trans-unit id="tx_dpnglossary_domain_model_term.term_type">
 				<source>Type of term</source>
@@ -50,6 +50,15 @@
 				<source>Character Navigation for the terms</source>
 			</trans-unit>
 
+
+			<trans-unit id="tx_dpnglossary_domain_model_synonym">
+				<source>Synonym</source>
+			</trans-unit>
+			<trans-unit id="tx_dpnglossary_domain_model_synonym.name">
+				<source>Name</source>
+			</trans-unit>
+
+
 			<trans-unit id="tx_dpnglossary_domain_model_description">
 				<source>Description</source>
 			</trans-unit>
@@ -63,6 +72,9 @@
 
 			<trans-unit id="tx_dpnglossary.new_description">
 				<source>New description</source>
+			</trans-unit>
+			<trans-unit id="tx_dpnglossary.new_synonym">
+				<source>New Synonym</source>
 			</trans-unit>
 			<trans-unit id="tx_dpnglossary.backtolastpage">
 				<source>Back to last page</source>

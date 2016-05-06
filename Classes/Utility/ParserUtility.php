@@ -78,12 +78,13 @@ class ParserUtility implements SingletonInterface {
 	 * inner content of the html tag
 	 *
 	 * @param string   $html
-	 * @param callable $callback receives the inner tag contents and has to return the parsed content
+	 * @param callable $contentCallback receives the inner tag contents and has to return the parsed content
+	 * @param callable $wrapperCallback the function used by the content callback to wrap parsed terms
 	 * @return string
 	 */
-	public static function getAndSetInnerTagContent($html, $callback) {
-		$regexCallback = function($match) use ($callback) {
-			return '<' . $match[1] . $match[2] . '>' . call_user_func($callback, $match[3]) . $match[4];
+	public static function getAndSetInnerTagContent($html, $contentCallback, $wrapperCallback) {
+		$regexCallback = function($match) use ($contentCallback, $wrapperCallback) {
+			return '<' . $match[1] . $match[2] . '>' . call_user_func($contentCallback, $match[3], $wrapperCallback) . $match[4];
 		};
 
 		return preg_replace_callback('#^<([\w]+)([^>]*)>(.*?)(<\/\1>)$#is', $regexCallback, $html);

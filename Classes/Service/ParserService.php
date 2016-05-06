@@ -25,6 +25,7 @@ namespace Featdd\DpnGlossary\Service;
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
+use Featdd\DpnGlossary\Domain\Model\Synonym;
 use Featdd\DpnGlossary\Domain\Model\Term;
 use Featdd\DpnGlossary\Domain\Repository\TermRepository;
 use Featdd\DpnGlossary\Utility\ParserUtility;
@@ -114,7 +115,10 @@ class ParserService implements SingletonInterface {
 			//Sort terms with an individual counter for max replacement per page
 			/** @var Term $term */
 			foreach ($terms as $term) {
-				$this->terms[] = array('term' => $term, 'replacements' => (int) $this->settings['maxReplacementPerPage'],);
+				$this->terms[] = array(
+					'term' => $term,
+					'replacements' => (int) $this->settings['maxReplacementPerPage'],
+				);
 			}
 		}
 	}
@@ -212,7 +216,8 @@ class ParserService implements SingletonInterface {
 						$DOMTag,
 						ParserUtility::getAndSetInnerTagContent(
 							$DOMTag->ownerDocument->saveHTML($DOMTag),
-							array($this, 'textParser')
+							array($this, 'textParser'),
+							array($this, 'termWrapper')
 						)
 					);
 				}
@@ -230,72 +235,97 @@ class ParserService implements SingletonInterface {
 	/**
 	 * Parse the extracted html for terms with a regex
 	 *
-	 * @param string $text
+	 * @param string   $text             the text to be parsed
+	 * @param callable $wrappingCallback the wrapping function for parsed terms as callback
 	 * @return string
 	 */
-	public function textParser($text) {
+	public function textParser($text, $wrappingCallback) {
 		$text = preg_replace('#\x{00a0}#iu', '&nbsp;', $text);
 		// Iterate over terms and search matches for each of them
 		foreach ($this->terms as $term) {
 			/** @var Term $termObject */
-			$termObject = $term['term'];
+			$termObject = clone $term['term'];
 			$replacements = &$term['replacements'];
 
 			//Check replacement counter
 			if (0 !== $term['replacements']) {
-				/*
-				 * Regex Explanation:
-				 * Group 1: (^|[\s\>[:punct:]])
-				 *  ^         = can be begin of the string
-				 *  \G        = can match an other matchs end
-				 *  \s        = can have space before term
-				 *  \>        = can have a > before term (end of some tag)
-				 *  [:punct:] = can have punctuation characters like .,?!& etc. before term
-				 *
-				 * Group 2: (' . preg_quote($term->getName()) . ')
-				 *  The term to find, preg_quote() escapes special chars
-				 *
-				 * Group 3: ($|[\s\<[:punct:]])
-				 *  Same as Group 1 but with end of string and < (start of some tag)
-				 *
-				 * Group 4: (?![^<]*>|[^<>]*<\/)
-				 *  This Group protects any children element of the tag which should be parsed
-				 *  ?!        = negative lookahead
-				 *  [^<]*>    = match is between < & > and some other character
-				 *              avoids parsing terms in self closing tags
-				 *              example: <TERM> will work <TERM > not
-				 *  [^<>]*<\/ = match is between some tag and tag ending
-				 *              example: < or >TERM</>
-				 *
-				 * Flags:
-				 * i = ignores camel case
-				 */
-				$regex = '#' .
-						 '(^|\G|[\s\>[:punct:]])' .
-						 '(' . preg_quote($termObject->getName()) . ')' .
-						 '($|[\s\<[:punct:]])' .
-						 '(?![^<]*>|[^<>]*<\/)' .
-						 '#i';
+				$this->regexParser($text, $termObject, $replacements, $wrappingCallback);
 
-				// replace callback
-				$callback = function($match) use ($termObject, &$replacements) {
-					//decrease replacement counter
-					if (0 < $replacements) {
-						$replacements--;
-					}
-					// Use term match to keep original camel case
-					$termObject->setName($match[2]);
+				/** @var Synonym $synonym */
+				foreach ($termObject->getSynonyms() as $synonym) {
+					$termObject->setName(
+						$synonym->getName()
+					);
 
-					// Wrap replacement with original chars
-					return $match[1] . $this->termWrapper($termObject) . $match[3];
-				};
-
-				// Use callback to keep allowed chars around the term and his camel case
-				$text = preg_replace_callback($regex, $callback, $text, $replacements);
+					if (TRUE === (boolean) $this->settings['maxReplacementPerPageRespectSynonyms']) {
+						$this->regexParser($text, $termObject, $replacements, $wrappingCallback);
+					} else {
+						$noReplacementCount = -1;
+						$this->regexParser($text, $termObject, $noReplacementCount, $wrappingCallback);
+					}					
+				}
 			}
 		}
 
 		return $text;
+	}
+
+	/**
+	 * @param string $text
+	 * @param Term $term
+	 * @param integer $replacements
+	 * @param callable $wrappingCallback
+	 */
+	protected function regexParser(&$text, Term $term, &$replacements, $wrappingCallback) {
+		/*
+		 * Regex Explanation:
+		 * Group 1: (^|[\s\>[:punct:]])
+		 *  ^         = can be begin of the string
+		 *  \G        = can match an other matchs end
+		 *  \s        = can have space before term
+		 *  \>        = can have a > before term (end of some tag)
+		 *  [:punct:] = can have punctuation characters like .,?!& etc. before term
+		 *
+		 * Group 2: (' . preg_quote($term->getName()) . ')
+		 *  The term to find, preg_quote() escapes special chars
+		 *
+		 * Group 3: ($|[\s\<[:punct:]])
+		 *  Same as Group 1 but with end of string and < (start of some tag)
+		 *
+		 * Group 4: (?![^<]*>|[^<>]*<\/)
+		 *  This Group protects any children element of the tag which should be parsed
+		 *  ?!        = negative lookahead
+		 *  [^<]*>    = match is between < & > and some other character
+		 *              avoids parsing terms in self closing tags
+		 *              example: <TERM> will work <TERM > not
+		 *  [^<>]*<\/ = match is between some tag and tag ending
+		 *              example: < or >TERM</>
+		 *
+		 * Flags:
+		 * i = ignores camel case
+		 */
+		$regex = '#' .
+				 '(^|\G|[\s\>[:punct:]])' .
+				 '(' . preg_quote($term->getName()) . ')' .
+				 '($|[\s\<[:punct:]])' .
+				 '(?![^<]*>|[^<>]*<\/)' .
+				 '#i';
+
+		// replace callback
+		$callback = function($match) use ($term, &$replacements, $wrappingCallback) {
+			//decrease replacement counter
+			if (0 < $replacements) {
+				$replacements--;
+			}
+			// Use term match to keep original camel case
+			$term->setName($match[2]);
+
+			// Wrap replacement with original chars
+			return $match[1] . call_user_func($wrappingCallback, $term) . $match[3];
+		};
+
+		// Use callback to keep allowed chars around the term and his camel case
+		$text = preg_replace_callback($regex, $callback, $text, $replacements);
 	}
 
 	/**
