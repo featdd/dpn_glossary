@@ -34,50 +34,52 @@ use TYPO3\CMS\Extbase\Persistence\Generic\QueryResult;
  * @package dpn_glossary
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  */
-class TermController extends ActionController {
+class TermController extends ActionController
+{
+    /**
+     * @var \Featdd\DpnGlossary\Domain\Repository\TermRepository
+     * @inject
+     */
+    protected $termRepository;
 
-	/**
-	 * @var \Featdd\DpnGlossary\Domain\Repository\TermRepository
-	 * @inject
-	 */
-	protected $termRepository;
+    /**
+     * action list
+     *
+     * @return void
+     */
+    public function listAction()
+    {
+        /** @var array|QueryResult $terms */
+        $terms = 'character' === $this->settings['listmode'] ?
+            $this->termRepository->findAllGroupedByFirstCharacter() :
+            $this->termRepository->findAll();
 
-	/**
-	 * action list
-	 *
-	 * @return void
-	 */
-	public function listAction() {
-		/** @var array|QueryResult $terms */
-		$terms = 'character' === $this->settings['listmode'] ?
-			$this->termRepository->findAllGroupedByFirstCharacter() :
-			$this->termRepository->findAll();
+        $this->view->assign('detailPage', $this->settings['detailPage']);
+        $this->view->assign('listmode', $this->settings['listmode']);
+        $this->view->assign('terms', $terms);
+    }
 
-		$this->view->assign('detailPage', $this->settings['detailPage']);
-		$this->view->assign('listmode', $this->settings['listmode']);
-		$this->view->assign('terms', $terms);
-	}
+    /**
+     * action show
+     *
+     * @param Term    $term
+     * @param integer $pageUid
+     * @return void
+     */
+    public function showAction(Term $term, $pageUid = NULL)
+    {
+        if ('pagination' === $this->settings['listmode']) {
+            $this->view->assign(
+                'paginateLink',
+                PaginateController::paginationArguments(
+                    $term->getName(),
+                    $this->settings['pagination']['characters']
+                )
+            );
+        }
 
-	/**
-	 * action show
-	 *
-	 * @param Term    $term
-	 * @param integer $pageUid
-	 * @return void
-	 */
-	public function showAction(Term $term, $pageUid = NULL) {
-		if ('pagination' === $this->settings['listmode']) {
-			$this->view->assign(
-				'paginateLink',
-				PaginateController::paginationArguments(
-					$term->getName(),
-					$this->settings['pagination']['characters']
-				)
-			);
-		}
-
-		$this->view->assign('pageUid', $pageUid);
-		$this->view->assign('listPage', $this->settings['listPage']);
-		$this->view->assign('term', $term);
-	}
+        $this->view->assign('pageUid', $pageUid);
+        $this->view->assign('listPage', $this->settings['listPage']);
+        $this->view->assign('term', $term);
+    }
 }

@@ -5,7 +5,7 @@ namespace Featdd\DpnGlossary\Domain\Model;
  *  Copyright notice
  *
  *  (c) 2016 Daniel Dorndorf <dorndorf@featdd.de>
- *  
+ *
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -31,32 +31,34 @@ use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
  * @package dpn_glossary
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  */
-class Synonym extends AbstractEntity {
+class Synonym extends AbstractEntity
+{
+    /**
+     * name of the term
+     *
+     * @var string $name
+     * @validate NotEmpty
+     */
+    protected $name;
 
-	/**
-	 * name of the term
-	 *
-	 * @var string $name
-	 * @validate NotEmpty
-	 */
-	protected $name;
+    /**
+     * Returns the name
+     *
+     * @return string $name
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
 
-	/**
-	 * Returns the name
-	 *
-	 * @return string $name
-	 */
-	public function getName() {
-		return $this->name;
-	}
-
-	/**
-	 * Sets the name
-	 *
-	 * @param string $name
-	 * @return void
-	 */
-	public function setName($name) {
-		$this->name = $name;
-	}
+    /**
+     * Sets the name
+     *
+     * @param string $name
+     * @return void
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+    }
 }

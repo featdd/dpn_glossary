@@ -25,4 +25,6 @@ namespace Featdd\DpnGlossary\ViewHelpers\Widget\Controller;
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
-class Exception extends \TYPO3\CMS\Fluid\Core\Widget\Exception {}
+class Exception extends \TYPO3\CMS\Fluid\Core\Widget\Exception
+{
+}

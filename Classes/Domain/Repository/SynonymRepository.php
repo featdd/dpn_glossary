@@ -33,14 +33,14 @@ use TYPO3\CMS\Extbase\Persistence\Repository;
  * @package dpn_glossary
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  */
-class SynonymRepository extends Repository {
-
-	/**
-	 * Default orderings ascending by name
-	 *
-	 * @var array $defaultOrderings
-	 */
-	protected $defaultOrderings = array(
-		'name' => QueryInterface::ORDER_ASCENDING,
-	);
+class SynonymRepository extends Repository
+{
+    /**
+     * Default orderings ascending by name
+     *
+     * @var array $defaultOrderings
+     */
+    protected $defaultOrderings = array(
+        'name' => QueryInterface::ORDER_ASCENDING,
+    );
 }

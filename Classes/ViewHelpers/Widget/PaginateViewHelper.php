@@ -35,33 +35,36 @@ use TYPO3\CMS\Fluid\Core\Widget\AbstractWidgetViewHelper;
  * @package dpn_glossary
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  */
-class PaginateViewHelper extends AbstractWidgetViewHelper {
+class PaginateViewHelper extends AbstractWidgetViewHelper
+{
 
-	/**
-	 * @var PaginateController
-	 */
-	protected $controller;
+    /**
+     * @var PaginateController
+     */
+    protected $controller;
 
-	/**
-	 * @param PaginateController $paginateController
-	 * @return void
-	 */
-	public function injectPaginateController(PaginateController $paginateController) {
-		$this->controller = $paginateController;
-	}
+    /**
+     * @param PaginateController $paginateController
+     * @return void
+     */
+    public function injectPaginateController(PaginateController $paginateController)
+    {
+        $this->controller = $paginateController;
+    }
 
-	/**
-	 * Gets the objects and "as" value also
-	 * the fieldname for what to sort for
-	 *
-	 * @param QueryResultInterface $objects
-	 * @param string               $as
-	 * @param string               $field
-	 *
-	 * @return ResponseInterface
-	 */
-	public function render(QueryResultInterface $objects, $as, $field = 'name') {
-		return $this->initiateSubRequest();
-	}
+    /**
+     * Gets the objects and "as" value also
+     * the fieldname for what to sort for
+     *
+     * @param QueryResultInterface $objects
+     * @param string               $as
+     * @param string               $field
+     *
+     * @return ResponseInterface
+     */
+    public function render(QueryResultInterface $objects, $as, $field = 'name')
+    {
+        return $this->initiateSubRequest();
+    }
 
 }

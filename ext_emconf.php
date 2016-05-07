@@ -25,33 +25,33 @@
  ***************************************************************/
 
 $EM_CONF[$_EXTKEY] = array(
-	'title' => 'dreipunktnull Glossar',
-	'description' => 'Modern Extbase and namespaced Glossary extension',
-	'category' => 'plugin',
-	'author' => 'Daniel Dorndorf',
-	'author_email' => 'dorndorf@dreipunktnull.com',
-	'author_company' => 'dreipunktnull',
-	'shy' => '',
-	'priority' => '',
-	'module' => '',
-	'state' => 'stable',
-	'internal' => '',
-	'uploadfolder' => '0',
-	'createDirs' => '',
-	'modify_tables' => '',
-	'clearCacheOnLoad' => 1,
-	'lockType' => '',
-	'version' => '2.3.19',
-	'constraints' => array(
-		'depends' => array(
-			'extbase' => '6.2.0',
-			'fluid' => '6.2.0',
-			'typo3' => '6.2.0-7.6.99',
-			'php' => '5.4.0'
-		),
-		'conflicts' => array(),
-		'suggests' => array(
-			'realurl' => '1.10.0-0.0.0'
-		)
-	)
+    'title'            => 'dreipunktnull Glossar',
+    'description'      => 'Modern Extbase and namespaced Glossary extension',
+    'category'         => 'plugin',
+    'author'           => 'Daniel Dorndorf',
+    'author_email'     => 'dorndorf@dreipunktnull.com',
+    'author_company'   => 'dreipunktnull',
+    'shy'              => '',
+    'priority'         => '',
+    'module'           => '',
+    'state'            => 'stable',
+    'internal'         => '',
+    'uploadfolder'     => '0',
+    'createDirs'       => '',
+    'modify_tables'    => '',
+    'clearCacheOnLoad' => 1,
+    'lockType'         => '',
+    'version'          => '2.3.19',
+    'constraints'      => array(
+        'depends'   => array(
+            'extbase' => '6.2.0',
+            'fluid'   => '6.2.0',
+            'typo3'   => '6.2.0-7.6.99',
+            'php'     => '5.4.0'
+        ),
+        'conflicts' => array(),
+        'suggests'  => array(
+            'realurl' => '1.10.0-0.0.0'
+        )
+    )
 );

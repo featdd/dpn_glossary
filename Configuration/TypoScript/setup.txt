@@ -1,113 +1,113 @@
 plugin.tx_dpnglossary {
-  view {
-    templateRootPaths {
-      0 = EXT:dpn_glossary/Resources/Private/Templates/
-      1 = {$plugin.tx_dpnglossary.view.templateRootPath}
-    }
-
-    partialRootPaths {
-      0 = EXT:dpn_glossary/Resources/Private/Partials/
-      1 = {$plugin.tx_dpnglossary.view.partialRootPath}
-    }
-
-    layoutRootPaths {
-      0 = EXT:dpn_glossary/Resources/Private/Layouts/
-      1 = {$plugin.tx_dpnglossary.view.layoutRootPath}
-    }
-  }
-
-  persistence {
-    storagePid = {$plugin.tx_dpnglossary.persistence.storagePid}
-  }
-
-  settings {
-    # Pid of the detailpage
-    detailPage = {$plugin.tx_dpnglossary.settings.detailPage}
-    # Pid of the listpage
-    listPage = {$plugin.tx_dpnglossary.settings.listPage}
-    # pages where terms should be searched, 0 = all
-    parsingPids = {$plugin.tx_dpnglossary.settings.parsingPids}
-    # pages where terms should NOT be searched
-    parsingExcludePidList = {$plugin.tx_dpnglossary.settings.parsingExcludePidList}
-    # max replacemnet per page, default = -1 (any matches)
-    maxReplacementPerPage = {$plugin.tx_dpnglossary.settings.maxReplacementPerPage}
-    # respect max replacement when parsing synonyms
-    maxReplacementPerPageRespectSynonyms = {$plugin.tx_dpnglossary.settings.maxReplacementPerPageRespectSynonyms}
-    # Tags which content will be parsed for terms
-    parsingTags = {$plugin.tx_dpnglossary.settings.parsingTags}
-    # Tags which are not allowed as direct parent for a parsingTag
-    forbiddenParentTags = {$plugin.tx_dpnglossary.settings.forbiddenParentTags}
-    # Listmode normal or character grouped list
-    listmode = {$plugin.tx_dpnglossary.settings.listmode}
-    # Disable Parser option
-    disableParser = {$plugin.tx_dpnglossary.settings.disableParser}
-
-    # Pagination settings
-    pagination {
-      characters = A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z
-      insertAbove = 1
-      insertBelow = 0
-    }
-
-    termWraps = CASE
-    termWraps {
-      key.field = term_type
-      default = TEXT
-      default {
-        field = name
-        dataWrap = |
-        typolink {
-          parameter = #{field:name}
-          parameter.insertData = 1
-          parameter.override < plugin.tx_dpnglossary.settings.detailPage
-          parameter.override {
-            if.value = 0
-            if.isGreaterThan < plugin.tx_dpnglossary.settings.detailPage
-          }
-
-          additionalParams = &tx_dpnglossary_glossarydetail[controller]=Term&tx_dpnglossary_glossarydetail[action]=show&tx_dpnglossary_glossarydetail[term]={field:uid}&tx_dpnglossary_glossarydetail[pageUid]={ global : TSFE | id}
-          additionalParams {
-            insertData = 1
-            if.value = 0
-            if.isGreaterThan < plugin.tx_dpnglossary.settings.detailPage
-          }
-
-          ATagParams.dataWrap = title="{field:tooltiptext}" class="dpnglossary link"
-          ATagParams.dataWrap {
-            override = title="{field:name}" class="dpnglossary link"
-            override.if.isFalse.data = field:tooltiptext
-          }
-
-          useCacheHash = 1
+    view {
+        templateRootPaths {
+            0 = EXT:dpn_glossary/Resources/Private/Templates/
+            1 = {$plugin.tx_dpnglossary.view.templateRootPath}
         }
-      }
 
-      abbreviation < .default
-      abbreviation {
-        dataWrap = <abbr title="{field:tooltiptext}" lang="{field:term_lang}">|</abbr>
-        dataWrap {
-          override = <abbr title="{field:name}" lang="{field:term_lang}">|</abbr>
-          override.if.isFalse.data = field:tooltiptext
+        partialRootPaths {
+            0 = EXT:dpn_glossary/Resources/Private/Partials/
+            1 = {$plugin.tx_dpnglossary.view.partialRootPath}
         }
-      }
 
-      acronym < .default
-      acronym {
-        dataWrap = <acronym title="{field:tooltiptext}" lang="{field:term_lang}">|</acronym>
-        dataWrap {
-          override = <acronym title="{field:name}" lang="{field:term_lang}">|</acronym>
-          override.if.isFalse.data = field:tooltiptext
+        layoutRootPaths {
+            0 = EXT:dpn_glossary/Resources/Private/Layouts/
+            1 = {$plugin.tx_dpnglossary.view.layoutRootPath}
         }
-      }
-
-      definition < .default
-      definition {
-        dataWrap = <dfn title="{field:tooltiptext}" lang="{field:term_lang}">|</dfn>
-        dataWrap {
-          override = <dfn title="{field:name}" lang="{field:term_lang}">|</dfn>
-          override.if.isFalse.data = field:tooltiptext
-        }
-      }
     }
-  }
+
+    persistence {
+        storagePid = {$plugin.tx_dpnglossary.persistence.storagePid}
+    }
+
+    settings {
+        # Pid of the detailpage
+        detailPage = {$plugin.tx_dpnglossary.settings.detailPage}
+        # Pid of the listpage
+        listPage = {$plugin.tx_dpnglossary.settings.listPage}
+        # pages where terms should be searched, 0 = all
+        parsingPids = {$plugin.tx_dpnglossary.settings.parsingPids}
+        # pages where terms should NOT be searched
+        parsingExcludePidList = {$plugin.tx_dpnglossary.settings.parsingExcludePidList}
+        # max replacemnet per page, default = -1 (any matches)
+        maxReplacementPerPage = {$plugin.tx_dpnglossary.settings.maxReplacementPerPage}
+        # respect max replacement when parsing synonyms
+        maxReplacementPerPageRespectSynonyms = {$plugin.tx_dpnglossary.settings.maxReplacementPerPageRespectSynonyms}
+        # Tags which content will be parsed for terms
+        parsingTags = {$plugin.tx_dpnglossary.settings.parsingTags}
+        # Tags which are not allowed as direct parent for a parsingTag
+        forbiddenParentTags = {$plugin.tx_dpnglossary.settings.forbiddenParentTags}
+        # Listmode normal or character grouped list
+        listmode = {$plugin.tx_dpnglossary.settings.listmode}
+        # Disable Parser option
+        disableParser = {$plugin.tx_dpnglossary.settings.disableParser}
+
+        # Pagination settings
+        pagination {
+            characters = A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z
+            insertAbove = 1
+            insertBelow = 0
+        }
+
+        termWraps = CASE
+        termWraps {
+            key.field = term_type
+            default = TEXT
+            default {
+                field = name
+                dataWrap = |
+                typolink {
+                    parameter = #{field:name}
+                    parameter.insertData = 1
+                    parameter.override < plugin.tx_dpnglossary.settings.detailPage
+                    parameter.override {
+                        if.value = 0
+                        if.isGreaterThan < plugin.tx_dpnglossary.settings.detailPage
+                    }
+
+                    additionalParams = &tx_dpnglossary_glossarydetail[controller]=Term&tx_dpnglossary_glossarydetail[action]=show&tx_dpnglossary_glossarydetail[term]={field:uid}&tx_dpnglossary_glossarydetail[pageUid]={ global : TSFE | id}
+                    additionalParams {
+                        insertData = 1
+                        if.value = 0
+                        if.isGreaterThan < plugin.tx_dpnglossary.settings.detailPage
+                    }
+
+                    ATagParams.dataWrap = title="{field:tooltiptext}" class="dpnglossary link"
+                    ATagParams.dataWrap {
+                        override = title="{field:name}" class="dpnglossary link"
+                        override.if.isFalse.data = field:tooltiptext
+                    }
+
+                    useCacheHash = 1
+                }
+            }
+
+            abbreviation < .default
+            abbreviation {
+                dataWrap = <abbr title="{field:tooltiptext}" lang="{field:term_lang}">|</abbr>
+                dataWrap {
+                    override = <abbr title="{field:name}" lang="{field:term_lang}">|</abbr>
+                    override.if.isFalse.data = field:tooltiptext
+                }
+            }
+
+            acronym < .default
+            acronym {
+                dataWrap = <acronym title="{field:tooltiptext}" lang="{field:term_lang}">|</acronym>
+                dataWrap {
+                    override = <acronym title="{field:name}" lang="{field:term_lang}">|</acronym>
+                    override.if.isFalse.data = field:tooltiptext
+                }
+            }
+
+            definition < .default
+            definition {
+                dataWrap = <dfn title="{field:tooltiptext}" lang="{field:term_lang}">|</dfn>
+                dataWrap {
+                    override = <dfn title="{field:name}" lang="{field:term_lang}">|</dfn>
+                    override.if.isFalse.data = field:tooltiptext
+                }
+            }
+        }
+    }
 }

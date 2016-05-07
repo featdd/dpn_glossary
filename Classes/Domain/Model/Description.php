@@ -31,57 +31,61 @@ use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
  * @package dpn_glossary
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  */
-class Description extends AbstractEntity {
+class Description extends AbstractEntity
+{
+    /**
+     * meaning of the terms description
+     *
+     * @var string $meaning
+     */
+    protected $meaning;
 
-	/**
-	 * meaning of the terms description
-	 *
-	 * @var string $meaning
-	 */
-	protected $meaning;
+    /**
+     * text of the term
+     *
+     * @var string $text
+     */
+    protected $text;
 
-	/**
-	 * text of the term
-	 *
-	 * @var string $text
-	 */
-	protected $text;
+    /**
+     * Returns the meaning
+     *
+     * @return string
+     */
+    public function getMeaning()
+    {
+        return $this->meaning;
+    }
 
-	/**
-	 * Returns the meaning
-	 *
-	 * @return string
-	 */
-	public function getMeaning() {
-		return $this->meaning;
-	}
+    /**
+     * Sets the meaning
+     *
+     * @param string $meaning
+     * @return void
+     */
+    public function setMeaning($meaning)
+    {
+        $this->meaning = $meaning;
+    }
 
-	/**
-	 * Sets the meaning
-	 *
-	 * @param string $meaning
-	 * @return void
-	 */
-	public function setMeaning($meaning) {
-		$this->meaning = $meaning;
-	}
+    /**
+     * Returns the text
+     *
+     * @return string
+     */
+    public function getText()
+    {
+        return $this->text;
+    }
 
-	/**
-	 * Returns the text
-	 *
-	 * @return string
-	 */
-	public function getText() {
-		return $this->text;
-	}
-
-	/**
-	 * Sets the text
-	 *
-	 * @param string $text
-	 * @return void
-	 */
-	public function setText($text) {
-		$this->text = $text;
-	}
+    /**
+     * Sets the text
+     *
+     * @param string $text
+     * @return void
+     */
+    public function setText($text)
+    {
+        $this->text = $text;
+    }
 }

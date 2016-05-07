@@ -32,94 +32,99 @@ use TYPO3\CMS\Core\SingletonInterface;
  * @package dpn_glossary
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  */
-class ParserUtility implements SingletonInterface {
+class ParserUtility implements SingletonInterface
+{
+    /**
+     * Protect inline JavaScript from DOM Manipulation with HTML comments
+     * Optional you can pass over a alternative comment tag
+     *
+     * @param string $html
+     * @param string $tag
+     * @return string
+     */
+    public static function protectScrtiptsAndCommentsFromDOM($html, $tag = 'DPNGLOSSARY')
+    {
+        $callback = function ($match) use ($tag) {
+            return '<!--' . $tag . base64_encode($match[1] . $match[2] . $match[3]) . '-->';
+        };
 
-	/**
-	 * Protect inline JavaScript from DOM Manipulation with HTML comments
-	 * Optional you can pass over a alternative comment tag
-	 *
-	 * @param string $html
-	 * @param string $tag
-	 * @return string
-	 */
-	public static function protectScrtiptsAndCommentsFromDOM($html, $tag = 'DPNGLOSSARY') {
-		$callback = function($match) use ($tag) {
-			return '<!--' . $tag . base64_encode($match[1] . $match[2] . $match[3]) . '-->';
-		};
+        return preg_replace_callback(
+            '#(<script[^>]*>)(.*?)(<\/script>)#is',
+            $callback,
+            preg_replace_callback(
+                '#(<!--\[[^<]*>|<!--)(.*?)(<!\[[^<]*>|-->)#s',
+                $callback,
+                $html
+            )
+        );
+    }
 
-		return preg_replace_callback(
-			'#(<script[^>]*>)(.*?)(<\/script>)#is',
-			$callback,
-			preg_replace_callback(
-				'#(<!--\[[^<]*>|<!--)(.*?)(<!\[[^<]*>|-->)#s',
-				$callback,
-				$html
-			)
-		);
-	}
+    /**
+     * Reverse inline JavaScript protection
+     *
+     * @param string $html
+     * @param string $tag
+     * @return string
+     */
+    public static function protectScriptsAndCommentsFromDOMReverse($html, $tag = 'DPNGLOSSARY')
+    {
+        $callback = function ($match) {
+            return base64_decode($match[2]);
+        };
 
-	/**
-	 * Reverse inline JavaScript protection
-	 *
-	 * @param string $html
-	 * @param string $tag
-	 * @return string
-	 */
-	public static function protectScriptsAndCommentsFromDOMReverse($html, $tag = 'DPNGLOSSARY') {
-		$callback = function($match) {
-			return base64_decode($match[2]);
-		};
+        return preg_replace_callback('#(<!--' . preg_quote($tag) . ')(.*?)(-->)#is', $callback, $html);
+    }
 
-		return preg_replace_callback('#(<!--' . preg_quote($tag) . ')(.*?)(-->)#is', $callback, $html);
-	}
+    /**
+     * Extracts and replaces the
+     * inner content of the html tag
+     *
+     * @param string   $html
+     * @param callable $contentCallback receives the inner tag contents and has to return the parsed content
+     * @param callable $wrapperCallback the function used by the content callback to wrap parsed terms
+     * @return string
+     */
+    public static function getAndSetInnerTagContent($html, $contentCallback, $wrapperCallback)
+    {
+        $regexCallback = function ($match) use ($contentCallback, $wrapperCallback) {
+            return '<' . $match[1] . $match[2] . '>' . call_user_func($contentCallback, $match[3], $wrapperCallback) . $match[4];
+        };
 
-	/**
-	 * Extracts and replaces the
-	 * inner content of the html tag
-	 *
-	 * @param string   $html
-	 * @param callable $contentCallback receives the inner tag contents and has to return the parsed content
-	 * @param callable $wrapperCallback the function used by the content callback to wrap parsed terms
-	 * @return string
-	 */
-	public static function getAndSetInnerTagContent($html, $contentCallback, $wrapperCallback) {
-		$regexCallback = function($match) use ($contentCallback, $wrapperCallback) {
-			return '<' . $match[1] . $match[2] . '>' . call_user_func($contentCallback, $match[3], $wrapperCallback) . $match[4];
-		};
+        return preg_replace_callback('#^<([\w]+)([^>]*)>(.*?)(<\/\1>)$#is', $regexCallback, $html);
+    }
 
-		return preg_replace_callback('#^<([\w]+)([^>]*)>(.*?)(<\/\1>)$#is', $regexCallback, $html);
-	}
+    /**
+     * Extract the DOMNodes html and
+     * replace it with the parsed html
+     * injected in a temp DOMDocument
+     *
+     * @param \DOMNode $DOMNode
+     * @param string   $replacement
+     * @return void
+     */
+    public static function domNodeContentReplacer(\DOMNode $DOMNode, $replacement)
+    {
+        $tempDOM = new \DOMDocument();
+        // use XHTML tag for avoiding UTF-8 encoding problems
+        $tempDOM->loadHTML(
+            '<?xml encoding="UTF-8">' .
+            $replacement
+        );
 
-	/**
-	 * Extract the DOMNodes html and
-	 * replace it with the parsed html
-	 * injected in a temp DOMDocument
-	 *
-	 * @param \DOMNode $DOMNode
-	 * @param string   $replacement
-	 * @return void
-	 */
-	public static function domNodeContentReplacer(\DOMNode $DOMNode, $replacement) {
-		$tempDOM = new \DOMDocument();
-		// use XHTML tag for avoiding UTF-8 encoding problems
-		$tempDOM->loadHTML(
-			'<?xml encoding="UTF-8">' .
-			$replacement
-		);
-		// Replaces the original Node with the
-		// new node containing the parsed content
-		$DOMNode->parentNode->replaceChild(
-			$DOMNode
-				->ownerDocument
-				->importNode(
-					$tempDOM
-						->getElementsByTagName('body')
-						->item(0)
-						->childNodes
-						->item(0),
-					TRUE
-				),
-			$DOMNode
-		);
-	}
+        // Replaces the original Node with the
+        // new node containing the parsed content
+        $DOMNode->parentNode->replaceChild(
+            $DOMNode
+                ->ownerDocument
+                ->importNode(
+                    $tempDOM
+                        ->getElementsByTagName('body')
+                        ->item(0)
+                        ->childNodes
+                        ->item(0),
+                    TRUE
+                ),
+            $DOMNode
+        );
+    }
 }
