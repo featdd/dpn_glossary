@@ -1,14 +1,15 @@
-<div xmlns="http://www.w3.org/1999/xhtml" lang="en"
-	 xmlns:dpn="http://typo3.org/ns/Featdd/DpnGlossary/ViewHelpers"
-	 xmlns:f="http://typo3.org/ns/fluid/ViewHelpers"
+<html data-namespace-typo3-fluid="true" lang="en"
+	  xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:f="http://typo3.org/ns/fluid/ViewHelpers"
+	  xmlns:dpn="http://typo3.org/ns/Featdd/DpnGlossary/ViewHelpers"
 
-	 dpn:schemaLocation="http://schemas.featdd.de/dpn_glossary.xsd">
+	  dpn:schemaLocation="http://schemas.featdd.de/dpn_glossary.xsd">
 
 	<f:layout name="Default"/>
 
 	<f:section name="Main">
 
-		<h1><f:translate key="tx_dpnglossary_domain_model_term.listheadline" /></h1>
+		<h1><f:translate key="tx_dpnglossary_domain_model_term.listheadline"/></h1>
 
 		<f:if condition="{listmode} == 'character'">
 
@@ -17,7 +18,9 @@
 					<f:for each="{terms}" as="groupTerms" key="firstChar">
 						<strong>{firstChar}</strong>
 						<f:for each="{groupTerms}" as="term" iteration="itemIteration">
-							<dt><f:link.action pageUid="{detailPage}" action="show" arguments="{term: term}">{term.name}</f:link.action></dt>
+							<dt>
+								<f:link.action pageUid="{detailPage}" action="show" arguments="{term: term}">{term.name}</f:link.action>
+							</dt>
 							<dd>{term.tooltiptext}</dd>
 						</f:for>
 					</f:for>
@@ -31,7 +34,9 @@
 			<div>
 				<dl>
 					<f:for each="{terms}" as="term">
-						<dt><f:link.action pageUid="{detailPage}" action="show" arguments="{term: term}">{term.name}</f:link.action></dt>
+						<dt>
+							<f:link.action pageUid="{detailPage}" action="show" arguments="{term: term}">{term.name}</f:link.action>
+						</dt>
 						<dd>{term.tooltiptext}</dd>
 					</f:for>
 				</dl>
@@ -45,7 +50,9 @@
 				<div>
 					<dl>
 						<f:for each="{paginatedTerms}" as="term">
-							<dt><f:link.action pageUid="{detailPage}" action="show" arguments="{term: term}">{term.name}</f:link.action></dt>
+							<dt>
+								<f:link.action pageUid="{detailPage}" action="show" arguments="{term: term}">{term.name}</f:link.action>
+							</dt>
 							<dd>{term.tooltiptext}</dd>
 						</f:for>
 					</dl>
@@ -56,4 +63,4 @@
 
 	</f:section>
 
-</div>
+</html>
