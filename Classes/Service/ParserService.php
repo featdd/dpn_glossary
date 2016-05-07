@@ -287,17 +287,18 @@ class ParserService implements SingletonInterface
     {
         /*
          * Regex Explanation:
-         * Group 1: (^|[\s\>[:punct:]])
+         * Group 1: (^|[\s\>[:punct:]]|\<br*\>)
          *  ^         = can be begin of the string
          *  \G        = can match an other matchs end
          *  \s        = can have space before term
          *  \>        = can have a > before term (end of some tag)
          *  [:punct:] = can have punctuation characters like .,?!& etc. before term
+         *  \<br*\>   = can have a "br" tag before
          *
          * Group 2: (' . preg_quote($term->getName()) . ')
          *  The term to find, preg_quote() escapes special chars
          *
-         * Group 3: ($|[\s\<[:punct:]])
+         * Group 3: ($|[\s\<[:punct:]]|\<br*\>)
          *  Same as Group 1 but with end of string and < (start of some tag)
          *
          * Group 4: (?![^<]*>|[^<>]*<\/)
@@ -313,9 +314,9 @@ class ParserService implements SingletonInterface
          * i = ignores camel case
          */
         $regex = '#' .
-            '(^|\G|[\s\>[:punct:]])' .
+            '(^|\G|[\s\>[:punct:]]|\<br*\>)' .
             '(' . preg_quote($term->getName()) . ')' .
-            '($|[\s\<[:punct:]])' .
+            '($|[\s\<[:punct:]]|\<br*\>)' .
             '(?![^<]*>|[^<>]*<\/)' .
             '#i';
 
