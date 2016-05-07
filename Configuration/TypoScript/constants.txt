@@ -32,7 +32,9 @@ plugin.tx_dpnglossary {
         forbiddenParentTags = a,script
         # cat=plugin.tx_dpnglossary//a; type=options[normal,character,pagination]; label=Listmode: normal, character or paginated by characters
         listmode = normal
-        # cat=plugin.tx_dpnglossary//a; type=boolean; label=Disable parser
+        # cat=plugin.tx_dpnglossary//a; type=boolean; label=Disable parser (default: enabled)
         disableParser = 0
+        # cat=plugin.tx_dpnglossary//a; type=boolean; label=Parse the terms synonyms (default: enabled)
+        parseSynonyms = 1
     }
 }

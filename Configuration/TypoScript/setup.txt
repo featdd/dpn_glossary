@@ -41,6 +41,8 @@ plugin.tx_dpnglossary {
         listmode = {$plugin.tx_dpnglossary.settings.listmode}
         # Disable Parser option
         disableParser = {$plugin.tx_dpnglossary.settings.disableParser}
+        # Parse the terms synonyms
+        parseSynonyms = {$plugin.tx_dpnglossary.settings.parseSynonyms}
 
         # Pagination settings
         pagination {

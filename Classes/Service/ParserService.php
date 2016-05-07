@@ -235,7 +235,7 @@ class ParserService implements SingletonInterface
     }
 
     /**
-     * Parse the extracted html for terms with a regex
+     * Parse the extracted html for terms
      *
      * @param string   $text             the text to be parsed
      * @param callable $wrappingCallback the wrapping function for parsed terms as callback
@@ -254,17 +254,19 @@ class ParserService implements SingletonInterface
             if (0 !== $term['replacements']) {
                 $this->regexParser($text, $termObject, $replacements, $wrappingCallback);
 
-                /** @var Synonym $synonym */
-                foreach ($termObject->getSynonyms() as $synonym) {
-                    $termObject->setName(
-                        $synonym->getName()
-                    );
+                if (TRUE === (boolean) $this->settings['parseSynonyms']) {
+                    /** @var Synonym $synonym */
+                    foreach ($termObject->getSynonyms() as $synonym) {
+                        $termObject->setName(
+                            $synonym->getName()
+                        );
 
-                    if (TRUE === (boolean)$this->settings['maxReplacementPerPageRespectSynonyms']) {
-                        $this->regexParser($text, $termObject, $replacements, $wrappingCallback);
-                    } else {
-                        $noReplacementCount = -1;
-                        $this->regexParser($text, $termObject, $noReplacementCount, $wrappingCallback);
+                        if (TRUE === (boolean) $this->settings['maxReplacementPerPageRespectSynonyms']) {
+                            $this->regexParser($text, $termObject, $replacements, $wrappingCallback);
+                        } else {
+                            $noReplacementCount = -1;
+                            $this->regexParser($text, $termObject, $noReplacementCount, $wrappingCallback);
+                        }
                     }
                 }
             }
@@ -274,6 +276,8 @@ class ParserService implements SingletonInterface
     }
 
     /**
+     * Regex parser for terms on a text string
+     * 
      * @param string   $text
      * @param Term     $term
      * @param integer  $replacements
