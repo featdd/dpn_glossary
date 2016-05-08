@@ -26,18 +26,20 @@ This extension is all namespaced and is tested in TYPO3 6.2.X & 7.6.X
 - (parsingPids) Set the pageIds which should be parsed for terms (0 for all)
 - (parsingPidsExcludePidList) Set the pageIds which should "not" be parsed for terms (0 for none)
 - (maxReplacementPerPage) Configure the max replacement for each terms
+- (maxReplacementPerPageRespectSynonyms) Respect the synonyms when counting the replacements
 - (parsingTags) The tags whish should be parsed for terms
 - (forbiddenParentTags) The tags which are not allowed as a parent for a parsingTag
 - (disableParser) Disables the term parser
+- (parseSynonyms) Enables the parsing of synonyms, default is on
 - (listmode) Sets the listmode for the plugin
  - Normal: lists all terms in alphabetical order
  - Character: lists all terms grouped by their beginning characters
  - Pagination: lists terms by characters with a pagination
-  - You can override the characters in TypoScript used in the pagination (see example).
-    - Hint: if you want to add umlauts to the pagination you have to check the terms table collation.
-      - Normal utf8 will not differ between Ä and A, you have to use "utf8_german2_ci" which would make a difference
-      - You could change the 'name' column collation and add Ä,Ö,Ü to the comma list over typoscript (see example)
-      - See [MySQL reference](http://dev.mysql.com/doc/refman/5.7/en/charset-collation-effect.html) for more info
+- You can override the characters in TypoScript used in the pagination (see example).
+- Hint: if you want to add umlauts to the pagination you have to check the terms table collation.
+  - Normal utf8 will not differ between Ä and A, you have to use "utf8_german2_ci" which would make a difference
+  - You could change the 'name' column collation and add Ä,Ö,Ü to the comma list over typoscript (see example)
+  - See [MySQL reference](http://dev.mysql.com/doc/refman/5.7/en/charset-collation-effect.html) for more info
 
 - Link configuration:
  - The generated Link is whole configurable over TypoScript (see example).
