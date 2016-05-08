@@ -29,6 +29,20 @@ if (!defined('TYPO3_MODE')) {
 
 $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['tslib/class.tslib_fe.php']['contentPostProc-all'][] = \Featdd\DpnGlossary\Service\ParserService::class . '->pageParser';
 
+$iconRegistry = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Imaging\IconRegistry::class);
+
+$iconRegistry->registerIcon(
+    'ext-dpn_glossary-list-wizard-icon',
+    \TYPO3\CMS\Core\Imaging\IconProvider\BitmapIconProvider::class,
+    ['source' => 'EXT:dpn_glossary/Resources/Public/Icons/wizard_list.png']
+);
+
+$iconRegistry->registerIcon(
+    'ext-dpn_glossary-detail-wizard-icon',
+    \TYPO3\CMS\Core\Imaging\IconProvider\BitmapIconProvider::class,
+    ['source' => 'EXT:dpn_glossary/Resources/Public/Icons/wizard_detail.png']
+);
+
 if (
     TRUE === is_array($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['realurl']) &&
     TRUE === is_array($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['realurl']['_DEFAULT'])

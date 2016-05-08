@@ -1,0 +1,23 @@
+mod.wizards.newContentElement.wizardItems.plugins {
+    elements {
+        dpn_glossary_list {
+            iconIdentifier = ext-dpn_glossary-list-wizard-icon
+            title = LLL:EXT:dpn_glossary/Resources/Private/Language/locallang.xlf:tx_dpnglossary.wizard_list_title
+            description = LLL:EXT:dpn_glossary/Resources/Private/Language/locallang.xlf:tx_dpnglossary.wizard_list_description
+            tt_content_defValues {
+                CType = list
+                list_type = dpnglossary_glossarylist
+            }
+        }
+
+        dpn_glossary_detail {
+            iconIdentifier = ext-dpn_glossary-detail-wizard-icon
+            title = LLL:EXT:dpn_glossary/Resources/Private/Language/locallang.xlf:tx_dpnglossary.wizard_detail_title
+            description = LLL:EXT:dpn_glossary/Resources/Private/Language/locallang.xlf:tx_dpnglossary.wizard_detail_description
+            tt_content_defValues {
+                CType = list
+                list_type = dpnglossary_glossarydetail
+            }
+        }
+    }
+}
