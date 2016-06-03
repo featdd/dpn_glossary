@@ -187,7 +187,15 @@ class ParserService implements SingletonInterface
         libxml_use_internal_errors(TRUE);
         // Load Page HTML in DOM and check if HTML is valid else abort
         // use XHTML tag for avoiding UTF-8 encoding problems
-        if (FALSE === $DOM->loadHTML('<?xml encoding="UTF-8">' . ParserUtility::protectScrtiptsAndCommentsFromDOM($GLOBALS['TSFE']->content))) {
+        if (
+            FALSE === $DOM->loadHTML(
+                '<?xml encoding="UTF-8">' . ParserUtility::protectLinkAndSrcPathsFromDOM(
+                    ParserUtility::protectScrtiptsAndCommentsFromDOM(
+                        $GLOBALS['TSFE']->content
+                    )
+                )
+            )
+        ) {
             return;
         }
 
@@ -230,7 +238,11 @@ class ParserService implements SingletonInterface
         $GLOBALS['TSFE']->content = str_replace(
             '<?xml encoding="UTF-8">',
             '',
-            ParserUtility::protectScriptsAndCommentsFromDOMReverse($DOM->saveHTML())
+            ParserUtility::protectScriptsAndCommentsFromDOMReverse(
+                ParserUtility::protectLinkAndSrcPathsFromDOMReverse(
+                    $DOM->saveHTML()
+                )
+            )
         );
     }
 

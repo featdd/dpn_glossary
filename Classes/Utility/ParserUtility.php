@@ -34,6 +34,8 @@ use TYPO3\CMS\Core\SingletonInterface;
  */
 class ParserUtility implements SingletonInterface
 {
+    const DEFAULT_TAG = 'DPNGLOSSARY';
+
     /**
      * Protect inline JavaScript from DOM Manipulation with HTML comments
      * Optional you can pass over a alternative comment tag
@@ -42,7 +44,7 @@ class ParserUtility implements SingletonInterface
      * @param string $tag
      * @return string
      */
-    public static function protectScrtiptsAndCommentsFromDOM($html, $tag = 'DPNGLOSSARY')
+    public static function protectScrtiptsAndCommentsFromDOM($html, $tag = self::DEFAULT_TAG)
     {
         $callback = function ($match) use ($tag) {
             return '<!--' . $tag . base64_encode($match[1] . $match[2] . $match[3]) . '-->';
@@ -66,13 +68,57 @@ class ParserUtility implements SingletonInterface
      * @param string $tag
      * @return string
      */
-    public static function protectScriptsAndCommentsFromDOMReverse($html, $tag = 'DPNGLOSSARY')
+    public static function protectScriptsAndCommentsFromDOMReverse($html, $tag = self::DEFAULT_TAG)
     {
         $callback = function ($match) {
             return base64_decode($match[2]);
         };
 
-        return preg_replace_callback('#(<!--' . preg_quote($tag) . ')(.*?)(-->)#is', $callback, $html);
+        return preg_replace_callback(
+            '#(<!--' . preg_quote($tag) . ')(.*?)(-->)#is',
+            $callback,
+            $html
+        );
+    }
+
+    /**
+     * Protect link and src attribute paths to be altered by dom 
+     * 
+     * @param string $html
+     * @param string $tag
+     * @return string
+     */
+    public static function protectLinkAndSrcPathsFromDOM($html, $tag = self::DEFAULT_TAG)
+    {
+        $callback = function ($match) use ($tag) {
+            return $match[1] . $match[2] . $tag . base64_encode($match[3]) . $match[4];
+        };
+
+        return preg_replace_callback(
+            '#(href|src)(\=\")(.*?)(\")#is',
+            $callback,
+            $html
+        );
+    }
+
+    /**
+     * Reverse link and src paths protection
+     * 
+     * @param string $html
+     * @param string $tag
+     * @return string
+     */
+    public static function protectLinkAndSrcPathsFromDOMReverse($html, $tag = self::DEFAULT_TAG)
+    {
+        $callback = function ($match) {
+            return $match[1] . $match[2] . base64_decode($match[4]) . $match[5];
+        };
+
+        return preg_replace_callback(
+            '#(href|src)(\=\")(' . preg_quote($tag) . ')(.*?)(\")#is',
+            $callback,
+            $html
+        );
     }
 
     /**
@@ -87,7 +133,11 @@ class ParserUtility implements SingletonInterface
     public static function getAndSetInnerTagContent($html, $contentCallback, $wrapperCallback)
     {
         $regexCallback = function ($match) use ($contentCallback, $wrapperCallback) {
-            return '<' . $match[1] . $match[2] . '>' . call_user_func($contentCallback, $match[3], $wrapperCallback) . $match[4];
+            return '<' . $match[1] . $match[2] . '>' . call_user_func(
+                $contentCallback,
+                $match[3],
+                $wrapperCallback
+            ) . $match[4];
         };
 
         return preg_replace_callback('#^<([\w]+)([^>]*)>(.*?)(<\/\1>)$#is', $regexCallback, $html);
@@ -122,7 +172,7 @@ class ParserUtility implements SingletonInterface
                         ->item(0)
                         ->childNodes
                         ->item(0),
-                    TRUE
+                    true
                 ),
             $DOMNode
         );
