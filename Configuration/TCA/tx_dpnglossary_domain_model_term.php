@@ -239,7 +239,7 @@ return array(
                     ),
                     'maxitems'      => 999
                 ),
-                $GLOBALS['TYPO3_CONF_VARS']['GFX']['imagefile_ext'] . ',webm,mp4,ogg,mp3,wav'
+                $GLOBALS['TYPO3_CONF_VARS']['SYS']['mediafile_ext']
             ),
         ),
     ),
