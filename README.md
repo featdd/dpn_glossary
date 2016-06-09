@@ -5,7 +5,7 @@ A TYPO3 extension for a glossary and a contentparser to link terms to a detailpa
 This extension is all namespaced and is tested in TYPO3 6.2.X & 7.6.X
 
 ## Contact
-<dorndorf@dreipunktnull.com>
+<dorndorf@featdd.de>
 
 # Configuration
 
