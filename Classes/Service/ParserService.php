@@ -102,11 +102,15 @@ class ParserService implements SingletonInterface
         // Reduce TS config to plugin
         $this->tsConfig = $this->tsConfig['plugin.']['tx_dpnglossary.'];
 
-        if (NULL !== $this->tsConfig && 0 < count($this->tsConfig)) {
+        if (null !== $this->tsConfig && 0 < count($this->tsConfig)) {
             // Save extension settings without ts dots
             $this->settings = GeneralUtility::removeDotsFromTS($this->tsConfig['settings.']);
             // Set StoragePid in the query settings object
-            $querySettings->setStoragePageIds(GeneralUtility::trimExplode(',', $this->tsConfig['persistence.']['storagePid']));
+            $querySettings->setStoragePageIds(
+                GeneralUtility::trimExplode(
+                    ',',
+                    $this->tsConfig['persistence.']['storagePid'])
+            );
             // Set current language uid
             $querySettings->setLanguageUid($GLOBALS['TSFE']->sys_language_uid);
             // Assign query settings object to repository
@@ -117,7 +121,7 @@ class ParserService implements SingletonInterface
             /** @var Term $term */
             foreach ($terms as $term) {
                 $this->terms[] = array(
-                    'term'         => $term,
+                    'term' => $term,
                     'replacements' => (int) $this->settings['maxReplacementPerPage'],
                 );
             }
@@ -141,14 +145,14 @@ class ParserService implements SingletonInterface
         // Get Tags which content should be parsed
         $tags = GeneralUtility::trimExplode(',', $this->settings['parsingTags']);
         // Remove "a" & "script" from parsingTags if it was added unknowingly
-        if (TRUE === in_array(self::$alwaysIgnoreParentTags, $tags, TRUE)) {
+        if (true === in_array(self::$alwaysIgnoreParentTags, $tags, true)) {
             $tags = array_diff($tags, self::$alwaysIgnoreParentTags);
         }
 
         // Abort parser...
         if (
             // Parser disabled
-            TRUE === (boolean) $this->settings['disableParser'] ||
+            true === (boolean) $this->settings['disableParser'] ||
             // Pagetype not 0
             0 !== $GLOBALS['TSFE']->type ||
             // current page is the glossary detailpage
@@ -163,22 +167,28 @@ class ParserService implements SingletonInterface
             0 === count($this->tsConfig) ||
             (
                 // parsingPids doesn't contain 0 and...
-                FALSE === in_array('0', $parsingPids, TRUE) &&
+                false === in_array('0', $parsingPids, true) &&
                 (
                     // page is excluded
-                    TRUE === in_array($GLOBALS['TSFE']->id, $excludePids, FALSE) ||
+                    true === in_array($GLOBALS['TSFE']->id, $excludePids, false) ||
                     // page is not whitelisted
-                    FALSE === in_array($GLOBALS['TSFE']->id, $parsingPids, FALSE)
+                    false === in_array($GLOBALS['TSFE']->id, $parsingPids, false)
                 )
             )
         ) {
-            return FALSE;
+            return false;
         }
+
+        // Classes which are not allowed for the parsing tag
+        $forbiddenParsingTagClasses = array_filter(
+            GeneralUtility::trimExplode(',', $this->settings['forbiddenParsingTagClasses'])
+        );
 
         // Tags which are not allowed as direct parent for a parsingTag
         $forbiddenParentTags = array_filter(GeneralUtility::trimExplode(',', $this->settings['forbiddenParentTags']));
+
         // Add "a" if unknowingly deleted to prevent errors
-        if (FALSE === in_array(self::$alwaysIgnoreParentTags, $forbiddenParentTags, TRUE)) {
+        if (false === in_array(self::$alwaysIgnoreParentTags, $forbiddenParentTags, true)) {
             $forbiddenParentTags = array_unique(
                 array_merge($forbiddenParentTags, self::$alwaysIgnoreParentTags)
             );
@@ -186,12 +196,14 @@ class ParserService implements SingletonInterface
 
         //Create new DOMDocument
         $DOM = new \DOMDocument();
+
         // Prevent crashes caused by HTML5 entities with internal errors
-        libxml_use_internal_errors(TRUE);
+        libxml_use_internal_errors(true);
+
         // Load Page HTML in DOM and check if HTML is valid else abort
         // use XHTML tag for avoiding UTF-8 encoding problems
         if (
-            FALSE === $DOM->loadHTML(
+            false === $DOM->loadHTML(
                 '<?xml encoding="UTF-8">' . ParserUtility::protectLinkAndSrcPathsFromDOM(
                     ParserUtility::protectScrtiptsAndCommentsFromDOM(
                         $html
@@ -203,13 +215,29 @@ class ParserService implements SingletonInterface
         }
 
         // remove unnecessary whitespaces in nodes (no visible whitespace)
-        $DOM->preserveWhiteSpace = FALSE;
+        $DOM->preserveWhiteSpace = false;
+
+        // Init DOMXPath with main DOMDocument
+        $DOMXPath = new \DOMXPath($DOM);
+
         /** @var \DOMElement $DOMBody */
         $DOMBody = $DOM->getElementsByTagName('body')->item(0);
         // iterate over tags which are defined to be parsed
         foreach ($tags as $tag) {
+            $xpathQuery = '//' . $tag;
+
+            // if classes given add them to xpath query
+            if (0 < count($forbiddenParsingTagClasses)) {
+                $xpathQuery .= '[not(contains(@class, \'' .
+                    implode(
+                        '\') or contains(@class, \'',
+                        $forbiddenParsingTagClasses
+                    ) .
+                    '\'))]';
+            }
+
             // extract the tags
-            $DOMTags = $DOMBody->getElementsByTagName($tag);
+            $DOMTags = $DOMXPath->query($xpathQuery, $DOMBody);
             // call the nodereplacer for each node to parse its content
             /** @var \DOMNode $DOMTag */
             foreach ($DOMTags as $DOMTag) {
@@ -224,7 +252,7 @@ class ParserService implements SingletonInterface
                 );
 
                 // check if element is children of a forbidden parent
-                if (FALSE === in_array($parentTags, $forbiddenParentTags, TRUE)) {
+                if (false === in_array($parentTags, $forbiddenParentTags, true)) {
                     ParserUtility::domNodeContentReplacer(
                         $DOMTag,
                         ParserUtility::getAndSetInnerTagContent(
@@ -262,21 +290,21 @@ class ParserService implements SingletonInterface
         // Iterate over terms and search matches for each of them
         foreach ($this->terms as $term) {
             /** @var Term $termObject */
-            $termObject   = clone $term['term'];
+            $termObject = clone $term['term'];
             $replacements = &$term['replacements'];
 
             //Check replacement counter
             if (0 !== $term['replacements']) {
                 $this->regexParser($text, $termObject, $replacements, $wrappingCallback);
 
-                if (TRUE === (boolean) $this->settings['parseSynonyms']) {
+                if (true === (boolean) $this->settings['parseSynonyms']) {
                     /** @var Synonym $synonym */
                     foreach ($termObject->getSynonyms() as $synonym) {
                         $termObject->setName(
                             $synonym->getName()
                         );
 
-                        if (TRUE === (boolean) $this->settings['maxReplacementPerPageRespectSynonyms']) {
+                        if (true === (boolean) $this->settings['maxReplacementPerPageRespectSynonyms']) {
                             $this->regexParser($text, $termObject, $replacements, $wrappingCallback);
                         } else {
                             $noReplacementCount = -1;
@@ -292,7 +320,7 @@ class ParserService implements SingletonInterface
 
     /**
      * Regex parser for terms on a text string
-     * 
+     *
      * @param string   $text
      * @param Term     $term
      * @param integer  $replacements
