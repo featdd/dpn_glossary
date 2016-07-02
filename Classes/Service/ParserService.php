@@ -125,11 +125,14 @@ class ParserService implements SingletonInterface
     }
 
     /**
-     * Main function called by hook 'contentPostProc-all'
+     * parse html for terms and return the parsed html
+     * or false if parsers has to be aborted
      *
-     * @return void
+     * @param string $html
+     * @return string|boolean
+     * @throws Exception
      */
-    public function pageParser()
+    public function pageParser($html)
     {
         // extract Pids which should be parsed
         $parsingPids = GeneralUtility::trimExplode(',', $this->settings['parsingPids']);
@@ -169,7 +172,7 @@ class ParserService implements SingletonInterface
                 )
             )
         ) {
-            return;
+            return FALSE;
         }
 
         // Tags which are not allowed as direct parent for a parsingTag
@@ -191,12 +194,12 @@ class ParserService implements SingletonInterface
             FALSE === $DOM->loadHTML(
                 '<?xml encoding="UTF-8">' . ParserUtility::protectLinkAndSrcPathsFromDOM(
                     ParserUtility::protectScrtiptsAndCommentsFromDOM(
-                        $GLOBALS['TSFE']->content
+                        $html
                     )
                 )
             )
         ) {
-            return;
+            throw new Exception('Parsers DOM Document could\'nt load the html');
         }
 
         // remove unnecessary whitespaces in nodes (no visible whitespace)
@@ -234,8 +237,8 @@ class ParserService implements SingletonInterface
             }
         }
 
-        // set the parsed html page and remove XHTML tag which is not needed anymore
-        $GLOBALS['TSFE']->content = str_replace(
+        // return the parsed html page and remove XHTML tag which is not needed anymore
+        return str_replace(
             '<?xml encoding="UTF-8">',
             '',
             ParserUtility::protectScriptsAndCommentsFromDOMReverse(
