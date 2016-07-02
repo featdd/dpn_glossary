@@ -37,6 +37,8 @@ use TYPO3\CMS\Extbase\Persistence\Repository;
  */
 class TermRepository extends Repository
 {
+    const DEFAULT_LIMIT = 5;
+
     /**
      * Default orderings ascending by name
      *
@@ -68,6 +70,43 @@ class TermRepository extends Repository
 
         // Sort terms
         usort($terms, $sortingCallback);
+
+        return $terms;
+    }
+
+    /**
+     * finds the newest terms
+     *
+     * @param integer $limit
+     * @return QueryResultInterface
+     */
+    public function findNewest($limit = self::DEFAULT_LIMIT)
+    {
+        return $this->createQuery()
+            ->setOrderings(array(
+                'crdate' => QueryInterface::ORDER_ASCENDING,
+            ))
+            ->setLimit($limit)
+            ->execute();
+    }
+
+    /**
+     * finds random terms
+     *
+     * @param integer $limit
+     * @return array
+     */
+    public function findRandom($limit = self::DEFAULT_LIMIT)
+    {
+        $terms = $this->createQuery()->execute()->toArray();
+
+        shuffle($terms);
+
+        $terms = array_slice(
+            $terms,
+            0,
+            $limit
+        );
 
         return $terms;
     }

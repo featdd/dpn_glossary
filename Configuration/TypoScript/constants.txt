@@ -36,6 +36,10 @@ plugin.tx_dpnglossary {
     forbiddenParsingTagClasses =
     # cat=plugin.tx_dpnglossary//a; type=options[normal,character,pagination]; label=Listmode: normal, character or paginated by characters
     listmode = normal
+    # cat=plugin.tx_dpnglossary//a; type=options[newest,random]; label=Previewmode: newest or random
+    previewmode = newest
+    # cat=plugin.tx_dpnglossary//a; type=string; label=Previewlimit
+    previewlimit = 5
     # cat=plugin.tx_dpnglossary//a; type=boolean; label=Disable parser (default: enabled)
     disableParser = 0
     # cat=plugin.tx_dpnglossary//a; type=boolean; label=Parse the terms synonyms (default: enabled)

@@ -26,6 +26,7 @@ namespace Featdd\DpnGlossary\Controller;
  ***************************************************************/
 
 use Featdd\DpnGlossary\Domain\Model\Term;
+use Featdd\DpnGlossary\Domain\Repository\TermRepository;
 use Featdd\DpnGlossary\ViewHelpers\Widget\Controller\PaginateController;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 use TYPO3\CMS\Extbase\Persistence\Generic\QueryResult;
@@ -60,13 +61,33 @@ class TermController extends ActionController
     }
 
     /**
+     * action preview
+     *
+     * @return void
+     */
+    public function previewAction()
+    {
+        $limit = (integer) $this->settings['previewlimit'];
+
+        if (0 >= $limit) {
+            $limit = TermRepository::DEFAULT_LIMIT;
+        }
+
+        $terms = 'newest' === $this->settings['previewmode'] ?
+            $this->termRepository->findNewest($limit) :
+            $this->termRepository->findRandom($limit);
+
+        $this->view->assign('terms', $terms);
+    }
+
+    /**
      * action show
      *
      * @param Term    $term
      * @param integer $pageUid
      * @return void
      */
-    public function showAction(Term $term, $pageUid = NULL)
+    public function showAction(Term $term, $pageUid = null)
     {
         if ('pagination' === $this->settings['listmode']) {
             $this->view->assign(

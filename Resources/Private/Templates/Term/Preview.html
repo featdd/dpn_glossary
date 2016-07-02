@@ -1,0 +1,25 @@
+<html data-namespace-typo3-fluid="true" lang="en"
+	  xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:f="http://typo3.org/ns/fluid/ViewHelpers"
+	  xmlns:dpn="http://typo3.org/ns/Featdd/DpnGlossary/ViewHelpers"
+
+	  dpn:schemaLocation="http://schemas.featdd.de/dpn_glossary.xsd">
+
+	<f:layout name="Default"/>
+
+	<f:section name="Main">
+
+		<h1>
+			<f:translate key="tx_dpnglossary_domain_model_term.previewheadline"/>
+		</h1>
+
+		<dl>
+			<f:for each="{terms}" as="term">
+				<dt>{term.name}</dt>
+				<dd>{term.tooltiptext}</dd>
+			</f:for>
+		</dl>
+
+	</f:section>
+
+</html>

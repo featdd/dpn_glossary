@@ -43,6 +43,10 @@ plugin.tx_dpnglossary {
     forbiddenParsingTagClasses = {$plugin.tx_dpnglossary.settings.forbiddenParentClasses}
     # Listmode normal or character grouped list
     listmode = {$plugin.tx_dpnglossary.settings.listmode}
+    # Previewmode newest or random
+    previewmode = {$plugin.tx_dpnglossary.settings.previewmode}
+    # Previewlimit
+    previewlimit = {$plugin.tx_dpnglossary.settings.previewlimit}
     # Disable Parser option
     disableParser = {$plugin.tx_dpnglossary.settings.disableParser}
     # Parse the terms synonyms

@@ -17,6 +17,18 @@ if (!defined('TYPO3_MODE')) {
 
 \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
     'Featdd.' . $_EXTKEY,
+    'Glossarypreview',
+    array(
+        'Term' => 'preview',
+    ),
+    // non-cacheable actions
+    array(
+        'Term' => '',
+    )
+);
+
+\TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
+    'Featdd.' . $_EXTKEY,
     'Glossarydetail',
     array(
         'Term' => 'show',
@@ -36,14 +48,20 @@ $iconRegistry = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\
 
 $iconRegistry->registerIcon(
     'ext-dpn_glossary-list-wizard-icon',
-    \TYPO3\CMS\Core\Imaging\IconProvider\BitmapIconProvider::class,
-    ['source' => 'EXT:dpn_glossary/Resources/Public/Icons/wizard_list.png']
+    \TYPO3\CMS\Core\Imaging\IconProvider\FontawesomeIconProvider::class,
+    ['name' => 'list']
+);
+
+$iconRegistry->registerIcon(
+    'ext-dpn_glossary-preview-wizard-icon',
+    \TYPO3\CMS\Core\Imaging\IconProvider\FontawesomeIconProvider::class,
+    ['name' => 'external-link-square']
 );
 
 $iconRegistry->registerIcon(
     'ext-dpn_glossary-detail-wizard-icon',
-    \TYPO3\CMS\Core\Imaging\IconProvider\BitmapIconProvider::class,
-    ['source' => 'EXT:dpn_glossary/Resources/Public/Icons/wizard_detail.png']
+    \TYPO3\CMS\Core\Imaging\IconProvider\FontawesomeIconProvider::class,
+    ['name' => 'search']
 );
 
 if (

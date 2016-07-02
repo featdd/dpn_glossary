@@ -1,0 +1,42 @@
+<T3DataStructure>
+	<sheets>
+		<sDEF>
+			<ROOT>
+				<TCEforms>
+					<sheetTitle>LLL:EXT:dpn_glossary/Resources/Private/Language/locallang.xlf:tx_dpnglossary.flexforms.preview</sheetTitle>
+				</TCEforms>
+				<type>array</type>
+				<el>
+					<settings.previewmode>
+						<TCEforms>
+							<label>LLL:EXT:dpn_glossary/Resources/Private/Language/locallang.xlf:tx_dpnglossary.flexforms.preview.mode</label>
+							<config>
+								<type>select</type>
+								<items>
+									<numIndex index="0" type="array">
+										<numIndex index="0">LLL:EXT:dpn_glossary/Resources/Private/Language/locallang.xlf:tx_dpnglossary.flexforms.preview.mode.newest</numIndex>
+										<numIndex index="1">newest</numIndex>
+									</numIndex>
+									<numIndex index="1">
+										<numIndex index="0">LLL:EXT:dpn_glossary/Resources/Private/Language/locallang.xlf:tx_dpnglossary.flexforms.preview.mode.random</numIndex>
+										<numIndex index="1">random</numIndex>
+									</numIndex>
+								</items>
+							</config>
+						</TCEforms>
+					</settings.previewmode>
+					<settings.previewlimit>
+						<TCEforms>
+							<label>LLL:EXT:dpn_glossary/Resources/Private/Language/locallang.xlf:tx_dpnglossary.flexforms.preview.limit</label>
+							<config>
+								<type>input</type>
+								<eval>int</eval>
+								<default>5</default>
+							</config>
+						</TCEforms>
+					</settings.previewlimit>
+				</el>
+			</ROOT>
+		</sDEF>
+	</sheets>
+</T3DataStructure>
