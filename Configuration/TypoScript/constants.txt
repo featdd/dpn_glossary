@@ -1,44 +1,44 @@
 plugin.tx_dpnglossary {
-    view {
-        # cat=plugin.tx_dpnglossary/file; type=string; label=Path to template root (FE)
-        templateRootPath = EXT:dpn_glossary/Resources/Private/Templates/
-        # cat=plugin.tx_dpnglossary/file; type=string; label=Path to template partials (FE)
-        partialRootPath = EXT:dpn_glossary/Resources/Private/Partials/
-        # cat=plugin.tx_dpnglossary/file; type=string; label=Path to template layouts (FE)
-        layoutRootPath = EXT:dpn_glossary/Resources/Private/Layouts/
-    }
+  view {
+    # cat=plugin.tx_dpnglossary/file; type=string; label=Path to template root (FE)
+    templateRootPath = EXT:dpn_glossary/Resources/Private/Templates/
+    # cat=plugin.tx_dpnglossary/file; type=string; label=Path to template partials (FE)
+    partialRootPath = EXT:dpn_glossary/Resources/Private/Partials/
+    # cat=plugin.tx_dpnglossary/file; type=string; label=Path to template layouts (FE)
+    layoutRootPath = EXT:dpn_glossary/Resources/Private/Layouts/
+  }
 
-    persistence {
-        # cat=plugin.tx_dpnglossary//a; type=string; label=Default storage PID
-        storagePid =
-    }
+  persistence {
+    # cat=plugin.tx_dpnglossary//a; type=string; label=Default storage PID
+    storagePid =
+  }
 
-    settings {
-        # cat=plugin.tx_dpnglossary//a; type=integer; label=Page ID of the detailpage for parsed terms
-        detailPage =
-        # cat=plugin.tx_dpnglossary//a; type=integer; label=Page ID of the listpage for parsed terms
-        listPage =
-        # cat=plugin.tx_dpnglossary//a; type=boolean; label=Add a canonical url to the detailpage
-        addCanonicalUrl = 1
-        # cat=plugin.tx_dpnglossary//a; type=string; label=Pages which should be parsed for glossary terms
-        parsingPids = 0
-        # cat=plugin.tx_dpnglossary//a; type=string; label=Pages (comma list) which should not be parsed for glossary terms
-        parsingExcludePidList =
-        # cat=plugin.tx_dpnglossary//a; type=integer; label=Maximum replacements for each term (default: -1 = any)
-        maxReplacementPerPage = -1
-        # cat=plugin.tx_dpnglossary//a; type=boolean; label=Respect replacement counter when parsing synonyms (default: off)
-        maxReplacementPerPageRespectSynonyms = 0
-        # cat=plugin.tx_dpnglossary//a; type=string; label=Tags which content will be parsed for terms
-        parsingTags = p
-        # cat=plugin.tx_dpnglossary//a; type=string; label=Tags which are not allowed as direct parent for a parsingTag
-        forbiddenParentTags = a,script
-        # cat=plugin.tx_dpnglossary//a; type=string; label=Classes which are not allowed for the parsing tag
-        forbiddenParsingTagClasses =
-        # cat=plugin.tx_dpnglossary//a; type=options[normal,character,pagination]; label=Listmode: normal, character or paginated by characters
-        listmode = normal
-        # cat=plugin.tx_dpnglossary//a; type=boolean; label=Disable parser (default: enabled)
-        disableParser = 0
-        # cat=plugin.tx_dpnglossary//a; type=boolean; label=Parse the terms synonyms (default: enabled)
-        parseSynonyms = 1
-    }
+  settings {
+    # cat=plugin.tx_dpnglossary//a; type=integer; label=Page ID of the detailpage for parsed terms
+    detailPage =
+    # cat=plugin.tx_dpnglossary//a; type=integer; label=Page ID of the listpage for parsed terms
+    listPage =
+    # cat=plugin.tx_dpnglossary//a; type=boolean; label=Add a canonical url to the detailpage
+    addCanonicalUrl = 1
+    # cat=plugin.tx_dpnglossary//a; type=string; label=Pages which should be parsed for glossary terms
+    parsingPids = 0
+    # cat=plugin.tx_dpnglossary//a; type=string; label=Pages (comma list) which should not be parsed for glossary terms
+    parsingExcludePidList =
+    # cat=plugin.tx_dpnglossary//a; type=integer; label=Maximum replacements for each term (default: -1 = any)
+    maxReplacementPerPage = -1
+    # cat=plugin.tx_dpnglossary//a; type=boolean; label=Respect replacement counter when parsing synonyms (default: off)
+    maxReplacementPerPageRespectSynonyms = 0
+    # cat=plugin.tx_dpnglossary//a; type=string; label=Tags which content will be parsed for terms
+    parsingTags = p
+    # cat=plugin.tx_dpnglossary//a; type=string; label=Tags which are not allowed as direct parent for a parsingTag
+    forbiddenParentTags = a,script
+    # cat=plugin.tx_dpnglossary//a; type=string; label=Classes which are not allowed for the parsing tag
+    forbiddenParsingTagClasses =
+    # cat=plugin.tx_dpnglossary//a; type=options[normal,character,pagination]; label=Listmode: normal, character or paginated by characters
+    listmode = normal
+    # cat=plugin.tx_dpnglossary//a; type=boolean; label=Disable parser (default: enabled)
+    disableParser = 0
+    # cat=plugin.tx_dpnglossary//a; type=boolean; label=Parse the terms synonyms (default: enabled)
+    parseSynonyms = 1
+  }
 }
