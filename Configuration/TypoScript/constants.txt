@@ -18,6 +18,8 @@ plugin.tx_dpnglossary {
         detailPage =
         # cat=plugin.tx_dpnglossary//a; type=integer; label=Page ID of the listpage for parsed terms
         listPage =
+        # cat=plugin.tx_dpnglossary//a; type=boolean; label=Add a canonical url to the detailpage
+        addCanonicalUrl = 1
         # cat=plugin.tx_dpnglossary//a; type=string; label=Pages which should be parsed for glossary terms
         parsingPids = 0
         # cat=plugin.tx_dpnglossary//a; type=string; label=Pages (comma list) which should not be parsed for glossary terms

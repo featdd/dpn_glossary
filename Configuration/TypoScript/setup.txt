@@ -25,6 +25,8 @@ plugin.tx_dpnglossary {
         detailPage = {$plugin.tx_dpnglossary.settings.detailPage}
         # Pid of the listpage
         listPage = {$plugin.tx_dpnglossary.settings.listPage}
+        # Add canonical url to detailPage
+        addCanonicalUrl = {$plugin.tx_dpnglossary.settings.addCanonicalUrl}
         # pages where terms should be searched, 0 = all
         parsingPids = {$plugin.tx_dpnglossary.settings.parsingPids}
         # pages where terms should NOT be searched
