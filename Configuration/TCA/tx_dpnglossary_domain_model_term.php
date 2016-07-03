@@ -33,7 +33,7 @@ return array(
         'showRecordFieldList' => 'sys_language_uid, hidden, name, tooltiptext, synonyms, descriptions, term_type, term_lang, media, starttime, endtime',
     ),
     'types'     => array(
-        '1' => array('showitem' => 'sys_language_uid, hidden;;1, name, tooltiptext, synonyms, descriptions, term_type, term_lang, media, --div--;LLL:EXT:cms/locallang_ttc.xml:tabs.access,starttime, endtime'),
+        '1' => array('showitem' => 'sys_language_uid, hidden;;1, name, tooltiptext, synonyms, descriptions, term_type, term_lang, media, --div--;LLL:EXT:cms/locallang_ttc.xlf:tabs.access, starttime, endtime'),
     ),
     'palettes'  => array(
         '1' => array('showitem' => ''),
