@@ -105,6 +105,17 @@
 			</trans-unit>
 
 
+			<trans-unit id="tx_dpnglossary_domain_model_term.previewheadline.newest">
+				<source>Latest added terms</source>
+			</trans-unit>
+			<trans-unit id="tx_dpnglossary_domain_model_term.previewheadline.random">
+				<source>Random terms</source>
+			</trans-unit>
+			<trans-unit id="tx_dpnglossary_domain_model_term.previewheadline.selected">
+				<source>Selected terms</source>
+			</trans-unit>
+
+
 			<trans-unit id="tx_dpnglossary.flexforms.preview">
 				<source>Preview Settings</source>
 			</trans-unit>
@@ -116,6 +127,9 @@
 			</trans-unit>
 			<trans-unit id="tx_dpnglossary.flexforms.preview.mode.random">
 				<source>Random</source>
+			</trans-unit>
+			<trans-unit id="tx_dpnglossary.flexforms.preview.mode.selected">
+				<source>Selected</source>
 			</trans-unit>
 			<trans-unit id="tx_dpnglossary.flexforms.preview.limit">
 				<source>Limit</source>

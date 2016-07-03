@@ -28,6 +28,7 @@ namespace Featdd\DpnGlossary\Controller;
 use Featdd\DpnGlossary\Domain\Model\Term;
 use Featdd\DpnGlossary\Domain\Repository\TermRepository;
 use Featdd\DpnGlossary\ViewHelpers\Widget\Controller\PaginateController;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 use TYPO3\CMS\Extbase\Persistence\Generic\QueryResult;
 
@@ -61,11 +62,11 @@ class TermController extends ActionController
     }
 
     /**
-     * action preview
+     * action previewNewest
      *
      * @return void
      */
-    public function previewAction()
+    public function previewNewestAction()
     {
         $limit = (integer) $this->settings['previewlimit'];
 
@@ -73,11 +74,44 @@ class TermController extends ActionController
             $limit = TermRepository::DEFAULT_LIMIT;
         }
 
-        $terms = 'newest' === $this->settings['previewmode'] ?
-            $this->termRepository->findNewest($limit) :
-            $this->termRepository->findRandom($limit);
+        $this->view->assign(
+            'terms',
+            $this->termRepository->findNewest($limit)
+        );
+    }
 
-        $this->view->assign('terms', $terms);
+    /**
+     * action previewRandom
+     * 
+     * @return void
+     */
+    public function previewRandomAction()
+    {
+        $limit = (integer) $this->settings['previewlimit'];
+
+        if (0 >= $limit) {
+            $limit = TermRepository::DEFAULT_LIMIT;
+        }
+
+        $this->view->assign(
+            'terms',
+            $this->termRepository->findRandom($limit)
+        );
+    }
+
+    /**
+     * action previewSelected
+     * 
+     * @return void
+     */
+    public function previewSelectedAction()
+    {
+        $previewSelectedUids = GeneralUtility::trimExplode(',', $this->settings['previewSelected']);
+        
+        $this->view->assign(
+            'terms',
+            $this->termRepository->findByUids($previewSelectedUids)
+        );
     }
 
     /**

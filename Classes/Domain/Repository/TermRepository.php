@@ -75,6 +75,23 @@ class TermRepository extends Repository
     }
 
     /**
+     * finds terms by multiple uids
+     * 
+     * @param array $uids
+     * @return QueryResultInterface
+     */
+    public function findByUids(array $uids)
+    {
+        $query = $this->createQuery();
+        
+        $query->matching(
+            $query->in('uid', $uids)
+        );
+        
+        return $query->execute();
+    }
+
+    /**
      * finds the newest terms
      *
      * @param integer $limit

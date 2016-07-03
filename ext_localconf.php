@@ -19,7 +19,7 @@ if (!defined('TYPO3_MODE')) {
     'Featdd.' . $_EXTKEY,
     'Glossarypreview',
     array(
-        'Term' => 'preview',
+        'Term' => 'previewNewest, previewRandom, previewSelected',
     ),
     // non-cacheable actions
     array(

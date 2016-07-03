@@ -105,6 +105,17 @@
 			</trans-unit>
 
 
+			<trans-unit id="tx_dpnglossary_domain_model_term.previewheadline.newest">
+				<target>Zuletzt hinzugefügte Begriffe</target>
+			</trans-unit>
+			<trans-unit id="tx_dpnglossary_domain_model_term.previewheadline.random">
+				<target>Zufällige Begriffe</target>
+			</trans-unit>
+			<trans-unit id="tx_dpnglossary_domain_model_term.previewheadline.selected">
+				<target>Ausgewählte Begriffe</target>
+			</trans-unit>
+
+
 			<trans-unit id="tx_dpnglossary.flexforms.preview">
 				<target>Vorschau Einstellungen</target>
 			</trans-unit>
@@ -116,6 +127,9 @@
 			</trans-unit>
 			<trans-unit id="tx_dpnglossary.flexforms.preview.mode.random">
 				<target>Zufällige</target>
+			</trans-unit>
+			<trans-unit id="tx_dpnglossary.flexforms.preview.mode.selected">
+				<target>Ausgewählte</target>
 			</trans-unit>
 			<trans-unit id="tx_dpnglossary.flexforms.preview.limit">
 				<target>Maximal</target>
