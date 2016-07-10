@@ -1,5 +1,5 @@
 <?php
-namespace Featdd\DpnGlossary\Hook;
+namespace Featdd\DpnGlossary\Service;
 
 /***************************************************************
  *  Copyright notice
@@ -25,69 +25,61 @@ namespace Featdd\DpnGlossary\Hook;
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
-use Featdd\DpnGlossary\Service\LinkService;
-use TYPO3\CMS\Core\Page\PageRenderer;
+use TYPO3\CMS\Core\SingletonInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManager;
+use TYPO3\CMS\Extbase\Mvc\Web\Routing\UriBuilder;
 use TYPO3\CMS\Extbase\Object\ObjectManager;
+use TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer;
 
 /**
- *
  * @package dpn_glossary
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  */
-class RenderPreProcessHook
+class LinkService implements SingletonInterface
 {
-    const URL_PARAM_DETAIL = 'tx_dpnglossary_glossarydetail[term]';
-
     /**
-     * @var array
+     * @var \TYPO3\CMS\Extbase\Mvc\Web\Routing\UriBuilder
      */
-    protected $settings = array();
+    protected $uriBuilder;
 
     /**
-     * @var \Featdd\DpnGlossary\Service\LinkService
-     */
-    protected $linkService;
-
-    /**
-     * @return RenderPreProcessHook
+     * @return LinkService
      */
     public function __construct()
     {
         /** @var ObjectManager $objectManager */
         $objectManager = GeneralUtility::makeInstance(ObjectManager::class);
-        $this->linkService = $objectManager->get(LinkService::class);
         /** @var ConfigurationManager $configurationManager */
         $configurationManager = $objectManager->get(ConfigurationManager::class);
-        $tsConfig = $configurationManager->getConfiguration(ConfigurationManager::CONFIGURATION_TYPE_FULL_TYPOSCRIPT);
-        $settings = $tsConfig['plugin.']['tx_dpnglossary.']['settings.'];
-        $this->settings = GeneralUtility::removeDotsFromTS($settings);
+        /** @var ContentObjectRenderer $contentObjectRenderer */
+        $contentObjectRenderer = $objectManager->get(ContentObjectRenderer::class);
+        $configurationManager->setContentObject($contentObjectRenderer);
+        $this->uriBuilder = $objectManager->get(UriBuilder::class);
+        $this->uriBuilder->injectConfigurationManager($configurationManager);
     }
 
     /**
-     * @param array        $params
-     * @param PageRenderer $pageRenderer
+     * @param int   $pageId
+     * @param array $arguments
+     * @param bool  $absolut
+     * @param int   $sysLanguageUid
+     * @return string
      */
-    public function main(array &$params, PageRenderer $pageRenderer)
+    public function buildLink($pageId, array $arguments = array(), $absolut = false, $sysLanguageUid = 0)
     {
-        $getParams = $_GET['tx_dpnglossary_glossarydetail'];
-
-        if (
-            $GLOBALS['TSFE']->id === (integer) $this->settings['detailPage'] &&
-            true === (boolean) $this->settings['addCanonicalUrl'] &&
-            array_key_exists('pageUid', $getParams)
-        ) {
-            $url = $this->linkService->buildLink(
-                $this->settings['detailPage'],
-                array(
-                    self::URL_PARAM_DETAIL => $getParams['term'],
-                ),
-                true,
-                $GLOBALS['TSFE']->sys_language_uid
+        if (0 < $sysLanguageUid) {
+            $arguments = array_merge(
+                array('L' => $sysLanguageUid),
+                $arguments
             );
-
-            $pageRenderer->addHeaderData('<link rel="canonical" href="' . $url . '"/>');
         }
+
+        return $this->uriBuilder
+            ->reset()
+            ->setTargetPageUid($pageId)
+            ->setArguments($arguments)
+            ->setCreateAbsoluteUri($absolut)
+            ->buildFrontendUri();
     }
 }
