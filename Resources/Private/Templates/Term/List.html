@@ -17,12 +17,7 @@
 				<dl>
 					<f:for each="{terms}" as="groupTerms" key="firstChar">
 						<strong>{firstChar}</strong>
-						<f:for each="{groupTerms}" as="term" iteration="itemIteration">
-							<dt>
-								<f:link.action pageUid="{detailPage}" action="show" arguments="{term: term}">{term.name}</f:link.action>
-							</dt>
-							<dd>{term.tooltiptext}</dd>
-						</f:for>
+						<f:render partial="Term/List" arguments="{terms: groupTerms}"/>
 					</f:for>
 				</dl>
 			</div>
@@ -33,12 +28,7 @@
 
 			<div>
 				<dl>
-					<f:for each="{terms}" as="term">
-						<dt>
-							<f:link.action pageUid="{detailPage}" action="show" arguments="{term: term}">{term.name}</f:link.action>
-						</dt>
-						<dd>{term.tooltiptext}</dd>
-					</f:for>
+					<f:render partial="Term/List" arguments="{terms: terms}"/>
 				</dl>
 			</div>
 
@@ -49,12 +39,7 @@
 			<dpn:widget.paginate objects="{terms}" field="name" as="paginatedTerms">
 				<div>
 					<dl>
-						<f:for each="{paginatedTerms}" as="term">
-							<dt>
-								<f:link.action pageUid="{detailPage}" action="show" arguments="{term: term}">{term.name}</f:link.action>
-							</dt>
-							<dd>{term.tooltiptext}</dd>
-						</f:for>
+						<f:render partial="Term/List" arguments="{terms: paginatedTerms}"/>
 					</dl>
 				</div>
 			</dpn:widget.paginate>

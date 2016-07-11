@@ -4,7 +4,9 @@
 
 	<dl>
 		<f:for each="{terms}" as="term">
-			<dt>{term.name}</dt>
+			<dt>
+				<f:link.action pageUid="{detailPage}" action="show" arguments="{term: term}">{term.name}</f:link.action>
+			</dt>
 			<dd>{term.tooltiptext}</dd>
 		</f:for>
 	</dl>

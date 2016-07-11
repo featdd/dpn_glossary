@@ -2,49 +2,43 @@
 	  xmlns="http://www.w3.org/1999/xhtml"
 	  xmlns:f="http://typo3.org/ns/fluid/ViewHelpers">
 
-	<f:layout name="Default"/>
-
-	<f:section name="Main">
-
-		<div class="dpnglossary details">
-			<dl>
-				<dt><f:translate key="tx_dpnglossary_domain_model_term.name" />: {term.name}</dt>
-				<dd><strong><f:translate key="tx_dpnglossary_domain_model_term.descriptions" />:</strong>
-					<f:for each="{term.descriptions}" as="description">
-						<div class="description">
-							<h3>{description.meaning}</h3>
-							<div class="text">
-								<f:format.html>{description.text}</f:format.html>
-							</div>
+	<div class="dpnglossary details">
+		<dl>
+			<dt><f:translate key="tx_dpnglossary_domain_model_term.name" />: {term.name}</dt>
+			<dd><strong><f:translate key="tx_dpnglossary_domain_model_term.descriptions" />:</strong>
+				<f:for each="{term.descriptions}" as="description">
+					<div class="description">
+						<h3>{description.meaning}</h3>
+						<div class="text">
+							<f:format.html>{description.text}</f:format.html>
+						</div>
+					</div>
+				</f:for>
+			</dd>
+			<f:if condition="{term.synonyms}">
+				<dd><f:translate key="tx_dpnglossary_domain_model_term.synonyms" />:
+					<f:for each="{term.synonyms}" as="synonym" iteration="synonymIterator">
+						{synonym.name}{f:if(condition: synonymIterator.isLast, else: ', ')}
+					</f:for>
+				</dd>
+			</f:if>
+			<f:if condition="{term.termType}">
+				<dd><f:translate key="tx_dpnglossary_domain_model_term.term_type" />: {term.termType}</dd>
+			</f:if>
+			<f:if condition="{term.termLang}">
+				<dd><f:translate key="tx_dpnglossary_domain_model_term.term_lang" />: {term.termLang}</dd>
+			</f:if>
+			<f:if condition="{term.media}">
+				<dd class="media">
+					<f:translate key="tx_dpnglossary_domain_model_term.media" />:<br/>
+					<f:for each="{term.media}" as="media">
+						<div class="mediafile">
+							<f:media file="{media}" title="{media.title}" alt="{media.alt}" width="700" height="m300"/>
 						</div>
 					</f:for>
 				</dd>
-				<f:if condition="{term.synonyms}">
-					<dd><f:translate key="tx_dpnglossary_domain_model_term.synonyms" />:
-						<f:for each="{term.synonyms}" as="synonym" iteration="synonymIterator">
-							{synonym.name}{f:if(condition: synonymIterator.isLast, else: ', ')}
-						</f:for>
-					</dd>
-				</f:if>
-				<f:if condition="{term.termType}">
-					<dd><f:translate key="tx_dpnglossary_domain_model_term.term_type" />: {term.termType}</dd>
-				</f:if>
-				<f:if condition="{term.termLang}">
-					<dd><f:translate key="tx_dpnglossary_domain_model_term.term_lang" />: {term.termLang}</dd>
-				</f:if>
-				<f:if condition="{term.media}">
-					<dd class="media">
-						<f:translate key="tx_dpnglossary_domain_model_term.media" />:<br/>
-						<f:for each="{term.media}" as="media">
-							<div class="mediafile">
-								<f:media file="{media}" title="{media.title}" alt="{media.alt}" width="700" height="m300"/>
-							</div>
-						</f:for>
-					</dd>
-				</f:if>
-			</dl>
-		</div>
-
-	</f:section>
+			</f:if>
+		</dl>
+	</div>
 
 </html>
