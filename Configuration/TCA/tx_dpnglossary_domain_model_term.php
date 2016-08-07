@@ -147,7 +147,7 @@ return array(
                 'foreign_table' => 'tx_dpnglossary_domain_model_synonym',
                 'foreign_field' => 'term',
                 'foreign_label' => 'name',
-                'minitems' => 1,
+                'minitems' => 0,
                 'maxitems' => 9999,
                 'appearance' => array(
                     'newRecordLinkTitle' => 'LLL:EXT:dpn_glossary/Resources/Private/Language/locallang.xlf:tx_dpnglossary.new_synonym',
