@@ -17,7 +17,7 @@
 				<dl>
 					<f:for each="{terms}" as="groupTerms" key="firstChar">
 						<strong>{firstChar}</strong>
-						<f:render partial="Term/List" arguments="{terms: groupTerms}"/>
+						<f:render partial="Term/List" arguments="{terms: groupTerms, detailPage: detailPage}"/>
 					</f:for>
 				</dl>
 			</div>
@@ -39,7 +39,7 @@
 			<dpn:widget.paginate objects="{terms}" field="name" as="paginatedTerms">
 				<div>
 					<dl>
-						<f:render partial="Term/List" arguments="{terms: paginatedTerms}"/>
+						<f:render partial="Term/List" arguments="{terms: paginatedTerms, detailPage: detailPage}"/>
 					</dl>
 				</div>
 			</dpn:widget.paginate>
