@@ -62,7 +62,10 @@ class RenderPreProcessHook
         $configurationManager = $objectManager->get(ConfigurationManager::class);
         $tsConfig = $configurationManager->getConfiguration(ConfigurationManager::CONFIGURATION_TYPE_FULL_TYPOSCRIPT);
         $settings = $tsConfig['plugin.']['tx_dpnglossary.']['settings.'];
-        $this->settings = GeneralUtility::removeDotsFromTS($settings);
+
+        if (is_array($settings)) {
+            $this->settings = GeneralUtility::removeDotsFromTS($settings);
+        }
     }
 
     /**
@@ -74,6 +77,7 @@ class RenderPreProcessHook
         $getParams = $_GET['tx_dpnglossary_glossarydetail'];
 
         if (
+            0 < count($this->settings) &&
             $GLOBALS['TSFE']->id === (integer) $this->settings['detailPage'] &&
             true === (boolean) $this->settings['addCanonicalUrl'] &&
             array_key_exists('pageUid', $getParams)
