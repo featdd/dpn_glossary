@@ -155,10 +155,6 @@ class ParserService implements SingletonInterface
             true === (boolean) $this->settings['disableParser'] ||
             // Pagetype not 0
             0 !== $GLOBALS['TSFE']->type ||
-            // current page is the glossary detailpage
-            $GLOBALS['TSFE']->id === (integer) $this->settings['detailPage'] ||
-            // current page is the glossary listpage
-            $GLOBALS['TSFE']->id === (integer) $this->settings['listPage'] ||
             // no tags to parse given
             0 === count($tags) ||
             // no terms have been found
