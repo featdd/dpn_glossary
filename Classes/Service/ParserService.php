@@ -161,15 +161,13 @@ class ParserService implements SingletonInterface
             0 === count($this->terms) ||
             // no config is given
             0 === count($this->tsConfig) ||
+            // page is excluded
+            true === in_array($GLOBALS['TSFE']->id, $excludePids, false) ||
             (
                 // parsingPids doesn't contain 0 and...
-                false === in_array('0', $parsingPids, true) &&
-                (
-                    // page is excluded
-                    true === in_array($GLOBALS['TSFE']->id, $excludePids, false) ||
-                    // page is not whitelisted
-                    false === in_array($GLOBALS['TSFE']->id, $parsingPids, false)
-                )
+                false === in_array(0, $parsingPids, false) &&
+                // page is not whitelisted
+                false === in_array($GLOBALS['TSFE']->id, $parsingPids, false)
             )
         ) {
             return false;
