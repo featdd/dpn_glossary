@@ -40,7 +40,7 @@ plugin.tx_dpnglossary {
     # Tags which are not allowed as direct parent for a parsingTag
     forbiddenParentTags = {$plugin.tx_dpnglossary.settings.forbiddenParentTags}
     # Classes which are not allowed for the parsing tag
-    forbiddenParsingTagClasses = {$plugin.tx_dpnglossary.settings.forbiddenParentClasses}
+    forbiddenParsingTagClasses = {$plugin.tx_dpnglossary.settings.forbiddenParsingTagClasses}
     # Listmode normal or character grouped list
     listmode = {$plugin.tx_dpnglossary.settings.listmode}
     # Previewmode newest or random
