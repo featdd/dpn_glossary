@@ -247,14 +247,18 @@ class ParserService implements SingletonInterface
 
                 // check if element is children of a forbidden parent
                 if (false === in_array($parentTags, $forbiddenParentTags, true)) {
-                    ParserUtility::domNodeContentReplacer(
-                        $DOMTag,
-                        ParserUtility::getAndSetInnerTagContent(
-                            $DOMTag->ownerDocument->saveHTML($DOMTag),
-                            array($this, 'textParser'),
-                            array($this, 'termWrapper')
-                        )
-                    );
+                    /** @var \DOMElement|\DOMText $childNode */
+                    foreach ($DOMTag->childNodes as $childNode) {
+                        if ($childNode instanceof \DOMText) {
+                            ParserUtility::domTextReplacer(
+                                $childNode,
+                                $this->textParser(
+                                    $childNode->nodeValue,
+                                    array($this, 'termWrapper')
+                                )
+                            );
+                        }
+                    }
                 }
             }
         }
@@ -350,12 +354,12 @@ class ParserService implements SingletonInterface
          * Flags:
          * i = ignores camel case
          */
-        $regex = '#' .
+        $regex = '/' .
             '(^|\G|[\s\>[:punct:]]|\<br*\>)' .
             '(' . preg_quote($term->getName()) . ')' .
             '($|[\s\<[:punct:]]|\<br*\>)' .
             '(?![^<]*>|[^<>]*<\/)' .
-            '#i';
+            '/i';
 
         // replace callback
         $callback = function ($match) use ($term, &$replacements, $wrappingCallback) {

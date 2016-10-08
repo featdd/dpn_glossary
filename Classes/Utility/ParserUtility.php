@@ -144,37 +144,30 @@ class ParserUtility implements SingletonInterface
     }
 
     /**
-     * Extract the DOMNodes html and
-     * replace it with the parsed html
-     * injected in a temp DOMDocument
+     * Replaces a DOM Text node
+     * with a replacement string
      *
-     * @param \DOMNode $DOMNode
-     * @param string   $replacement
+     * @param \DOMText $DOMText
+     * @param string $replacement
      * @return void
      */
-    public static function domNodeContentReplacer(\DOMNode $DOMNode, $replacement)
+    public static function domTextReplacer(\DOMText $DOMText, $replacement)
     {
-        $tempDOM = new \DOMDocument();
-        // use XHTML tag for avoiding UTF-8 encoding problems
-        $tempDOM->loadHTML(
-            '<?xml encoding="UTF-8">' .
-            $replacement
-        );
+        if (false === empty(trim($replacement))) {
+            $tempDOM = new \DOMDocument();
+            // use XHTML tag for avoiding UTF-8 encoding problems
+            $tempDOM->loadHTML('<?xml encoding="UTF-8">' . '<div id="replacement">' . $replacement . '</div>');
 
-        // Replaces the original Node with the
-        // new node containing the parsed content
-        $DOMNode->parentNode->replaceChild(
-            $DOMNode
-                ->ownerDocument
-                ->importNode(
-                    $tempDOM
-                        ->getElementsByTagName('body')
-                        ->item(0)
-                        ->childNodes
-                        ->item(0),
-                    true
-                ),
-            $DOMNode
-        );
+            $replacementNode = $DOMText->ownerDocument->createDocumentFragment();
+
+            /** @var \DOMElement $tempDOMChild */
+            foreach ($tempDOM->getElementById('replacement')->childNodes as $tempDOMChild) {
+                $tempChild = $DOMText->ownerDocument->importNode($tempDOMChild);
+                $tempChild->nodeValue = $tempDOMChild->nodeValue;
+                $replacementNode->appendChild($tempChild);
+            }
+
+            $DOMText->parentNode->replaceChild($replacementNode, $DOMText);
+        }
     }
 }
