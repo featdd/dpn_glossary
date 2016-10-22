@@ -113,6 +113,8 @@ class ParserService implements SingletonInterface
             );
             // Set current language uid
             $querySettings->setLanguageUid($GLOBALS['TSFE']->sys_language_uid);
+            // Set query to respect the language uid
+            $querySettings->setRespectSysLanguage(true);
             // Assign query settings object to repository
             $termRepository->setDefaultQuerySettings($querySettings);
             //Find all terms

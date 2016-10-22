@@ -62,6 +62,7 @@ class Term extends AbstractEntity
      * synonyms for the term
      *
      * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\Featdd\DpnGlossary\Domain\Model\Synonym> $synonyms
+     * @cascade remove
      */
     protected $synonyms;
 

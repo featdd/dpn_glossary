@@ -9,7 +9,7 @@ if (true === version_compare(TYPO3_version, '7.5', '>=')) {
 return array(
     'ctrl' => array(
         'title' => 'LLL:EXT:dpn_glossary/Resources/Private/Language/locallang.xlf:tx_dpnglossary_domain_model_synonym',
-        'label' => 'meaning',
+        'label' => 'name',
         'sortby' => 'sorting',
         'tstamp' => 'tstamp',
         'crdate' => 'crdate',
@@ -20,18 +20,17 @@ return array(
         'versioning_followPages' => true,
         'origUid' => 't3_origuid',
         'languageField' => 'sys_language_uid',
+        'transOrigPointerField' => 'l10n_parent',
+        'transOrigDiffSourceField' => 'l10n_diffsource',
         'delete' => 'deleted',
-        'enablecolumns' => array(
-            'disabled' => 'hidden',
-        ),
-        'searchFields' => 'meaning,text,',
+        'searchFields' => 'name,',
         'iconfile' => $iconFile,
     ),
     'interface' => array(
-        'showRecordFieldList' => 'hidden, name',
+        'showRecordFieldList' => 'l10n_parent, l10n_diffsource, name',
     ),
     'types' => array(
-        '1' => array('showitem' => 'name'),
+        '1' => array('showitem' => 'l10n_parent, l10n_diffsource, name'),
     ),
     'palettes' => array(
         '1' => array('showitem' => ''),
@@ -45,13 +44,30 @@ return array(
                 'renderType' => 'selectSingle',
                 'special' => 'languages',
                 'items' => array(
-                    array(
-                        'LLL:EXT:lang/locallang_general.xlf:LGL.allLanguages',
-                        -1,
-                        'flags-multiple',
-                    ),
+                    array('LLL:EXT:lang/locallang_general.xlf:LGL.allLanguages', -1),
+                    array('LLL:EXT:lang/locallang_general.xlf:LGL.default_value', 0),
                 ),
                 'default' => 0,
+            ),
+        ),
+        'l10n_parent' => array(
+            'displayCond' => 'FIELD:sys_language_uid:>:0',
+            'exclude' => 1,
+            'label' => 'LLL:EXT:lang/locallang_general.xlf:LGL.l18n_parent',
+            'config' => array(
+                'type' => 'select',
+                'renderType' => 'selectSingle',
+                'items' => array(
+                    array('', 0),
+                ),
+                'foreign_table' => 'tx_dpnglossary_domain_model_synonym',
+                'foreign_table_where' => 'AND tx_dpnglossary_domain_model_synonym.pid=###CURRENT_PID### AND tx_dpnglossary_domain_model_synonym.sys_language_uid IN (-1,0)',
+                'showIconTable' => false,
+            ),
+        ),
+        'l10n_diffsource' => array(
+            'config' => array(
+                'type' => 'passthrough',
             ),
         ),
         't3ver_label' => array(

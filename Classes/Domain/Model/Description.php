@@ -37,6 +37,7 @@ class Description extends AbstractEntity
      * meaning of the terms description
      *
      * @var string $meaning
+     * @validate NotEmpty
      */
     protected $meaning;
 

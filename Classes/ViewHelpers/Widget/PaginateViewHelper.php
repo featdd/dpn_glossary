@@ -26,8 +26,12 @@ namespace Featdd\DpnGlossary\ViewHelpers\Widget;
  ***************************************************************/
 
 use Featdd\DpnGlossary\ViewHelpers\Widget\Controller\PaginateController;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Mvc\ResponseInterface;
+use TYPO3\CMS\Extbase\Object\ObjectManager;
 use TYPO3\CMS\Extbase\Persistence\QueryResultInterface;
+use TYPO3\CMS\Fluid\Core\Rendering\RenderingContextInterface;
+use TYPO3\CMS\Fluid\Core\ViewHelper\Facets\CompilableInterface;
 use TYPO3\CMS\Fluid\Core\Widget\AbstractWidgetViewHelper;
 
 /**
@@ -39,12 +43,12 @@ class PaginateViewHelper extends AbstractWidgetViewHelper
 {
 
     /**
-     * @var PaginateController
+     * @var \Featdd\DpnGlossary\ViewHelpers\Widget\Controller\PaginateController
      */
     protected $controller;
 
     /**
-     * @param PaginateController $paginateController
+     * @param \Featdd\DpnGlossary\ViewHelpers\Widget\Controller\PaginateController $paginateController
      * @return void
      */
     public function injectPaginateController(PaginateController $paginateController)
@@ -53,16 +57,22 @@ class PaginateViewHelper extends AbstractWidgetViewHelper
     }
 
     /**
+     * @return void
+     */
+    public function initializeArguments()
+    {
+        $this->registerArgument('objects', 'array', 'Objects to paginate', true);
+        $this->registerArgument('as', 'string', 'Objects passed as fluid variable with this name', true);
+        $this->registerArgument('field', 'string', 'Field name of the property in the domain model', false, 'name');
+    }
+
+    /**
      * Gets the objects and "as" value also
      * the fieldname for what to sort for
      *
-     * @param QueryResultInterface $objects
-     * @param string               $as
-     * @param string               $field
-     *
-     * @return ResponseInterface
+     * @return \TYPO3\CMS\Extbase\Mvc\ResponseInterface
      */
-    public function render(QueryResultInterface $objects, $as, $field = 'name')
+    public function render()
     {
         return $this->initiateSubRequest();
     }

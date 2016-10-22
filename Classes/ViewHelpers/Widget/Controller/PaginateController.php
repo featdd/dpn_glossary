@@ -45,9 +45,9 @@ class PaginateController extends AbstractWidgetController
      * @var array
      */
     protected $configuration = array(
-        'characters'  => 'A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z',
-        'insertAbove' => TRUE,
-        'insertBelow' => FALSE,
+        'characters' => 'A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z',
+        'insertAbove' => true,
+        'insertBelow' => false,
     );
 
     /**
@@ -99,12 +99,12 @@ class PaginateController extends AbstractWidgetController
         ArrayUtility::mergeRecursiveWithOverrule(
             $this->configuration,
             (array) $this->settings['pagination'],
-            TRUE
+            true
         );
 
-        $this->field   = FALSE === empty($this->widgetConfiguration['field']) ? $this->widgetConfiguration['field'] : 'name';
+        $this->field = false === empty($this->widgetConfiguration['field']) ? $this->widgetConfiguration['field'] : 'name';
         $this->objects = $this->widgetConfiguration['objects'];
-        $this->query   = $this->objects->getQuery();
+        $this->query = $this->objects->getQuery();
 
         // Apply stdWrap
         if (is_array($this->configuration['characters'])) {
@@ -113,7 +113,10 @@ class PaginateController extends AbstractWidgetController
 
             // It's required to convert the "new" array to dot notation one before we can use `cObjGetSingle`
             $this->configuration['characters'] = $typoScriptService->convertPlainArrayToTypoScriptArray($this->configuration['characters']);
-            $this->configuration['characters'] = $contentObjectRenderer->cObjGetSingle($this->configuration['characters']['_typoScriptNodeValue'], $this->configuration['characters']);
+            $this->configuration['characters'] = $contentObjectRenderer->cObjGetSingle(
+                $this->configuration['characters']['_typoScriptNodeValue'],
+                $this->configuration['characters']
+            );
         }
 
         $this->characters = explode(',', $this->configuration['characters']);
@@ -132,17 +135,17 @@ class PaginateController extends AbstractWidgetController
     public function indexAction($character = '')
     {
 
-        if (TRUE === empty($character)) {
+        if (true === empty($character)) {
             $this->query->setLimit(1)->setOrderings(array($this->field => QueryInterface::ORDER_ASCENDING));
             $firstObject = $this->query->execute()->toArray();
             $this->query = $this->objects->getQuery();
 
-            if (TRUE === empty($firstObject)) {
-                $this->view->assign('noObjects', TRUE);
+            if (true === empty($firstObject)) {
+                $this->view->assign('noObjects', true);
             } else {
                 $getter = 'get' . GeneralUtility::underscoredToUpperCamelCase($this->field);
 
-                if (TRUE === method_exists($firstObject[0], $getter)) {
+                if (true === method_exists($firstObject[0], $getter)) {
                     $this->currentCharacter = strtoupper(substr($firstObject[0]->{$getter}(), 0, 1));
                 } else {
                     throw new Exception('Getter for "' . $this->field . '" in "' . get_class($firstObject[0]) . '" does not exist', 1433257601);
@@ -172,7 +175,7 @@ class PaginateController extends AbstractWidgetController
      */
     protected function buildPagination()
     {
-        $pages              = array();
+        $pages = array();
         $numberOfCharacters = count($this->characters);
 
         /*
@@ -186,18 +189,18 @@ class PaginateController extends AbstractWidgetController
                     array('AE', 'OE', 'UE'),
                     $character
                 ),
-                'character'     => $character,
-                'isCurrent'     => $character === $this->currentCharacter,
-                'isEmpty'       => 0 === $this->getMatchings($character)->execute()->count(),
+                'character' => $character,
+                'isCurrent' => $character === $this->currentCharacter,
+                'isEmpty' => 0 === $this->getMatchings($character)->execute()->count(),
             );
         }
 
         $pagination = array(
-            'pages'          => $pages,
-            'current'        => $this->currentCharacter,
-            'numberOfPages'  => $numberOfCharacters,
+            'pages' => $pages,
+            'current' => $this->currentCharacter,
+            'numberOfPages' => $numberOfCharacters,
             'startCharacter' => $this->characters[0],
-            'endCharacter'   => $this->characters[count($this->characters) + 1],
+            'endCharacter' => $this->characters[count($this->characters) + 1],
         );
 
         return $pagination;
@@ -213,11 +216,11 @@ class PaginateController extends AbstractWidgetController
      * @param string $characters
      * @return QueryInterface
      */
-    protected function getMatchings($characters = NULL)
+    protected function getMatchings($characters = null)
     {
         $matching = array();
 
-        if ($characters === NULL) {
+        if ($characters === null) {
             $characters = $this->currentCharacter;
         }
 
@@ -233,12 +236,12 @@ class PaginateController extends AbstractWidgetController
 
                 // Fix orderings
                 $firstCharacter = ord($characters[0]);
-                $lastCharacter  = ord($characters[2]);
+                $lastCharacter = ord($characters[2]);
 
                 if ($firstCharacter - $lastCharacter > 0) {
-                    $tmp            = $firstCharacter;
+                    $tmp = $firstCharacter;
                     $firstCharacter = $lastCharacter;
-                    $lastCharacter  = $tmp;
+                    $lastCharacter = $tmp;
                 }
 
                 // Build the new String
@@ -274,13 +277,14 @@ class PaginateController extends AbstractWidgetController
     static public function paginationArguments($field, $paginationCharacters)
     {
         $firstCharacter = mb_strtoupper(mb_substr($field, 0, 1, 'UTF-8'), 'UTF-8');
-        $characters     = array_change_key_case(explode(',', $paginationCharacters), CASE_UPPER);
+        $characters = array_change_key_case(explode(',', $paginationCharacters), CASE_UPPER);
 
         /*
          * Replace umlauts if they are in characters
          * else use A,O,U
          */
-        $hasUmlauts        = array_intersect(array('Ä', 'Ö', 'Ü'), $characters);
+        $hasUmlauts = array_intersect(array('Ä', 'Ö', 'Ü'), $characters);
+
         $umlautReplacement = 0 < count($hasUmlauts) ?
             array('AE', 'OE', 'UE') :
             array('A', 'O', 'U');
@@ -297,9 +301,9 @@ class PaginateController extends AbstractWidgetController
             $characters
         );
 
-        $character = TRUE === in_array($firstCharacter, $characters, TRUE) ?
+        $character = true === in_array($firstCharacter, $characters, true) ?
             $firstCharacter :
-            FALSE;
+            false;
 
         return array(
             '@widget_0' => array(

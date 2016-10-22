@@ -20,18 +20,17 @@ return array(
         'versioning_followPages' => true,
         'origUid' => 't3_origuid',
         'languageField' => 'sys_language_uid',
+        'transOrigPointerField' => 'l10n_parent',
+        'transOrigDiffSourceField' => 'l10n_diffsource',
         'delete' => 'deleted',
-        'enablecolumns' => array(
-            'disabled' => 'hidden',
-        ),
         'searchFields' => 'meaning,text,',
         'iconfile' => $iconFile,
     ),
     'interface' => array(
-        'showRecordFieldList' => 'hidden, meaning, text',
+        'showRecordFieldList' => 'l10n_parent, l10n_diffsource, meaning, text',
     ),
     'types' => array(
-        '1' => array('showitem' => 'meaning, text;;;richtext:rte_transform[mode=ts_links]'),
+        '1' => array('showitem' => 'l10n_parent, l10n_diffsource, meaning, text;;;richtext:rte_transform[mode=ts_links]'),
     ),
     'palettes' => array(
         '1' => array('showitem' => ''),
@@ -45,13 +44,30 @@ return array(
                 'renderType' => 'selectSingle',
                 'special' => 'languages',
                 'items' => array(
-                    array(
-                        'LLL:EXT:lang/locallang_general.xlf:LGL.allLanguages',
-                        -1,
-                        'flags-multiple',
-                    ),
+                    array('LLL:EXT:lang/locallang_general.xlf:LGL.allLanguages', -1),
+                    array('LLL:EXT:lang/locallang_general.xlf:LGL.default_value', 0),
                 ),
                 'default' => 0,
+            ),
+        ),
+        'l10n_parent' => array(
+            'displayCond' => 'FIELD:sys_language_uid:>:0',
+            'exclude' => 1,
+            'label' => 'LLL:EXT:lang/locallang_general.xlf:LGL.l18n_parent',
+            'config' => array(
+                'type' => 'select',
+                'renderType' => 'selectSingle',
+                'items' => array(
+                    array('', 0),
+                ),
+                'foreign_table' => 'tx_dpnglossary_domain_model_description',
+                'foreign_table_where' => 'AND tx_dpnglossary_domain_model_description.pid=###CURRENT_PID### AND tx_dpnglossary_domain_model_description.sys_language_uid IN (-1,0)',
+                'showIconTable' => false,
+            ),
+        ),
+        'l10n_diffsource' => array(
+            'config' => array(
+                'type' => 'passthrough',
             ),
         ),
         't3ver_label' => array(

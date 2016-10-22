@@ -82,8 +82,8 @@ class ParserUtility implements SingletonInterface
     }
 
     /**
-     * Protect link and src attribute paths to be altered by dom 
-     * 
+     * Protect link and src attribute paths to be altered by dom
+     *
      * @param string $html
      * @param string $tag
      * @return string
@@ -103,7 +103,7 @@ class ParserUtility implements SingletonInterface
 
     /**
      * Reverse link and src paths protection
-     * 
+     *
      * @param string $html
      * @param string $tag
      * @return string
@@ -125,7 +125,7 @@ class ParserUtility implements SingletonInterface
      * Extracts and replaces the
      * inner content of the html tag
      *
-     * @param string   $html
+     * @param string $html
      * @param callable $contentCallback receives the inner tag contents and has to return the parsed content
      * @param callable $wrapperCallback the function used by the content callback to wrap parsed terms
      * @return string
