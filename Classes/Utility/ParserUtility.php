@@ -156,7 +156,7 @@ class ParserUtility implements SingletonInterface
         if (false === empty(trim($replacement))) {
             $tempDOM = new \DOMDocument();
             // use XHTML tag for avoiding UTF-8 encoding problems
-            $tempDOM->loadHTML('<?xml encoding="UTF-8">' . '<div id="replacement">' . $replacement . '</div>');
+            $tempDOM->loadHTML('<?xml encoding="UTF-8">' . '<!DOCTYPE html><html><body><div id="replacement">' . $replacement . '</div></body></html>');
 
             $replacementNode = $DOMText->ownerDocument->createDocumentFragment();
 
