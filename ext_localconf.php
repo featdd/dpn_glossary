@@ -120,6 +120,7 @@ if (
             ),
             array(
                 'GETvar' => 'tx_dpnglossary_glossarydetail[pageUid]',
+                'optional' => true,
             ),
         ),
     );
