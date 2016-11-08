@@ -86,19 +86,19 @@
 				<source>No objects were found</source>
 			</trans-unit>
 			<trans-unit id="tx_dpnglossary.wizard_list_title">
-				<source>dreipunktnull Glossary list plugin</source>
+				<source>Glossary list</source>
 			</trans-unit>
 			<trans-unit id="tx_dpnglossary.wizard_list_description">
 				<source>Plugin for the listview of the dpn_glossary extension</source>
 			</trans-unit>
 			<trans-unit id="tx_dpnglossary.wizard_preview_title">
-				<source>dreipunktnull Glossary preview list plugin</source>
+				<source>Glossary preview list</source>
 			</trans-unit>
 			<trans-unit id="tx_dpnglossary.wizard_preview_description">
 				<source>Plugin for the preview for the dpn_glossary extension</source>
 			</trans-unit>
 			<trans-unit id="tx_dpnglossary.wizard_detail_title">
-				<source>dreipunktnull Glossary detailview plugin</source>
+				<source>Glossary detailview plugin</source>
 			</trans-unit>
 			<trans-unit id="tx_dpnglossary.wizard_detail_description">
 				<source>Plugin for the detailview of the dpn_glossary extension</source>

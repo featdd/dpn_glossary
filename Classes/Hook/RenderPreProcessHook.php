@@ -38,7 +38,8 @@ use TYPO3\CMS\Extbase\Object\ObjectManager;
  */
 class RenderPreProcessHook
 {
-    const URL_PARAM_DETAIL = 'tx_dpnglossary_glossarydetail[term]';
+    const URL_PARAM_DETAIL = 'tx_dpnglossary_glossarydetail';
+    const URL_PARAM_DETAIL_TERM_KEY = '[term]';
 
     /**
      * @var array
@@ -74,7 +75,7 @@ class RenderPreProcessHook
      */
     public function main(array &$params, PageRenderer $pageRenderer)
     {
-        $getParams = $_GET['tx_dpnglossary_glossarydetail'];
+        $getParams = GeneralUtility::_GET(self::URL_PARAM_DETAIL);
 
         if (
             0 < count($this->settings) &&
@@ -85,7 +86,7 @@ class RenderPreProcessHook
             $url = $this->linkService->buildLink(
                 $this->settings['detailPage'],
                 array(
-                    self::URL_PARAM_DETAIL => $getParams['term'],
+                    self::URL_PARAM_DETAIL . self::URL_PARAM_DETAIL_TERM_KEY => $getParams['term'],
                 ),
                 true,
                 $GLOBALS['TSFE']->sys_language_uid

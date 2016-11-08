@@ -92,13 +92,13 @@
 				<target>Plugin für die Listenansicht der dpn_glossary Extension</target>
 			</trans-unit>
 			<trans-unit id="tx_dpnglossary.wizard_preview_title">
-				<target>dreipunktnull Glossar Vorschau Plugin</target>
+				<target>Glossar Vorschau</target>
 			</trans-unit>
 			<trans-unit id="tx_dpnglossary.wizard_preview_description">
 				<target>Plugin für die Vorschau der dpn_glossary Extension</target>
 			</trans-unit>
 			<trans-unit id="tx_dpnglossary.wizard_detail_title">
-				<target>dreipunktnull Glossar Einzelansicht Plugin</target>
+				<target>Glossar Einzelansicht</target>
 			</trans-unit>
 			<trans-unit id="tx_dpnglossary.wizard_detail_description">
 				<target>Plugin für die Detailansicht der dpn_glossary Extension</target>
