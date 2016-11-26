@@ -38,7 +38,7 @@ plugin.tx_dpnglossary {
     listmode = normal
     # cat=plugin.tx_dpnglossary//a; type=options[newest,random]; label=Previewmode: newest or random
     previewmode = newest
-    # cat=plugin.tx_dpnglossary//a; type=string; label=Previewlimit
+    # cat=plugin.tx_dpnglossary//a; type=integer; label=Previewlimit
     previewlimit = 5
     # cat=plugin.tx_dpnglossary//a; type=boolean; label=Disable parser (default: enabled)
     disableParser = 0

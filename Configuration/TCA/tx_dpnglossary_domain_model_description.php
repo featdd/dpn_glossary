@@ -27,10 +27,10 @@ return array(
         'iconfile' => $iconFile,
     ),
     'interface' => array(
-        'showRecordFieldList' => 'l10n_parent, l10n_diffsource, meaning, text',
+        'showRecordFieldList' => 'l10n_diffsource, meaning, text',
     ),
     'types' => array(
-        '1' => array('showitem' => 'l10n_parent, l10n_diffsource, meaning, text;;;richtext:rte_transform[mode=ts_links]'),
+        '1' => array('showitem' => 'l10n_diffsource, meaning, text;;;richtext:rte_transform[mode=ts_links]'),
     ),
     'palettes' => array(
         '1' => array('showitem' => ''),
