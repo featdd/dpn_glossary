@@ -51,6 +51,8 @@ plugin.tx_dpnglossary {
     disableParser = {$plugin.tx_dpnglossary.settings.disableParser}
     # Parse the terms synonyms
     parseSynonyms = {$plugin.tx_dpnglossary.settings.parseSynonyms}
+    # Only find terms marked with given char
+    termPrefix = {$plugin.tx_dpnglossary.settings.termPrefix}
 
     # Pagination settings
     pagination {
