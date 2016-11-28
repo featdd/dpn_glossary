@@ -362,7 +362,7 @@ class ParserService implements SingletonInterface
          */
         $regex = self::REGEX_DELIMITER .
             '(^|\G|[\s\>[:punct:]]|\<br*\>)' .
-            preg_quote($this->settings['termPrefix']) . '(' . preg_quote($term->getName(), self::REGEX_DELIMITER) . ')' .
+            preg_quote($this->settings['termPrefix'], self::REGEX_DELIMITER) . '(' . preg_quote($term->getName(), self::REGEX_DELIMITER) . ')' .
             '($|[\s\<[:punct:]]|\<br*\>)' .
             '(?![^<]*>|[^<>]*<\/)' .
             self::REGEX_DELIMITER . 'i';
