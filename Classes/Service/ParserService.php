@@ -44,6 +44,8 @@ use TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer;
  */
 class ParserService implements SingletonInterface
 {
+    const REGEX_DELIMITER = '/';
+
     /**
      * tags to be always ignored by parsing
      */
@@ -282,7 +284,7 @@ class ParserService implements SingletonInterface
     /**
      * Parse the extracted html for terms
      *
-     * @param string   $text             the text to be parsed
+     * @param string $text the text to be parsed
      * @param callable $wrappingCallback the wrapping function for parsed terms as callback
      * @return string
      */
@@ -323,9 +325,9 @@ class ParserService implements SingletonInterface
     /**
      * Regex parser for terms on a text string
      *
-     * @param string   $text
-     * @param Term     $term
-     * @param integer  $replacements
+     * @param string $text
+     * @param Term $term
+     * @param integer $replacements
      * @param callable $wrappingCallback
      */
     protected function regexParser(&$text, Term $term, &$replacements, $wrappingCallback)
@@ -358,12 +360,12 @@ class ParserService implements SingletonInterface
          * Flags:
          * i = ignores camel case
          */
-        $regex = '/' .
+        $regex = self::REGEX_DELIMITER .
             '(^|\G|[\s\>[:punct:]]|\<br*\>)' .
-            '(' . preg_quote($term->getName()) . ')' .
+            '(' . preg_quote($term->getName(), self::REGEX_DELIMITER) . ')' .
             '($|[\s\<[:punct:]]|\<br*\>)' .
             '(?![^<]*>|[^<>]*<\/)' .
-            '/i';
+            self::REGEX_DELIMITER . 'i';
 
         // replace callback
         $callback = function ($match) use ($term, &$replacements, $wrappingCallback) {
