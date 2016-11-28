@@ -34,16 +34,12 @@ use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
 class Synonym extends AbstractEntity
 {
     /**
-     * name of the term
-     *
      * @var string $name
      * @validate NotEmpty
      */
     protected $name;
 
     /**
-     * Returns the name
-     *
      * @return string $name
      */
     public function getName()
@@ -52,8 +48,6 @@ class Synonym extends AbstractEntity
     }
 
     /**
-     * Sets the name
-     *
      * @param string $name
      * @return void
      */

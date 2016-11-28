@@ -44,15 +44,15 @@ class LinkService implements SingletonInterface
     protected $uriBuilder;
 
     /**
-     * @return LinkService
+     * @return \Featdd\DpnGlossary\Service\LinkService
      */
     public function __construct()
     {
-        /** @var ObjectManager $objectManager */
+        /** @var \TYPO3\CMS\Extbase\Object\ObjectManager $objectManager */
         $objectManager = GeneralUtility::makeInstance(ObjectManager::class);
-        /** @var ConfigurationManager $configurationManager */
+        /** @var \TYPO3\CMS\Extbase\Configuration\ConfigurationManager $configurationManager */
         $configurationManager = $objectManager->get(ConfigurationManager::class);
-        /** @var ContentObjectRenderer $contentObjectRenderer */
+        /** @var \TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer $contentObjectRenderer */
         $contentObjectRenderer = $objectManager->get(ContentObjectRenderer::class);
         $configurationManager->setContentObject($contentObjectRenderer);
         $this->uriBuilder = $objectManager->get(UriBuilder::class);
@@ -60,10 +60,10 @@ class LinkService implements SingletonInterface
     }
 
     /**
-     * @param int   $pageId
+     * @param int $pageId
      * @param array $arguments
-     * @param bool  $absolut
-     * @param int   $sysLanguageUid
+     * @param bool $absolut
+     * @param int $sysLanguageUid
      * @return string
      */
     public function buildLink($pageId, array $arguments = array(), $absolut = false, $sysLanguageUid = 0)

@@ -31,7 +31,6 @@ use TYPO3\CMS\Extbase\Persistence\QueryResultInterface;
 use TYPO3\CMS\Extbase\Persistence\Repository;
 
 /**
- *
  * @package dpn_glossary
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  */
@@ -40,9 +39,7 @@ class TermRepository extends Repository
     const DEFAULT_LIMIT = 5;
 
     /**
-     * Default orderings ascending by name
-     *
-     * @var array $defaultOrderings
+     * @var array
      */
     protected $defaultOrderings = array(
         'name' => QueryInterface::ORDER_ASCENDING,
@@ -76,18 +73,18 @@ class TermRepository extends Repository
 
     /**
      * finds terms by multiple uids
-     * 
+     *
      * @param array $uids
      * @return QueryResultInterface
      */
     public function findByUids(array $uids)
     {
         $query = $this->createQuery();
-        
+
         $query->matching(
             $query->in('uid', $uids)
         );
-        
+
         return $query->execute();
     }
 
@@ -135,38 +132,44 @@ class TermRepository extends Repository
      */
     public function findAllGroupedByFirstCharacter()
     {
-        $terms       = $this->findAll();
-        $numbers     = array('0', '1', '2', '3', '4', '5', '6', '7', '8', '9');
-        $normalChars = array('a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z');
+        $terms = $this->findAll();
+        $numbers = range(0, 9);
+        $normalChars = range('a', 'z');
         $sortedTerms = array();
 
         /** @var Term $term */
         foreach ($terms as $term) {
             $firstCharacter = mb_strtolower(mb_substr($term->getName(), 0, 1, 'UTF-8'), 'UTF-8');
 
-            if (in_array($firstCharacter, $numbers)) {
-                $firstCharacter = '0-9';
-            } else if (FALSE === in_array($firstCharacter, $normalChars)) {
-                switch ($firstCharacter) {
-                    case 'ä':
-                        $firstCharacter = 'a';
-                        break;
-                    case 'ö':
-                        $firstCharacter = 'o';
-                        break;
-                    case 'ü':
-                        $firstCharacter = 'u';
-                        break;
-                    default:
-                        $firstCharacter = '_';
-                        break;
-                }
+            if (true === is_numeric($firstCharacter)) {
+                $firstCharacter = (int) $firstCharacter;
+            }
 
+            if (true === in_array($firstCharacter, $numbers, true)) {
+                $firstCharacter = '0-9';
+            } else {
+                if (false === in_array($firstCharacter, $normalChars)) {
+                    switch ($firstCharacter) {
+                        case 'ä':
+                            $firstCharacter = 'a';
+                            break;
+                        case 'ö':
+                            $firstCharacter = 'o';
+                            break;
+                        case 'ü':
+                            $firstCharacter = 'u';
+                            break;
+                        default:
+                            $firstCharacter = '_';
+                            break;
+                    }
+
+                }
             }
 
             $firstCharacter = mb_strtoupper($firstCharacter, 'UTF-8');
 
-            if (FALSE === isset($sortedTerms[$firstCharacter])) {
+            if (false === isset($sortedTerms[$firstCharacter])) {
                 $sortedTerms[$firstCharacter] = array();
             }
 

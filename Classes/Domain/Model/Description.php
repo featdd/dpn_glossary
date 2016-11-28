@@ -34,23 +34,17 @@ use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
 class Description extends AbstractEntity
 {
     /**
-     * meaning of the terms description
-     *
      * @var string $meaning
      * @validate NotEmpty
      */
     protected $meaning;
 
     /**
-     * text of the term
-     *
      * @var string $text
      */
     protected $text;
 
     /**
-     * Returns the meaning
-     *
      * @return string
      */
     public function getMeaning()
@@ -59,8 +53,6 @@ class Description extends AbstractEntity
     }
 
     /**
-     * Sets the meaning
-     *
      * @param string $meaning
      * @return void
      */
@@ -70,8 +62,6 @@ class Description extends AbstractEntity
     }
 
     /**
-     * Returns the text
-     *
      * @return string
      */
     public function getText()
@@ -80,8 +70,6 @@ class Description extends AbstractEntity
     }
 
     /**
-     * Sets the text
-     *
      * @param string $text
      * @return void
      */

@@ -1,51 +1,51 @@
 <html data-namespace-typo3-fluid="true" lang="en"
-	  xmlns="http://www.w3.org/1999/xhtml"
-	  xmlns:f="http://typo3.org/ns/fluid/ViewHelpers"
-	  xmlns:dpn="http://typo3.org/ns/Featdd/DpnGlossary/ViewHelpers"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://typo3.org/ns/fluid/ViewHelpers"
+      xmlns:dpn="http://typo3.org/ns/Featdd/DpnGlossary/ViewHelpers"
 
-	  dpn:schemaLocation="http://schemas.featdd.de/dpn_glossary.xsd">
+      dpn:schemaLocation="http://schemas.featdd.de/dpn_glossary.xsd">
 
-	<f:layout name="Default"/>
+  <f:layout name="Default"/>
 
-	<f:section name="Main">
+  <f:section name="Main">
 
-		<h1><f:translate key="tx_dpnglossary_domain_model_term.listheadline"/></h1>
+    <h1>{f:translate(key: 'tx_dpnglossary_domain_model_term.listheadline')}</h1>
 
-		<f:if condition="{listmode} == 'character'">
+    <f:if condition="{listmode} == 'character'">
 
-			<div>
-				<dl>
-					<f:for each="{terms}" as="groupTerms" key="firstChar">
-						<strong>{firstChar}</strong>
-						<f:render partial="Term/List" arguments="{terms: groupTerms, detailPage: detailPage}"/>
-					</f:for>
-				</dl>
-			</div>
+      <div>
+        <dl>
+          <f:for each="{terms}" as="groupTerms" key="firstChar">
+            <strong>{firstChar}</strong>
+            <f:render partial="Term/List" arguments="{terms: groupTerms, detailPage: detailPage}"/>
+          </f:for>
+        </dl>
+      </div>
 
-		</f:if>
+    </f:if>
 
-		<f:if condition="{listmode} == 'normal'">
+    <f:if condition="{listmode} == 'normal'">
 
-			<div>
-				<dl>
-					<f:render partial="Term/List" arguments="{terms: terms, detailPage: detailPage}"/>
-				</dl>
-			</div>
+      <div>
+        <dl>
+          <f:render partial="Term/List" arguments="{terms: terms, detailPage: detailPage}"/>
+        </dl>
+      </div>
 
-		</f:if>
+    </f:if>
 
-		<f:if condition="{listmode} == 'pagination'">
+    <f:if condition="{listmode} == 'pagination'">
 
-			<dpn:widget.paginate objects="{terms}" field="name" as="paginatedTerms">
-				<div>
-					<dl>
-						<f:render partial="Term/List" arguments="{terms: paginatedTerms, detailPage: detailPage}"/>
-					</dl>
-				</div>
-			</dpn:widget.paginate>
+      <dpn:widget.paginate objects="{terms}" field="name" as="paginatedTerms">
+        <div>
+          <dl>
+            <f:render partial="Term/List" arguments="{terms: paginatedTerms, detailPage: detailPage}"/>
+          </dl>
+        </div>
+      </dpn:widget.paginate>
 
-		</f:if>
+    </f:if>
 
-	</f:section>
+  </f:section>
 
 </html>

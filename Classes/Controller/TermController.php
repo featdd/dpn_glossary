@@ -82,7 +82,7 @@ class TermController extends ActionController
 
     /**
      * action previewRandom
-     * 
+     *
      * @return void
      */
     public function previewRandomAction()
@@ -101,13 +101,13 @@ class TermController extends ActionController
 
     /**
      * action previewSelected
-     * 
+     *
      * @return void
      */
     public function previewSelectedAction()
     {
         $previewSelectedUids = GeneralUtility::trimExplode(',', $this->settings['previewSelected']);
-        
+
         $this->view->assign(
             'terms',
             $this->termRepository->findByUids($previewSelectedUids)
@@ -117,7 +117,7 @@ class TermController extends ActionController
     /**
      * action show
      *
-     * @param Term    $term
+     * @param \Featdd\DpnGlossary\Domain\Model\Term $term
      * @param integer $pageUid
      * @return void
      */
@@ -136,7 +136,7 @@ class TermController extends ActionController
         if ((int) $this->settings['detailPage'] !== $pageUid) {
             $this->view->assign('pageUid', $pageUid);
         }
-        
+
         $this->view->assign('listPage', $this->settings['listPage']);
         $this->view->assign('term', $term);
     }

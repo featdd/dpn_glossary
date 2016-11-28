@@ -29,16 +29,16 @@ use Featdd\DpnGlossary\Utility\ParserUtility;
 use TYPO3\CMS\Core\Tests\UnitTestCase;
 
 /**
- *
  * @package dpn_glossary
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  */
-class ParserUtilityTest extends UnitTestCase {
+class ParserUtilityTest extends UnitTestCase
+{
 
-	/**
-	 * @var string
-	 */
-	protected $testHtmlScript = '
+    /**
+     * @var string
+     */
+    protected $testHtmlScript = '
 		<script>
 			var test = \'<a href="#”>Test</a>\';
 		</script>
@@ -50,10 +50,10 @@ class ParserUtilityTest extends UnitTestCase {
 		</script>
 	';
 
-	/**
-	 * @var string
-	 */
-	protected $testHtmlScriptWrapped = '
+    /**
+     * @var string
+     */
+    protected $testHtmlScriptWrapped = '
 		<!--DPNGLOSSARY<script>
 			var test = \'<a href="#”>Test</a>\';
 		</script>-->
@@ -65,48 +65,51 @@ class ParserUtilityTest extends UnitTestCase {
 		</script>-->
 	';
 
-	/**
-	 * @test
-	 */
-	public function protectInlineJSFromDOMTest() {
-		$this->assertEquals(
-			$this->testHtmlScriptWrapped,
-			ParserUtility::protectInlineJSFromDOM($this->testHtmlScript)
-		);
-	}
+    /**
+     * @test
+     */
+    public function protectInlineJSFromDOMTest()
+    {
+        $this->assertEquals(
+            $this->testHtmlScriptWrapped,
+            ParserUtility::protectInlineJSFromDOM($this->testHtmlScript)
+        );
+    }
 
-	/**
-	 * @test
-	 */
-	public function protectInlineJSFromDOMReverseTest() {
-		$this->assertEquals(
-			$this->testHtmlScript,
-			ParserUtility::protectInlineJSFromDOMReverse($this->testHtmlScriptWrapped)
-		);
-	}
+    /**
+     * @test
+     */
+    public function protectInlineJSFromDOMReverseTest()
+    {
+        $this->assertEquals(
+            $this->testHtmlScript,
+            ParserUtility::protectInlineJSFromDOMReverse($this->testHtmlScriptWrapped)
+        );
+    }
 
-	/**
-	 * @test
-	 */
-	public function getAndSetInnerTagContentTest() {
-		$html = '<p class="bodytext">Testtext bla bla <a href="#">Test</a> Test</p>';
-		$htmlExpected = '<p class="bodytext">Testtext bla bla <a href="#">Test</a> Test TESTSTRING</p>';
+    /**
+     * @test
+     */
+    public function getAndSetInnerTagContentTest()
+    {
+        $html = '<p class="bodytext">Testtext bla bla <a href="#">Test</a> Test</p>';
+        $htmlExpected = '<p class="bodytext">Testtext bla bla <a href="#">Test</a> Test TESTSTRING</p>';
 
-		$testCallback = function($content) {
-			return $content . ' TESTSTRING';
-		};
+        $testCallback = function ($content) {
+            return $content . ' TESTSTRING';
+        };
 
-		$this->assertEquals(
-			$htmlExpected,
-			ParserUtility::getAndSetInnerTagContent($html, $testCallback)
-		);
+        $this->assertEquals(
+            $htmlExpected,
+            ParserUtility::getAndSetInnerTagContent($html, $testCallback)
+        );
 
-		$html = '<p>Testtext <p>Test</p>Test</p>';
-		$htmlExpected = '<p>Testtext <p>Test</p>Test TESTSTRING</p>';
+        $html = '<p>Testtext <p>Test</p>Test</p>';
+        $htmlExpected = '<p>Testtext <p>Test</p>Test TESTSTRING</p>';
 
-		$this->assertEquals(
-			$htmlExpected,
-			ParserUtility::getAndSetInnerTagContent($html, $testCallback)
-		);
-	}
+        $this->assertEquals(
+            $htmlExpected,
+            ParserUtility::getAndSetInnerTagContent($html, $testCallback)
+        );
+    }
 }

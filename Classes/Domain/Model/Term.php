@@ -36,46 +36,34 @@ use TYPO3\CMS\Extbase\Domain\Model\FileReference;
 class Term extends AbstractEntity
 {
     /**
-     * name of the term
-     *
      * @var string $name
      * @validate NotEmpty
      */
     protected $name;
 
     /**
-     * text shown in the css tooltip
-     *
      * @var string $tooltiptext
      */
     protected $tooltiptext;
 
     /**
-     * description of the term
-     *
      * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\Featdd\DpnGlossary\Domain\Model\Description> $descriptions
      * @cascade remove
      */
     protected $descriptions;
 
     /**
-     * synonyms for the term
-     *
      * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\Featdd\DpnGlossary\Domain\Model\Synonym> $synonyms
      * @cascade remove
      */
     protected $synonyms;
 
     /**
-     * the type of the term, must by empty or one of [abbrevation/description]
-     *
      * @var string $termType
      */
     protected $termType;
 
     /**
-     * the 2 char iso code of the term, can also be empty
-     *
      * @var string $termLang
      */
     protected $termLang;
@@ -91,27 +79,19 @@ class Term extends AbstractEntity
      */
     public function __construct()
     {
-        //Do not remove the next line: It would break the functionality
         $this->initStorageObjects();
     }
 
     /**
-     * Initializes all ObjectStorage properties
-     * Do not modify this method!
-     * It will be rewritten on each save in the extension builder
-     * You may modify the constructor of this class instead
-     *
      * @return void
      */
     protected function initStorageObjects()
     {
         $this->descriptions = new ObjectStorage();
-        $this->synonyms     = new ObjectStorage();
+        $this->synonyms = new ObjectStorage();
     }
 
     /**
-     * Returns the name
-     *
      * @return string $name
      */
     public function getName()
@@ -120,8 +100,6 @@ class Term extends AbstractEntity
     }
 
     /**
-     * Sets the name
-     *
      * @param string $name
      * @return void
      */
@@ -131,8 +109,6 @@ class Term extends AbstractEntity
     }
 
     /**
-     * Returns the tooltiptext
-     *
      * @return string $tooltiptext
      */
     public function getTooltiptext()
@@ -141,8 +117,6 @@ class Term extends AbstractEntity
     }
 
     /**
-     * Sets the tooltiptext
-     *
      * @param string $tooltiptext
      * @return void
      */
@@ -152,9 +126,7 @@ class Term extends AbstractEntity
     }
 
     /**
-     * Returns the descriptions
-     *
-     * @return \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\Featdd\DpnGlossary\Domain\Model\Description> $descriptions
+     * @return \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\Featdd\DpnGlossary\Domain\Model\Description>
      */
     public function getDescriptions()
     {
@@ -162,9 +134,7 @@ class Term extends AbstractEntity
     }
 
     /**
-     * Adds the description
-     *
-     * @param Description $description
+     * @param \Featdd\DpnGlossary\Domain\Model\Description $description
      */
     public function addDescription(Description $description)
     {
@@ -172,9 +142,7 @@ class Term extends AbstractEntity
     }
 
     /**
-     * removes the description
-     *
-     * @param Description $description
+     * @param \Featdd\DpnGlossary\Domain\Model\Description $description
      */
     public function removeDescription(Description $description)
     {
@@ -182,8 +150,6 @@ class Term extends AbstractEntity
     }
 
     /**
-     * Sets the descriptions
-     *
      * @param \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\Featdd\DpnGlossary\Domain\Model\Description> $descriptions
      * @return void
      */
@@ -193,9 +159,7 @@ class Term extends AbstractEntity
     }
 
     /**
-     * Returns the synonyms
-     *
-     * @return \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\Featdd\DpnGlossary\Domain\Model\Synonym> $synonyms
+     * @return \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\Featdd\DpnGlossary\Domain\Model\Synonym>
      */
     public function getSynonyms()
     {
@@ -203,9 +167,7 @@ class Term extends AbstractEntity
     }
 
     /**
-     * Adds the synonym
-     *
-     * @param Synonym $synonym
+     * @param \Featdd\DpnGlossary\Domain\Model\Synonym $synonym
      */
     public function addSynonym(Synonym $synonym)
     {
@@ -213,9 +175,7 @@ class Term extends AbstractEntity
     }
 
     /**
-     * removes the synonym
-     *
-     * @param Synonym $synonym
+     * @param \Featdd\DpnGlossary\Domain\Model\Synonym $synonym
      */
     public function removeSynonym(Synonym $synonym)
     {
@@ -223,9 +183,7 @@ class Term extends AbstractEntity
     }
 
     /**
-     * Sets the synonyms
-     *
-     * @param \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\Featdd\DpnGlossary\Domain\Model\Synonym> $synonyms
+     * @param \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\Featdd\DpnGlossary\Domain\Model\Synonym>
      * @return void
      */
     public function setSynonyms(ObjectStorage $synonyms)
@@ -234,8 +192,6 @@ class Term extends AbstractEntity
     }
 
     /**
-     * Sets the language of the term
-     *
      * @param string $termLang
      */
     public function setTermLang($termLang)
@@ -244,8 +200,6 @@ class Term extends AbstractEntity
     }
 
     /**
-     * Returns the language of the term
-     *
      * @return string
      */
     public function getTermLang()
@@ -254,8 +208,6 @@ class Term extends AbstractEntity
     }
 
     /**
-     * Sets the type of the term
-     *
      * @param string $termType
      */
     public function setTermType($termType)
@@ -264,8 +216,6 @@ class Term extends AbstractEntity
     }
 
     /**
-     * Returns the type of the term
-     *
      * @return string
      */
     public function getTermType()
@@ -274,20 +224,16 @@ class Term extends AbstractEntity
     }
 
     /**
-     * sets the Media
-     *
-     * @param ObjectStorage $media
+     * @param \TYPO3\CMS\Extbase\Persistence\ObjectStorage $media
      * @return void
      */
-    public function setMedias($media)
+    public function setMedia(ObjectStorage $media)
     {
         $this->media = $media;
     }
 
     /**
-     * Adds a FileReference
-     *
-     * @param FileReference $file
+     * @param \TYPO3\CMS\Extbase\Domain\Model\FileReference $file
      * @return void
      */
     public function addMedia(FileReference $file)
@@ -296,9 +242,7 @@ class Term extends AbstractEntity
     }
 
     /**
-     * Removes a FileReference
-     *
-     * @param FileReference $file
+     * @param \TYPO3\CMS\Extbase\Domain\Model\FileReference $file
      * @return void
      */
     public function removeMedia(FileReference $file)
@@ -307,9 +251,7 @@ class Term extends AbstractEntity
     }
 
     /**
-     * get the Media
-     *
-     * @return ObjectStorage
+     * @return \TYPO3\CMS\Extbase\Persistence\ObjectStorage
      */
     public function getMedia()
     {
@@ -322,14 +264,14 @@ class Term extends AbstractEntity
     public function toArray()
     {
         return array(
-            'uid'          => $this->getUid(),
-            'pid'          => $this->getPid(),
-            'name'         => $this->getName(),
-            'tooltiptext'  => $this->getTooltiptext(),
+            'uid' => $this->getUid(),
+            'pid' => $this->getPid(),
+            'name' => $this->getName(),
+            'tooltiptext' => $this->getTooltiptext(),
             'descriptions' => $this->getDescriptions(),
-            'synonyms'     => $this->getSynonyms(),
-            'term_type'    => $this->getTermType(),
-            'term_lang'    => $this->getTermLang(),
+            'synonyms' => $this->getSynonyms(),
+            'term_type' => $this->getTermType(),
+            'term_lang' => $this->getTermLang(),
         );
     }
 }

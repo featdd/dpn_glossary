@@ -1,14 +1,14 @@
 <html data-namespace-typo3-fluid="true" lang="en"
-	  xmlns="http://www.w3.org/1999/xhtml"
-	  xmlns:f="http://typo3.org/ns/fluid/ViewHelpers">
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://typo3.org/ns/fluid/ViewHelpers">
 
-	<dl>
-		<f:for each="{terms}" as="term">
-			<dt>
-				<f:link.action pageUid="{detailPage}" action="show" arguments="{term: term}">{term.name}</f:link.action>
-			</dt>
-			<dd>{term.tooltiptext}</dd>
-		</f:for>
-	</dl>
+  <dl>
+    <f:for each="{terms}" as="term">
+      <dt>
+        <f:link.action pageUid="{detailPage}" action="show" arguments="{term: term}">{term.name}</f:link.action>
+      </dt>
+      <dd>{term.tooltiptext}</dd>
+    </f:for>
+  </dl>
 
 </html>

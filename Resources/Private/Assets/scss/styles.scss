@@ -9,23 +9,42 @@
       margin-left: 5px;
       margin-right: 5px;
 
-      a {text-decoration: none;}
-      &.first {margin-left: 0;}
-      &.last {margin-right: 0;}
-      &.empty {color: #f00;}
+      a {
+        text-decoration: none;
+      }
+
+      &.first {
+        margin-left: 0;
+      }
+
+      &.last {
+        margin-right: 0;
+      }
+
+      &.empty {
+        color: red;
+      }
     }
   }
 
   &.details {
     .description {
-      h3 {cursor: pointer;}
-      .text {display: none;}
+      h3 {
+        cursor: pointer;
+      }
+
+      .text {
+        display: none;
+      }
     }
 
     .mediafile {
       display: inline-block;
       margin-bottom: 10px;
-      &:last-child {margin-bottom: 0;}
+
+      &:last-child {
+        margin-bottom: 0;
+      }
     }
   }
 
@@ -39,7 +58,7 @@
         background: rgba(0, 0, 0, .8);
         border-radius: 5px;
         bottom: 26px;
-        color: #fff;
+        color: white;
         content: attr(title);
         left: 20%;
         padding: 5px 15px;

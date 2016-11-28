@@ -26,16 +26,9 @@ namespace Featdd\DpnGlossary\ViewHelpers\Widget;
  ***************************************************************/
 
 use Featdd\DpnGlossary\ViewHelpers\Widget\Controller\PaginateController;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Extbase\Mvc\ResponseInterface;
-use TYPO3\CMS\Extbase\Object\ObjectManager;
-use TYPO3\CMS\Extbase\Persistence\QueryResultInterface;
-use TYPO3\CMS\Fluid\Core\Rendering\RenderingContextInterface;
-use TYPO3\CMS\Fluid\Core\ViewHelper\Facets\CompilableInterface;
 use TYPO3\CMS\Fluid\Core\Widget\AbstractWidgetViewHelper;
 
 /**
- *
  * @package dpn_glossary
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  */
@@ -67,14 +60,10 @@ class PaginateViewHelper extends AbstractWidgetViewHelper
     }
 
     /**
-     * Gets the objects and "as" value also
-     * the fieldname for what to sort for
-     *
      * @return \TYPO3\CMS\Extbase\Mvc\ResponseInterface
      */
     public function render()
     {
         return $this->initiateSubRequest();
     }
-
 }

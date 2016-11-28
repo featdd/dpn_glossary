@@ -32,7 +32,6 @@ use TYPO3\CMS\Extbase\Configuration\ConfigurationManager;
 use TYPO3\CMS\Extbase\Object\ObjectManager;
 
 /**
- *
  * @package dpn_glossary
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  */
@@ -52,17 +51,16 @@ class RenderPreProcessHook
     protected $linkService;
 
     /**
-     * @return RenderPreProcessHook
+     * @return \Featdd\DpnGlossary\Hook\RenderPreProcessHook
      */
     public function __construct()
     {
-        /** @var ObjectManager $objectManager */
+        /** @var \TYPO3\CMS\Extbase\Object\ObjectManager $objectManager */
         $objectManager = GeneralUtility::makeInstance(ObjectManager::class);
         $this->linkService = $objectManager->get(LinkService::class);
-        /** @var ConfigurationManager $configurationManager */
+        /** @var \TYPO3\CMS\Extbase\Configuration\ConfigurationManager $configurationManager */
         $configurationManager = $objectManager->get(ConfigurationManager::class);
-        $tsConfig = $configurationManager->getConfiguration(ConfigurationManager::CONFIGURATION_TYPE_FULL_TYPOSCRIPT);
-        $settings = $tsConfig['plugin.']['tx_dpnglossary.']['settings.'];
+        $settings = $configurationManager->getConfiguration(ConfigurationManager::CONFIGURATION_TYPE_SETTINGS, 'dpnglossary');
 
         if (is_array($settings)) {
             $this->settings = GeneralUtility::removeDotsFromTS($settings);
@@ -70,8 +68,8 @@ class RenderPreProcessHook
     }
 
     /**
-     * @param array        $params
-     * @param PageRenderer $pageRenderer
+     * @param array $params
+     * @param \TYPO3\CMS\Core\Page\PageRenderer $pageRenderer
      */
     public function main(array &$params, PageRenderer $pageRenderer)
     {

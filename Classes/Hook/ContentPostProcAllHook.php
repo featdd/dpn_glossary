@@ -31,7 +31,6 @@ use TYPO3\CMS\Extbase\Object\ObjectManager;
 use TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController;
 
 /**
- *
  * @package dpn_glossary
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  */
@@ -43,7 +42,7 @@ class ContentPostProcAllHook
     protected $parserService;
 
     /**
-     * @return ContentPostProcAllHook
+     * @return \Featdd\DpnGlossary\Hook\ContentPostProcAllHook
      */
     public function __construct()
     {
@@ -53,14 +52,14 @@ class ContentPostProcAllHook
     }
 
     /**
-     * @param array                        $params
-     * @param TypoScriptFrontendController $typoScriptFrontendController
+     * @param array $params
+     * @param \TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController $typoScriptFrontendController
      */
     public function main(array &$params, TypoScriptFrontendController $typoScriptFrontendController)
     {
         $parsedHTML = $this->parserService->pageParser($typoScriptFrontendController->content);
 
-        if (FALSE !== $parsedHTML) {
+        if (false !== $parsedHTML) {
             $typoScriptFrontendController->content = $parsedHTML;
         }
     }

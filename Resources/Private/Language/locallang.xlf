@@ -1,140 +1,138 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <xliff version="1.0">
-	<file source-language="en" datatype="plaintext" original="messages" date="2013-12-16T14:16:05Z" product-name="dpn_glossary">
-		<header/>
-		<body>
-
-			<trans-unit id="tx_dpnglossary_domain_model_term">
-				<source>Term</source>
-			</trans-unit>
-			<trans-unit id="tx_dpnglossary_domain_model_term.name">
-				<source>name of the term</source>
-			</trans-unit>
-			<trans-unit id="tx_dpnglossary_domain_model_term.tooltiptext">
-				<source>text shown in the css tooltip</source>
-			</trans-unit>
-			<trans-unit id="tx_dpnglossary_domain_model_term.descriptions">
-				<source>descriptions of the term</source>
-			</trans-unit>
-			<trans-unit id="tx_dpnglossary_domain_model_term.synonyms">
-				<source>Synonyms</source>
-			</trans-unit>
-			<trans-unit id="tx_dpnglossary_domain_model_term.term_type">
-				<source>Type of term</source>
-			</trans-unit>
-			<trans-unit id="tx_dpnglossary_domain_model_term.term_type_acronym">
-				<source>Acronym (e.g. NATO)</source>
-			</trans-unit>
-			<trans-unit id="tx_dpnglossary_domain_model_term.term_type_abbreviation">
-				<source>Abbreviation (e.t.c.)</source>
-			</trans-unit>
-			<trans-unit id="tx_dpnglossary_domain_model_term.term_type_definition">
-				<source>Definition</source>
-			</trans-unit>
-			<trans-unit id="tx_dpnglossary_domain_model_term.term_type_none">
-				<source>None (Tooltip)</source>
-			</trans-unit>
-			<trans-unit id="tx_dpnglossary_domain_model_term.term_lang">
-				<source>Language of the term (2 char ISO code)</source>
-			</trans-unit>
-			<trans-unit id="tx_dpnglossary_domain_model_term.media">
-				<source>Media Files</source>
-			</trans-unit>
-			<trans-unit id="tx_dpnglossary_domain_model_term.detailheadline">
-				<source>Detailview for term</source>
-			</trans-unit>
-			<trans-unit id="tx_dpnglossary_domain_model_term.listheadline">
-				<source>Listview for the terms</source>
-			</trans-unit>
-			<trans-unit id="tx_dpnglossary_domain_model_term.characterheadline">
-				<source>Character Navigation for the terms</source>
-			</trans-unit>
-
-
-			<trans-unit id="tx_dpnglossary_domain_model_synonym">
-				<source>Synonym</source>
-			</trans-unit>
-			<trans-unit id="tx_dpnglossary_domain_model_synonym.name">
-				<source>Name</source>
-			</trans-unit>
+    <file source-language="en" datatype="plaintext" original="messages" product-name="dpn_glossary">
+        <header/>
+        <body>
+            <trans-unit id="tx_dpnglossary_domain_model_term">
+                <source>Term</source>
+            </trans-unit>
+            <trans-unit id="tx_dpnglossary_domain_model_term.name">
+                <source>name of the term</source>
+            </trans-unit>
+            <trans-unit id="tx_dpnglossary_domain_model_term.tooltiptext">
+                <source>text shown in the css tooltip</source>
+            </trans-unit>
+            <trans-unit id="tx_dpnglossary_domain_model_term.descriptions">
+                <source>descriptions of the term</source>
+            </trans-unit>
+            <trans-unit id="tx_dpnglossary_domain_model_term.synonyms">
+                <source>Synonyms</source>
+            </trans-unit>
+            <trans-unit id="tx_dpnglossary_domain_model_term.term_type">
+                <source>Type of term</source>
+            </trans-unit>
+            <trans-unit id="tx_dpnglossary_domain_model_term.term_type_acronym">
+                <source>Acronym (e.g. NATO)</source>
+            </trans-unit>
+            <trans-unit id="tx_dpnglossary_domain_model_term.term_type_abbreviation">
+                <source>Abbreviation (e.t.c.)</source>
+            </trans-unit>
+            <trans-unit id="tx_dpnglossary_domain_model_term.term_type_definition">
+                <source>Definition</source>
+            </trans-unit>
+            <trans-unit id="tx_dpnglossary_domain_model_term.term_type_none">
+                <source>None (Tooltip)</source>
+            </trans-unit>
+            <trans-unit id="tx_dpnglossary_domain_model_term.term_lang">
+                <source>Language of the term (2 char ISO code)</source>
+            </trans-unit>
+            <trans-unit id="tx_dpnglossary_domain_model_term.media">
+                <source>Media Files</source>
+            </trans-unit>
+            <trans-unit id="tx_dpnglossary_domain_model_term.detailheadline">
+                <source>Detailview for term</source>
+            </trans-unit>
+            <trans-unit id="tx_dpnglossary_domain_model_term.listheadline">
+                <source>Listview for the terms</source>
+            </trans-unit>
+            <trans-unit id="tx_dpnglossary_domain_model_term.characterheadline">
+                <source>Character Navigation for the terms</source>
+            </trans-unit>
 
 
-			<trans-unit id="tx_dpnglossary_domain_model_description">
-				<source>Description</source>
-			</trans-unit>
-			<trans-unit id="tx_dpnglossary_domain_model_description.meaning">
-				<source>Meaning</source>
-			</trans-unit>
-			<trans-unit id="tx_dpnglossary_domain_model_description.text">
-				<source>Text</source>
-			</trans-unit>
+            <trans-unit id="tx_dpnglossary_domain_model_synonym">
+                <source>Synonym</source>
+            </trans-unit>
+            <trans-unit id="tx_dpnglossary_domain_model_synonym.name">
+                <source>Name</source>
+            </trans-unit>
 
 
-			<trans-unit id="tx_dpnglossary.new_description">
-				<source>New description</source>
-			</trans-unit>
-			<trans-unit id="tx_dpnglossary.new_synonym">
-				<source>New Synonym</source>
-			</trans-unit>
-			<trans-unit id="tx_dpnglossary.backtolastpage">
-				<source>Back to last page</source>
-			</trans-unit>
-			<trans-unit id="tx_dpnglossary.backtolist">
-				<source>Back to list</source>
-			</trans-unit>
-			<trans-unit id="tx_dpnglossary.no_objects_found">
-				<source>No objects were found</source>
-			</trans-unit>
-			<trans-unit id="tx_dpnglossary.wizard_list_title">
-				<source>Glossary list</source>
-			</trans-unit>
-			<trans-unit id="tx_dpnglossary.wizard_list_description">
-				<source>Plugin for the listview of the dpn_glossary extension</source>
-			</trans-unit>
-			<trans-unit id="tx_dpnglossary.wizard_preview_title">
-				<source>Glossary preview list</source>
-			</trans-unit>
-			<trans-unit id="tx_dpnglossary.wizard_preview_description">
-				<source>Plugin for the preview for the dpn_glossary extension</source>
-			</trans-unit>
-			<trans-unit id="tx_dpnglossary.wizard_detail_title">
-				<source>Glossary detailview plugin</source>
-			</trans-unit>
-			<trans-unit id="tx_dpnglossary.wizard_detail_description">
-				<source>Plugin for the detailview of the dpn_glossary extension</source>
-			</trans-unit>
+            <trans-unit id="tx_dpnglossary_domain_model_description">
+                <source>Description</source>
+            </trans-unit>
+            <trans-unit id="tx_dpnglossary_domain_model_description.meaning">
+                <source>Meaning</source>
+            </trans-unit>
+            <trans-unit id="tx_dpnglossary_domain_model_description.text">
+                <source>Text</source>
+            </trans-unit>
 
 
-			<trans-unit id="tx_dpnglossary_domain_model_term.previewheadline.newest">
-				<source>Latest added terms</source>
-			</trans-unit>
-			<trans-unit id="tx_dpnglossary_domain_model_term.previewheadline.random">
-				<source>Random terms</source>
-			</trans-unit>
-			<trans-unit id="tx_dpnglossary_domain_model_term.previewheadline.selected">
-				<source>Selected terms</source>
-			</trans-unit>
+            <trans-unit id="tx_dpnglossary.new_description">
+                <source>New description</source>
+            </trans-unit>
+            <trans-unit id="tx_dpnglossary.new_synonym">
+                <source>New Synonym</source>
+            </trans-unit>
+            <trans-unit id="tx_dpnglossary.backtolastpage">
+                <source>Back to last page</source>
+            </trans-unit>
+            <trans-unit id="tx_dpnglossary.backtolist">
+                <source>Back to list</source>
+            </trans-unit>
+            <trans-unit id="tx_dpnglossary.no_objects_found">
+                <source>No objects were found</source>
+            </trans-unit>
+            <trans-unit id="tx_dpnglossary.wizard_list_title">
+                <source>Glossary list</source>
+            </trans-unit>
+            <trans-unit id="tx_dpnglossary.wizard_list_description">
+                <source>Plugin for the listview of the dpn_glossary extension</source>
+            </trans-unit>
+            <trans-unit id="tx_dpnglossary.wizard_preview_title">
+                <source>Glossary preview list</source>
+            </trans-unit>
+            <trans-unit id="tx_dpnglossary.wizard_preview_description">
+                <source>Plugin for the preview for the dpn_glossary extension</source>
+            </trans-unit>
+            <trans-unit id="tx_dpnglossary.wizard_detail_title">
+                <source>Glossary detailview plugin</source>
+            </trans-unit>
+            <trans-unit id="tx_dpnglossary.wizard_detail_description">
+                <source>Plugin for the detailview of the dpn_glossary extension</source>
+            </trans-unit>
 
 
-			<trans-unit id="tx_dpnglossary.flexforms.preview">
-				<source>Preview Settings</source>
-			</trans-unit>
-			<trans-unit id="tx_dpnglossary.flexforms.preview.mode">
-				<source>Preview Mode</source>
-			</trans-unit>
-			<trans-unit id="tx_dpnglossary.flexforms.preview.mode.newest">
-				<source>Newest</source>
-			</trans-unit>
-			<trans-unit id="tx_dpnglossary.flexforms.preview.mode.random">
-				<source>Random</source>
-			</trans-unit>
-			<trans-unit id="tx_dpnglossary.flexforms.preview.mode.selected">
-				<source>Selected</source>
-			</trans-unit>
-			<trans-unit id="tx_dpnglossary.flexforms.preview.limit">
-				<source>Limit</source>
-			</trans-unit>
+            <trans-unit id="tx_dpnglossary_domain_model_term.previewheadline.newest">
+                <source>Latest added terms</source>
+            </trans-unit>
+            <trans-unit id="tx_dpnglossary_domain_model_term.previewheadline.random">
+                <source>Random terms</source>
+            </trans-unit>
+            <trans-unit id="tx_dpnglossary_domain_model_term.previewheadline.selected">
+                <source>Selected terms</source>
+            </trans-unit>
 
-		</body>
-	</file>
+
+            <trans-unit id="tx_dpnglossary.flexforms.preview">
+                <source>Preview Settings</source>
+            </trans-unit>
+            <trans-unit id="tx_dpnglossary.flexforms.preview.mode">
+                <source>Preview Mode</source>
+            </trans-unit>
+            <trans-unit id="tx_dpnglossary.flexforms.preview.mode.newest">
+                <source>Newest</source>
+            </trans-unit>
+            <trans-unit id="tx_dpnglossary.flexforms.preview.mode.random">
+                <source>Random</source>
+            </trans-unit>
+            <trans-unit id="tx_dpnglossary.flexforms.preview.mode.selected">
+                <source>Selected</source>
+            </trans-unit>
+            <trans-unit id="tx_dpnglossary.flexforms.preview.limit">
+                <source>Limit</source>
+            </trans-unit>
+        </body>
+    </file>
 </xliff>

@@ -30,81 +30,84 @@ use TYPO3\CMS\Core\Tests\AccessibleObjectInterface;
 use TYPO3\CMS\Core\Tests\UnitTestCase;
 
 /**
- *
  * @package dpn_glossary
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  */
-class PaginateContollerTest extends UnitTestCase {
+class PaginateContollerTest extends UnitTestCase
+{
 
-	/**
-	 * @var PaginateController|AccessibleObjectInterface
-	 */
-	protected $controller;
+    /**
+     * @var \Featdd\DpnGlossary\ViewHelpers\Widget\Controller\PaginateController|\TYPO3\CMS\Core\Tests\AccessibleObjectInterface
+     */
+    protected $controller;
 
-	/**
-	 * @var string
-	 */
-	protected $characters = 'A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z';
+    /**
+     * @var string
+     */
+    protected $characters = 'A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z';
 
-	public function setUp() {
-		$this->controller = $this->getAccessibleMock(PaginateController::class);
-	}
+    public function setUp()
+    {
+        $this->controller = $this->getAccessibleMock(PaginateController::class);
+    }
 
-	public function tearDown() {
-		unset($this->controller);
-	}
+    public function tearDown()
+    {
+        unset($this->controller);
+    }
 
-	/**
-	 * @test
-	 */
-	public function paginateArgumentsTest() {
-		$this->assertEquals(
-			array(
-				'@widget_0' => array(
-					'character' => 'T'
-				)
-			),
-			PaginateController::paginationArguments('Test', $this->characters)
-		);
+    /**
+     * @test
+     */
+    public function paginateArgumentsTest()
+    {
+        $this->assertEquals(
+            array(
+                '@widget_0' => array(
+                    'character' => 'T',
+                ),
+            ),
+            PaginateController::paginationArguments('Test', $this->characters)
+        );
 
-		$this->assertEquals(
-			array(
-				'@widget_0' => array(
-					'character' => 'A'
-				)
-			),
-			PaginateController::paginationArguments('Ätest', $this->characters)
-		);
+        $this->assertEquals(
+            array(
+                '@widget_0' => array(
+                    'character' => 'A',
+                ),
+            ),
+            PaginateController::paginationArguments('Ätest', $this->characters)
+        );
 
-		//Use characters plus umlauts
-		$characters = $this->characters . ',Ä,Ö,Ü';
+        //Use characters plus umlauts
+        $characters = $this->characters . ',Ä,Ö,Ü';
 
-		$this->assertEquals(
-			array(
-				'@widget_0' => array(
-					'character' => 'AE'
-				)
-			),
-			PaginateController::paginationArguments('Ätest', $characters)
-		);
+        $this->assertEquals(
+            array(
+                '@widget_0' => array(
+                    'character' => 'AE',
+                ),
+            ),
+            PaginateController::paginationArguments('Ätest', $characters)
+        );
 
-		$this->assertEquals(
-			array(
-				'@widget_0' => array(
-					'character' => 'OE'
-				)
-			),
-			PaginateController::paginationArguments('Ötest', $characters)
-		);
+        $this->assertEquals(
+            array(
+                '@widget_0' => array(
+                    'character' => 'OE',
+                ),
+            ),
+            PaginateController::paginationArguments('Ötest', $characters)
+        );
 
-		$this->assertEquals(
-			array(
-				'@widget_0' => array(
-					'character' => 'UE'
-				)
-			),
-			PaginateController::paginationArguments('Ütest', $characters)
-		);
-	}
+        $this->assertEquals(
+            array(
+                '@widget_0' => array(
+                    'character' => 'UE',
+                ),
+            ),
+            PaginateController::paginationArguments('Ütest', $characters)
+        );
+    }
 
 }

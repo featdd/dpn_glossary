@@ -1,17 +1,15 @@
 <html data-namespace-typo3-fluid="true" lang="en"
-	  xmlns="http://www.w3.org/1999/xhtml"
-	  xmlns:f="http://typo3.org/ns/fluid/ViewHelpers">
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://typo3.org/ns/fluid/ViewHelpers">
 
-	<f:layout name="Default"/>
+  <f:layout name="Default"/>
 
-	<f:section name="Main">
+  <f:section name="Main">
 
-		<h1>
-			<f:translate key="tx_dpnglossary_domain_model_term.previewheadline.random"/>
-		</h1>
+    <h1>{f:translate(key: 'tx_dpnglossary_domain_model_term.previewheadline.random')}</h1>
 
-		<f:render partial="PreviewList" arguments="{terms: terms}"/>
+    <f:render partial="PreviewList" arguments="{terms: terms}"/>
 
-	</f:section>
+  </f:section>
 
 </html>

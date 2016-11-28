@@ -34,7 +34,6 @@ use TYPO3\CMS\Fluid\Core\Widget\AbstractWidgetController;
 use TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer;
 
 /**
- *
  * @package dpn_glossary
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  */
@@ -127,14 +126,11 @@ class PaginateController extends AbstractWidgetController
      * by the currentCharacter
      *
      * @param string $character
-     *
-     * @throws Exception
-     *
      * @return void
+     * @throws \Featdd\DpnGlossary\ViewHelpers\Widget\Controller\Exception
      */
     public function indexAction($character = '')
     {
-
         if (true === empty($character)) {
             $this->query->setLimit(1)->setOrderings(array($this->field => QueryInterface::ORDER_ASCENDING));
             $firstObject = $this->query->execute()->toArray();
@@ -148,7 +144,8 @@ class PaginateController extends AbstractWidgetController
                 if (true === method_exists($firstObject[0], $getter)) {
                     $this->currentCharacter = strtoupper(substr($firstObject[0]->{$getter}(), 0, 1));
                 } else {
-                    throw new Exception('Getter for "' . $this->field . '" in "' . get_class($firstObject[0]) . '" does not exist', 1433257601);
+                    throw new Exception('Getter for "' . $this->field . '" in "' . get_class($firstObject[0]) . '" does not exist',
+                        1433257601);
                 }
             }
         } else {

@@ -288,12 +288,12 @@ class ParserService implements SingletonInterface
      * @param callable $wrappingCallback the wrapping function for parsed terms as callback
      * @return string
      */
-    public function textParser($text, $wrappingCallback)
+    public function textParser($text, callable $wrappingCallback)
     {
         $text = preg_replace('#\x{00a0}#iu', '&nbsp;', $text);
         // Iterate over terms and search matches for each of them
         foreach ($this->terms as $term) {
-            /** @var Term $termObject */
+            /** @var \Featdd\DpnGlossary\Domain\Model\Term $termObject */
             $termObject = clone $term['term'];
             $replacements = &$term['replacements'];
 
@@ -302,7 +302,7 @@ class ParserService implements SingletonInterface
                 $this->regexParser($text, $termObject, $replacements, $wrappingCallback);
 
                 if (true === (boolean) $this->settings['parseSynonyms']) {
-                    /** @var Synonym $synonym */
+                    /** @var \Featdd\DpnGlossary\Domain\Model\Synonym $synonym */
                     foreach ($termObject->getSynonyms() as $synonym) {
                         $termObject->setName(
                             $synonym->getName()
@@ -330,7 +330,7 @@ class ParserService implements SingletonInterface
      * @param integer $replacements
      * @param callable $wrappingCallback
      */
-    protected function regexParser(&$text, Term $term, &$replacements, $wrappingCallback)
+    protected function regexParser(&$text, Term $term, &$replacements, callable $wrappingCallback)
     {
         /*
          * Regex Explanation:
