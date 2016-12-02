@@ -16,7 +16,7 @@
         </f:for>
       </dd>
       <f:if condition="{term.synonyms}">
-        <dd>{f:translate(key: 'tx_dpnglossary_domain_model_term.synonyms')}: {f:if(condition: synonymIterator.isLast, else: ', ') -> f:for.each(each: term.synonyms, iterator: 'synonymIterator')}</dd>
+        <dd>{f:translate(key: 'tx_dpnglossary_domain_model_term.synonyms')}: {f:if(condition: synonymIterator.isLast, then: '{synonym.name}', else: '{synonym.name}, ') -> f:for(each: term.synonyms, iteration: 'synonymIterator', as: 'synonym')}</dd>
       </f:if>
       <f:if condition="{term.termType}">
         <dd>
