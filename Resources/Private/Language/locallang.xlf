@@ -97,7 +97,7 @@
                 <source>Plugin for the preview for the dpn_glossary extension</source>
             </trans-unit>
             <trans-unit id="tx_dpnglossary.wizard_detail_title">
-                <source>Glossary detailview plugin</source>
+                <source>Glossary detailview</source>
             </trans-unit>
             <trans-unit id="tx_dpnglossary.wizard_detail_description">
                 <source>Plugin for the detailview of the dpn_glossary extension</source>

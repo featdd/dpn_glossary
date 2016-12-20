@@ -85,7 +85,7 @@
                 <target>Es wurden keine Objekte gefunden</target>
             </trans-unit>
             <trans-unit id="tx_dpnglossary.wizard_list_title">
-                <target>dreipunktnull Glossar Listen Plugin</target>
+                <target>Glossar Listenansicht</target>
             </trans-unit>
             <trans-unit id="tx_dpnglossary.wizard_list_description">
                 <target>Plugin für die Listenansicht der dpn_glossary Extension</target>
