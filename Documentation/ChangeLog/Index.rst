@@ -10,6 +10,9 @@
 ChangeLog
 ---------
 
+v2.6.9
+  - Fixed compability issue with 6.2
+
 v2.6.8
   - Updated fluid namespaces
   - refactoring of the update script

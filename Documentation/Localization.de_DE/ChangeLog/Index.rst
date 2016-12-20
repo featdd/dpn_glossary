@@ -9,6 +9,10 @@
 
 Versionshistorie
 ----------------
+
+v2.6.9
+  - Kompabilität mit 6.2 behoben
+
 v2.6.8
   - Aktualisieren der fluid namespaces
   - Umbauen des Update Scripts in einen Service
