@@ -47,25 +47,27 @@ if (\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::isLoaded('realurl')) {
     $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['t3lib/class.t3lib_pagerenderer.php']['render-preProcess'][] = \Featdd\DpnGlossary\Hook\RenderPreProcessHook::class . '->main';
 }
 
-$iconRegistry = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Imaging\IconRegistry::class);
+if (version_compare(\TYPO3\CMS\Core\Utility\VersionNumberUtility::getNumericTypo3Version(), '7.5.0', '>=')) {
+    $iconRegistry = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Imaging\IconRegistry::class);
 
-$iconRegistry->registerIcon(
-    'ext-dpn_glossary-list-wizard-icon',
-    \TYPO3\CMS\Core\Imaging\IconProvider\FontawesomeIconProvider::class,
-    ['name' => 'list']
-);
+    $iconRegistry->registerIcon(
+        'ext-dpn_glossary-list-wizard-icon',
+        \TYPO3\CMS\Core\Imaging\IconProvider\FontawesomeIconProvider::class,
+        ['name' => 'list']
+    );
 
-$iconRegistry->registerIcon(
-    'ext-dpn_glossary-preview-wizard-icon',
-    \TYPO3\CMS\Core\Imaging\IconProvider\FontawesomeIconProvider::class,
-    ['name' => 'external-link-square']
-);
+    $iconRegistry->registerIcon(
+        'ext-dpn_glossary-preview-wizard-icon',
+        \TYPO3\CMS\Core\Imaging\IconProvider\FontawesomeIconProvider::class,
+        ['name' => 'external-link-square']
+    );
 
-$iconRegistry->registerIcon(
-    'ext-dpn_glossary-detail-wizard-icon',
-    \TYPO3\CMS\Core\Imaging\IconProvider\FontawesomeIconProvider::class,
-    ['name' => 'search']
-);
+    $iconRegistry->registerIcon(
+        'ext-dpn_glossary-detail-wizard-icon',
+        \TYPO3\CMS\Core\Imaging\IconProvider\FontawesomeIconProvider::class,
+        ['name' => 'search']
+    );
+}
 
 if (
     true === is_array($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['realurl']) &&
