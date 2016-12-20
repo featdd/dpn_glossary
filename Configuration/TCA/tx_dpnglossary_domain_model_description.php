@@ -43,11 +43,10 @@ return array(
                 'type' => 'select',
                 'renderType' => 'selectSingle',
                 'special' => 'languages',
+                'default' => 0,
                 'items' => array(
                     array('LLL:EXT:lang/locallang_general.xlf:LGL.allLanguages', -1),
-                    array('LLL:EXT:lang/locallang_general.xlf:LGL.default_value', 0),
                 ),
-                'default' => 0,
             ),
         ),
         'l10n_parent' => array(
