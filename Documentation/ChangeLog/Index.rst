@@ -10,6 +10,9 @@
 ChangeLog
 ---------
 
+v2.6.10
+  - Removed unwanted warning caused by null param
+
 v2.6.9
   - Fixed compability issue with 6.2
 

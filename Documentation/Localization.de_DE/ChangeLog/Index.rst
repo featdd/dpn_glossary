@@ -10,6 +10,9 @@
 Versionshistorie
 ----------------
 
+v2.6.10
+  - Entfernen einer ungewollten Fehlermeldung bei einem null Parameter
+
 v2.6.9
   - Kompabilität mit 6.2 behoben
 
