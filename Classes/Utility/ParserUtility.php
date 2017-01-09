@@ -162,8 +162,7 @@ class ParserUtility implements SingletonInterface
 
             /** @var \DOMElement $tempDOMChild */
             foreach ($tempDOM->getElementById('replacement')->childNodes as $tempDOMChild) {
-                $tempChild = $DOMText->ownerDocument->importNode($tempDOMChild);
-                $tempChild->nodeValue = $tempDOMChild->nodeValue;
+                $tempChild = $DOMText->ownerDocument->importNode($tempDOMChild, true);
                 $replacementNode->appendChild($tempChild);
             }
 
