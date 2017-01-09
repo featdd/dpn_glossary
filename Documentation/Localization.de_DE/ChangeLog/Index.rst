@@ -10,6 +10,9 @@
 Versionshistorie
 ----------------
 
+v2.6.11
+  - Verwende den rekursiven Import um Verschachtelungen von ersetzten Begriffen zu erhalten
+
 v2.6.10
   - Entfernen einer ungewollten Fehlermeldung bei einem null Parameter
 

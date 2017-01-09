@@ -10,6 +10,9 @@
 ChangeLog
 ---------
 
+v2.6.11
+  - Use deep import to keep wraps around replaced terms
+
 v2.6.10
   - Removed unwanted warning caused by null param
 
