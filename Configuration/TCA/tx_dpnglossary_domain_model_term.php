@@ -1,9 +1,9 @@
 <?php
 
-if (true === version_compare(TYPO3_version, '7.5', '>=')) {
+if (true === version_compare(\TYPO3\CMS\Core\Utility\VersionNumberUtility::getNumericTypo3Version(), '7.5', '>=')) {
     $iconFile = 'EXT:dpn_glossary/Resources/Public/Icons/term.png';
 } else {
-    $iconFile = \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extRelPath($_EXTKEY) . 'Resources/Public/Icons/term.png';
+    $iconFile = \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extRelPath('dpn_glossary') . 'Resources/Public/Icons/term.png';
 }
 
 return array(

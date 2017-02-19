@@ -3,7 +3,7 @@
 if (true === version_compare(TYPO3_version, '7.5', '>=')) {
     $iconFile = 'EXT:dpn_glossary/Resources/Public/Icons/synonym.png';
 } else {
-    $iconFile = \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extRelPath($_EXTKEY) . 'Resources/Public/Icons/synonym.png	';
+    $iconFile = \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extRelPath('dpn_glossary') . 'Resources/Public/Icons/synonym.png	';
 }
 
 return array(
