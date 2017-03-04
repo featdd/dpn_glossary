@@ -4,7 +4,7 @@ namespace Featdd\DpnGlossary\Domain\Repository;
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2016 Daniel Dorndorf <dorndorf@featdd.de>
+ *  (c) 2017 Daniel Dorndorf <dorndorf@featdd.de>
  *
  *  All rights reserved
  *
