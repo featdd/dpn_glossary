@@ -272,6 +272,7 @@ class Term extends AbstractEntity
             'synonyms' => $this->getSynonyms(),
             'term_type' => $this->getTermType(),
             'term_lang' => $this->getTermLang(),
+            'media' => $this->getMedia(),
         );
     }
 }
