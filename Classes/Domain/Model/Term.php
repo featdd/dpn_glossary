@@ -39,12 +39,22 @@ class Term extends AbstractEntity
      * @var string $name
      * @validate NotEmpty
      */
-    protected $name;
+    protected $name = '';
 
     /**
      * @var string $tooltiptext
      */
-    protected $tooltiptext;
+    protected $tooltiptext = '';
+
+    /**
+     * @var string $termType
+     */
+    protected $termType = '';
+
+    /**
+     * @var string $termLang
+     */
+    protected $termLang = '';
 
     /**
      * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\Featdd\DpnGlossary\Domain\Model\Description> $descriptions
@@ -59,18 +69,8 @@ class Term extends AbstractEntity
     protected $synonyms;
 
     /**
-     * @var string $termType
-     */
-    protected $termType;
-
-    /**
-     * @var string $termLang
-     */
-    protected $termLang;
-
-    /**
      * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\TYPO3\CMS\Extbase\Domain\Model\FileReference>
-     * @lazy
+     * @cascade remove
      */
     protected $media;
 
@@ -89,6 +89,7 @@ class Term extends AbstractEntity
     {
         $this->descriptions = new ObjectStorage();
         $this->synonyms = new ObjectStorage();
+        $this->media = new ObjectStorage();
     }
 
     /**
@@ -123,6 +124,38 @@ class Term extends AbstractEntity
     public function setTooltiptext($tooltiptext)
     {
         $this->tooltiptext = $tooltiptext;
+    }
+
+    /**
+     * @param string $termLang
+     */
+    public function setTermLang($termLang)
+    {
+        $this->termLang = $termLang;
+    }
+
+    /**
+     * @return string
+     */
+    public function getTermLang()
+    {
+        return $this->termLang;
+    }
+
+    /**
+     * @param string $termType
+     */
+    public function setTermType($termType)
+    {
+        $this->termType = $termType;
+    }
+
+    /**
+     * @return string
+     */
+    public function getTermType()
+    {
+        return $this->termType;
     }
 
     /**
@@ -189,38 +222,6 @@ class Term extends AbstractEntity
     public function setSynonyms(ObjectStorage $synonyms)
     {
         $this->synonyms = $synonyms;
-    }
-
-    /**
-     * @param string $termLang
-     */
-    public function setTermLang($termLang)
-    {
-        $this->termLang = $termLang;
-    }
-
-    /**
-     * @return string
-     */
-    public function getTermLang()
-    {
-        return $this->termLang;
-    }
-
-    /**
-     * @param string $termType
-     */
-    public function setTermType($termType)
-    {
-        $this->termType = $termType;
-    }
-
-    /**
-     * @return string
-     */
-    public function getTermType()
-    {
-        return $this->termType;
     }
 
     /**
