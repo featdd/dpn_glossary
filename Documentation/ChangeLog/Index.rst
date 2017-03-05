@@ -10,6 +10,11 @@
 ChangeLog
 ---------
 
+v2.6.12
+  - Fix 6.2 Compability
+  - Small cleanup and refactorings
+  - Fix problem with html special chars
+
 v2.6.11
   - Use deep import to keep wraps around replaced terms
 

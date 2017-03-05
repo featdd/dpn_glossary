@@ -10,6 +10,11 @@
 Versionshistorie
 ----------------
 
+v2.6.12
+  - Optimieren der 6.2 Kompabilität
+  - Code aufräumen und refaktorieren
+  - Behebe Problem mit HTML Entities
+
 v2.6.11
   - Verwende den rekursiven Import um Verschachtelungen von ersetzten Begriffen zu erhalten
 
