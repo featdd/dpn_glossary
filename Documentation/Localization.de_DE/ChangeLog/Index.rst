@@ -10,6 +10,9 @@
 Versionshistorie
 ----------------
 
+v2.6.13
+  - Hinzufügen der Option das Parsing für Begriffe zu deaktivieren
+
 v2.6.12
   - Optimieren der 6.2 Kompabilität
   - Code aufräumen und refaktorieren

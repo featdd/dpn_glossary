@@ -10,6 +10,9 @@
 ChangeLog
 ---------
 
+v2.6.13
+  - Add option to disable parsing for terms
+
 v2.6.12
   - Fix 6.2 Compability
   - Small cleanup and refactorings
