@@ -36,34 +36,39 @@ use TYPO3\CMS\Extbase\Domain\Model\FileReference;
 class Term extends AbstractEntity
 {
     /**
-     * @var string $name
+     * @var string
      * @validate NotEmpty
      */
     protected $name = '';
 
     /**
-     * @var string $tooltiptext
+     * @var string
      */
     protected $tooltiptext = '';
 
     /**
-     * @var string $termType
+     * @var string
      */
     protected $termType = '';
 
     /**
-     * @var string $termLang
+     * @var string
      */
     protected $termLang = '';
 
     /**
-     * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\Featdd\DpnGlossary\Domain\Model\Description> $descriptions
+     * @var bool
+     */
+    protected $excludeFromParsing = false;
+
+    /**
+     * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\Featdd\DpnGlossary\Domain\Model\Description>
      * @cascade remove
      */
     protected $descriptions;
 
     /**
-     * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\Featdd\DpnGlossary\Domain\Model\Synonym> $synonyms
+     * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\Featdd\DpnGlossary\Domain\Model\Synonym>
      * @cascade remove
      */
     protected $synonyms;
@@ -127,6 +132,22 @@ class Term extends AbstractEntity
     }
 
     /**
+     * @param string $termType
+     */
+    public function setTermType($termType)
+    {
+        $this->termType = $termType;
+    }
+
+    /**
+     * @return string
+     */
+    public function getTermType()
+    {
+        return $this->termType;
+    }
+
+    /**
      * @param string $termLang
      */
     public function setTermLang($termLang)
@@ -143,19 +164,20 @@ class Term extends AbstractEntity
     }
 
     /**
-     * @param string $termType
+     * @return bool
      */
-    public function setTermType($termType)
+    public function getExcludeFromParsing()
     {
-        $this->termType = $termType;
+        return $this->excludeFromParsing;
     }
 
     /**
-     * @return string
+     * @param bool $excludeFromParsing
+     * @return void
      */
-    public function getTermType()
+    public function setExcludeFromParsing($excludeFromParsing)
     {
-        return $this->termType;
+        $this->excludeFromParsing = $excludeFromParsing;
     }
 
     /**
@@ -269,10 +291,11 @@ class Term extends AbstractEntity
             'pid' => $this->getPid(),
             'name' => $this->getName(),
             'tooltiptext' => $this->getTooltiptext(),
-            'descriptions' => $this->getDescriptions(),
-            'synonyms' => $this->getSynonyms(),
             'term_type' => $this->getTermType(),
             'term_lang' => $this->getTermLang(),
+            'exclude_from_parsing' => $this->getExcludeFromParsing(),
+            'descriptions' => $this->getDescriptions(),
+            'synonyms' => $this->getSynonyms(),
             'media' => $this->getMedia(),
         );
     }

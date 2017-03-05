@@ -297,6 +297,10 @@ class ParserService implements SingletonInterface
             $termObject = clone $term['term'];
             $replacements = &$term['replacements'];
 
+            if (true === $termObject->getExcludeFromParsing()) {
+                continue;
+            }
+
             //Check replacement counter
             if (0 !== $term['replacements']) {
                 $this->regexParser($text, $termObject, $replacements, $wrappingCallback);

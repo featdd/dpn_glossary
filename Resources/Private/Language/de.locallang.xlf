@@ -18,6 +18,9 @@
             <trans-unit id="tx_dpnglossary_domain_model_term.synonyms">
                 <target>Synonyme</target>
             </trans-unit>
+            <trans-unit id="tx_dpnglossary_domain_model_term.exclude_from_parsing">
+                <target>Den Begriff vom Parsing ausschließen</target>
+            </trans-unit>
             <trans-unit id="tx_dpnglossary_domain_model_term.term_type">
                 <target>Typ des Begriff</target>
             </trans-unit>

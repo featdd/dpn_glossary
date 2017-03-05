@@ -110,6 +110,7 @@ class UpdateService implements SingletonInterface
         $this->checkMediaColumn();
         $this->checkSortingColumn();
         $this->checkSynonymTable();
+        $this->checkExcludeFromParsingColumn();
     }
 
     /**
@@ -304,6 +305,30 @@ class UpdateService implements SingletonInterface
                 KEY t3ver_oid (t3ver_oid,t3ver_wsid),
                 KEY language (l10n_parent,sys_language_uid)
             );
+        ');
+    }
+
+    /**
+     * @return void
+     */
+    protected function checkExcludeFromParsingColumn()
+    {
+        /** @var \mysqli_result $checkSortingColumn */
+        $check = $this->databaseConnection->sql_query('SHOW COLUMNS FROM tx_dpnglossary_domain_model_term LIKE "exclude_from_parsing"');
+
+        if (0 === $check->num_rows) {
+            $this->updateChecks['updateExcludeFromParsingColumn'] = 'Add missing exclude_from_parsing column';
+        }
+    }
+
+    /**
+     * @return void
+     */
+    protected function updateExcludeFromParsingColumn()
+    {
+        $this->databaseConnection->sql_query('
+            ALTER TABLE tx_dpnglossary_domain_model_term
+            ADD exclude_from_parsing tinyint(4) unsigned DEFAULT \'0\' NOT NULL
         ');
     }
 }

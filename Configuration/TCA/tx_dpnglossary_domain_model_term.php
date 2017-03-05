@@ -34,10 +34,10 @@ return array(
         'showRecordFieldList' => 'sys_language_uid, l10n_parent, l10n_diffsource, hidden, name, tooltiptext, synonyms, descriptions, term_type, term_lang, media, starttime, endtime',
     ),
     'types' => array(
-        '1' => array('showitem' => 'sys_language_uid;;;;1-1-1, hidden;;1, name, tooltiptext, synonyms, descriptions, term_type, term_lang, media, --div--;LLL:EXT:cms/locallang_ttc.xlf:tabs.access, starttime, endtime'),
+        '1' => array('showitem' => 'sys_language_uid;;;;1-1-1, --palette--;;hidden_exludefromparsing, name, tooltiptext, synonyms, descriptions, term_type, term_lang, media, --div--;LLL:EXT:cms/locallang_ttc.xlf:tabs.access, starttime, endtime'),
     ),
     'palettes' => array(
-        '1' => array('showitem' => ''),
+        'hidden_exludefromparsing' => array('showitem' => 'hidden;;1, exclude_from_parsing'),
     ),
     'columns' => array(
         'sys_language_uid' => array(
@@ -136,6 +136,50 @@ return array(
                 'eval' => 'trim',
             ),
         ),
+        'term_type' => array(
+            'exclude' => 0,
+            'label' => 'LLL:EXT:dpn_glossary/Resources/Private/Language/locallang.xlf:tx_dpnglossary_domain_model_term.term_type',
+            'config' => array(
+                'type' => 'select',
+                'renderType' => 'selectSingle',
+                'items' => array(
+                    array(
+                        'LLL:EXT:dpn_glossary/Resources/Private/Language/locallang.xlf:tx_dpnglossary_domain_model_term.term_type_none',
+                        '',
+                    ),
+                    array(
+                        'LLL:EXT:dpn_glossary/Resources/Private/Language/locallang.xlf:tx_dpnglossary_domain_model_term.term_type_definition',
+                        'definition',
+                    ),
+                    array(
+                        'LLL:EXT:dpn_glossary/Resources/Private/Language/locallang.xlf:tx_dpnglossary_domain_model_term.term_type_abbreviation',
+                        'abbreviation',
+                    ),
+                    array(
+                        'LLL:EXT:dpn_glossary/Resources/Private/Language/locallang.xlf:tx_dpnglossary_domain_model_term.term_type_acronym',
+                        'acronym',
+                    ),
+                ),
+                'default' => '',
+            ),
+        ),
+        'term_lang' => array(
+            'exclude' => 0,
+            'label' => 'LLL:EXT:dpn_glossary/Resources/Private/Language/locallang.xlf:tx_dpnglossary_domain_model_term.term_lang',
+            'config' => array(
+                'type' => 'input',
+                'size' => 2,
+                'max' => 2,
+                'eval' => 'trim,lower,nospace,alpha',
+            ),
+        ),
+        'exclude_from_parsing' => array(
+            'exclude' => 0,
+            'label' => 'LLL:EXT:dpn_glossary/Resources/Private/Language/locallang.xlf:tx_dpnglossary_domain_model_term.exclude_from_parsing',
+            'config' => array(
+                'type' => 'check',
+            ),
+        ),
         'descriptions' => array(
             'exclude' => 0,
             'label' => 'LLL:EXT:dpn_glossary/Resources/Private/Language/locallang.xlf:tx_dpnglossary_domain_model_term.descriptions',
@@ -174,43 +218,6 @@ return array(
                     'localizationMode' => 'select',
                     'localizeChildrenAtParentLocalization' => true,
                 ),
-            ),
-        ),
-        'term_type' => array(
-            'exclude' => 0,
-            'label' => 'LLL:EXT:dpn_glossary/Resources/Private/Language/locallang.xlf:tx_dpnglossary_domain_model_term.term_type',
-            'config' => array(
-                'type' => 'select',
-                'renderType' => 'selectSingle',
-                'items' => array(
-                    array(
-                        'LLL:EXT:dpn_glossary/Resources/Private/Language/locallang.xlf:tx_dpnglossary_domain_model_term.term_type_none',
-                        '',
-                    ),
-                    array(
-                        'LLL:EXT:dpn_glossary/Resources/Private/Language/locallang.xlf:tx_dpnglossary_domain_model_term.term_type_definition',
-                        'definition',
-                    ),
-                    array(
-                        'LLL:EXT:dpn_glossary/Resources/Private/Language/locallang.xlf:tx_dpnglossary_domain_model_term.term_type_abbreviation',
-                        'abbreviation',
-                    ),
-                    array(
-                        'LLL:EXT:dpn_glossary/Resources/Private/Language/locallang.xlf:tx_dpnglossary_domain_model_term.term_type_acronym',
-                        'acronym',
-                    ),
-                ),
-                'default' => '',
-            ),
-        ),
-        'term_lang' => array(
-            'exclude' => 0,
-            'label' => 'LLL:EXT:dpn_glossary/Resources/Private/Language/locallang.xlf:tx_dpnglossary_domain_model_term.term_lang',
-            'config' => array(
-                'type' => 'input',
-                'size' => 2,
-                'max' => 2,
-                'eval' => 'trim,lower,nospace,alpha',
             ),
         ),
         'media' => array(
