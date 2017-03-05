@@ -259,7 +259,7 @@ class ParserService implements SingletonInterface
                             ParserUtility::domTextReplacer(
                                 $childNode,
                                 $this->textParser(
-                                    $childNode->nodeValue,
+                                    $childNode->ownerDocument->saveHTML($childNode),
                                     array($this, 'termWrapper')
                                 )
                             );
