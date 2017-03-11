@@ -44,5 +44,7 @@ plugin.tx_dpnglossary {
     disableParser = 0
     # cat=plugin.tx_dpnglossary//a; type=boolean; label=Parse the terms synonyms (default: enabled)
     parseSynonyms = 1
+    # cat=plugin.tx_dpnglossary//a; type=boolean; label=Use http referer instead of the page uid appended to the url (default: disabled)
+    useHttpReferer = 0
   }
 }

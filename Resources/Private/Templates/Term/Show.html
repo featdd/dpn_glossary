@@ -1,6 +1,9 @@
 <html data-namespace-typo3-fluid="true" lang="en"
       xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers">
+      xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+      xmlns:dpn="http://typo3.org/ns/Featdd/DpnGlossary/ViewHelpers"
+
+      dpn:schemaLocation="http://schemas.featdd.de/dpn_glossary.xsd">
 
   <f:layout name="Default"/>
 
@@ -10,27 +13,7 @@
 
     <f:render partial="Term/Properties" arguments="{term: term}"/>
 
-    <f:if condition="{pageUid}">
-      <f:then>
-        <p>
-          <f:link.page pageUid="{pageUid}">{f:translate(key: 'tx_dpnglossary.backtolastpage')}</f:link.page>
-        </p>
-      </f:then>
-      <f:else>
-        <f:if condition="{paginateLink}">
-          <f:then>
-            <p>
-              <f:link.action pageUid="{listPage}" action="list" arguments="{paginateLink}">{f:translate(key: 'tx_dpnglossary.backtolist')}</f:link.action>
-            </p>
-          </f:then>
-          <f:else>
-            <p>
-              <f:link.action pageUid="{listPage}" action="list">{f:translate(key: 'tx_dpnglossary.backtolist')}</f:link.action>
-            </p>
-          </f:else>
-        </f:if>
-      </f:else>
-    </f:if>
+    <dpn:backlink absolute="0">{f:translate(key: 'tx_dpnglossary.back')}</dpn:backlink>
 
   </f:section>
 

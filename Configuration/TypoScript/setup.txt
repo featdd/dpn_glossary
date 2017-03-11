@@ -51,6 +51,8 @@ plugin.tx_dpnglossary {
     disableParser = {$plugin.tx_dpnglossary.settings.disableParser}
     # Parse the terms synonyms
     parseSynonyms = {$plugin.tx_dpnglossary.settings.parseSynonyms}
+    # Use http referer for backlinks
+    useHttpReferer = {$plugin.tx_dpnglossary.settings.useHttpReferer}
 
     # Pagination settings
     pagination {
@@ -78,8 +80,17 @@ plugin.tx_dpnglossary {
           additionalParams = &tx_dpnglossary_glossarydetail[controller]=Term&tx_dpnglossary_glossarydetail[action]=show&tx_dpnglossary_glossarydetail[term]={field:uid}&tx_dpnglossary_glossarydetail[pageUid]={ global : TSFE | id}
           additionalParams {
             insertData = 1
-            if.value = 0
-            if.isGreaterThan < plugin.tx_dpnglossary.settings.detailPage
+
+            if {
+              value = 0
+              isGreaterThan < plugin.tx_dpnglossary.settings.detailPage
+            }
+
+            override = &tx_dpnglossary_glossarydetail[controller]=Term&tx_dpnglossary_glossarydetail[action]=show&tx_dpnglossary_glossarydetail[term]={field:uid}
+            override.if {
+              value = 0
+              isGreaterThan < plugin.tx_dpnglossary.settings.useHttpReferer
+            }
           }
 
           ATagParams.dataWrap = title="{field:tooltiptext}" class="dpnglossary link"

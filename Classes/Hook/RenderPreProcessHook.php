@@ -80,7 +80,7 @@ class RenderPreProcessHook
             $GLOBALS['TSFE']->id === (integer) $this->settings['detailPage'] &&
             true === (boolean) $this->settings['addCanonicalUrl'] &&
             true === is_array($getParams) &&
-            array_key_exists('pageUid', $getParams)
+            true === array_key_exists('pageUid', $getParams)
         ) {
             $url = $this->linkService->buildLink(
                 $this->settings['detailPage'],

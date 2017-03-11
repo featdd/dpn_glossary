@@ -78,11 +78,8 @@
             <trans-unit id="tx_dpnglossary.new_synonym">
                 <target>Neues Synonym</target>
             </trans-unit>
-            <trans-unit id="tx_dpnglossary.backtolastpage">
-                <target>Zurück zur letzten Seite</target>
-            </trans-unit>
-            <trans-unit id="tx_dpnglossary.backtolist">
-                <target>Zurück zur Liste</target>
+            <trans-unit id="tx_dpnglossary.back">
+                <target>Zurück</target>
             </trans-unit>
             <trans-unit id="tx_dpnglossary.no_objects_found">
                 <target>Es wurden keine Objekte gefunden</target>

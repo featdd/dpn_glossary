@@ -137,7 +137,6 @@ class TermController extends ActionController
             $this->view->assign('pageUid', $pageUid);
         }
 
-        $this->view->assign('listPage', $this->settings['listPage']);
         $this->view->assign('term', $term);
     }
 }
