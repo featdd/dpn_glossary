@@ -63,3 +63,24 @@ Das folgende Beispiel beinhaltet alle Einstellungsmöglichkeiten der Extension:
             }
         }
     }
+
+
+Füge den Begriff dem Seitentitel hinzu
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+::
+
+  temp.termTitle = RECORDS
+  temp.termTitle {
+    source = {GP:tx_dpnglossary_glossarydetail|term}
+    source.insertData = 1
+    tables = tx_dpnglossary_domain_model_term
+    conf.tx_dpnglossary_domain_model_term >
+    conf.tx_dpnglossary_domain_model_term = TEXT
+    conf.tx_dpnglossary_domain_model_term.field = name
+    wrap = <title>|</title>
+  }
+
+  page.headerData.5 >
+  page.headerData.5 = COA
+  page.headerData.5 < temp.termTitle
