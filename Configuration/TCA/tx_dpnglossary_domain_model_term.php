@@ -193,6 +193,9 @@ return array(
                 'appearance' => array(
                     'newRecordLinkTitle' => 'LLL:EXT:dpn_glossary/Resources/Private/Language/locallang.xlf:tx_dpnglossary.new_description',
                     'useSortable' => 1,
+                    'showSynchronizationLink' => 1,
+                    'showPossibleLocalizationRecords' => 1,
+                    'showAllLocalizationLink' => 1
                 ),
                 'behaviour' => array(
                     'localizationMode' => 'select',
@@ -213,6 +216,9 @@ return array(
                 'appearance' => array(
                     'newRecordLinkTitle' => 'LLL:EXT:dpn_glossary/Resources/Private/Language/locallang.xlf:tx_dpnglossary.new_synonym',
                     'useSortable' => 1,
+                    'showSynchronizationLink' => 1,
+                    'showPossibleLocalizationRecords' => 1,
+                    'showAllLocalizationLink' => 1
                 ),
                 'behaviour' => array(
                     'localizationMode' => 'select',
