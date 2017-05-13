@@ -10,6 +10,9 @@
 Versionshistorie
 ----------------
 
+v2.7.0
+  - TYPO3 Kompatibilität
+
 v2.6.13
   - Hinzufügen der Option das Parsing für Begriffe zu deaktivieren
 

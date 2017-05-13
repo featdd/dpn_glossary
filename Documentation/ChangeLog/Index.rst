@@ -10,6 +10,9 @@
 ChangeLog
 ---------
 
+v2.7.0
+  - TYPO3 compatibility
+
 v2.6.13
   - Add option to disable parsing for terms
 
