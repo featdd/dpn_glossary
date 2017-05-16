@@ -10,6 +10,9 @@
 ChangeLog
 ---------
 
+v2.7.1
+  - Increase missed TYPO3 verison depenedency in composer.json
+
 v2.7.0
   - TYPO3 compatibility
 

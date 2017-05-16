@@ -10,6 +10,9 @@
 Versionshistorie
 ----------------
 
+v2.7.1
+  - Erhöhe die TYPO3 abhängigkeit in composer.json
+
 v2.7.0
   - TYPO3 Kompatibilität
 
