@@ -39,6 +39,18 @@
             <trans-unit id="tx_dpnglossary_domain_model_term.term_lang">
                 <source>Language of the term (2 char ISO code)</source>
             </trans-unit>
+            <trans-unit id="tx_dpnglossary_domain_model_term.term_mode">
+                <source>Term Mode</source>
+            </trans-unit>
+            <trans-unit id="tx_dpnglossary_domain_model_term.term_mode_normal">
+                <source>Normal Term</source>
+            </trans-unit>
+            <trans-unit id="tx_dpnglossary_domain_model_term.term_mode_link">
+                <source>Link</source>
+            </trans-unit>
+            <trans-unit id="tx_dpnglossary_domain_model_term.term_link">
+                <source>Term Link</source>
+            </trans-unit>
             <trans-unit id="tx_dpnglossary_domain_model_term.media">
                 <source>Media Files</source>
             </trans-unit>

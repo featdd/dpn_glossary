@@ -28,13 +28,14 @@ return array(
             'endtime' => 'endtime',
         ),
         'searchFields' => 'name,tooltiptext,descriptions,synonyms,term_type,term_lang,images,',
+        'requestUpdate' => 'term_mode',
         'iconfile' => $iconFile,
     ),
     'interface' => array(
-        'showRecordFieldList' => 'sys_language_uid, l10n_parent, l10n_diffsource, hidden, name, tooltiptext, synonyms, descriptions, term_type, term_lang, media, starttime, endtime',
+        'showRecordFieldList' => 'sys_language_uid, l10n_parent, l10n_diffsource, hidden, name, tooltiptext, synonyms, descriptions, term_type, term_lang, term_mode, term_link, media, starttime, endtime',
     ),
     'types' => array(
-        '1' => array('showitem' => 'sys_language_uid;;;;1-1-1, --palette--;;hidden_exludefromparsing, name, tooltiptext, synonyms, descriptions, term_type, term_lang, media, --div--;LLL:EXT:cms/locallang_ttc.xlf:tabs.access, starttime, endtime'),
+        '1' => array('showitem' => 'sys_language_uid;;;;1-1-1, --palette--;;hidden_exludefromparsing, name, tooltiptext, term_mode, term_link, synonyms, descriptions, term_type, term_lang, media, --div--;LLL:EXT:cms/locallang_ttc.xlf:tabs.access, starttime, endtime'),
     ),
     'palettes' => array(
         'hidden_exludefromparsing' => array('showitem' => 'hidden;;1, exclude_from_parsing'),
@@ -124,6 +125,7 @@ return array(
             'config' => array(
                 'type' => 'input',
                 'size' => 30,
+                'max' => 255,
                 'eval' => 'trim,required',
             ),
         ),
@@ -133,6 +135,7 @@ return array(
             'config' => array(
                 'type' => 'input',
                 'size' => 30,
+                'max' => 255,
                 'eval' => 'trim',
             ),
         ),
@@ -173,6 +176,48 @@ return array(
                 'eval' => 'trim,lower,nospace,alpha',
             ),
         ),
+        'term_mode' => array(
+            'exclude' => 0,
+            'label' => 'LLL:EXT:dpn_glossary/Resources/Private/Language/locallang.xlf:tx_dpnglossary_domain_model_term.term_mode',
+            'config' => array(
+                'type' => 'select',
+                'renderType' => 'selectSingle',
+                'default' => '',
+                'items' => array(
+                    array(
+                        'LLL:EXT:dpn_glossary/Resources/Private/Language/locallang.xlf:tx_dpnglossary_domain_model_term.term_mode_normal',
+                        '',
+                    ),
+                    array(
+                        'LLL:EXT:dpn_glossary/Resources/Private/Language/locallang.xlf:tx_dpnglossary_domain_model_term.term_mode_link',
+                        'link',
+                    ),
+                ),
+            ),
+        ),
+        'term_link' => array(
+            'exclude' => 0,
+            'displayCond' => 'FIELD:term_mode:=:link',
+            'label' => 'LLL:EXT:dpn_glossary/Resources/Private/Language/locallang.xlf:tx_dpnglossary_domain_model_term.term_link',
+            'config' => array(
+                'type' => 'input',
+                'size' => 30,
+                'max' => 255,
+                'eval' => 'trim',
+                'softref' => 'typolink',
+                'wizards' => array(
+                    'link' => array(
+                        'type' => 'popup',
+                        'title' => 'LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:header_link_formlabel',
+                        'icon' => 'EXT:backend/Resources/Public/Images/FormFieldWizard/wizard_link.gif',
+                        'module' => array(
+                            'name' => 'wizard_link',
+                        ),
+                        'JSopenParams' => 'height=600,width=500,status=0,menubar=0,scrollbars=1',
+                    ),
+                ),
+            ),
+        ),
         'exclude_from_parsing' => array(
             'exclude' => 0,
             'label' => 'LLL:EXT:dpn_glossary/Resources/Private/Language/locallang.xlf:tx_dpnglossary_domain_model_term.exclude_from_parsing',
@@ -182,6 +227,7 @@ return array(
         ),
         'descriptions' => array(
             'exclude' => 0,
+            'displayCond' => 'FIELD:term_mode:!=:link',
             'label' => 'LLL:EXT:dpn_glossary/Resources/Private/Language/locallang.xlf:tx_dpnglossary_domain_model_term.descriptions',
             'config' => array(
                 'type' => 'inline',
@@ -195,7 +241,7 @@ return array(
                     'useSortable' => 1,
                     'showSynchronizationLink' => 1,
                     'showPossibleLocalizationRecords' => 1,
-                    'showAllLocalizationLink' => 1
+                    'showAllLocalizationLink' => 1,
                 ),
                 'behaviour' => array(
                     'localizationMode' => 'select',
@@ -205,6 +251,7 @@ return array(
         ),
         'synonyms' => array(
             'exclude' => 0,
+            'displayCond' => 'FIELD:term_mode:!=:link',
             'label' => 'LLL:EXT:dpn_glossary/Resources/Private/Language/locallang.xlf:tx_dpnglossary_domain_model_term.synonyms',
             'config' => array(
                 'type' => 'inline',
@@ -218,7 +265,7 @@ return array(
                     'useSortable' => 1,
                     'showSynchronizationLink' => 1,
                     'showPossibleLocalizationRecords' => 1,
-                    'showAllLocalizationLink' => 1
+                    'showAllLocalizationLink' => 1,
                 ),
                 'behaviour' => array(
                     'localizationMode' => 'select',
@@ -227,7 +274,8 @@ return array(
             ),
         ),
         'media' => array(
-            'exclude' => 1,
+            'exclude' => 0,
+            'displayCond' => 'FIELD:term_mode:!=:link',
             'label' => 'LLL:EXT:dpn_glossary/Resources/Private/Language/locallang.xlf:tx_dpnglossary_domain_model_term.media',
             'config' => \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::getFileFieldTCAConfig(
                 'media',

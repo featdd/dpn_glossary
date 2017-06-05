@@ -7,6 +7,8 @@ CREATE TABLE tx_dpnglossary_domain_model_term (
   tooltiptext          varchar(255) DEFAULT ''         NOT NULL,
   term_type            varchar(255) DEFAULT ''         NOT NULL,
   term_lang            char(2) DEFAULT ''              NOT NULL,
+  term_mode            varchar(255) DEFAULT ''         NOT NULL,
+  term_link            varchar(255) DEFAULT ''         NOT NULL,
   exclude_from_parsing tinyint(4) unsigned DEFAULT '0' NOT NULL,
   descriptions         int(11) unsigned                         DEFAULT '0',
   synonyms             int(11) unsigned                         DEFAULT '0',

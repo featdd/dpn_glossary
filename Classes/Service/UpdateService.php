@@ -111,6 +111,7 @@ class UpdateService implements SingletonInterface
         $this->checkSortingColumn();
         $this->checkSynonymTable();
         $this->checkExcludeFromParsingColumn();
+        $this->checkTermModeAndTermLinkColumn();
     }
 
     /**
@@ -329,6 +330,31 @@ class UpdateService implements SingletonInterface
         $this->databaseConnection->sql_query('
             ALTER TABLE tx_dpnglossary_domain_model_term
             ADD exclude_from_parsing tinyint(4) unsigned DEFAULT \'0\' NOT NULL
+        ');
+    }
+
+    /**
+     * @return void
+     */
+    protected function checkTermModeAndTermLinkColumn()
+    {
+        /** @var \mysqli_result $checkSortingColumn */
+        $check = $this->databaseConnection->sql_query('SHOW COLUMNS FROM tx_dpnglossary_domain_model_term LIKE "term_mode"');
+
+        if (0 === $check->num_rows) {
+            $this->updateChecks['updateTermModeAndTermLinkColumn'] = 'Add missing term_mode & term_link column';
+        }
+    }
+
+    /**
+     * @return void
+     */
+    protected function updateTermModeAndTermLinkColumn()
+    {
+        $this->databaseConnection->sql_query('
+            ALTER TABLE tx_dpnglossary_domain_model_term
+            ADD term_mode varchar(255) DEFAULT \'\'  NOT NULL,
+            ADD term_link varchar(255) DEFAULT \'\'  NOT NULL
         ');
     }
 }

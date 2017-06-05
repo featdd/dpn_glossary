@@ -39,6 +39,18 @@
             <trans-unit id="tx_dpnglossary_domain_model_term.term_lang">
                 <target>Sprache des Begriffs (2 Zeichen ISO Code)</target>
             </trans-unit>
+            <trans-unit id="tx_dpnglossary_domain_model_term.term_mode">
+                <target>Begriffsmodus</target>
+            </trans-unit>
+            <trans-unit id="tx_dpnglossary_domain_model_term.term_mode_normal">
+                <target>Normaler Begriff</target>
+            </trans-unit>
+            <trans-unit id="tx_dpnglossary_domain_model_term.term_mode_link">
+                <target>Link</target>
+            </trans-unit>
+            <trans-unit id="tx_dpnglossary_domain_model_term.term_link">
+                <target>Begriffslink</target>
+            </trans-unit>
             <trans-unit id="tx_dpnglossary_domain_model_term.media">
                 <target>Multimedia Dateien</target>
             </trans-unit>

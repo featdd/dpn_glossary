@@ -57,6 +57,16 @@ class Term extends AbstractEntity
     protected $termLang = '';
 
     /**
+     * @var string
+     */
+    protected $termMode = '';
+
+    /**
+     * @var string
+     */
+    protected $termLink = '';
+
+    /**
      * @var bool
      */
     protected $excludeFromParsing = false;
@@ -161,6 +171,40 @@ class Term extends AbstractEntity
     public function getTermLang()
     {
         return $this->termLang;
+    }
+
+    /**
+     * @return string
+     */
+    public function getTermMode()
+    {
+        return $this->termMode;
+    }
+
+    /**
+     * @param string $termMode
+     * @return void
+     */
+    public function setTermMode($termMode)
+    {
+        $this->termMode = $termMode;
+    }
+
+    /**
+     * @return string
+     */
+    public function getTermLink()
+    {
+        return $this->termLink;
+    }
+
+    /**
+     * @param string $termLink
+     * @return void
+     */
+    public function setTermLink($termLink)
+    {
+        $this->termLink = $termLink;
     }
 
     /**
@@ -293,6 +337,8 @@ class Term extends AbstractEntity
             'tooltiptext' => $this->getTooltiptext(),
             'term_type' => $this->getTermType(),
             'term_lang' => $this->getTermLang(),
+            'term_mode' => $this->getTermMode(),
+            'term_link' => $this->getTermLink(),
             'exclude_from_parsing' => $this->getExcludeFromParsing(),
             'descriptions' => $this->getDescriptions(),
             'synonyms' => $this->getSynonyms(),

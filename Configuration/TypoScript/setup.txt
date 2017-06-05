@@ -70,11 +70,30 @@ plugin.tx_dpnglossary {
         dataWrap = |
         typolink {
           parameter = #{field:name}
-          parameter.insertData = 1
-          parameter.override < plugin.tx_dpnglossary.settings.detailPage
-          parameter.override {
-            if.value = 0
-            if.isGreaterThan < plugin.tx_dpnglossary.settings.detailPage
+          parameter {
+            insertData = 1
+            htmlSpecialChars = 1
+
+            override = {field:term_link}
+            override {
+              insertData = 1
+
+              if {
+                value = link
+                equals.field = term_mode
+              }
+            }
+
+            stdWrap.override < plugin.tx_dpnglossary.settings.detailPage
+            stdWrap.override.if {
+              value = 0
+              isGreaterThan < plugin.tx_dpnglossary.settings.detailPage
+              isFalse = 1
+              isFalse.if {
+                value = link
+                equals.field = term_mode
+              }
+            }
           }
 
           additionalParams = &tx_dpnglossary_glossarydetail[controller]=Term&tx_dpnglossary_glossarydetail[action]=show&tx_dpnglossary_glossarydetail[term]={field:uid}&tx_dpnglossary_glossarydetail[pageUid]={ global : TSFE | id}
@@ -84,12 +103,22 @@ plugin.tx_dpnglossary {
             if {
               value = 0
               isGreaterThan < plugin.tx_dpnglossary.settings.detailPage
+              isFalse = 1
+              isFalse.if {
+                value = link
+                equals.field = term_mode
+              }
             }
 
             override = &tx_dpnglossary_glossarydetail[controller]=Term&tx_dpnglossary_glossarydetail[action]=show&tx_dpnglossary_glossarydetail[term]={field:uid}
             override.if {
               value = 0
               isGreaterThan < plugin.tx_dpnglossary.settings.useHttpReferer
+              isFalse = 1
+              isFalse.if {
+                value = link
+                equals.field = term_mode
+              }
             }
           }
 
