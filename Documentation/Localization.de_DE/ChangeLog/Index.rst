@@ -10,6 +10,9 @@
 Versionshistorie
 ----------------
 
+v2.7.2
+  - Neuer Begriffsmodus und Begriffslink anstatt der festen Detailseite
+
 v2.7.1
   - Erhöhe die TYPO3 abhängigkeit in composer.json
 

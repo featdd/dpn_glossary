@@ -10,6 +10,9 @@
 ChangeLog
 ---------
 
+v2.7.2
+  - Add term mode feature and term link instead of glossary detailpage
+
 v2.7.1
   - Increase missed TYPO3 verison depenedency in composer.json
 
