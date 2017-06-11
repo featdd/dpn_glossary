@@ -251,7 +251,6 @@ return array(
         ),
         'synonyms' => array(
             'exclude' => 0,
-            'displayCond' => 'FIELD:term_mode:!=:link',
             'label' => 'LLL:EXT:dpn_glossary/Resources/Private/Language/locallang.xlf:tx_dpnglossary_domain_model_term.synonyms',
             'config' => array(
                 'type' => 'inline',

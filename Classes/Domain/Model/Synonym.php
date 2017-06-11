@@ -33,6 +33,8 @@ use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
  */
 class Synonym extends AbstractEntity
 {
+    const TABLE = 'tx_dpnglossary_domain_model_synonym';
+
     /**
      * @var string $name
      * @validate NotEmpty

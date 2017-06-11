@@ -25,7 +25,6 @@ namespace Featdd\DpnGlossary\Service;
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
-use Featdd\DpnGlossary\Domain\Model\Synonym;
 use Featdd\DpnGlossary\Domain\Model\Term;
 use Featdd\DpnGlossary\Domain\Repository\TermRepository;
 use Featdd\DpnGlossary\Utility\ParserUtility;
@@ -292,7 +291,7 @@ class ParserService implements SingletonInterface
     {
         $text = preg_replace('#\x{00a0}#iu', '&nbsp;', $text);
         // Iterate over terms and search matches for each of them
-        foreach ($this->terms as $term) {
+        foreach ($this->terms as &$term) {
             /** @var \Featdd\DpnGlossary\Domain\Model\Term $termObject */
             $termObject = clone $term['term'];
             $replacements = &$term['replacements'];
@@ -377,11 +376,12 @@ class ParserService implements SingletonInterface
             if (0 < $replacements) {
                 $replacements--;
             }
+
             // Use term match to keep original camel case
             $term->setName($match[2]);
 
             // Wrap replacement with original chars
-            return $match[1] . call_user_func($wrappingCallback, $term) . $match[3];
+            return $match[1] . $wrappingCallback($term) . $match[3];
         };
 
         // Use callback to keep allowed chars around the term and his camel case
@@ -393,6 +393,7 @@ class ParserService implements SingletonInterface
      *
      * @param \Featdd\DpnGlossary\Domain\Model\Term
      * @return string
+     * @throws \UnexpectedValueException
      */
     protected function termWrapper(Term $term)
     {
@@ -401,7 +402,10 @@ class ParserService implements SingletonInterface
         // get term wrapping settings
         $wrapSettings = $this->tsConfig['settings.']['termWraps.'];
         // pass term data to the cObject pseudo constructor
-        $this->contentObjectRenderer->start($term->toArray());
+        $this->contentObjectRenderer->start(
+            $term->toArray(),
+            Term::TABLE
+        );
 
         // return the wrapped term
         return $this->contentObjectRenderer->cObjGetSingle($contentObjectType, $wrapSettings);

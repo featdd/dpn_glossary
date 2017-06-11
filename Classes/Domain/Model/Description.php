@@ -33,6 +33,8 @@ use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
  */
 class Description extends AbstractEntity
 {
+    const TABLE = 'tx_dpnglossary_domain_model_description';
+
     /**
      * @var string $meaning
      * @validate NotEmpty

@@ -35,6 +35,8 @@ use TYPO3\CMS\Extbase\Domain\Model\FileReference;
  */
 class Term extends AbstractEntity
 {
+    const TABLE = 'tx_dpnglossary_domain_model_term';
+
     /**
      * @var string
      * @validate NotEmpty
