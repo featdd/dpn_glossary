@@ -10,6 +10,9 @@
 Versionshistorie
 ----------------
 
+v2.7.3
+  - Behebe eine Problem mit der maximalen Ersetzung von Begriffen auf einer Seite
+
 v2.7.2
   - Neuer Begriffsmodus und Begriffslink anstatt der festen Detailseite
 

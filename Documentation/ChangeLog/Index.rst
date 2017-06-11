@@ -10,6 +10,9 @@
 ChangeLog
 ---------
 
+v2.7.3
+  - Fix issue with the terms maximum replacement per page
+
 v2.7.2
   - Add term mode feature and term link instead of glossary detailpage
 
