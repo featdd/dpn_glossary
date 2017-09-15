@@ -158,7 +158,7 @@ plugin.tx_dpnglossary.settings:
         options
 
    Description
-        Listmode of the listpage (normal list, character sorted list, alphabeticly paginated list)
+        Listmode of the listpage (normal, character, paginated)
 
    Default
         normal
