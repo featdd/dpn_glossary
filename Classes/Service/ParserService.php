@@ -119,7 +119,20 @@ class ParserService implements SingletonInterface
             // Assign query settings object to repository
             $termRepository->setDefaultQuerySettings($querySettings);
             //Find all terms
-            $terms = $terms = $termRepository->findByNameLength();
+            if ($this->settings['useCachingFramework']) {
+                $cacheIdentifier = sha1('termsByNameLength');
+                $cache = GeneralUtility::makeInstance('TYPO3\\CMS\\Core\\Cache\\CacheManager')->getCache('dpnglossary_termscache');
+                $terms = $cache->get($cacheIdentifier);
+                // If $terms is null, it hasn't been cached. Calculate the value and store it in the cache:
+                if ($terms === false) {
+                   $terms = $termRepository->findByNameLength();
+                   // Save value in cache
+                   $cache->set($cacheIdentifier, $terms, ['dpnglossary_termscache']);
+                }
+            } else {
+                $terms = $termRepository->findByNameLength();
+            }
+
             //Sort terms with an individual counter for max replacement per page
             /** @var Term $term */
             foreach ($terms as $term) {
