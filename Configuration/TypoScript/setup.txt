@@ -54,6 +54,8 @@ plugin.tx_dpnglossary {
     # Use http referer for backlinks
     useHttpReferer = {$plugin.tx_dpnglossary.settings.useHttpReferer}
 
+    useCachingFramework = 1
+
     # Pagination settings
     pagination {
       characters = A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z
