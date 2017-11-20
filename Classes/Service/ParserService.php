@@ -302,7 +302,9 @@ class ParserService implements SingletonInterface
 
             //Check replacement counter
             if (0 !== $term['replacements']) {
-                $this->regexParser($text, $termObject, $replacements, $wrappingCallback);
+                if (stripos($text, $termObject->getName()) !== false) {
+                    $this->regexParser($text, $termObject, $replacements, $wrappingCallback);
+                }
 
                 if (true === (boolean) $this->settings['parseSynonyms']) {
                     /** @var \Featdd\DpnGlossary\Domain\Model\Synonym $synonym */
@@ -312,10 +314,14 @@ class ParserService implements SingletonInterface
                         );
 
                         if (true === (boolean) $this->settings['maxReplacementPerPageRespectSynonyms']) {
-                            $this->regexParser($text, $termObject, $replacements, $wrappingCallback);
+                            if (stripos($text, $termObject->getName()) !== false) {
+                                $this->regexParser($text, $termObject, $replacements, $wrappingCallback);
+                            }
                         } else {
                             $noReplacementCount = -1;
-                            $this->regexParser($text, $termObject, $noReplacementCount, $wrappingCallback);
+                            if (stripos($text, $termObject->getName()) !== false) {
+                                $this->regexParser($text, $termObject, $noReplacementCount, $wrappingCallback);
+                            }
                         }
                     }
                 }
