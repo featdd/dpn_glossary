@@ -28,6 +28,7 @@ namespace Featdd\DpnGlossary\Service;
 use Featdd\DpnGlossary\Domain\Model\Term;
 use Featdd\DpnGlossary\Domain\Repository\TermRepository;
 use Featdd\DpnGlossary\Utility\ParserUtility;
+use TYPO3\CMS\Core\Cache\CacheManager;
 use TYPO3\CMS\Core\SingletonInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Persistence\Generic\QuerySettingsInterface;
@@ -90,6 +91,9 @@ class ParserService implements SingletonInterface
         // Get Configuration Manager
         /** @var ConfigurationManager $configurationManager */
         $configurationManager = $objectManager->get(ConfigurationManager::class);
+        // Get Cache Manager
+        /** @var \TYPO3\CMS\Core\Cache\CacheManager $cacheManager */
+        $cacheManager = $objectManager->get(CacheManager::class);
         // Inject Content Object Renderer
         $this->contentObjectRenderer = $objectManager->get(ContentObjectRenderer::class);
         // Get Query Settings
@@ -118,28 +122,30 @@ class ParserService implements SingletonInterface
             $querySettings->setRespectSysLanguage(true);
             // Assign query settings object to repository
             $termRepository->setDefaultQuerySettings($querySettings);
+
             //Find all terms
-            if ($this->settings['useCachingFramework']) {
+            if (false === (bool) $this->settings['useCachingFramework']) {
+                $terms = $termRepository->findByNameLength();
+            } else {
                 $cacheIdentifier = sha1('termsByNameLength');
-                $cache = GeneralUtility::makeInstance('TYPO3\\CMS\\Core\\Cache\\CacheManager')->getCache('dpnglossary_termscache');
+                $cache = $cacheManager->getCache('dpnglossary_termscache');
                 $terms = $cache->get($cacheIdentifier);
+
                 // If $terms is null, it hasn't been cached. Calculate the value and store it in the cache:
                 if ($terms === false) {
-                   $terms = $termRepository->findByNameLength();
-                   // Save value in cache
-                   $cache->set($cacheIdentifier, $terms, ['dpnglossary_termscache']);
+                    $terms = $termRepository->findByNameLength();
+                    // Save value in cache
+                    $cache->set($cacheIdentifier, $terms, ['dpnglossary_termscache']);
                 }
-            } else {
-                $terms = $termRepository->findByNameLength();
             }
 
             //Sort terms with an individual counter for max replacement per page
             /** @var Term $term */
             foreach ($terms as $term) {
-                $this->terms[] = array(
+                $this->terms[] = [
                     'term' => $term,
                     'replacements' => (int) $this->settings['maxReplacementPerPage'],
-                );
+                ];
             }
         }
     }
@@ -315,9 +321,7 @@ class ParserService implements SingletonInterface
 
             //Check replacement counter
             if (0 !== $term['replacements']) {
-                if (stripos($text, $termObject->getName()) !== false) {
-                    $this->regexParser($text, $termObject, $replacements, $wrappingCallback);
-                }
+                $this->regexParser($text, $termObject, $replacements, $wrappingCallback);
 
                 if (true === (boolean) $this->settings['parseSynonyms']) {
                     /** @var \Featdd\DpnGlossary\Domain\Model\Synonym $synonym */
@@ -327,14 +331,10 @@ class ParserService implements SingletonInterface
                         );
 
                         if (true === (boolean) $this->settings['maxReplacementPerPageRespectSynonyms']) {
-                            if (stripos($text, $termObject->getName()) !== false) {
-                                $this->regexParser($text, $termObject, $replacements, $wrappingCallback);
-                            }
+                            $this->regexParser($text, $termObject, $replacements, $wrappingCallback);
                         } else {
                             $noReplacementCount = -1;
-                            if (stripos($text, $termObject->getName()) !== false) {
-                                $this->regexParser($text, $termObject, $noReplacementCount, $wrappingCallback);
-                            }
+                            $this->regexParser($text, $termObject, $noReplacementCount, $wrappingCallback);
                         }
                     }
                 }
@@ -351,9 +351,15 @@ class ParserService implements SingletonInterface
      * @param Term $term
      * @param integer $replacements
      * @param callable $wrappingCallback
+     * @return void
      */
     protected function regexParser(&$text, Term $term, &$replacements, callable $wrappingCallback)
     {
+        // Try simple search first to save performance
+        if (false === mb_stripos($text, $term->getName())) {
+            return;
+        }
+
         /*
          * Regex Explanation:
          * Group 1: (^|[\s\>[:punct:]]|\<br*\>)

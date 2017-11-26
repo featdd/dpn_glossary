@@ -124,3 +124,21 @@ CREATE TABLE tx_dpnglossary_domain_model_description (
   KEY language (l10n_parent,sys_language_uid)
 
 );
+
+CREATE TABLE cf_dpnglossary_termscache (
+  id         int(11) UNSIGNED NOT NULL auto_increment,
+  identifier varchar(250)     NOT NULL DEFAULT '',
+  expires    int(11) UNSIGNED NOT NULL DEFAULT '0',
+  content    mediumblob,
+  PRIMARY KEY (id),
+  KEY cache_id (identifier,expires)
+);
+
+CREATE TABLE cf_dpnglossary_termscache_tags (
+  id         int(11) UNSIGNED NOT NULL auto_increment,
+  identifier varchar(250)     NOT NULL DEFAULT '',
+  tag        varchar(250)     NOT NULL DEFAULT '',
+  PRIMARY KEY (id),
+  KEY cache_id (identifier),
+  KEY cache_tag (tag)
+);
