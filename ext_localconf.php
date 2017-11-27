@@ -68,66 +68,7 @@ if (true === version_compare(\TYPO3\CMS\Core\Utility\VersionNumberUtility::getNu
         ['name' => 'search']
     );
 }
-
-if (
-    true === is_array($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['realurl']) &&
-    true === is_array($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['realurl']['_DEFAULT'])
-) {
-    if (false === is_array($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['realurl']['_DEFAULT']['fixedPostVars'])) {
-        $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['realurl']['_DEFAULT']['fixedPostVars'] = array();
-    }
-
-    $realurlConfig = array(
-        $_EXTKEY . '_list_RealUrlConfig' => array(
-            array(
-                'GETvar' => 'tx_dpnglossary_glossarylist[controller]',
-                'noMatch' => 'bypass',
-            ),
-            array(
-                'GETvar' => 'tx_dpnglossary_glossarylist[action]',
-                'noMatch' => 'bypass',
-            ),
-            array(
-                'GETvar' => 'tx_dpnglossary_glossarylist[@widget_0][character]',
-            ),
-        ),
-        $_EXTKEY . '_detail_RealUrlConfig' => array(
-            array(
-                'GETvar' => 'tx_dpnglossary_glossarydetail[controller]',
-                'noMatch' => 'bypass',
-            ),
-            array(
-                'GETvar' => 'tx_dpnglossary_glossarydetail[action]',
-                'noMatch' => 'bypass',
-            ),
-            array(
-                'GETvar' => 'tx_dpnglossary_glossarydetail[term]',
-                'lookUpTable' => array(
-                    'table' => 'tx_dpnglossary_domain_model_term',
-                    'id_field' => 'uid',
-                    'alias_field' => 'name',
-                    'addWhereClause' => ' AND NOT deleted',
-                    'useUniqueCache' => 1,
-                    'useUniqueCache_conf' => array(
-                        'strtolower' => 1,
-                        'spaceCharacter' => '-',
-                    ),
-                    'languageGetVar' => 'L',
-                    'languageExceptionUids' => '',
-                    'languageField' => 'sys_language_uid',
-                    'transOrigPointerField' => 'l10n_parent',
-                    'autoUpdate' => 1,
-                    'expireDays' => 180,
-                ),
-            ),
-            array(
-                'GETvar' => 'tx_dpnglossary_glossarydetail[pageUid]',
-                'optional' => true,
-            ),
-        ),
-    );
-
-    $realurlConfig += $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['realurl']['_DEFAULT']['fixedPostVars'];
-
-    $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['realurl']['_DEFAULT']['fixedPostVars'] = $realurlConfig;
+if (\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::isLoaded('realurl')) {
+    $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['ext/realurl/class.tx_realurl_autoconfgen.php']['extensionConfiguration']['dpn_glossary'] =
+        \Featdd\DpnGlossary\Hook\RealurlHook::class . '->addConfig';
 }
