@@ -6,37 +6,37 @@ if (!defined('TYPO3_MODE')) {
 \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
     'Featdd.' . $_EXTKEY,
     'Glossarylist',
-    array(
+    [
         'Term' => 'list',
-    ),
+    ],
     // non-cacheable actions
-    array(
+    [
         'Term' => '',
-    )
+    ]
 );
 
 \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
     'Featdd.' . $_EXTKEY,
     'Glossarypreview',
-    array(
+    [
         'Term' => 'previewNewest, previewRandom, previewSelected',
-    ),
+    ],
     // non-cacheable actions
-    array(
+    [
         'Term' => '',
-    )
+    ]
 );
 
 \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
     'Featdd.' . $_EXTKEY,
     'Glossarydetail',
-    array(
+    [
         'Term' => 'show',
-    ),
+    ],
     // non-cacheable actions
-    array(
+    [
         'Term' => 'show',
-    )
+    ]
 );
 
 if (version_compare(PHP_VERSION, '5.4.0', '>=')) {
@@ -68,7 +68,11 @@ if (true === version_compare(\TYPO3\CMS\Core\Utility\VersionNumberUtility::getNu
         ['name' => 'search']
     );
 }
+
 if (\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::isLoaded('realurl')) {
-    $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['ext/realurl/class.tx_realurl_autoconfgen.php']['extensionConfiguration']['dpn_glossary'] =
-        \Featdd\DpnGlossary\Hook\RealurlHook::class . '->addConfig';
+    $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['ext/realurl/class.tx_realurl_autoconfgen.php']['extensionConfiguration']['dpn_glossary'] = \Featdd\DpnGlossary\Hook\RealurlHook::class . '->addConfig';
+}
+
+if (false === is_array($GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations']['dpnglossary_termscache'])) {
+    $GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations']['dpnglossary_termscache'] = [];
 }
