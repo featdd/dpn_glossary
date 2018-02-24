@@ -74,6 +74,11 @@ class Term extends AbstractEntity
     protected $excludeFromParsing = false;
 
     /**
+     * @var bool
+     */
+    protected $caseSensitive = false;
+
+    /**
      * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\Featdd\DpnGlossary\Domain\Model\Description>
      * @cascade remove
      */
@@ -224,6 +229,23 @@ class Term extends AbstractEntity
     public function setExcludeFromParsing($excludeFromParsing)
     {
         $this->excludeFromParsing = $excludeFromParsing;
+    }
+
+    /**
+     * @return bool
+     */
+    public function getCaseSensitive()
+    {
+        return $this->caseSensitive;
+    }
+
+    /**
+     * @param bool $caseSensitive
+     * @return void
+     */
+    public function setCaseSensitive($caseSensitive)
+    {
+        $this->caseSensitive = $caseSensitive;
     }
 
     /**

@@ -112,6 +112,7 @@ class UpdateService implements SingletonInterface
         $this->checkSynonymTable();
         $this->checkExcludeFromParsingColumn();
         $this->checkTermModeAndTermLinkColumn();
+        $this->checkCaseSensitiveColumn();
     }
 
     /**
@@ -329,7 +330,7 @@ class UpdateService implements SingletonInterface
     {
         $this->databaseConnection->sql_query('
             ALTER TABLE tx_dpnglossary_domain_model_term
-            ADD exclude_from_parsing tinyint(4) unsigned DEFAULT \'0\' NOT NULL
+            ADD exclude_from_parsing TINYINT(4) unsigned DEFAULT \'0\' NOT NULL
         ');
     }
 
@@ -353,8 +354,32 @@ class UpdateService implements SingletonInterface
     {
         $this->databaseConnection->sql_query('
             ALTER TABLE tx_dpnglossary_domain_model_term
-            ADD term_mode varchar(255) DEFAULT \'\'  NOT NULL,
-            ADD term_link varchar(255) DEFAULT \'\'  NOT NULL
+            ADD term_mode VARCHAR(255) DEFAULT \'\'  NOT NULL,
+            ADD term_link VARCHAR(255) DEFAULT \'\'  NOT NULL
+        ');
+    }
+
+    /**
+     * @return void
+     */
+    protected function checkCaseSensitiveColumn()
+    {
+        /** @var \mysqli_result $checkSortingColumn */
+        $check = $this->databaseConnection->sql_query('SHOW COLUMNS FROM tx_dpnglossary_domain_model_term LIKE "case_sensitive"');
+
+        if (0 === $check->num_rows) {
+            $this->updateChecks['updateCaseSensitiveColumn'] = 'Add missing case_sensitive column';
+        }
+    }
+
+    /**
+     * @return void
+     */
+    protected function updateCaseSensitiveColumn()
+    {
+        $this->databaseConnection->sql_query('
+            ALTER TABLE tx_dpnglossary_domain_model_term
+            ADD case_sensitive TINYINT(4) UNSIGNED DEFAULT \'0\' NOT NULL
         ');
     }
 }

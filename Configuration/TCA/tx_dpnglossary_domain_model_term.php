@@ -35,10 +35,10 @@ return array(
         'showRecordFieldList' => 'sys_language_uid, l10n_parent, l10n_diffsource, hidden, name, tooltiptext, synonyms, descriptions, term_type, term_lang, term_mode, term_link, media, starttime, endtime',
     ),
     'types' => array(
-        '1' => array('showitem' => 'sys_language_uid;;;;1-1-1, --palette--;;hidden_exludefromparsing, name, tooltiptext, term_mode, term_link, synonyms, descriptions, term_type, term_lang, media, --div--;LLL:EXT:cms/locallang_ttc.xlf:tabs.access, starttime, endtime'),
+        '1' => array('showitem' => 'sys_language_uid;;;;1-1-1, --palette--;;hidden_exludefromparsing_casesensitive, name, tooltiptext, term_mode, term_link, synonyms, descriptions, term_type, term_lang, media, --div--;LLL:EXT:cms/locallang_ttc.xlf:tabs.access, starttime, endtime'),
     ),
     'palettes' => array(
-        'hidden_exludefromparsing' => array('showitem' => 'hidden;;1, exclude_from_parsing'),
+        'hidden_exludefromparsing_casesensitive' => array('showitem' => 'hidden;;1, case_sensitive, exclude_from_parsing'),
     ),
     'columns' => array(
         'sys_language_uid' => array(
@@ -221,6 +221,13 @@ return array(
         'exclude_from_parsing' => array(
             'exclude' => 0,
             'label' => 'LLL:EXT:dpn_glossary/Resources/Private/Language/locallang.xlf:tx_dpnglossary_domain_model_term.exclude_from_parsing',
+            'config' => array(
+                'type' => 'check',
+            ),
+        ),
+        'case_sensitive' => array(
+            'exclude' => 0,
+            'label' => 'LLL:EXT:dpn_glossary/Resources/Private/Language/locallang.xlf:tx_dpnglossary_domain_model_term.case_sensitive',
             'config' => array(
                 'type' => 'check',
             ),

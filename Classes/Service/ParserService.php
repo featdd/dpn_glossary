@@ -393,7 +393,8 @@ class ParserService implements SingletonInterface
             '(' . preg_quote($term->getName(), self::REGEX_DELIMITER) . ')' .
             '($|[\s\<[:punct:]]|\<br*\>)' .
             '(?![^<]*>|[^<>]*<\/)' .
-            self::REGEX_DELIMITER . 'i';
+            self::REGEX_DELIMITER .
+            (false === $term->getCaseSensitive() ? 'i' : '');
 
         // replace callback
         $callback = function ($match) use ($term, &$replacements, $wrappingCallback) {

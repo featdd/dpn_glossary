@@ -21,6 +21,9 @@
             <trans-unit id="tx_dpnglossary_domain_model_term.exclude_from_parsing">
                 <source>Exclude this term from parsing</source>
             </trans-unit>
+            <trans-unit id="tx_dpnglossary_domain_model_term.case_sensitive">
+                <source>Case Sensitive parsing</source>
+            </trans-unit>
             <trans-unit id="tx_dpnglossary_domain_model_term.term_type">
                 <source>Type of term</source>
             </trans-unit>
