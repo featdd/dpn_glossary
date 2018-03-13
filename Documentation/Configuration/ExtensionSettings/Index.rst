@@ -16,7 +16,7 @@ plugin.tx_dpnglossary.settings:
 .. container:: table-row
 
    Constant
-        settings.detailpage
+        settings.detailPage
 
    Data Type
          integer
