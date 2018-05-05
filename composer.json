@@ -4,7 +4,7 @@
 	"description": "Modern Extbase and namespaced Glossary extension",
 	"homepage": "http://featdd.de",
 	"license": ["GPL-2.0+"],
-	"version": "2.7.3",
+	"version": "2.7.4",
 	"require": {
 		"typo3/cms-core": ">=6.2.0,<8.8.0"
 	},

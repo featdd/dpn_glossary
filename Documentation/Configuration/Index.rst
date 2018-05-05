@@ -21,8 +21,7 @@ There are also example styles and scripts for the views and a tiny CSS3 Tooltip
 Special: RealUrl
 ^^^^^^^^^^^^^^^^
 
-The configuration for RealUrl is now integrated into the localconf.
-If you want to use it set the list & detailpage in your RealUrl configuration.
+An example configuration will be added to realurl by hook.
 
 + Add the id of your list & detailpage as the key (see example below).
 

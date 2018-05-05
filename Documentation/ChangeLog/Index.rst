@@ -10,6 +10,12 @@
 ChangeLog
 ---------
 
+v2.7.4
+  - Add case sensitive option for terms
+  - Realurl configuration as hook
+  - Link mode for terms
+  - small optimizations
+
 v2.7.3
   - Fix issue with the terms maximum replacement per page
 
