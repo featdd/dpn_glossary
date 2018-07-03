@@ -127,7 +127,7 @@ class ParserService implements SingletonInterface
             if (false === (bool) $this->settings['useCachingFramework']) {
                 $terms = $termRepository->findByNameLength();
             } else {
-                $cacheIdentifier = sha1('termsByNameLength');
+                $cacheIdentifier = sha1('termsByNameLength' . $querySettings->getLanguageUid());
                 $cache = $cacheManager->getCache('dpnglossary_termscache');
                 $terms = $cache->get($cacheIdentifier);
 
