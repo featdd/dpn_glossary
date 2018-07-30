@@ -1,19 +1,24 @@
 {
-	"name": "Featdd/dpn_glossary",
-	"type": "typo3-cms-extension",
-	"description": "Modern Extbase and namespaced Glossary extension",
-	"homepage": "http://featdd.de",
-	"license": ["GPL-2.0+"],
-	"version": "2.7.4",
-	"require": {
-		"typo3/cms-core": ">=6.2.0,<8.8.0"
-	},
-	"autoload": {
-		"psr-4": {
-			"Featdd\\DpnGlossary\\": "Classes"
-		}
-	},
-	"replace": {
-		"dpn_glossary": "*"
-	}
+  "name": "Featdd/dpn_glossary",
+  "type": "typo3-cms-extension",
+  "description": "Modern Extbase and namespaced Glossary extension",
+  "homepage": "http://featdd.de",
+  "license": [
+    "GPL-2.0+"
+  ],
+  "version": "2.7.4",
+  "require": {
+    "typo3/cms-core": "~6.2 || ~7.6 || ~8.7",
+    "ext-dom": "*",
+    "ext-libxml": "*"
+  },
+  "autoload": {
+    "psr-4": {
+      "Featdd\\DpnGlossary\\": "Classes"
+    }
+  },
+  "replace": {
+    "dpn_glossary": "self.version",
+    "typo3-ter/dpn-glossary": "self.version"
+  }
 }

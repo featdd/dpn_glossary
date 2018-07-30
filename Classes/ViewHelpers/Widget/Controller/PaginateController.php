@@ -1,45 +1,31 @@
 <?php
 namespace Featdd\DpnGlossary\ViewHelpers\Widget\Controller;
 
-/***************************************************************
- *  Copyright notice
+/***
  *
- *  (c) 2017 Daniel Dorndorf <dorndorf@featdd.de>
+ * This file is part of the "dreipunktnull Glossar" Extension for TYPO3 CMS.
  *
- *  All rights reserved
+ * For the full copyright and license information, please read the
+ * LICENSE.txt file that was distributed with this source code.
  *
- *  This script is part of the TYPO3 project. The TYPO3 project is
- *  free software; you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation; either version 3 of the License, or
- *  (at your option) any later version.
+ *  (c) 2018 Daniel Dorndorf <dorndorf@featdd.de>
  *
- *  The GNU General Public License can be found at
- *  http://www.gnu.org/copyleft/gpl.html.
- *
- *  This script is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
- *
- *  This copyright notice MUST APPEAR in all copies of the script!
- ***************************************************************/
+ ***/
 
+use TYPO3\CMS\Core\TypoScript\TypoScriptService;
 use TYPO3\CMS\Core\Utility\ArrayUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Persistence\QueryInterface;
 use TYPO3\CMS\Extbase\Persistence\QueryResultInterface;
-use TYPO3\CMS\Extbase\Service\TypoScriptService;
 use TYPO3\CMS\Fluid\Core\Widget\AbstractWidgetController;
 use TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer;
 
 /**
- * @package dpn_glossary
- * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
+ * @package DpnGlossary
+ * @subpackage ViewHelpers\Widget\Controller
  */
 class PaginateController extends AbstractWidgetController
 {
-
     /**
      * @var array
      */
@@ -107,7 +93,7 @@ class PaginateController extends AbstractWidgetController
 
         // Apply stdWrap
         if (is_array($this->configuration['characters'])) {
-            /** @var $typoScriptService \TYPO3\CMS\Extbase\Service\TypoScriptService */
+            /** @var $typoScriptService \TYPO3\CMS\Core\TypoScript\TypoScriptService */
             $typoScriptService = $this->objectManager->get(TypoScriptService::class);
 
             // It's required to convert the "new" array to dot notation one before we can use `cObjGetSingle`
@@ -142,7 +128,7 @@ class PaginateController extends AbstractWidgetController
                 $getter = 'get' . GeneralUtility::underscoredToUpperCamelCase($this->field);
 
                 if (true === method_exists($firstObject[0], $getter)) {
-                    $this->currentCharacter = strtoupper(substr($firstObject[0]->{$getter}(), 0, 1));
+                    $this->currentCharacter = strtoupper($firstObject[0]->{$getter}()[0]);
                 } else {
                     throw new Exception('Getter for "' . $this->field . '" in "' . get_class($firstObject[0]) . '" does not exist',
                         1433257601);
@@ -271,7 +257,7 @@ class PaginateController extends AbstractWidgetController
      * @param string $paginationCharacters
      * @return array
      */
-    static public function paginationArguments($field, $paginationCharacters)
+    public static function paginationArguments($field, $paginationCharacters)
     {
         $firstCharacter = mb_strtoupper(mb_substr($field, 0, 1, 'UTF-8'), 'UTF-8');
         $characters = array_change_key_case(explode(',', $paginationCharacters), CASE_UPPER);

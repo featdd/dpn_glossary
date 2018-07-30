@@ -1,36 +1,22 @@
 <?php
 namespace Featdd\DpnGlossary\Utility;
 
-/***************************************************************
- *  Copyright notice
+/***
  *
- *  (c) 2017 Daniel Dorndorf <dorndorf@featdd.de>
+ * This file is part of the "dreipunktnull Glossar" Extension for TYPO3 CMS.
  *
- *  All rights reserved
+ * For the full copyright and license information, please read the
+ * LICENSE.txt file that was distributed with this source code.
  *
- *  This script is part of the TYPO3 project. The TYPO3 project is
- *  free software; you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation; either version 3 of the License, or
- *  (at your option) any later version.
+ *  (c) 2018 Daniel Dorndorf <dorndorf@featdd.de>
  *
- *  The GNU General Public License can be found at
- *  http://www.gnu.org/copyleft/gpl.html.
- *
- *  This script is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
- *
- *  This copyright notice MUST APPEAR in all copies of the script!
- ***************************************************************/
+ ***/
 
 use TYPO3\CMS\Core\SingletonInterface;
 
 /**
- *
- * @package dpn_glossary
- * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
+ * @package DpnGlossary
+ * @subpackage Utility
  */
 class ParserUtility implements SingletonInterface
 {
@@ -75,7 +61,7 @@ class ParserUtility implements SingletonInterface
         };
 
         return preg_replace_callback(
-            '#(<!--' . preg_quote($tag) . ')(.*?)(-->)#is',
+            '#(<!--' . preg_quote($tag, '#') . ')(.*?)(-->)#is',
             $callback,
             $html
         );
@@ -115,7 +101,7 @@ class ParserUtility implements SingletonInterface
         };
 
         return preg_replace_callback(
-            '#(href|src)(\=\")(' . preg_quote($tag) . ')(.*?)(\")#is',
+            '#(href|src)(\=\")(' . preg_quote($tag, '#') . ')(.*?)(\")#is',
             $callback,
             $html
         );
@@ -133,11 +119,7 @@ class ParserUtility implements SingletonInterface
     public static function getAndSetInnerTagContent($html, callable $contentCallback, callable $wrapperCallback)
     {
         $regexCallback = function ($match) use ($contentCallback, $wrapperCallback) {
-            return '<' . $match[1] . $match[2] . '>' . call_user_func(
-                $contentCallback,
-                $match[3],
-                $wrapperCallback
-            ) . $match[4];
+            return '<' . $match[1] . $match[2] . '>' . $contentCallback($match[3], $wrapperCallback) . $match[4];
         };
 
         return preg_replace_callback('#^<([\w]+)([^>]*)>(.*?)(<\/\1>)$#is', $regexCallback, $html);

@@ -24,7 +24,7 @@ use TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController;
 class ContentPostProcHook
 {
     /**
-     * @var ParserService
+     * @var \Featdd\DpnGlossary\Service\ParserService
      */
     protected $parserService;
 

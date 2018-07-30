@@ -1,37 +1,24 @@
 <?php
 namespace Featdd\DpnGlossary\Domain\Model;
 
-/***************************************************************
- *  Copyright notice
+/***
  *
- *  (c) 2017 Daniel Dorndorf <dorndorf@featdd.de>
+ * This file is part of the "dreipunktnull Glossar" Extension for TYPO3 CMS.
  *
- *  All rights reserved
+ * For the full copyright and license information, please read the
+ * LICENSE.txt file that was distributed with this source code.
  *
- *  This script is part of the TYPO3 project. The TYPO3 project is
- *  free software; you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation; either version 3 of the License, or
- *  (at your option) any later version.
+ *  (c) 2018 Daniel Dorndorf <dorndorf@featdd.de>
  *
- *  The GNU General Public License can be found at
- *  http://www.gnu.org/copyleft/gpl.html.
- *
- *  This script is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
- *
- *  This copyright notice MUST APPEAR in all copies of the script!
- ***************************************************************/
+ ***/
 
 use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
 use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
 use TYPO3\CMS\Extbase\Domain\Model\FileReference;
 
 /**
- * @package dpn_glossary
- * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
+ * @package DpnGlossary
+ * @subpackage Domain\Model
  */
 class Term extends AbstractEntity
 {
@@ -96,18 +83,7 @@ class Term extends AbstractEntity
      */
     protected $media;
 
-    /**
-     * @return Term
-     */
     public function __construct()
-    {
-        $this->initStorageObjects();
-    }
-
-    /**
-     * @return void
-     */
-    protected function initStorageObjects()
     {
         $this->descriptions = new ObjectStorage();
         $this->synonyms = new ObjectStorage();
@@ -124,7 +100,6 @@ class Term extends AbstractEntity
 
     /**
      * @param string $name
-     * @return void
      */
     public function setName($name)
     {
@@ -141,7 +116,6 @@ class Term extends AbstractEntity
 
     /**
      * @param string $tooltiptext
-     * @return void
      */
     public function setTooltiptext($tooltiptext)
     {
@@ -190,7 +164,6 @@ class Term extends AbstractEntity
 
     /**
      * @param string $termMode
-     * @return void
      */
     public function setTermMode($termMode)
     {
@@ -207,7 +180,6 @@ class Term extends AbstractEntity
 
     /**
      * @param string $termLink
-     * @return void
      */
     public function setTermLink($termLink)
     {
@@ -224,7 +196,6 @@ class Term extends AbstractEntity
 
     /**
      * @param bool $excludeFromParsing
-     * @return void
      */
     public function setExcludeFromParsing($excludeFromParsing)
     {
@@ -241,7 +212,6 @@ class Term extends AbstractEntity
 
     /**
      * @param bool $caseSensitive
-     * @return void
      */
     public function setCaseSensitive($caseSensitive)
     {
@@ -274,7 +244,6 @@ class Term extends AbstractEntity
 
     /**
      * @param \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\Featdd\DpnGlossary\Domain\Model\Description> $descriptions
-     * @return void
      */
     public function setDescriptions(ObjectStorage $descriptions)
     {
@@ -307,7 +276,6 @@ class Term extends AbstractEntity
 
     /**
      * @param \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\Featdd\DpnGlossary\Domain\Model\Synonym>
-     * @return void
      */
     public function setSynonyms(ObjectStorage $synonyms)
     {
@@ -316,7 +284,6 @@ class Term extends AbstractEntity
 
     /**
      * @param \TYPO3\CMS\Extbase\Persistence\ObjectStorage $media
-     * @return void
      */
     public function setMedia(ObjectStorage $media)
     {
@@ -325,7 +292,6 @@ class Term extends AbstractEntity
 
     /**
      * @param \TYPO3\CMS\Extbase\Domain\Model\FileReference $file
-     * @return void
      */
     public function addMedia(FileReference $file)
     {
@@ -334,7 +300,6 @@ class Term extends AbstractEntity
 
     /**
      * @param \TYPO3\CMS\Extbase\Domain\Model\FileReference $file
-     * @return void
      */
     public function removeMedia(FileReference $file)
     {

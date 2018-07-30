@@ -1,29 +1,16 @@
 <?php
 namespace Featdd\DpnGlossary\Service;
 
-/***************************************************************
- *  Copyright notice
+/***
  *
- *  (c) 2017 Daniel Dorndorf <dorndorf@featdd.de>
+ * This file is part of the "dreipunktnull Glossar" Extension for TYPO3 CMS.
  *
- *  All rights reserved
+ * For the full copyright and license information, please read the
+ * LICENSE.txt file that was distributed with this source code.
  *
- *  This script is part of the TYPO3 project. The TYPO3 project is
- *  free software; you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation; either version 3 of the License, or
- *  (at your option) any later version.
+ *  (c) 2018 Daniel Dorndorf <dorndorf@featdd.de>
  *
- *  The GNU General Public License can be found at
- *  http://www.gnu.org/copyleft/gpl.html.
- *
- *  This script is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
- *
- *  This copyright notice MUST APPEAR in all copies of the script!
- ***************************************************************/
+ ***/
 
 use Featdd\DpnGlossary\Domain\Model\Term;
 use Featdd\DpnGlossary\Domain\Repository\TermRepository;
@@ -38,9 +25,8 @@ use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
 use TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer;
 
 /**
- *
- * @package dpn_glossary
- * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
+ * @package DpnGlossary
+ * @subpackage Service
  */
 class ParserService implements SingletonInterface
 {
@@ -81,7 +67,8 @@ class ParserService implements SingletonInterface
      *  - contentObjectRenderer for generating links etc.
      *  - termRepository to get the Terms
      *
-     * @return ParserService
+     * @throws \TYPO3\CMS\Extbase\Configuration\Exception\InvalidConfigurationTypeException
+     * @throws \TYPO3\CMS\Core\Cache\Exception\NoSuchCacheException
      */
     public function __construct()
     {
@@ -167,7 +154,7 @@ class ParserService implements SingletonInterface
         // Get Tags which content should be parsed
         $tags = GeneralUtility::trimExplode(',', $this->settings['parsingTags']);
         // Remove "a" & "script" from parsingTags if it was added unknowingly
-        if (true === in_array(self::$alwaysIgnoreParentTags, $tags, true)) {
+        if (true === \in_array(self::$alwaysIgnoreParentTags, $tags, true)) {
             $tags = array_diff($tags, self::$alwaysIgnoreParentTags);
         }
 
@@ -178,18 +165,18 @@ class ParserService implements SingletonInterface
             // Pagetype not 0
             0 !== $GLOBALS['TSFE']->type ||
             // no tags to parse given
-            0 === count($tags) ||
+            0 === \count($tags) ||
             // no terms have been found
-            0 === count($this->terms) ||
+            0 === \count($this->terms) ||
             // no config is given
-            0 === count($this->tsConfig) ||
+            0 === \count($this->tsConfig) ||
             // page is excluded
-            true === in_array($GLOBALS['TSFE']->id, $excludePids, false) ||
+            true === \in_array($GLOBALS['TSFE']->id, $excludePids, false) ||
             (
                 // parsingPids doesn't contain 0 and...
-                false === in_array(0, $parsingPids, false) &&
+                false === \in_array(0, $parsingPids, false) &&
                 // page is not whitelisted
-                false === in_array($GLOBALS['TSFE']->id, $parsingPids, false)
+                false === \in_array($GLOBALS['TSFE']->id, $parsingPids, false)
             )
         ) {
             return false;
@@ -204,7 +191,7 @@ class ParserService implements SingletonInterface
         $forbiddenParentTags = array_filter(GeneralUtility::trimExplode(',', $this->settings['forbiddenParentTags']));
 
         // Add "a" if unknowingly deleted to prevent errors
-        if (false === in_array(self::$alwaysIgnoreParentTags, $forbiddenParentTags, true)) {
+        if (false === \in_array(self::$alwaysIgnoreParentTags, $forbiddenParentTags, true)) {
             $forbiddenParentTags = array_unique(
                 array_merge($forbiddenParentTags, self::$alwaysIgnoreParentTags)
             );
@@ -351,7 +338,6 @@ class ParserService implements SingletonInterface
      * @param Term $term
      * @param integer $replacements
      * @param callable $wrappingCallback
-     * @return void
      */
     protected function regexParser(&$text, Term $term, &$replacements, callable $wrappingCallback)
     {
@@ -411,7 +397,7 @@ class ParserService implements SingletonInterface
         };
 
         // Use callback to keep allowed chars around the term and his camel case
-        $text = preg_replace_callback($regex, $callback, $text, $replacements);
+        $text = (string) preg_replace_callback($regex, $callback, $text, $replacements);
     }
 
     /**

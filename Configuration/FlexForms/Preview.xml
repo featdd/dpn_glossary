@@ -1,0 +1,66 @@
+<T3DataStructure>
+  <sheets>
+    <sDEF>
+      <ROOT>
+        <TCEforms>
+          <sheetTitle>LLL:EXT:dpn_glossary/Resources/Private/Language/locallang.xlf:tx_dpnglossary.flexforms.preview</sheetTitle>
+        </TCEforms>
+        <type>array</type>
+        <el>
+          <switchableControllerActions>
+            <TCEforms>
+              <label>LLL:EXT:dpn_glossary/Resources/Private/Language/locallang.xlf:tx_dpnglossary.flexforms.preview.mode</label>
+              <onChange>reload</onChange>
+              <config>
+                <type>select</type>
+                <items>
+                  <numIndex index="1">
+                    <numIndex index="0">LLL:EXT:dpn_glossary/Resources/Private/Language/locallang.xlf:tx_dpnglossary.flexforms.preview.mode.newest</numIndex>
+                    <numIndex index="1">Term->previewNewest</numIndex>
+                  </numIndex>
+                  <numIndex index="2">
+                    <numIndex index="0">LLL:EXT:dpn_glossary/Resources/Private/Language/locallang.xlf:tx_dpnglossary.flexforms.preview.mode.random</numIndex>
+                    <numIndex index="1">Term->previewRandom</numIndex>
+                  </numIndex>
+                  <numIndex index="3">
+                    <numIndex index="0">LLL:EXT:dpn_glossary/Resources/Private/Language/locallang.xlf:tx_dpnglossary.flexforms.preview.mode.selected</numIndex>
+                    <numIndex index="1">Term->previewSelected</numIndex>
+                  </numIndex>
+                </items>
+              </config>
+            </TCEforms>
+          </switchableControllerActions>
+          <settings.previewlimit>
+            <TCEforms>
+              <label>LLL:EXT:dpn_glossary/Resources/Private/Language/locallang.xlf:tx_dpnglossary.flexforms.preview.limit</label>
+              <displayCond>
+                <OR>
+                  <numIndex index="0">FIELD:switchableControllerActions:=:Term->previewNewest</numIndex>
+                  <numIndex index="1">FIELD:switchableControllerActions:=:Term->previewRandom</numIndex>
+                </OR>
+              </displayCond>
+              <config>
+                <type>input</type>
+                <eval>int</eval>
+                <default>5</default>
+              </config>
+            </TCEforms>
+          </settings.previewlimit>
+          <settings.previewSelected>
+            <TCEforms>
+              <label>LLL:EXT:dpn_glossary/Resources/Private/Language/locallang.xlf:tx_dpnglossary.flexforms.preview.selected</label>
+              <displayCond>FIELD:switchableControllerActions:=:Term->previewSelected</displayCond>
+              <config>
+                <type>select</type>
+                <renderType>selectMultipleSideBySide</renderType>
+                <size>10</size>
+                <maxitems>9999</maxitems>
+                <foreign_table>tx_dpnglossary_domain_model_term</foreign_table>
+              </config>
+            </TCEforms>
+          </settings.previewSelected>
+        </el>
+      </ROOT>
+    </sDEF>
+  </sheets>
+</T3DataStructure>
