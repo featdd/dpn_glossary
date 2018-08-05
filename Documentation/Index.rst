@@ -27,7 +27,7 @@ dpn_glossary Extension
         glossary,glossar,dreipunktnull,dpn,parser,term
 
     :Copyright:
-        2017
+        2018
 
     :Author:
         Daniel Dorndorf

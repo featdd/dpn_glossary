@@ -18,10 +18,12 @@ Target group: **Administrators**
 Installation
 ------------
 
-1. Install the extension over the extension manager
+#. Install the extension over the extension manager
 
-2. Add the static TypoScript to your Site template
+#. Add the static TypoScript to your Site template
 
-3. Create a list- & detailpage for terms
+#. Create a list- & detailpage for terms
 
-4. Configure the uids in the constants to make the detailpage resolvable for the parser
+#. Configure the uids in the constants to make the detailpage resolvable for the parser
+
+   - Set the storage page uid (persistence.storagePid)

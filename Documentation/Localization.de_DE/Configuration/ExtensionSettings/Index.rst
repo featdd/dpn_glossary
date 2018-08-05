@@ -157,7 +157,7 @@ Alle Konstanten zugehörig zu plugin.tx_dpnglossary.settings:
         options
 
    Description
-        Listenmodus für die Listenseite (normal, character, paginated)
+        Listenmodus für die Listenseite (normal, character, pagination)
 
    Default
         normal
