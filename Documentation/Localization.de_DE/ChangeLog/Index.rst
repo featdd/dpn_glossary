@@ -10,6 +10,16 @@
 Versionshistorie
 ----------------
 
+v2.7.5
+  - Cache für übersetzte Begriffe repariert
+  - Besserer Hook für das parsen von Begriffen verwendet
+
+v2.7.4
+  - Groß- Kleinschreibung Option für Begriffe
+  - RealUrl Konfiguration als Hook
+  - Link Modus für Begriffe
+  - Kleinere Optimierungen
+
 v2.7.3
   - Behebe eine Problem mit der maximalen Ersetzung von Begriffen auf einer Seite
 

@@ -6,7 +6,7 @@
   "license": [
     "GPL-2.0+"
   ],
-  "version": "2.7.4",
+  "version": "2.7.5",
   "require": {
     "typo3/cms-core": "~6.2 || ~7.6 || ~8.7",
     "ext-dom": "*",

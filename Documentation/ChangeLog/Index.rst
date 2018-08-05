@@ -10,6 +10,10 @@
 ChangeLog
 ---------
 
+v2.7.5
+  - Fix terms cache for translations
+  - Use better hook for parsing terms
+
 v2.7.4
   - Add case sensitive option for terms
   - Realurl configuration as hook
