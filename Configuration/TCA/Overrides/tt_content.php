@@ -3,6 +3,24 @@ defined('TYPO3_MODE') || die();
 
 call_user_func(
     function () {
+        \TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerPlugin(
+            'dpn_glossary',
+            'Glossarylist',
+            'LLL:EXT:dpn_glossary/Resources/Private/Language/locallang.xlf:tx_dpnglossary.wizard_list_title'
+        );
+
+        \TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerPlugin(
+            'dpn_glossary',
+            'Glossarypreview',
+            'LLL:EXT:dpn_glossary/Resources/Private/Language/locallang.xlf:tx_dpnglossary.wizard_preview_title'
+        );
+
+        \TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerPlugin(
+            'dpn_glossary',
+            'Glossarydetail',
+            'LLL:EXT:dpn_glossary/Resources/Private/Language/locallang.xlf:tx_dpnglossary.wizard_detail_title'
+        );
+
         $flexforms = [
             'dpnglossary_glossarypreview' => '/Configuration/FlexForms/Preview.xml',
         ];
