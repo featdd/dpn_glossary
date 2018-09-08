@@ -24,8 +24,6 @@ $EM_CONF[$_EXTKEY] = [
             'php' => '5.6.0',
         ],
         'conflicts' => [],
-        'suggests' => [
-            'realurl' => '1.10.0-0.0.0',
-        ],
+        'suggests' => [],
     ],
 ];

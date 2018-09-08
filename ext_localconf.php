@@ -45,9 +45,7 @@ call_user_func(
         }
 
         if (true === version_compare(\TYPO3\CMS\Core\Utility\VersionNumberUtility::getNumericTypo3Version(), '7.5.0', '>=')) {
-            if (\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::isLoaded('realurl')) {
-                $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['t3lib/class.t3lib_pagerenderer.php']['render-preProcess'][] = \Featdd\DpnGlossary\Hook\RenderPreProcessHook::class . '->main';
-            }
+            $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['t3lib/class.t3lib_pagerenderer.php']['render-preProcess'][] = \Featdd\DpnGlossary\Hook\RenderPreProcessHook::class . '->main';
 
             $iconRegistry = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Imaging\IconRegistry::class);
 
@@ -68,10 +66,6 @@ call_user_func(
                 \TYPO3\CMS\Core\Imaging\IconProvider\FontawesomeIconProvider::class,
                 ['name' => 'search']
             );
-        }
-
-        if (true === \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::isLoaded('realurl')) {
-            $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['ext/realurl/class.tx_realurl_autoconfgen.php']['extensionConfiguration'][$extKey] = \Featdd\DpnGlossary\Hook\RealurlHook::class . '->addConfig';
         }
 
         if (false === \is_array($GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations']['dpnglossary_termscache'])) {

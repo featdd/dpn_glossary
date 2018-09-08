@@ -18,20 +18,6 @@ There are also example styles and scripts for the views and a tiny CSS3 Tooltip
 + CSS: EXT:dpn_glossary/Resources/Public/css/styles.min.css
 + JS:  EXT:dpn_glossary/Resources/Public/js/scripts.min.js
 
-Special: RealUrl
-^^^^^^^^^^^^^^^^
-
-An example configuration will be added to realurl by hook.
-
-+ Add the id of your list & detailpage as the key (see example below).
-
-::
-
-    'fixedPostVars' => array(
-	    'LISTPAGEUID' => 'dpn_glossary_list_RealUrlConfig',
-	    'DETAILPAGEUID' => 'dpn_glossary_detail_RealUrlConfig',
-    ),
-
 Special: Umlauts
 ^^^^^^^^^^^^^^^^
 

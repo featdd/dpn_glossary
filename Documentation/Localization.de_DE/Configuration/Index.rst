@@ -18,21 +18,6 @@ Es sind außerdem beispiel Styles und JavaScript für Listen- & Detailansicht, s
 + CSS: EXT:dpn_glossary/Resources/Public/css/styles.min.css
 + JS:  EXT:dpn_glossary/Resources/Public/js/scripts.min.js
 
-Spezial: RealUrl
-^^^^^^^^^^^^^^^^
-
-Die Konfiguration für RealUrl ist in die Extension integriert.
-Wenn Sie sie benutzen wollen tragen sie die ID der Listen- & Detailseite in Ihre RealUrl Konfiguration ein
-
-+ Ersetzen Sie einfach die Platzhalter mit den IDs (see example below)
-
-::
-
-    'fixedPostVars' => array(
-	    'LISTPAGEUID' => 'dpn_glossary_list_RealUrlConfig',
-	    'DETAILPAGEUID' => 'dpn_glossary_detail_RealUrlConfig',
-    ),
-
 Spezial: Umlaute
 ^^^^^^^^^^^^^^^^
 
