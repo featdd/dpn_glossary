@@ -20,7 +20,7 @@ use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
  */
 class Description extends AbstractEntity
 {
-    const TABLE = 'tx_dpnglossary_domain_model_description';
+    public const TABLE = 'tx_dpnglossary_domain_model_description';
 
     /**
      * @var string $meaning
@@ -36,7 +36,7 @@ class Description extends AbstractEntity
     /**
      * @return string
      */
-    public function getMeaning()
+    public function getMeaning(): string
     {
         return $this->meaning;
     }
@@ -44,7 +44,7 @@ class Description extends AbstractEntity
     /**
      * @param string $meaning
      */
-    public function setMeaning($meaning)
+    public function setMeaning($meaning): void
     {
         $this->meaning = $meaning;
     }
@@ -52,7 +52,7 @@ class Description extends AbstractEntity
     /**
      * @return string
      */
-    public function getText()
+    public function getText(): string
     {
         return $this->text;
     }
@@ -60,7 +60,7 @@ class Description extends AbstractEntity
     /**
      * @param string $text
      */
-    public function setText($text)
+    public function setText($text): void
     {
         $this->text = $text;
     }

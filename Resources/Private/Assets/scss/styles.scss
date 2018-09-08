@@ -1,3 +1,7 @@
+$white: #fff;
+$grey: #333;
+$red: #f00;
+
 .dpnglossary {
   &.pagination ul {
     list-style: none;
@@ -22,22 +26,12 @@
       }
 
       &.empty {
-        color: red;
+        color: $red;
       }
     }
   }
 
   &.details {
-    .description {
-      h3 {
-        cursor: pointer;
-      }
-
-      .text {
-        display: none;
-      }
-    }
-
     .mediafile {
       display: inline-block;
       margin-bottom: 10px;
@@ -54,11 +48,10 @@
 
     &:hover {
       &:after {
-        background: #333;
         background: rgba(0, 0, 0, .8);
         border-radius: 5px;
         bottom: 26px;
-        color: white;
+        color: $white;
         content: attr(title);
         left: 20%;
         padding: 5px 15px;
@@ -69,7 +62,7 @@
 
       &:before {
         border: solid;
-        border-color: #333 transparent;
+        border-color: $grey transparent;
         border-width: 6px 6px 0;
         bottom: 20px;
         content: '';

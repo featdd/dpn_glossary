@@ -30,12 +30,12 @@ class PaginateViewHelper extends AbstractWidgetViewHelper
     /**
      * @param \Featdd\DpnGlossary\ViewHelpers\Widget\Controller\PaginateController $paginateController
      */
-    public function injectPaginateController(PaginateController $paginateController)
+    public function injectPaginateController(PaginateController $paginateController): void
     {
         $this->controller = $paginateController;
     }
 
-    public function initializeArguments()
+    public function initializeArguments(): void
     {
         $this->registerArgument('objects', 'array', 'Objects to paginate', true);
         $this->registerArgument('as', 'string', 'Objects passed as fluid variable with this name', true);
@@ -45,7 +45,7 @@ class PaginateViewHelper extends AbstractWidgetViewHelper
     /**
      * @return \TYPO3\CMS\Extbase\Mvc\ResponseInterface
      */
-    public function render()
+    public function render(): \TYPO3\CMS\Extbase\Mvc\ResponseInterface
     {
         return $this->initiateSubRequest();
     }

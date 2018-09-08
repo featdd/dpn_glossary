@@ -22,7 +22,7 @@ use TYPO3\CMS\Extbase\Domain\Model\FileReference;
  */
 class Term extends AbstractEntity
 {
-    const TABLE = 'tx_dpnglossary_domain_model_term';
+    public const TABLE = 'tx_dpnglossary_domain_model_term';
 
     /**
      * @var string
@@ -93,7 +93,7 @@ class Term extends AbstractEntity
     /**
      * @return string $name
      */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
@@ -101,7 +101,7 @@ class Term extends AbstractEntity
     /**
      * @param string $name
      */
-    public function setName($name)
+    public function setName($name): void
     {
         $this->name = $name;
     }
@@ -109,7 +109,7 @@ class Term extends AbstractEntity
     /**
      * @return string $tooltiptext
      */
-    public function getTooltiptext()
+    public function getTooltiptext(): string
     {
         return $this->tooltiptext;
     }
@@ -117,15 +117,23 @@ class Term extends AbstractEntity
     /**
      * @param string $tooltiptext
      */
-    public function setTooltiptext($tooltiptext)
+    public function setTooltiptext($tooltiptext): void
     {
         $this->tooltiptext = $tooltiptext;
     }
 
     /**
+     * @return string
+     */
+    public function getTermType(): string
+    {
+        return $this->termType;
+    }
+
+    /**
      * @param string $termType
      */
-    public function setTermType($termType)
+    public function setTermType($termType): void
     {
         $this->termType = $termType;
     }
@@ -133,15 +141,15 @@ class Term extends AbstractEntity
     /**
      * @return string
      */
-    public function getTermType()
+    public function getTermLang(): string
     {
-        return $this->termType;
+        return $this->termLang;
     }
 
     /**
      * @param string $termLang
      */
-    public function setTermLang($termLang)
+    public function setTermLang($termLang): void
     {
         $this->termLang = $termLang;
     }
@@ -149,15 +157,7 @@ class Term extends AbstractEntity
     /**
      * @return string
      */
-    public function getTermLang()
-    {
-        return $this->termLang;
-    }
-
-    /**
-     * @return string
-     */
-    public function getTermMode()
+    public function getTermMode(): string
     {
         return $this->termMode;
     }
@@ -165,7 +165,7 @@ class Term extends AbstractEntity
     /**
      * @param string $termMode
      */
-    public function setTermMode($termMode)
+    public function setTermMode($termMode): void
     {
         $this->termMode = $termMode;
     }
@@ -173,7 +173,7 @@ class Term extends AbstractEntity
     /**
      * @return string
      */
-    public function getTermLink()
+    public function getTermLink(): string
     {
         return $this->termLink;
     }
@@ -181,7 +181,7 @@ class Term extends AbstractEntity
     /**
      * @param string $termLink
      */
-    public function setTermLink($termLink)
+    public function setTermLink($termLink): void
     {
         $this->termLink = $termLink;
     }
@@ -189,7 +189,7 @@ class Term extends AbstractEntity
     /**
      * @return bool
      */
-    public function getExcludeFromParsing()
+    public function getExcludeFromParsing(): bool
     {
         return $this->excludeFromParsing;
     }
@@ -197,7 +197,7 @@ class Term extends AbstractEntity
     /**
      * @param bool $excludeFromParsing
      */
-    public function setExcludeFromParsing($excludeFromParsing)
+    public function setExcludeFromParsing($excludeFromParsing): void
     {
         $this->excludeFromParsing = $excludeFromParsing;
     }
@@ -205,7 +205,7 @@ class Term extends AbstractEntity
     /**
      * @return bool
      */
-    public function getCaseSensitive()
+    public function getCaseSensitive(): bool
     {
         return $this->caseSensitive;
     }
@@ -213,7 +213,7 @@ class Term extends AbstractEntity
     /**
      * @param bool $caseSensitive
      */
-    public function setCaseSensitive($caseSensitive)
+    public function setCaseSensitive($caseSensitive): void
     {
         $this->caseSensitive = $caseSensitive;
     }
@@ -221,7 +221,7 @@ class Term extends AbstractEntity
     /**
      * @return \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\Featdd\DpnGlossary\Domain\Model\Description>
      */
-    public function getDescriptions()
+    public function getDescriptions(): ObjectStorage
     {
         return $this->descriptions;
     }
@@ -229,7 +229,7 @@ class Term extends AbstractEntity
     /**
      * @param \Featdd\DpnGlossary\Domain\Model\Description $description
      */
-    public function addDescription(Description $description)
+    public function addDescription(Description $description): void
     {
         $this->descriptions->attach($description);
     }
@@ -237,7 +237,7 @@ class Term extends AbstractEntity
     /**
      * @param \Featdd\DpnGlossary\Domain\Model\Description $description
      */
-    public function removeDescription(Description $description)
+    public function removeDescription(Description $description): void
     {
         $this->descriptions->detach($description);
     }
@@ -245,7 +245,7 @@ class Term extends AbstractEntity
     /**
      * @param \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\Featdd\DpnGlossary\Domain\Model\Description> $descriptions
      */
-    public function setDescriptions(ObjectStorage $descriptions)
+    public function setDescriptions(ObjectStorage $descriptions): void
     {
         $this->descriptions = $descriptions;
     }
@@ -253,7 +253,7 @@ class Term extends AbstractEntity
     /**
      * @return \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\Featdd\DpnGlossary\Domain\Model\Synonym>
      */
-    public function getSynonyms()
+    public function getSynonyms(): ObjectStorage
     {
         return $this->synonyms;
     }
@@ -261,7 +261,7 @@ class Term extends AbstractEntity
     /**
      * @param \Featdd\DpnGlossary\Domain\Model\Synonym $synonym
      */
-    public function addSynonym(Synonym $synonym)
+    public function addSynonym(Synonym $synonym): void
     {
         $this->synonyms->attach($synonym);
     }
@@ -269,7 +269,7 @@ class Term extends AbstractEntity
     /**
      * @param \Featdd\DpnGlossary\Domain\Model\Synonym $synonym
      */
-    public function removeSynonym(Synonym $synonym)
+    public function removeSynonym(Synonym $synonym): void
     {
         $this->synonyms->detach($synonym);
     }
@@ -277,7 +277,7 @@ class Term extends AbstractEntity
     /**
      * @param \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\Featdd\DpnGlossary\Domain\Model\Synonym>
      */
-    public function setSynonyms(ObjectStorage $synonyms)
+    public function setSynonyms(ObjectStorage $synonyms): void
     {
         $this->synonyms = $synonyms;
     }
@@ -285,7 +285,7 @@ class Term extends AbstractEntity
     /**
      * @param \TYPO3\CMS\Extbase\Persistence\ObjectStorage $media
      */
-    public function setMedia(ObjectStorage $media)
+    public function setMedia(ObjectStorage $media): void
     {
         $this->media = $media;
     }
@@ -293,7 +293,7 @@ class Term extends AbstractEntity
     /**
      * @param \TYPO3\CMS\Extbase\Domain\Model\FileReference $file
      */
-    public function addMedia(FileReference $file)
+    public function addMedia(FileReference $file): void
     {
         $this->media->attach($file);
     }
@@ -301,15 +301,15 @@ class Term extends AbstractEntity
     /**
      * @param \TYPO3\CMS\Extbase\Domain\Model\FileReference $file
      */
-    public function removeMedia(FileReference $file)
+    public function removeMedia(FileReference $file): void
     {
         $this->media->detach($file);
     }
 
     /**
-     * @return \TYPO3\CMS\Extbase\Persistence\ObjectStorage
+     * @return \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\TYPO3\CMS\Extbase\Domain\Model\FileReference>
      */
-    public function getMedia()
+    public function getMedia(): ObjectStorage
     {
         return $this->media;
     }
@@ -317,7 +317,7 @@ class Term extends AbstractEntity
     /**
      * @return array
      */
-    public function toArray()
+    public function toArray(): array
     {
         return array(
             'uid' => $this->getUid(),

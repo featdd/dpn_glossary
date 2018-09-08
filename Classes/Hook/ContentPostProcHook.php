@@ -40,7 +40,7 @@ class ContentPostProcHook
      * @param \TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController $typoScriptFrontendController
      * @throws \Featdd\DpnGlossary\Service\Exception
      */
-    public function main(array &$params, TypoScriptFrontendController $typoScriptFrontendController)
+    public function main(array &$params, TypoScriptFrontendController $typoScriptFrontendController): void
     {
         $parsedHTML = $this->parserService->pageParser($typoScriptFrontendController->content);
 

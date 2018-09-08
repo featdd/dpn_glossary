@@ -25,8 +25,8 @@ use TYPO3\CMS\Extbase\Object\ObjectManager;
  */
 class RenderPreProcessHook
 {
-    const URL_PARAM_DETAIL = 'tx_dpnglossary_glossarydetail';
-    const URL_PARAM_DETAIL_TERM_KEY = '[term]';
+    public const URL_PARAM_DETAIL = 'tx_dpnglossary_glossarydetail';
+    public const URL_PARAM_DETAIL_TERM_KEY = '[term]';
 
     /**
      * @var array
@@ -61,7 +61,7 @@ class RenderPreProcessHook
      * @param array $params
      * @param \TYPO3\CMS\Core\Page\PageRenderer $pageRenderer
      */
-    public function main(array &$params, PageRenderer $pageRenderer)
+    public function main(array &$params, PageRenderer $pageRenderer): void
     {
         $getParams = GeneralUtility::_GET(self::URL_PARAM_DETAIL);
 
@@ -69,7 +69,7 @@ class RenderPreProcessHook
             true === \is_array($getParams) &&
             true === array_key_exists('pageUid', $getParams) &&
             true === (boolean) $this->settings['addCanonicalUrl'] &&
-            0 < count($this->settings) &&
+            0 < \count($this->settings) &&
             $GLOBALS['TSFE']->id === (integer) $this->settings['detailPage']
         ) {
             $url = $this->linkService->buildLink(

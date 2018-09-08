@@ -43,7 +43,7 @@ class BacklinkViewHelper extends AbstractTagBasedViewHelper
     /**
      * @param \Featdd\DpnGlossary\Service\LinkService $linkService
      */
-    public function injectLinkService(LinkService $linkService)
+    public function injectLinkService(LinkService $linkService): void
     {
         $this->linkService = $linkService;
     }
@@ -51,7 +51,7 @@ class BacklinkViewHelper extends AbstractTagBasedViewHelper
     /**
      * @throws \TYPO3\CMS\Extbase\Configuration\Exception\InvalidConfigurationTypeException
      */
-    public function initialize()
+    public function initialize(): void
     {
         parent::initialize();
 
@@ -63,7 +63,7 @@ class BacklinkViewHelper extends AbstractTagBasedViewHelper
         $this->settings = $configurationManager->getConfiguration(ConfigurationManager::CONFIGURATION_TYPE_SETTINGS, 'dpnglossary');
     }
 
-    public function initializeArguments()
+    public function initializeArguments(): void
     {
         $this->registerUniversalTagAttributes();
         $this->registerArgument('absolute', 'bool', 'Should the link be absolute', false, false);
@@ -72,7 +72,7 @@ class BacklinkViewHelper extends AbstractTagBasedViewHelper
     /**
      * @return string
      */
-    public function render()
+    public function render(): string
     {
         if (true === (bool) $this->settings['useHttpReferer']) {
             $httpReferer = GeneralUtility::getIndpEnv('HTTP_REFERER');
@@ -103,11 +103,9 @@ class BacklinkViewHelper extends AbstractTagBasedViewHelper
      * @param int $pageUid
      * @return string
      */
-    protected function getLink($pageUid = null)
+    protected function getLink($pageUid = null): string
     {
-        $pageUid = null === $pageUid
-            ? $this->settings['listPage']
-            : $pageUid;
+        $pageUid = $pageUid ?? $this->settings['listPage'];
 
         return $this->linkService->buildLink(
             $pageUid,

@@ -33,12 +33,12 @@ class TermController extends ActionController
     /**
      * @param \Featdd\DpnGlossary\Domain\Repository\TermRepository $termRepository
      */
-    public function injectTermRepository(TermRepository $termRepository)
+    public function injectTermRepository(TermRepository $termRepository): void
     {
         $this->termRepository = $termRepository;
     }
 
-    public function listAction()
+    public function listAction(): void
     {
         /** @var array|QueryResult $terms */
         $terms = 'character' === $this->settings['listmode']
@@ -50,7 +50,7 @@ class TermController extends ActionController
         $this->view->assign('terms', $terms);
     }
 
-    public function previewNewestAction()
+    public function previewNewestAction(): void
     {
         $limit = (integer) $this->settings['previewlimit'];
 
@@ -64,7 +64,7 @@ class TermController extends ActionController
         );
     }
 
-    public function previewRandomAction()
+    public function previewRandomAction(): void
     {
         $limit = (integer) $this->settings['previewlimit'];
 
@@ -78,7 +78,7 @@ class TermController extends ActionController
         );
     }
 
-    public function previewSelectedAction()
+    public function previewSelectedAction(): void
     {
         $previewSelectedUids = GeneralUtility::trimExplode(',', $this->settings['previewSelected']);
 
@@ -92,7 +92,7 @@ class TermController extends ActionController
      * @param \Featdd\DpnGlossary\Domain\Model\Term $term
      * @param integer $pageUid
      */
-    public function showAction(Term $term, $pageUid = null)
+    public function showAction(Term $term, $pageUid = null): void
     {
         if ('pagination' === $this->settings['listmode']) {
             $this->view->assign(

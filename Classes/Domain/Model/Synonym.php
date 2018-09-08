@@ -20,7 +20,7 @@ use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
  */
 class Synonym extends AbstractEntity
 {
-    const TABLE = 'tx_dpnglossary_domain_model_synonym';
+    public const TABLE = 'tx_dpnglossary_domain_model_synonym';
 
     /**
      * @var string $name
@@ -31,7 +31,7 @@ class Synonym extends AbstractEntity
     /**
      * @return string $name
      */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
@@ -39,7 +39,7 @@ class Synonym extends AbstractEntity
     /**
      * @param string $name
      */
-    public function setName($name)
+    public function setName($name): void
     {
         $this->name = $name;
     }

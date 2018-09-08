@@ -30,15 +30,15 @@ use TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer;
  */
 class ParserService implements SingletonInterface
 {
-    const REGEX_DELIMITER = '/';
+    public const REGEX_DELIMITER = '/';
 
     /**
      * tags to be always ignored by parsing
      */
-    public static $alwaysIgnoreParentTags = array(
+    public static $alwaysIgnoreParentTags = [
         'a',
         'script',
-    );
+    ];
 
     /**
      * @var ContentObjectRenderer
@@ -48,17 +48,17 @@ class ParserService implements SingletonInterface
     /**
      * @var array
      */
-    protected $terms = array();
+    protected $terms = [];
 
     /**
      * @var array
      */
-    protected $tsConfig = array();
+    protected $tsConfig = [];
 
     /**
      * @var array
      */
-    protected $settings = array();
+    protected $settings = [];
 
     /**
      * Boots up:
@@ -94,7 +94,7 @@ class ParserService implements SingletonInterface
         // Reduce TS config to plugin
         $this->tsConfig = $this->tsConfig['plugin.']['tx_dpnglossary.'];
 
-        if (null !== $this->tsConfig && 0 < count($this->tsConfig)) {
+        if (null !== $this->tsConfig && 0 < \count($this->tsConfig)) {
             // Save extension settings without ts dots
             $this->settings = GeneralUtility::removeDotsFromTS($this->tsConfig['settings.']);
             // Set StoragePid in the query settings object
@@ -230,7 +230,7 @@ class ParserService implements SingletonInterface
             $xpathQuery = '//' . $tag;
 
             // if classes given add them to xpath query
-            if (0 < count($forbiddenParsingTagClasses)) {
+            if (0 < \count($forbiddenParsingTagClasses)) {
                 $xpathQuery .= '[not(contains(@class, \'' .
                     implode(
                         '\') or contains(@class, \'',
@@ -255,7 +255,7 @@ class ParserService implements SingletonInterface
                 );
 
                 // check if element is children of a forbidden parent
-                if (false === in_array($parentTags, $forbiddenParentTags, true)) {
+                if (false === \in_array($parentTags, $forbiddenParentTags, true)) {
                     /** @var \DOMElement|\DOMText $childNode */
                     for ($i = 0; $i < $DOMTag->childNodes->length; $i++) {
                         $childNode = $DOMTag->childNodes->item($i);
@@ -293,7 +293,7 @@ class ParserService implements SingletonInterface
      * @param callable $wrappingCallback the wrapping function for parsed terms as callback
      * @return string
      */
-    public function textParser($text, callable $wrappingCallback)
+    public function textParser($text, callable $wrappingCallback): string
     {
         $text = preg_replace('#\x{00a0}#iu', '&nbsp;', $text);
         // Iterate over terms and search matches for each of them
@@ -339,7 +339,7 @@ class ParserService implements SingletonInterface
      * @param integer $replacements
      * @param callable $wrappingCallback
      */
-    protected function regexParser(&$text, Term $term, &$replacements, callable $wrappingCallback)
+    protected function regexParser(&$text, Term $term, &$replacements, callable $wrappingCallback): void
     {
         // Try simple search first to save performance
         if (false === mb_stripos($text, $term->getName())) {
@@ -407,7 +407,7 @@ class ParserService implements SingletonInterface
      * @return string
      * @throws \UnexpectedValueException
      */
-    protected function termWrapper(Term $term)
+    protected function termWrapper(Term $term): string
     {
         // get content object type
         $contentObjectType = $this->tsConfig['settings.']['termWraps'];

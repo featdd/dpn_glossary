@@ -20,7 +20,7 @@ use TYPO3\CMS\Core\SingletonInterface;
  */
 class ParserUtility implements SingletonInterface
 {
-    const DEFAULT_TAG = 'DPNGLOSSARY';
+    public const DEFAULT_TAG = 'DPNGLOSSARY';
 
     /**
      * Protect inline JavaScript from DOM Manipulation with HTML comments
@@ -30,7 +30,7 @@ class ParserUtility implements SingletonInterface
      * @param string $tag
      * @return string
      */
-    public static function protectScrtiptsAndCommentsFromDOM($html, $tag = self::DEFAULT_TAG)
+    public static function protectScrtiptsAndCommentsFromDOM($html, $tag = self::DEFAULT_TAG): string
     {
         $callback = function ($match) use ($tag) {
             return '<!--' . $tag . base64_encode($match[1] . $match[2] . $match[3]) . '-->';
@@ -54,7 +54,7 @@ class ParserUtility implements SingletonInterface
      * @param string $tag
      * @return string
      */
-    public static function protectScriptsAndCommentsFromDOMReverse($html, $tag = self::DEFAULT_TAG)
+    public static function protectScriptsAndCommentsFromDOMReverse($html, $tag = self::DEFAULT_TAG): string
     {
         $callback = function ($match) {
             return base64_decode($match[2]);
@@ -74,7 +74,7 @@ class ParserUtility implements SingletonInterface
      * @param string $tag
      * @return string
      */
-    public static function protectLinkAndSrcPathsFromDOM($html, $tag = self::DEFAULT_TAG)
+    public static function protectLinkAndSrcPathsFromDOM($html, $tag = self::DEFAULT_TAG): string
     {
         $callback = function ($match) use ($tag) {
             return $match[1] . $match[2] . $tag . base64_encode($match[3]) . $match[4];
@@ -94,7 +94,7 @@ class ParserUtility implements SingletonInterface
      * @param string $tag
      * @return string
      */
-    public static function protectLinkAndSrcPathsFromDOMReverse($html, $tag = self::DEFAULT_TAG)
+    public static function protectLinkAndSrcPathsFromDOMReverse($html, $tag = self::DEFAULT_TAG): string
     {
         $callback = function ($match) {
             return $match[1] . $match[2] . base64_decode($match[4]) . $match[5];
@@ -116,7 +116,7 @@ class ParserUtility implements SingletonInterface
      * @param callable $wrapperCallback the function used by the content callback to wrap parsed terms
      * @return string
      */
-    public static function getAndSetInnerTagContent($html, callable $contentCallback, callable $wrapperCallback)
+    public static function getAndSetInnerTagContent($html, callable $contentCallback, callable $wrapperCallback): string
     {
         $regexCallback = function ($match) use ($contentCallback, $wrapperCallback) {
             return '<' . $match[1] . $match[2] . '>' . $contentCallback($match[3], $wrapperCallback) . $match[4];
@@ -133,7 +133,7 @@ class ParserUtility implements SingletonInterface
      * @param string $replacement
      * @return void
      */
-    public static function domTextReplacer(\DOMText $DOMText, $replacement)
+    public static function domTextReplacer(\DOMText $DOMText, $replacement): void
     {
         if (false === empty(trim($replacement))) {
             $tempDOM = new \DOMDocument();

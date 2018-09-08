@@ -50,7 +50,7 @@ class LinkService implements SingletonInterface
      * @param int $sysLanguageUid
      * @return string
      */
-    public function buildLink($pageId, array $arguments = array(), $absolut = false, $sysLanguageUid = 0)
+    public function buildLink($pageId, array $arguments = array(), $absolut = false, $sysLanguageUid = 0): string
     {
         if (0 < $sysLanguageUid) {
             $arguments = array_merge(

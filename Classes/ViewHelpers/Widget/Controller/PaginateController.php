@@ -71,12 +71,7 @@ class PaginateController extends AbstractWidgetController
      */
     protected $characters = array();
 
-    /**
-     * Init action of the controller
-     *
-     * @return void
-     */
-    public function initializeAction()
+    public function initializeAction(): void
     {
         /** @var \TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer $contentObjectRenderer */
         $contentObjectRenderer = $this->objectManager->get(ContentObjectRenderer::class);
@@ -92,7 +87,7 @@ class PaginateController extends AbstractWidgetController
         $this->query = $this->objects->getQuery();
 
         // Apply stdWrap
-        if (is_array($this->configuration['characters'])) {
+        if (\is_array($this->configuration['characters'])) {
             /** @var $typoScriptService \TYPO3\CMS\Core\TypoScript\TypoScriptService */
             $typoScriptService = $this->objectManager->get(TypoScriptService::class);
 
@@ -114,8 +109,9 @@ class PaginateController extends AbstractWidgetController
      * @param string $character
      * @return void
      * @throws \Featdd\DpnGlossary\ViewHelpers\Widget\Controller\Exception
+     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\InvalidQueryException
      */
-    public function indexAction($character = '')
+    public function indexAction($character = ''): void
     {
         if (true === empty($character)) {
             $this->query->setLimit(1)->setOrderings(array($this->field => QueryInterface::ORDER_ASCENDING));
@@ -130,7 +126,7 @@ class PaginateController extends AbstractWidgetController
                 if (true === method_exists($firstObject[0], $getter)) {
                     $this->currentCharacter = strtoupper($firstObject[0]->{$getter}()[0]);
                 } else {
-                    throw new Exception('Getter for "' . $this->field . '" in "' . get_class($firstObject[0]) . '" does not exist',
+                    throw new Exception('Getter for "' . $this->field . '" in "' . \get_class($firstObject[0]) . '" does not exist',
                         1433257601);
                 }
             }
@@ -153,10 +149,8 @@ class PaginateController extends AbstractWidgetController
 
     /**
      * Pagination array gets build up
-     *
-     * @return array
      */
-    protected function buildPagination()
+    protected function buildPagination(): array
     {
         $pages = array();
         $numberOfCharacters = count($this->characters);
@@ -183,7 +177,7 @@ class PaginateController extends AbstractWidgetController
             'current' => $this->currentCharacter,
             'numberOfPages' => $numberOfCharacters,
             'startCharacter' => $this->characters[0],
-            'endCharacter' => $this->characters[count($this->characters) + 1],
+            'endCharacter' => $this->characters[\count($this->characters) + 1],
         );
 
         return $pagination;
@@ -197,9 +191,10 @@ class PaginateController extends AbstractWidgetController
      * - range of characters: 'B-G'
      *
      * @param string $characters
-     * @return QueryInterface
+     * @return \TYPO3\CMS\Extbase\Persistence\QueryInterface
+     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\InvalidQueryException
      */
-    protected function getMatchings($characters = null)
+    protected function getMatchings($characters = null): QueryInterface
     {
         $matching = array();
 
@@ -207,7 +202,7 @@ class PaginateController extends AbstractWidgetController
             $characters = $this->currentCharacter;
         }
 
-        $characterLength = strlen($characters);
+        $characterLength = \strlen($characters);
 
         if ($characterLength === 1) {
             // single character B
@@ -218,8 +213,8 @@ class PaginateController extends AbstractWidgetController
                 // Build the characters like multiple characters B-G => BCDEFG
 
                 // Fix orderings
-                $firstCharacter = ord($characters[0]);
-                $lastCharacter = ord($characters[2]);
+                $firstCharacter = \ord($characters[0]);
+                $lastCharacter = \ord($characters[2]);
 
                 if ($firstCharacter - $lastCharacter > 0) {
                     $tmp = $firstCharacter;
@@ -231,14 +226,14 @@ class PaginateController extends AbstractWidgetController
                 $characters = '';
 
                 for ($char = $firstCharacter; $char <= $lastCharacter; ++$char) {
-                    $characters .= chr($char);
+                    $characters .= \chr($char);
                 }
             }
 
             // multiple characters BDEFG
-            $characters = str_split($characters);
+            $charactersArray = str_split($characters);
 
-            foreach ($characters as $char) {
+            foreach ($charactersArray as $char) {
                 $matching[] = $this->query->like($this->field, $char . '%');
             }
 
@@ -257,7 +252,7 @@ class PaginateController extends AbstractWidgetController
      * @param string $paginationCharacters
      * @return array
      */
-    public static function paginationArguments($field, $paginationCharacters)
+    public static function paginationArguments($field, $paginationCharacters): array
     {
         $firstCharacter = mb_strtoupper(mb_substr($field, 0, 1, 'UTF-8'), 'UTF-8');
         $characters = array_change_key_case(explode(',', $paginationCharacters), CASE_UPPER);
@@ -284,7 +279,7 @@ class PaginateController extends AbstractWidgetController
             $characters
         );
 
-        $character = true === in_array($firstCharacter, $characters, true) ?
+        $character = true === \in_array($firstCharacter, $characters, true) ?
             $firstCharacter :
             false;
 

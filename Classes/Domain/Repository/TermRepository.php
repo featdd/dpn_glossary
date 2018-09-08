@@ -23,7 +23,7 @@ use TYPO3\CMS\Extbase\Persistence\Repository;
  */
 class TermRepository extends Repository
 {
-    const DEFAULT_LIMIT = 5;
+    public const DEFAULT_LIMIT = 5;
 
     /**
      * @var array
@@ -37,7 +37,7 @@ class TermRepository extends Repository
      *
      * @return array
      */
-    public function findByNameLength()
+    public function findByNameLength(): array
     {
         $terms = $this->findAll()->toArray();
 
@@ -49,7 +49,7 @@ class TermRepository extends Repository
          * @return int
          */
         $sortingCallback = function ($termA, $termB) {
-            return strlen($termB->getName()) - strlen($termA->getName());
+            return \strlen($termB->getName()) - \strlen($termA->getName());
         };
 
         // Sort terms
@@ -62,9 +62,10 @@ class TermRepository extends Repository
      * finds terms by multiple uids
      *
      * @param array $uids
-     * @return QueryResultInterface
+     * @return \TYPO3\CMS\Extbase\Persistence\QueryResultInterface
+     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\InvalidQueryException
      */
-    public function findByUids(array $uids)
+    public function findByUids(array $uids): QueryResultInterface
     {
         $query = $this->createQuery();
 
@@ -79,9 +80,9 @@ class TermRepository extends Repository
      * finds the newest terms
      *
      * @param integer $limit
-     * @return QueryResultInterface
+     * @return \TYPO3\CMS\Extbase\Persistence\QueryResultInterface
      */
-    public function findNewest($limit = self::DEFAULT_LIMIT)
+    public function findNewest($limit = self::DEFAULT_LIMIT): QueryResultInterface
     {
         return $this->createQuery()
             ->setOrderings(array(
@@ -97,19 +98,13 @@ class TermRepository extends Repository
      * @param integer $limit
      * @return array
      */
-    public function findRandom($limit = self::DEFAULT_LIMIT)
+    public function findRandom($limit = self::DEFAULT_LIMIT): array
     {
         $terms = $this->createQuery()->execute()->toArray();
 
         shuffle($terms);
 
-        $terms = array_slice(
-            $terms,
-            0,
-            $limit
-        );
-
-        return $terms;
+        return \array_slice($terms, 0, $limit);
     }
 
     /**
@@ -117,7 +112,7 @@ class TermRepository extends Repository
      *
      * @return array
      */
-    public function findAllGroupedByFirstCharacter()
+    public function findAllGroupedByFirstCharacter(): array
     {
         $terms = $this->findAll();
         $numbers = range(0, 9);
@@ -132,10 +127,10 @@ class TermRepository extends Repository
                 $firstCharacter = (int) $firstCharacter;
             }
 
-            if (true === in_array($firstCharacter, $numbers, true)) {
+            if (true === \in_array($firstCharacter, $numbers, true)) {
                 $firstCharacter = '0-9';
             } else {
-                if (false === in_array($firstCharacter, $normalChars)) {
+                if (false === \in_array($firstCharacter, $normalChars)) {
                     switch ($firstCharacter) {
                         case 'ä':
                             $firstCharacter = 'a';
