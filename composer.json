@@ -1,14 +1,15 @@
 {
-  "name": "Featdd/dpn_glossary",
+  "name": "featdd/dpn_glossary",
   "type": "typo3-cms-extension",
-  "description": "Modern Extbase and namespaced Glossary extension",
-  "homepage": "http://featdd.de",
+  "description": "Glossary extension with page parser",
+  "homepage": "https://featdd.de",
   "license": [
     "GPL-2.0+"
   ],
-  "version": "2.7.5",
+  "version": "3.0.0-beta",
   "require": {
-    "typo3/cms-core": "~6.2 || ~7.6 || ~8.7",
+    "typo3/cms-core": "~9.4.0",
+    "php": "^7.2",
     "ext-dom": "*",
     "ext-libxml": "*"
   },
