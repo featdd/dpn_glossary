@@ -163,3 +163,7 @@ plugin.tx_dpnglossary {
     }
   }
 }
+
+[globalVar = LIT:1 = {$plugin.tx_dpnglossary.settings.addStylesheet}]
+  page.includeCSS.dpnglossary = EXT:dpn_glossary/Resources/Public/css/styles.min.css
+[global]
