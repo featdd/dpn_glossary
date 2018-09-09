@@ -4,9 +4,8 @@
   "description": "Glossary extension with page parser",
   "homepage": "https://featdd.de",
   "license": [
-    "GPL-2.0+"
+    "GPL-2.0-or-later"
   ],
-  "version": "3.0.0-beta",
   "require": {
     "typo3/cms-core": "~9.4.0",
     "php": "^7.2",
