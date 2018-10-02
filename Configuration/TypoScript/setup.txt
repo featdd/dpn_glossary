@@ -23,8 +23,6 @@ plugin.tx_dpnglossary {
   settings {
     # Pid of the detailpage
     detailPage = {$plugin.tx_dpnglossary.settings.detailPage}
-    # Pid of the listpage
-    listPage = {$plugin.tx_dpnglossary.settings.listPage}
     # Add canonical url to detailPage
     addCanonicalUrl = {$plugin.tx_dpnglossary.settings.addCanonicalUrl}
     # pages where terms should be searched, 0 = all
@@ -69,6 +67,8 @@ plugin.tx_dpnglossary {
         field = name
         dataWrap = |
         typolink {
+          useCacheHash = 0
+
           parameter = #{field:name}
           parameter {
             insertData = 1
@@ -116,8 +116,6 @@ plugin.tx_dpnglossary {
             override = title="{field:name}" class="dpnglossary link"
             override.if.isFalse.data = field:tooltiptext
           }
-
-          useCacheHash = 1
         }
       }
 

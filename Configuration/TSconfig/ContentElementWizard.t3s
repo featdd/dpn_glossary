@@ -1,32 +1,22 @@
 mod.wizards.newContentElement.wizardItems.plugins {
   elements {
-    dpn_glossary_list {
-      iconIdentifier = ext-dpn_glossary-list-wizard-icon
-      title = LLL:EXT:dpn_glossary/Resources/Private/Language/locallang.xlf:tx_dpnglossary.wizard_list_title
-      description = LLL:EXT:dpn_glossary/Resources/Private/Language/locallang.xlf:tx_dpnglossary.wizard_list_description
+    dpnglossary_glossary {
+      iconIdentifier = ext-dpn_glossary-wizard-icon
+      title = LLL:EXT:dpn_glossary/Resources/Private/Language/locallang.xlf:tx_dpnglossary.wizard_glossary_title
+      description = LLL:EXT:dpn_glossary/Resources/Private/Language/locallang.xlf:tx_dpnglossary.wizard_glossary_description
       tt_content_defValues {
         CType = list
-        list_type = dpnglossary_glossarylist
+        list_type = dpnglossary_glossary
       }
     }
 
-    dpn_glossary_preview {
+    dpnglossary_preview {
       iconIdentifier = ext-dpn_glossary-preview-wizard-icon
       title = LLL:EXT:dpn_glossary/Resources/Private/Language/locallang.xlf:tx_dpnglossary.wizard_preview_title
       description = LLL:EXT:dpn_glossary/Resources/Private/Language/locallang.xlf:tx_dpnglossary.wizard_preview_description
       tt_content_defValues {
         CType = list
         list_type = dpnglossary_glossarypreview
-      }
-    }
-
-    dpn_glossary_detail {
-      iconIdentifier = ext-dpn_glossary-detail-wizard-icon
-      title = LLL:EXT:dpn_glossary/Resources/Private/Language/locallang.xlf:tx_dpnglossary.wizard_detail_title
-      description = LLL:EXT:dpn_glossary/Resources/Private/Language/locallang.xlf:tx_dpnglossary.wizard_detail_description
-      tt_content_defValues {
-        CType = list
-        list_type = dpnglossary_glossarydetail
       }
     }
   }

@@ -28,19 +28,6 @@ Alle Konstanten zugehörig zu plugin.tx_dpnglossary.settings:
 .. container:: table-row
 
    Constant
-        settings.listPage
-
-   Data Type
-         integer
-
-   Description
-         Seiten ID der Listenseite
-
-   Default
-
-.. container:: table-row
-
-   Constant
         settings.addCanonicalUrl
 
    Data Type

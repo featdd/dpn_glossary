@@ -72,7 +72,7 @@ Add Term as page title
 
   temp.termTitle = RECORDS
   temp.termTitle {
-    source = {GP:tx_dpnglossary_glossarydetail|term}
+    source = {GP:tx_dpnglossary_glossary|term}
     source.insertData = 1
     tables = tx_dpnglossary_domain_model_term
     conf.tx_dpnglossary_domain_model_term >

@@ -102,23 +102,17 @@
       <trans-unit id="tx_dpnglossary.no_objects_found">
         <target>Es wurden keine Objekte gefunden</target>
       </trans-unit>
-      <trans-unit id="tx_dpnglossary.wizard_list_title">
+      <trans-unit id="tx_dpnglossary.wizard_glossary_title">
         <target>Glossar Listenansicht</target>
       </trans-unit>
-      <trans-unit id="tx_dpnglossary.wizard_list_description">
-        <target>Plugin für die Listenansicht der dpn_glossary Extension</target>
+      <trans-unit id="tx_dpnglossary.wizard_glossary_description">
+        <target>Plugin für das Glossar der dpn_glossary Extension</target>
       </trans-unit>
       <trans-unit id="tx_dpnglossary.wizard_preview_title">
         <target>Glossar Vorschau</target>
       </trans-unit>
       <trans-unit id="tx_dpnglossary.wizard_preview_description">
         <target>Plugin für die Vorschau der dpn_glossary Extension</target>
-      </trans-unit>
-      <trans-unit id="tx_dpnglossary.wizard_detail_title">
-        <target>Glossar Einzelansicht</target>
-      </trans-unit>
-      <trans-unit id="tx_dpnglossary.wizard_detail_description">
-        <target>Plugin für die Detailansicht der dpn_glossary Extension</target>
       </trans-unit>
 
 

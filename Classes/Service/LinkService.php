@@ -44,26 +44,26 @@ class LinkService implements SingletonInterface
     }
 
     /**
-     * @param int $pageId
+     * @param int $pageUid
      * @param array $arguments
-     * @param bool $absolut
+     * @param bool $absolute
      * @param int $sysLanguageUid
      * @return string
      */
-    public function buildLink($pageId, array $arguments = array(), $absolut = false, $sysLanguageUid = 0): string
+    public function buildLink(int $pageUid, array $arguments = [], bool $absolute = false, int $sysLanguageUid = 0): string
     {
         if (0 < $sysLanguageUid) {
             $arguments = array_merge(
-                array('L' => $sysLanguageUid),
+                ['L' => $sysLanguageUid],
                 $arguments
             );
         }
 
         return $this->uriBuilder
             ->reset()
-            ->setTargetPageUid($pageId)
+            ->setTargetPageUid($pageUid)
             ->setArguments($arguments)
-            ->setCreateAbsoluteUri($absolut)
+            ->setCreateAbsoluteUri($absolute)
             ->buildFrontendUri();
     }
 }

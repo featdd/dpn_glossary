@@ -29,19 +29,6 @@ plugin.tx_dpnglossary.settings:
 .. container:: table-row
 
    Constant
-        settings.listPage
-
-   Data Type
-         integer
-
-   Description
-         Page ID of the listpage plugin
-
-   Default
-
-.. container:: table-row
-
-   Constant
         settings.addCanonicalUrl
 
    Data Type

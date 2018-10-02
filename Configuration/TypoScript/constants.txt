@@ -17,8 +17,6 @@ plugin.tx_dpnglossary {
   settings {
     # cat=dpn_glossary/settings/a; type=integer; label=Page ID of the detailpage for parsed terms
     detailPage =
-    # cat=dpn_glossary/settings/a; type=integer; label=Page ID of the listpage for parsed terms
-    listPage =
     # cat=dpn_glossary/settings/a; type=boolean; label=Add a canonical url to the detailpage
     addCanonicalUrl = 1
     # cat=dpn_glossary/settings/a; type=string; label=Pages which should be parsed for glossary terms

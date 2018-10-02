@@ -102,23 +102,17 @@
       <trans-unit id="tx_dpnglossary.no_objects_found">
         <source>No objects were found</source>
       </trans-unit>
-      <trans-unit id="tx_dpnglossary.wizard_list_title">
-        <source>Glossary list</source>
+      <trans-unit id="tx_dpnglossary.wizard_glossary_title">
+        <source>Glossary</source>
       </trans-unit>
-      <trans-unit id="tx_dpnglossary.wizard_list_description">
-        <source>Plugin for the listview of the dpn_glossary extension</source>
+      <trans-unit id="tx_dpnglossary.wizard_glossary_description">
+        <source>Plugin for the glossar of the dpn_glossary extension</source>
       </trans-unit>
       <trans-unit id="tx_dpnglossary.wizard_preview_title">
         <source>Glossary preview list</source>
       </trans-unit>
       <trans-unit id="tx_dpnglossary.wizard_preview_description">
         <source>Plugin for the preview for the dpn_glossary extension</source>
-      </trans-unit>
-      <trans-unit id="tx_dpnglossary.wizard_detail_title">
-        <source>Glossary detailview</source>
-      </trans-unit>
-      <trans-unit id="tx_dpnglossary.wizard_detail_description">
-        <source>Plugin for the detailview of the dpn_glossary extension</source>
       </trans-unit>
 
 

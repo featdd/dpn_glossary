@@ -5,20 +5,14 @@ call_user_func(
     function () {
         \TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerPlugin(
             'dpn_glossary',
-            'Glossarylist',
-            'LLL:EXT:dpn_glossary/Resources/Private/Language/locallang.xlf:tx_dpnglossary.wizard_list_title'
+            'Glossary',
+            'LLL:EXT:dpn_glossary/Resources/Private/Language/locallang.xlf:tx_dpnglossary.wizard_glossary_title'
         );
 
         \TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerPlugin(
             'dpn_glossary',
             'Glossarypreview',
             'LLL:EXT:dpn_glossary/Resources/Private/Language/locallang.xlf:tx_dpnglossary.wizard_preview_title'
-        );
-
-        \TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerPlugin(
-            'dpn_glossary',
-            'Glossarydetail',
-            'LLL:EXT:dpn_glossary/Resources/Private/Language/locallang.xlf:tx_dpnglossary.wizard_detail_title'
         );
 
         $flexforms = [

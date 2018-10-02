@@ -5,9 +5,9 @@ call_user_func(
     function ($extKey) {
         \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
             'Featdd.' . $extKey,
-            'Glossarylist',
+            'Glossary',
             [
-                'Term' => 'list',
+                'Term' => 'list, show',
             ],
             // non-cacheable actions
             [
@@ -27,28 +27,14 @@ call_user_func(
             ]
         );
 
-        \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
-            'Featdd.' . $extKey,
-            'Glossarydetail',
-            [
-                'Term' => 'show',
-            ],
-            // non-cacheable actions
-            [
-                'Term' => 'show',
-            ]
-        );
-
         $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['tslib/class.tslib_fe.php']['contentPostProc-output'][] = \Featdd\DpnGlossary\Hook\ContentPostProcHook::class . '->main';
         $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['tslib/class.tslib_fe.php']['contentPostProc-cached'][] = \Featdd\DpnGlossary\Hook\ContentPostProcHook::class . '->main';
-        $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['t3lib/class.t3lib_pagerenderer.php']['render-preProcess'][] = \Featdd\DpnGlossary\Hook\RenderPreProcessHook::class . '->main';
-
         $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['ext/install']['update'][\Featdd\DpnGlossary\Updates\SlugUpdateWizard::class] = \Featdd\DpnGlossary\Updates\SlugUpdateWizard::class;
 
         $iconRegistry = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Imaging\IconRegistry::class);
 
         $iconRegistry->registerIcon(
-            'ext-dpn_glossary-list-wizard-icon',
+            'ext-dpn_glossary-wizard-icon',
             \TYPO3\CMS\Core\Imaging\IconProvider\FontawesomeIconProvider::class,
             ['name' => 'list']
         );
@@ -57,12 +43,6 @@ call_user_func(
             'ext-dpn_glossary-preview-wizard-icon',
             \TYPO3\CMS\Core\Imaging\IconProvider\FontawesomeIconProvider::class,
             ['name' => 'external-link-square']
-        );
-
-        $iconRegistry->registerIcon(
-            'ext-dpn_glossary-detail-wizard-icon',
-            \TYPO3\CMS\Core\Imaging\IconProvider\FontawesomeIconProvider::class,
-            ['name' => 'search']
         );
 
         if (false === \is_array($GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations']['dpnglossary_termscache'])) {
