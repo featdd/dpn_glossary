@@ -15,14 +15,6 @@ insert_final_newline = true
 indent_size = 4
 indent_style = space
 
-[*.{js,css,scss,json,yml,txt,md,sql,typoscript}]
-indent_size = 2
-indent_style = space
-
-[*.{html}]
-indent_size = 2
-indent_style = space
-
-[*.{xml,xlf,xsd}]
+[*.{js,css,scss,json,yml,txt,md,sql,typoscript,html,xml,xlf,xsd}]
 indent_size = 2
 indent_style = space
