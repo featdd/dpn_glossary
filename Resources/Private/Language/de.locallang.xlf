@@ -9,6 +9,9 @@
       <trans-unit id="tx_dpnglossary_domain_model_term.name">
         <target>Name des Begriffes</target>
       </trans-unit>
+      <trans-unit id="tx_dpnglossary_domain_model_term.url_segment">
+        <source>URL Segment</source>
+      </trans-unit>
       <trans-unit id="tx_dpnglossary_domain_model_term.tooltiptext">
         <target>Text der im CSS Tooltip angezeigt wird</target>
       </trans-unit>

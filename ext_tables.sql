@@ -4,6 +4,7 @@ CREATE TABLE tx_dpnglossary_domain_model_term (
   pid                  int(11) DEFAULT '0'             NOT NULL,
 
   name                 varchar(255) DEFAULT ''         NOT NULL,
+  url_segment          varchar(255) DEFAULT ''         NOT NULL,
   tooltiptext          varchar(255) DEFAULT ''         NOT NULL,
   term_type            varchar(255) DEFAULT ''         NOT NULL,
   term_lang            char(2) DEFAULT ''              NOT NULL,
