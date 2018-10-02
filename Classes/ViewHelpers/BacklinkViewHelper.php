@@ -74,19 +74,11 @@ class BacklinkViewHelper extends AbstractTagBasedViewHelper
      */
     public function render(): string
     {
-        if (true === (bool) $this->settings['useHttpReferer']) {
-            $httpReferer = GeneralUtility::getIndpEnv('HTTP_REFERER');
+        $httpReferer = GeneralUtility::getIndpEnv('HTTP_REFERER');
 
-            $url = false === empty($httpReferer)
-                ? $httpReferer
-                : $this->getLink();
-        } else {
-            $getParams = GeneralUtility::_GET(RenderPreProcessHook::URL_PARAM_DETAIL);
-
-            $url = true === array_key_exists('pageUid', $getParams)
-                ? $this->getLink($getParams['pageUid'])
-                : $this->getLink();
-        }
+        $url = false === empty($httpReferer)
+            ? $httpReferer
+            : 'javascript:history.back(1)';
 
         $this->tag->addAttribute('href', $url);
 
@@ -97,21 +89,5 @@ class BacklinkViewHelper extends AbstractTagBasedViewHelper
         $this->tag->forceClosingTag(true);
 
         return $this->tag->render();
-    }
-
-    /**
-     * @param int $pageUid
-     * @return string
-     */
-    protected function getLink($pageUid = null): string
-    {
-        $pageUid = $pageUid ?? $this->settings['listPage'];
-
-        return $this->linkService->buildLink(
-            $pageUid,
-            array(),
-            (bool) $this->arguments['absolute'],
-            $GLOBALS['TSFE']->sys_language_uid
-        );
     }
 }

@@ -51,8 +51,6 @@ plugin.tx_dpnglossary {
     disableParser = {$plugin.tx_dpnglossary.settings.disableParser}
     # Parse the terms synonyms
     parseSynonyms = {$plugin.tx_dpnglossary.settings.parseSynonyms}
-    # Use http referer for backlinks
-    useHttpReferer = {$plugin.tx_dpnglossary.settings.useHttpReferer}
 
     useCachingFramework = 1
 
@@ -98,24 +96,13 @@ plugin.tx_dpnglossary {
             }
           }
 
-          additionalParams = &tx_dpnglossary_glossarydetail[controller]=Term&tx_dpnglossary_glossarydetail[action]=show&tx_dpnglossary_glossarydetail[term]={field:uid}&tx_dpnglossary_glossarydetail[pageUid]={ global : TSFE | id}
+          additionalParams = &tx_dpnglossary_glossary[controller]=Term&tx_dpnglossary_glossary[action]=show&tx_dpnglossary_glossary[term]={field:uid}
           additionalParams {
             insertData = 1
 
             if {
               value = 0
               isGreaterThan < plugin.tx_dpnglossary.settings.detailPage
-              isFalse = 1
-              isFalse.if {
-                value = link
-                equals.field = term_mode
-              }
-            }
-
-            override = &tx_dpnglossary_glossarydetail[controller]=Term&tx_dpnglossary_glossarydetail[action]=show&tx_dpnglossary_glossarydetail[term]={field:uid}
-            override.if {
-              value = 0
-              isGreaterThan < plugin.tx_dpnglossary.settings.useHttpReferer
               isFalse = 1
               isFalse.if {
                 value = link
