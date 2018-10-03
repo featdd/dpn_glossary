@@ -30,6 +30,7 @@ call_user_func(
         $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['tslib/class.tslib_fe.php']['contentPostProc-output'][] = \Featdd\DpnGlossary\Hook\ContentPostProcHook::class . '->main';
         $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['tslib/class.tslib_fe.php']['contentPostProc-cached'][] = \Featdd\DpnGlossary\Hook\ContentPostProcHook::class . '->main';
         $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['ext/install']['update'][\Featdd\DpnGlossary\Updates\SlugUpdateWizard::class] = \Featdd\DpnGlossary\Updates\SlugUpdateWizard::class;
+        $GLOBALS['TYPO3_CONF_VARS']['SYS']['routing']['aspects']['StaticMultiRangeMapper'] = \Featdd\DpnGlossary\Routing\Aspect\StaticMultiRangeMapper::class;
 
         $iconRegistry = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Imaging\IconRegistry::class);
 

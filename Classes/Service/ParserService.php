@@ -73,10 +73,10 @@ class ParserService implements SingletonInterface
     public function __construct()
     {
         // Make instance of Object Manager
-        /** @var ObjectManager $objectManager */
+        /** @var \TYPO3\CMS\Extbase\Object\ObjectManager $objectManager */
         $objectManager = GeneralUtility::makeInstance(ObjectManager::class);
         // Get Configuration Manager
-        /** @var ConfigurationManager $configurationManager */
+        /** @var \TYPO3\CMS\Extbase\Configuration\ConfigurationManager $configurationManager */
         $configurationManager = $objectManager->get(ConfigurationManager::class);
         // Get Cache Manager
         /** @var \TYPO3\CMS\Core\Cache\CacheManager $cacheManager */
@@ -84,10 +84,10 @@ class ParserService implements SingletonInterface
         // Inject Content Object Renderer
         $this->contentObjectRenderer = $objectManager->get(ContentObjectRenderer::class);
         // Get Query Settings
-        /** @var QuerySettingsInterface $querySettings */
+        /** @var \TYPO3\CMS\Extbase\Persistence\Generic\QuerySettingsInterface $querySettings */
         $querySettings = $objectManager->get(QuerySettingsInterface::class);
         // Get termRepository
-        /** @var TermRepository $termRepository */
+        /** @var \Featdd\DpnGlossary\Domain\Repository\TermRepository $termRepository */
         $termRepository = $objectManager->get(TermRepository::class);
         // Get Typoscript Configuration
         $this->tsConfig = $configurationManager->getConfiguration(ConfigurationManagerInterface::CONFIGURATION_TYPE_FULL_TYPOSCRIPT);
