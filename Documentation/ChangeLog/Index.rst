@@ -10,6 +10,12 @@
 ChangeLog
 ---------
 
+v3.0.0
+  - Compatibility to 9.5 LTS
+  - Add slug field for routing (migration comes with the install wizard)
+  - IMPORTANT!: Removed seperat detailpage plugin
+  - Remove backpage param and always use http referer or history.back(1) for backlink
+
 v2.7.5
   - Fix terms cache for translations
   - Use better hook for parsing terms

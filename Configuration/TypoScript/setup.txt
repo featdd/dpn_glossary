@@ -23,8 +23,6 @@ plugin.tx_dpnglossary {
   settings {
     # Pid of the detailpage
     detailPage = {$plugin.tx_dpnglossary.settings.detailPage}
-    # Add canonical url to detailPage
-    addCanonicalUrl = {$plugin.tx_dpnglossary.settings.addCanonicalUrl}
     # pages where terms should be searched, 0 = all
     parsingPids = {$plugin.tx_dpnglossary.settings.parsingPids}
     # pages where terms should NOT be searched
@@ -150,5 +148,5 @@ plugin.tx_dpnglossary {
 }
 
 [globalVar = LIT:1 = {$plugin.tx_dpnglossary.settings.addStylesheet}]
-  page.includeCSS.dpnglossary = EXT:dpn_glossary/Resources/Public/css/styles.min.css
+  page.includeCSS.dpnglossary = EXT:dpn_glossary/Resources/Public/css/styles.css
 [global]

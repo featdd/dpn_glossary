@@ -29,20 +29,6 @@ plugin.tx_dpnglossary.settings:
 .. container:: table-row
 
    Constant
-        settings.addCanonicalUrl
-
-   Data Type
-        boolean
-
-   Description
-        Add a canonical url to the detailpage
-
-   Default
-        1
-
-.. container:: table-row
-
-   Constant
         settings.parsingPids
 
    Data Type

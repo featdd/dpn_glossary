@@ -22,7 +22,7 @@ Installation
 
 #. Add the static TypoScript to your Site template
 
-#. Create a list- & detailpage for terms
+#. Create a page for terms
 
 #. Configure the uids in the constants to make the detailpage resolvable for the parser
 

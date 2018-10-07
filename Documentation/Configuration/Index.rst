@@ -13,10 +13,9 @@ Configuration Reference
 The whole linking of terms can be configured over TypoScript.
 The Parsing itself can also be defined as precise as you wish.
 
-There are also example styles and scripts for the views and a tiny CSS3 Tooltip
+There are also example styles for the views and a tiny CSS3 Tooltip
 
 + CSS: EXT:dpn_glossary/Resources/Public/css/styles.min.css
-+ JS:  EXT:dpn_glossary/Resources/Public/js/scripts.min.js
 
 Special: Umlauts
 ^^^^^^^^^^^^^^^^

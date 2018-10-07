@@ -1,8 +1,8 @@
 ---
 conf.py:
-  copyright: 2017
+  copyright: 2018
   project: dreipunktnull Glossar
-  version: 2.6
+  version: 3.0
   latex_documents:
   - - Index
       - dpn_glossary.tex

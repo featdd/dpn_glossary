@@ -84,3 +84,36 @@ Add Term as page title
   page.headerData.5 >
   page.headerData.5 = COA
   page.headerData.5 < temp.termTitle
+
+Configure Routing for terms and pagination
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+::
+
+  DpnGlossary:
+    type: Extbase
+    limitToPages: [YOUR_PLUGINPAGE_UID]
+    extension: DpnGlossary
+    plugin: glossary
+    routes:
+    - { routePath: '/{character}', _controller: 'Term::list', _arguments: {'character': '@widget_0/character'} }
+    - { routePath: '/{localized_term}/{term_name}', _controller: 'Term::show', _arguments: {'term_name': 'term'} }
+    defaultController: 'Term::list'
+    defaults:
+      character: ''
+    aspects:
+      term_name:
+        type: PersistedAliasMapper
+        tableName: 'tx_dpnglossary_domain_model_term'
+        routeFieldName: 'url_segment'
+      character:
+        type: StaticMultiRangeMapper
+        ranges:
+          - start: 'A'
+            end: 'Z'
+      localized_term:
+        type: LocaleModifier
+        default: 'term'
+        localeMap:
+        - locale: 'de_DE.*'
+          value: 'begriff'
