@@ -6,7 +6,6 @@ $EM_CONF[$_EXTKEY] = [
     'category' => 'plugin',
     'author' => 'Daniel Dorndorf',
     'author_email' => 'dorndorf@featdd.de',
-    'author_company' => 'dreipunktnull',
     'state' => 'stable',
     'uploadfolder' => false,
     'createDirs' => '',

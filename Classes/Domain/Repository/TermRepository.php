@@ -13,6 +13,7 @@ namespace Featdd\DpnGlossary\Domain\Repository;
  ***/
 
 use Featdd\DpnGlossary\Domain\Model\Term;
+use TYPO3\CMS\Extbase\Persistence\Exception\InvalidQueryException;
 use TYPO3\CMS\Extbase\Persistence\QueryInterface;
 use TYPO3\CMS\Extbase\Persistence\QueryResultInterface;
 use TYPO3\CMS\Extbase\Persistence\Repository;
@@ -63,15 +64,18 @@ class TermRepository extends Repository
      *
      * @param array $uids
      * @return \TYPO3\CMS\Extbase\Persistence\QueryResultInterface
-     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\InvalidQueryException
      */
     public function findByUids(array $uids): QueryResultInterface
     {
         $query = $this->createQuery();
 
-        $query->matching(
-            $query->in('uid', $uids)
-        );
+        try {
+            $query->matching(
+                $query->in('uid', $uids)
+            );
+        } catch (InvalidQueryException $e) {
+            // nothing
+        }
 
         return $query->execute();
     }
@@ -130,7 +134,7 @@ class TermRepository extends Repository
             if (true === \in_array($firstCharacter, $numbers, true)) {
                 $firstCharacter = '0-9';
             } else {
-                if (false === \in_array($firstCharacter, $normalChars)) {
+                if (false === \in_array($firstCharacter, $normalChars, true)) {
                     switch ($firstCharacter) {
                         case 'ä':
                             $firstCharacter = 'a';
