@@ -124,7 +124,7 @@ class PaginateController extends AbstractWidgetController
                 $getter = 'get' . GeneralUtility::underscoredToUpperCamelCase($this->field);
 
                 if (true === method_exists($firstObject[0], $getter)) {
-                    $this->currentCharacter = strtoupper($firstObject[0]->{$getter}()[0]);
+                    $this->currentCharacter = 'A-Z';
                 } else {
                     throw new Exception('Getter for "' . $this->field . '" in "' . \get_class($firstObject[0]) . '" does not exist',
                         1433257601);
