@@ -37,6 +37,7 @@ CREATE TABLE tx_dpnglossary_domain_model_term (
   t3_origuid           int(11) DEFAULT '0'             NOT NULL,
   sys_language_uid     int(11) DEFAULT '0'             NOT NULL,
   l10n_parent          int(11) DEFAULT '0'             NOT NULL,
+  l10n_source          int(11) DEFAULT '0'             NOT NULL,
   l10n_diffsource      mediumblob,
 
   PRIMARY KEY (uid),
