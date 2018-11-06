@@ -135,12 +135,8 @@ class ParserUtility implements SingletonInterface
      */
     public static function domTextReplacer(\DOMText $DOMText, $replacement): void
     {
-        //class HTML5DOMDocument
-        $extPath = ExtensionManagementUtility::extPath('dpn_glossary');
-        require_once($extPath . 'Resources/Private/Libraries/html5DomDocument/autoload.php');
-        
         if (false === empty(trim($replacement))) {
-            $tempDOM = new \IvoPetkov\HTML5DOMDocument();;
+            $tempDOM = new \DOMDocument();
             // use XHTML tag for avoiding UTF-8 encoding problems
             $tempDOM->loadHTML('<?xml encoding="UTF-8">' . '<!DOCTYPE html><html><body><div id="replacement">' . $replacement . '</div></body></html>');
 
