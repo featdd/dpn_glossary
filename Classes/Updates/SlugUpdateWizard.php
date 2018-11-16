@@ -13,6 +13,7 @@ namespace Featdd\DpnGlossary\Updates;
  ***/
 
 use Featdd\DpnGlossary\Domain\Model\Term;
+use TYPO3\CMS\Core\DataHandling\Model\RecordStateFactory;
 use TYPO3\CMS\Core\DataHandling\SlugHelper;
 use TYPO3\CMS\Core\Exception\SiteNotFoundException;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -72,11 +73,11 @@ class SlugUpdateWizard extends AbstractUpdateWizard
         foreach ($terms as $term) {
             $termUid = (int) $term['uid'];
             $termPid = (int) $term['pid'];
-            $termLanguageUid = (int) $term['sys_language_uid'];
             $termSlug = $slugHelper->generate($term, $termPid);
+            $state = RecordStateFactory::forName(Term::TABLE)->fromArray($term, $termPid, $termUid);
 
             try {
-                if (false === $slugHelper->isUniqueInSite($termSlug, $termUid, 0, $termLanguageUid)) {
+                if (false === $slugHelper->isUniqueInSite($termSlug, $state)) {
                     $termSlug .= '-' . $termUid;
                 }
             } catch (SiteNotFoundException $e) {
