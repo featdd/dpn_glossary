@@ -7,7 +7,7 @@
     "GPL-2.0-or-later"
   ],
   "require": {
-    "typo3/cms-core": "~9.5.0",
+    "typo3/cms-core": "~9.5.1",
     "php": "^7.2",
     "ext-dom": "*",
     "ext-libxml": "*"

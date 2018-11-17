@@ -10,6 +10,9 @@
 ChangeLog
 ---------
 
+v3.0.1
+  - Fix upgrade wizard for TYPO3 9.5.1 due to broken slug helper method
+
 v3.0.0
   - Compatibility to 9.5 LTS
   - Add slug field for routing (migration comes with the install wizard)
