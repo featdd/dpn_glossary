@@ -20,5 +20,10 @@
   "replace": {
     "dpn_glossary": "self.version",
     "typo3-ter/dpn-glossary": "self.version"
+  },
+  "extra": {
+    "typo3/cms": {
+      "extension-key": "dpn_glossary"
+    }
   }
 }
