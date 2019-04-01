@@ -92,10 +92,9 @@ class SlugUpdateWizard extends AbstractUpdateWizard
                         'uid',
                         $queryBuilder->createNamedParameter($termUid, \PDO::PARAM_INT)
                     )
-                );
+                )
+                ->execute();
         }
-
-        $queryBuilder->execute();
 
         return true;
     }
