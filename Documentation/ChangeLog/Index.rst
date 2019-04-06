@@ -10,6 +10,9 @@
 ChangeLog
 ---------
 
+v3.0.2
+  - Bugfix for upgrade wizard
+
 v3.0.1
   - Fix upgrade wizard for TYPO3 9.5.1 due to broken slug helper method
 
