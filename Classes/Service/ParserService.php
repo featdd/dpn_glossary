@@ -23,6 +23,7 @@ use TYPO3\CMS\Extbase\Object\ObjectManager;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManager;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
 use TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer;
+use IvoPetkov\HTML5DOMDocument;
 
 /**
  * @package DpnGlossary
@@ -198,7 +199,7 @@ class ParserService implements SingletonInterface
         }
 
         //Create new DOMDocument
-        $DOM = new \DOMDocument();
+        $DOM = new HTML5DOMDocument();
 
         // Prevent crashes caused by HTML5 entities with internal errors
         libxml_use_internal_errors(true);

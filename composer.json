@@ -10,7 +10,8 @@
     "typo3/cms-core": "~9.5.0",
     "php": "^7.2",
     "ext-dom": "*",
-    "ext-libxml": "*"
+    "ext-libxml": "*",
+    "require ivopetkov/html5-dom-document-php": "^2"
   },
   "autoload": {
     "psr-4": {
