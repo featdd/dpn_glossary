@@ -10,6 +10,9 @@
 ChangeLog
 ---------
 
+v3.0.3
+  - Update composer.json
+
 v3.0.2
   - Bugfix for upgrade wizard
 
