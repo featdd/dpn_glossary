@@ -7,8 +7,8 @@
     "GPL-2.0-or-later"
   ],
   "require": {
-    "typo3/cms-core": "~9.5.1",
-    "php": "^7.2",
+    "typo3/cms-core": "^9.5.1",
+    "php": "~7.2",
     "ext-dom": "*",
     "ext-libxml": "*"
   },
@@ -18,7 +18,6 @@
     }
   },
   "replace": {
-    "dpn_glossary": "self.version",
     "typo3-ter/dpn-glossary": "self.version"
   },
   "extra": {
