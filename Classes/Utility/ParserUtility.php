@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 namespace Featdd\DpnGlossary\Utility;
 
 /***
@@ -8,7 +10,7 @@ namespace Featdd\DpnGlossary\Utility;
  * For the full copyright and license information, please read the
  * LICENSE.txt file that was distributed with this source code.
  *
- *  (c) 2018 Daniel Dorndorf <dorndorf@featdd.de>
+ *  (c) 2019 Daniel Dorndorf <dorndorf@featdd.de>
  *
  ***/
 
@@ -30,9 +32,9 @@ class ParserUtility implements SingletonInterface
      * @param string $tag
      * @return string
      */
-    public static function protectScrtiptsAndCommentsFromDOM($html, $tag = self::DEFAULT_TAG): string
+    public static function protectScrtiptsAndCommentsFromDOM(string $html, string $tag = self::DEFAULT_TAG): string
     {
-        $callback = function ($match) use ($tag) {
+        $callback = function (array $match) use ($tag) {
             return '<!--' . $tag . base64_encode($match[1] . $match[2] . $match[3]) . '-->';
         };
 
@@ -54,9 +56,9 @@ class ParserUtility implements SingletonInterface
      * @param string $tag
      * @return string
      */
-    public static function protectScriptsAndCommentsFromDOMReverse($html, $tag = self::DEFAULT_TAG): string
+    public static function protectScriptsAndCommentsFromDOMReverse(string $html, string $tag = self::DEFAULT_TAG): string
     {
-        $callback = function ($match) {
+        $callback = function (array $match) {
             return base64_decode($match[2]);
         };
 
@@ -74,9 +76,9 @@ class ParserUtility implements SingletonInterface
      * @param string $tag
      * @return string
      */
-    public static function protectLinkAndSrcPathsFromDOM($html, $tag = self::DEFAULT_TAG): string
+    public static function protectLinkAndSrcPathsFromDOM(string $html, string $tag = self::DEFAULT_TAG): string
     {
-        $callback = function ($match) use ($tag) {
+        $callback = function (array $match) use ($tag) {
             return $match[1] . $match[2] . $tag . base64_encode($match[3]) . $match[4];
         };
 
@@ -94,9 +96,9 @@ class ParserUtility implements SingletonInterface
      * @param string $tag
      * @return string
      */
-    public static function protectLinkAndSrcPathsFromDOMReverse($html, $tag = self::DEFAULT_TAG): string
+    public static function protectLinkAndSrcPathsFromDOMReverse(string $html, string $tag = self::DEFAULT_TAG): string
     {
-        $callback = function ($match) {
+        $callback = function (array $match) {
             return $match[1] . $match[2] . base64_decode($match[4]) . $match[5];
         };
 
@@ -108,24 +110,6 @@ class ParserUtility implements SingletonInterface
     }
 
     /**
-     * Extracts and replaces the
-     * inner content of the html tag
-     *
-     * @param string $html
-     * @param callable $contentCallback receives the inner tag contents and has to return the parsed content
-     * @param callable $wrapperCallback the function used by the content callback to wrap parsed terms
-     * @return string
-     */
-    public static function getAndSetInnerTagContent($html, callable $contentCallback, callable $wrapperCallback): string
-    {
-        $regexCallback = function ($match) use ($contentCallback, $wrapperCallback) {
-            return '<' . $match[1] . $match[2] . '>' . $contentCallback($match[3], $wrapperCallback) . $match[4];
-        };
-
-        return preg_replace_callback('#^<([\w]+)([^>]*)>(.*?)(<\/\1>)$#is', $regexCallback, $html);
-    }
-
-    /**
      * Replaces a DOM Text node
      * with a replacement string
      *
@@ -133,7 +117,7 @@ class ParserUtility implements SingletonInterface
      * @param string $replacement
      * @return void
      */
-    public static function domTextReplacer(\DOMText $DOMText, $replacement): void
+    public static function domTextReplacer(\DOMText $DOMText, string $replacement): void
     {
         if (false === empty(trim($replacement))) {
             $tempDOM = new \DOMDocument();

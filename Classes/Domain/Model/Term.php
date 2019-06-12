@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 namespace Featdd\DpnGlossary\Domain\Model;
 
 /***
@@ -8,7 +10,7 @@ namespace Featdd\DpnGlossary\Domain\Model;
  * For the full copyright and license information, please read the
  * LICENSE.txt file that was distributed with this source code.
  *
- *  (c) 2018 Daniel Dorndorf <dorndorf@featdd.de>
+ *  (c) 2019 Daniel Dorndorf <dorndorf@featdd.de>
  *
  ***/
 
@@ -101,7 +103,7 @@ class Term extends AbstractEntity
     /**
      * @param string $name
      */
-    public function setName($name): void
+    public function setName(string $name): void
     {
         $this->name = $name;
     }
@@ -117,7 +119,7 @@ class Term extends AbstractEntity
     /**
      * @param string $tooltiptext
      */
-    public function setTooltiptext($tooltiptext): void
+    public function setTooltiptext(string $tooltiptext): void
     {
         $this->tooltiptext = $tooltiptext;
     }
@@ -133,7 +135,7 @@ class Term extends AbstractEntity
     /**
      * @param string $termType
      */
-    public function setTermType($termType): void
+    public function setTermType(string $termType): void
     {
         $this->termType = $termType;
     }
@@ -149,7 +151,7 @@ class Term extends AbstractEntity
     /**
      * @param string $termLang
      */
-    public function setTermLang($termLang): void
+    public function setTermLang(string $termLang): void
     {
         $this->termLang = $termLang;
     }
@@ -165,7 +167,7 @@ class Term extends AbstractEntity
     /**
      * @param string $termMode
      */
-    public function setTermMode($termMode): void
+    public function setTermMode(string $termMode): void
     {
         $this->termMode = $termMode;
     }
@@ -181,7 +183,7 @@ class Term extends AbstractEntity
     /**
      * @param string $termLink
      */
-    public function setTermLink($termLink): void
+    public function setTermLink(string $termLink): void
     {
         $this->termLink = $termLink;
     }
@@ -197,7 +199,7 @@ class Term extends AbstractEntity
     /**
      * @param bool $excludeFromParsing
      */
-    public function setExcludeFromParsing($excludeFromParsing): void
+    public function setExcludeFromParsing(bool $excludeFromParsing): void
     {
         $this->excludeFromParsing = $excludeFromParsing;
     }
@@ -213,7 +215,7 @@ class Term extends AbstractEntity
     /**
      * @param bool $caseSensitive
      */
-    public function setCaseSensitive($caseSensitive): void
+    public function setCaseSensitive(bool $caseSensitive): void
     {
         $this->caseSensitive = $caseSensitive;
     }
@@ -275,7 +277,7 @@ class Term extends AbstractEntity
     }
 
     /**
-     * @param \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\Featdd\DpnGlossary\Domain\Model\Synonym>
+     * @param \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\Featdd\DpnGlossary\Domain\Model\Synonym> $synonyms
      */
     public function setSynonyms(ObjectStorage $synonyms): void
     {
@@ -317,9 +319,9 @@ class Term extends AbstractEntity
     /**
      * @return array
      */
-    public function toArray(): array
+    public function __toArray(): array
     {
-        return array(
+        return [
             'uid' => $this->getUid(),
             'pid' => $this->getPid(),
             'name' => $this->getName(),
@@ -332,6 +334,6 @@ class Term extends AbstractEntity
             'descriptions' => $this->getDescriptions(),
             'synonyms' => $this->getSynonyms(),
             'media' => $this->getMedia(),
-        );
+        ];
     }
 }

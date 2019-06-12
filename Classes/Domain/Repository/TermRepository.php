@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 namespace Featdd\DpnGlossary\Domain\Repository;
 
 /***
@@ -8,7 +10,7 @@ namespace Featdd\DpnGlossary\Domain\Repository;
  * For the full copyright and license information, please read the
  * LICENSE.txt file that was distributed with this source code.
  *
- *  (c) 2018 Daniel Dorndorf <dorndorf@featdd.de>
+ *  (c) 2019 Daniel Dorndorf <dorndorf@featdd.de>
  *
  ***/
 
@@ -20,7 +22,7 @@ use TYPO3\CMS\Extbase\Persistence\Repository;
 
 /**
  * @package DpnGlossary
- * @subpackage Repository
+ * @subpackage Domain\Repository
  */
 class TermRepository extends Repository
 {
@@ -29,9 +31,9 @@ class TermRepository extends Repository
     /**
      * @var array
      */
-    protected $defaultOrderings = array(
+    protected $defaultOrderings = [
         'name' => QueryInterface::ORDER_ASCENDING,
-    );
+    ];
 
     /**
      * find all terms sorted by name length
@@ -62,12 +64,16 @@ class TermRepository extends Repository
     /**
      * finds terms by multiple uids
      *
-     * @param array $uids
-     * @return \TYPO3\CMS\Extbase\Persistence\QueryResultInterface
+     * @param int[] $uids
+     * @return array
      */
-    public function findByUids(array $uids): QueryResultInterface
+    public function findByUids(array $uids): array
     {
         $query = $this->createQuery();
+
+        if (0 === count($uids)) {
+            return [];
+        }
 
         try {
             $query->matching(
@@ -77,21 +83,21 @@ class TermRepository extends Repository
             // nothing
         }
 
-        return $query->execute();
+        return $query->execute()->toArray();
     }
 
     /**
      * finds the newest terms
      *
-     * @param integer $limit
+     * @param int $limit
      * @return \TYPO3\CMS\Extbase\Persistence\QueryResultInterface
      */
-    public function findNewest($limit = self::DEFAULT_LIMIT): QueryResultInterface
+    public function findNewest(int $limit = self::DEFAULT_LIMIT): QueryResultInterface
     {
         return $this->createQuery()
-            ->setOrderings(array(
+            ->setOrderings([
                 'crdate' => QueryInterface::ORDER_ASCENDING,
-            ))
+            ])
             ->setLimit($limit)
             ->execute();
     }
@@ -102,7 +108,7 @@ class TermRepository extends Repository
      * @param integer $limit
      * @return array
      */
-    public function findRandom($limit = self::DEFAULT_LIMIT): array
+    public function findRandom(int $limit = self::DEFAULT_LIMIT): array
     {
         $terms = $this->createQuery()->execute()->toArray();
 
@@ -121,7 +127,7 @@ class TermRepository extends Repository
         $terms = $this->findAll();
         $numbers = range(0, 9);
         $normalChars = range('a', 'z');
-        $sortedTerms = array();
+        $sortedTerms = [];
 
         /** @var Term $term */
         foreach ($terms as $term) {
@@ -156,7 +162,7 @@ class TermRepository extends Repository
             $firstCharacter = mb_strtoupper($firstCharacter, 'UTF-8');
 
             if (false === isset($sortedTerms[$firstCharacter])) {
-                $sortedTerms[$firstCharacter] = array();
+                $sortedTerms[$firstCharacter] = [];
             }
 
             $sortedTerms[$firstCharacter][] = $term;

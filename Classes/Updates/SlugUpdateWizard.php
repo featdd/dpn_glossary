@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 namespace Featdd\DpnGlossary\Updates;
 
 /***
@@ -8,11 +10,12 @@ namespace Featdd\DpnGlossary\Updates;
  * For the full copyright and license information, please read the
  * LICENSE.txt file that was distributed with this source code.
  *
- *  (c) 2018 Daniel Dorndorf <dorndorf@featdd.de>
+ *  (c) 2019 Daniel Dorndorf <dorndorf@featdd.de>
  *
  ***/
 
 use Featdd\DpnGlossary\Domain\Model\Term;
+use Featdd\DpnGlossary\Utility\DatabaseUtility;
 use TYPO3\CMS\Core\DataHandling\Model\RecordStateFactory;
 use TYPO3\CMS\Core\DataHandling\SlugHelper;
 use TYPO3\CMS\Core\Exception\SiteNotFoundException;

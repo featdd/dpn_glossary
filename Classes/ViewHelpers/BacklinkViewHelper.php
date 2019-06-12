@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 namespace Featdd\DpnGlossary\ViewHelpers;
 
 /***
@@ -8,16 +10,15 @@ namespace Featdd\DpnGlossary\ViewHelpers;
  * For the full copyright and license information, please read the
  * LICENSE.txt file that was distributed with this source code.
  *
- *  (c) 2018 Daniel Dorndorf <dorndorf@featdd.de>
+ *  (c) 2019 Daniel Dorndorf <dorndorf@featdd.de>
  *
  ***/
 
-use Featdd\DpnGlossary\Hook\RenderPreProcessHook;
 use Featdd\DpnGlossary\Service\LinkService;
+use Featdd\DpnGlossary\Utility\ObjectUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManager;
-use TYPO3\CMS\Extbase\Object\ObjectManager;
-use TYPO3\CMS\Fluid\Core\ViewHelper\AbstractTagBasedViewHelper;
+use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractTagBasedViewHelper;
 
 /**
  * @package DpnGlossary
@@ -33,7 +34,7 @@ class BacklinkViewHelper extends AbstractTagBasedViewHelper
     /**
      * @var array
      */
-    protected $settings = array();
+    protected $settings = [];
 
     /**
      * @var \Featdd\DpnGlossary\Service\LinkService
@@ -55,10 +56,8 @@ class BacklinkViewHelper extends AbstractTagBasedViewHelper
     {
         parent::initialize();
 
-        /** @var \TYPO3\CMS\Extbase\Object\ObjectManager $objectManager */
-        $objectManager = GeneralUtility::makeInstance(ObjectManager::class);
         /** @var \TYPO3\CMS\Extbase\Configuration\ConfigurationManager $configurationManager */
-        $configurationManager = $objectManager->get(ConfigurationManager::class);
+        $configurationManager = ObjectUtility::makeInstance(ConfigurationManager::class);
 
         $this->settings = $configurationManager->getConfiguration(ConfigurationManager::CONFIGURATION_TYPE_SETTINGS, 'dpnglossary');
     }

@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 namespace Featdd\DpnGlossary\Domain\Model;
 
 /***
@@ -8,7 +10,7 @@ namespace Featdd\DpnGlossary\Domain\Model;
  * For the full copyright and license information, please read the
  * LICENSE.txt file that was distributed with this source code.
  *
- *  (c) 2018 Daniel Dorndorf <dorndorf@featdd.de>
+ *  (c) 2019 Daniel Dorndorf <dorndorf@featdd.de>
  *
  ***/
 
@@ -26,12 +28,12 @@ class Description extends AbstractEntity
      * @var string $meaning
      * @validate NotEmpty
      */
-    protected $meaning;
+    protected $meaning = '';
 
     /**
      * @var string $text
      */
-    protected $text;
+    protected $text = '';
 
     /**
      * @return string
@@ -44,7 +46,7 @@ class Description extends AbstractEntity
     /**
      * @param string $meaning
      */
-    public function setMeaning($meaning): void
+    public function setMeaning(string $meaning): void
     {
         $this->meaning = $meaning;
     }
@@ -60,7 +62,7 @@ class Description extends AbstractEntity
     /**
      * @param string $text
      */
-    public function setText($text): void
+    public function setText(string $text): void
     {
         $this->text = $text;
     }

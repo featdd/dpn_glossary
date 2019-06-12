@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 namespace Featdd\DpnGlossary\Service;
 
 /***
@@ -8,18 +10,20 @@ namespace Featdd\DpnGlossary\Service;
  * For the full copyright and license information, please read the
  * LICENSE.txt file that was distributed with this source code.
  *
- *  (c) 2018 Daniel Dorndorf <dorndorf@featdd.de>
+ *  (c) 2019 Daniel Dorndorf <dorndorf@featdd.de>
  *
  ***/
 
 use Featdd\DpnGlossary\Domain\Model\Term;
 use Featdd\DpnGlossary\Domain\Repository\TermRepository;
+use Featdd\DpnGlossary\Utility\ObjectUtility;
 use Featdd\DpnGlossary\Utility\ParserUtility;
 use TYPO3\CMS\Core\Cache\CacheManager;
+use TYPO3\CMS\Core\Context\Context;
+use TYPO3\CMS\Core\Context\Exception\AspectNotFoundException;
 use TYPO3\CMS\Core\SingletonInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Persistence\Generic\QuerySettingsInterface;
-use TYPO3\CMS\Extbase\Object\ObjectManager;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManager;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
 use TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer;
@@ -53,7 +57,7 @@ class ParserService implements SingletonInterface
     /**
      * @var array
      */
-    protected $tsConfig = [];
+    protected $typoScriptConfiguration = [];
 
     /**
      * @var array
@@ -62,8 +66,7 @@ class ParserService implements SingletonInterface
 
     /**
      * Boots up:
-     *  - objectManager to get class instances
-     *  - configuration manager for ts settings
+     *  - configuration manager for TypoScript settings
      *  - contentObjectRenderer for generating links etc.
      *  - termRepository to get the Terms
      *
@@ -72,39 +75,45 @@ class ParserService implements SingletonInterface
      */
     public function __construct()
     {
-        // Make instance of Object Manager
-        /** @var \TYPO3\CMS\Extbase\Object\ObjectManager $objectManager */
-        $objectManager = GeneralUtility::makeInstance(ObjectManager::class);
         // Get Configuration Manager
         /** @var \TYPO3\CMS\Extbase\Configuration\ConfigurationManager $configurationManager */
-        $configurationManager = $objectManager->get(ConfigurationManager::class);
+        $configurationManager = ObjectUtility::makeInstance(ConfigurationManager::class);
         // Get Cache Manager
         /** @var \TYPO3\CMS\Core\Cache\CacheManager $cacheManager */
-        $cacheManager = $objectManager->get(CacheManager::class);
+        $cacheManager = ObjectUtility::makeInstance(CacheManager::class);
         // Inject Content Object Renderer
-        $this->contentObjectRenderer = $objectManager->get(ContentObjectRenderer::class);
+        $this->contentObjectRenderer = ObjectUtility::makeInstance(ContentObjectRenderer::class);
         // Get Query Settings
         /** @var \TYPO3\CMS\Extbase\Persistence\Generic\QuerySettingsInterface $querySettings */
-        $querySettings = $objectManager->get(QuerySettingsInterface::class);
+        $querySettings = ObjectUtility::makeInstance(QuerySettingsInterface::class);
         // Get termRepository
         /** @var \Featdd\DpnGlossary\Domain\Repository\TermRepository $termRepository */
-        $termRepository = $objectManager->get(TermRepository::class);
+        $termRepository = ObjectUtility::makeInstance(TermRepository::class);
         // Get Typoscript Configuration
-        $this->tsConfig = $configurationManager->getConfiguration(ConfigurationManagerInterface::CONFIGURATION_TYPE_FULL_TYPOSCRIPT);
+        $this->typoScriptConfiguration = $configurationManager->getConfiguration(ConfigurationManagerInterface::CONFIGURATION_TYPE_FULL_TYPOSCRIPT);
         // Reduce TS config to plugin
-        $this->tsConfig = $this->tsConfig['plugin.']['tx_dpnglossary.'];
+        $this->typoScriptConfiguration = $this->typoScriptConfiguration['plugin.']['tx_dpnglossary.'];
 
-        if (null !== $this->tsConfig && 0 < \count($this->tsConfig)) {
+        if (null !== $this->typoScriptConfiguration && 0 < \count($this->typoScriptConfiguration)) {
             // Save extension settings without ts dots
-            $this->settings = GeneralUtility::removeDotsFromTS($this->tsConfig['settings.']);
+            $this->settings = GeneralUtility::removeDotsFromTS($this->typoScriptConfiguration['settings.']);
             // Set StoragePid in the query settings object
             $querySettings->setStoragePageIds(
                 GeneralUtility::trimExplode(
                     ',',
-                    $this->tsConfig['persistence.']['storagePid'])
+                    $this->typoScriptConfiguration['persistence.']['storagePid'])
             );
+
+            try {
+                /** @var \TYPO3\CMS\Core\Context\Context $context */
+                $context = ObjectUtility::makeInstance(Context::class);
+                $sysLanguageUid = $context->getPropertyFromAspect('language', 'id');
+            } catch (AspectNotFoundException $exception) {
+                $sysLanguageUid = 0;
+            }
+
             // Set current language uid
-            $querySettings->setLanguageUid($GLOBALS['TSFE']->sys_language_uid);
+            $querySettings->setLanguageUid($sysLanguageUid);
             // Set query to respect the language uid
             $querySettings->setRespectSysLanguage(true);
             // Assign query settings object to repository
@@ -142,15 +151,15 @@ class ParserService implements SingletonInterface
      * or false if parsers has to be aborted
      *
      * @param string $html
-     * @return string|boolean
+     * @return string|null
      * @throws Exception
      */
-    public function pageParser($html)
+    public function pageParser(string $html): string
     {
         // extract Pids which should be parsed
-        $parsingPids = GeneralUtility::trimExplode(',', $this->settings['parsingPids']);
+        $parsingPids = GeneralUtility::intExplode(',', $this->settings['parsingPids']);
         // extract Pids which should NOT be parsed
-        $excludePids = GeneralUtility::trimExplode(',', $this->settings['parsingExcludePidList']);
+        $excludePids = GeneralUtility::intExplode(',', $this->settings['parsingExcludePidList']);
         // Get Tags which content should be parsed
         $tags = GeneralUtility::trimExplode(',', $this->settings['parsingTags']);
         // Remove "a" & "script" from parsingTags if it was added unknowingly
@@ -158,28 +167,31 @@ class ParserService implements SingletonInterface
             $tags = array_diff($tags, self::$alwaysIgnoreParentTags);
         }
 
+        $currentPageId = (int) $GLOBALS['TSFE']->id;
+        $currentPageType = (int) $GLOBALS['TSFE']->type;
+
         // Abort parser...
         if (
             // Parser disabled
-            true === (boolean) $this->settings['disableParser'] ||
+            true === (bool) $this->settings['disableParser'] ||
             // Pagetype not 0
-            0 !== $GLOBALS['TSFE']->type ||
+            0 !== $currentPageType ||
             // no tags to parse given
             0 === \count($tags) ||
             // no terms have been found
             0 === \count($this->terms) ||
             // no config is given
-            0 === \count($this->tsConfig) ||
+            0 === \count($this->typoScriptConfiguration) ||
             // page is excluded
-            true === \in_array($GLOBALS['TSFE']->id, $excludePids, false) ||
+            true === \in_array($currentPageId, $excludePids, true) ||
             (
                 // parsingPids doesn't contain 0 and...
-                false === \in_array(0, $parsingPids, false) &&
+                false === \in_array(0, $parsingPids, true) &&
                 // page is not whitelisted
-                false === \in_array($GLOBALS['TSFE']->id, $parsingPids, false)
+                false === \in_array($currentPageId, $parsingPids, true)
             )
         ) {
-            return false;
+            return $html;
         }
 
         // Classes which are not allowed for the parsing tag
@@ -223,8 +235,11 @@ class ParserService implements SingletonInterface
         // Init DOMXPath with main DOMDocument
         $DOMXPath = new \DOMXPath($DOM);
 
-        /** @var \DOMElement $DOMBody */
+        /** @var \DOMNode $DOMBody */
         $DOMBody = $DOM->getElementsByTagName('body')->item(0);
+
+        $wrapperClosure = \Closure::fromCallable([$this, 'termWrapper']);
+
         // iterate over tags which are defined to be parsed
         foreach ($tags as $tag) {
             $xpathQuery = '//' . $tag;
@@ -256,7 +271,7 @@ class ParserService implements SingletonInterface
 
                 // check if element is children of a forbidden parent
                 if (false === \in_array($parentTags, $forbiddenParentTags, true)) {
-                    /** @var \DOMElement|\DOMText $childNode */
+                    /** @var \DOMNode $childNode */
                     for ($i = 0; $i < $DOMTag->childNodes->length; $i++) {
                         $childNode = $DOMTag->childNodes->item($i);
 
@@ -265,7 +280,7 @@ class ParserService implements SingletonInterface
                                 $childNode,
                                 $this->textParser(
                                     $childNode->ownerDocument->saveHTML($childNode),
-                                    array($this, 'termWrapper')
+                                    $wrapperClosure
                                 )
                             );
                         }
@@ -290,10 +305,10 @@ class ParserService implements SingletonInterface
      * Parse the extracted html for terms
      *
      * @param string $text the text to be parsed
-     * @param callable $wrappingCallback the wrapping function for parsed terms as callback
+     * @param \Closure $wrapperClosure the wrapping function for parsed terms as callback
      * @return string
      */
-    public function textParser($text, callable $wrappingCallback): string
+    public function textParser(string $text, \Closure $wrapperClosure): string
     {
         $text = preg_replace('#\x{00a0}#iu', '&nbsp;', $text);
         // Iterate over terms and search matches for each of them
@@ -308,7 +323,7 @@ class ParserService implements SingletonInterface
 
             //Check replacement counter
             if (0 !== $term['replacements']) {
-                $this->regexParser($text, $termObject, $replacements, $wrappingCallback);
+                $this->regexParser($text, $termObject, $replacements, $wrapperClosure);
 
                 if (true === (boolean) $this->settings['parseSynonyms']) {
                     /** @var \Featdd\DpnGlossary\Domain\Model\Synonym $synonym */
@@ -318,10 +333,10 @@ class ParserService implements SingletonInterface
                         );
 
                         if (true === (boolean) $this->settings['maxReplacementPerPageRespectSynonyms']) {
-                            $this->regexParser($text, $termObject, $replacements, $wrappingCallback);
+                            $this->regexParser($text, $termObject, $replacements, $wrapperClosure);
                         } else {
                             $noReplacementCount = -1;
-                            $this->regexParser($text, $termObject, $noReplacementCount, $wrappingCallback);
+                            $this->regexParser($text, $termObject, $noReplacementCount, $wrapperClosure);
                         }
                     }
                 }
@@ -337,9 +352,9 @@ class ParserService implements SingletonInterface
      * @param string $text
      * @param Term $term
      * @param integer $replacements
-     * @param callable $wrappingCallback
+     * @param \Closure $wrapperClosure
      */
-    protected function regexParser(&$text, Term $term, &$replacements, callable $wrappingCallback): void
+    protected function regexParser(string &$text, Term $term, int &$replacements, \Closure $wrapperClosure): void
     {
         // Try simple search first to save performance
         if (false === mb_stripos($text, $term->getName())) {
@@ -383,7 +398,7 @@ class ParserService implements SingletonInterface
             (false === $term->getCaseSensitive() ? 'i' : '');
 
         // replace callback
-        $callback = function ($match) use ($term, &$replacements, $wrappingCallback) {
+        $callback = function (array $match) use ($term, &$replacements, $wrapperClosure) {
             //decrease replacement counter
             if (0 < $replacements) {
                 $replacements--;
@@ -393,7 +408,7 @@ class ParserService implements SingletonInterface
             $term->setName($match[2]);
 
             // Wrap replacement with original chars
-            return $match[1] . $wrappingCallback($term) . $match[3];
+            return $match[1] . $wrapperClosure($term) . $match[3];
         };
 
         // Use callback to keep allowed chars around the term and his camel case
@@ -410,12 +425,12 @@ class ParserService implements SingletonInterface
     protected function termWrapper(Term $term): string
     {
         // get content object type
-        $contentObjectType = $this->tsConfig['settings.']['termWraps'];
+        $contentObjectType = $this->typoScriptConfiguration['settings.']['termWraps'];
         // get term wrapping settings
-        $wrapSettings = $this->tsConfig['settings.']['termWraps.'];
+        $wrapSettings = $this->typoScriptConfiguration['settings.']['termWraps.'];
         // pass term data to the cObject pseudo constructor
         $this->contentObjectRenderer->start(
-            $term->toArray(),
+            $term->__toArray(),
             Term::TABLE
         );
 

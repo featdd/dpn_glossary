@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 namespace Featdd\DpnGlossary\Domain\Model;
 
 /***
@@ -8,7 +10,7 @@ namespace Featdd\DpnGlossary\Domain\Model;
  * For the full copyright and license information, please read the
  * LICENSE.txt file that was distributed with this source code.
  *
- *  (c) 2018 Daniel Dorndorf <dorndorf@featdd.de>
+ *  (c) 2019 Daniel Dorndorf <dorndorf@featdd.de>
  *
  ***/
 
@@ -26,7 +28,7 @@ class Synonym extends AbstractEntity
      * @var string $name
      * @validate NotEmpty
      */
-    protected $name;
+    protected $name = '';
 
     /**
      * @return string $name
@@ -39,7 +41,7 @@ class Synonym extends AbstractEntity
     /**
      * @param string $name
      */
-    public function setName($name): void
+    public function setName(string $name): void
     {
         $this->name = $name;
     }

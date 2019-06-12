@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 namespace Featdd\DpnGlossary\Updates;
 
 /***
@@ -8,7 +10,7 @@ namespace Featdd\DpnGlossary\Updates;
  * For the full copyright and license information, please read the
  * LICENSE.txt file that was distributed with this source code.
  *
- *  (c) 2018 Daniel Dorndorf <dorndorf@featdd.de>
+ *  (c) 2019 Daniel Dorndorf <dorndorf@featdd.de>
  *
  ***/
 
@@ -30,7 +32,7 @@ abstract class AbstractUpdateWizard implements UpgradeWizardInterface
      * @param string $tablename
      * @return \TYPO3\CMS\Core\Database\Query\QueryBuilder
      */
-    protected function getQueryBuilder($tablename = Term::TABLE): QueryBuilder
+    protected function getQueryBuilder(string $tablename = Term::TABLE): QueryBuilder
     {
         /** @var \TYPO3\CMS\Core\Database\ConnectionPool $connectionPool */
         $connectionPool = GeneralUtility::makeInstance(ConnectionPool::class);

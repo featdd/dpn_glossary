@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 namespace Featdd\DpnGlossary\Service;
 
 /***
@@ -8,15 +10,14 @@ namespace Featdd\DpnGlossary\Service;
  * For the full copyright and license information, please read the
  * LICENSE.txt file that was distributed with this source code.
  *
- *  (c) 2018 Daniel Dorndorf <dorndorf@featdd.de>
+ *  (c) 2019 Daniel Dorndorf <dorndorf@featdd.de>
  *
  ***/
 
+use Featdd\DpnGlossary\Utility\ObjectUtility;
 use TYPO3\CMS\Core\SingletonInterface;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManager;
 use TYPO3\CMS\Extbase\Mvc\Web\Routing\UriBuilder;
-use TYPO3\CMS\Extbase\Object\ObjectManager;
 use TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer;
 
 /**
@@ -32,14 +33,12 @@ class LinkService implements SingletonInterface
 
     public function __construct()
     {
-        /** @var \TYPO3\CMS\Extbase\Object\ObjectManager $objectManager */
-        $objectManager = GeneralUtility::makeInstance(ObjectManager::class);
         /** @var \TYPO3\CMS\Extbase\Configuration\ConfigurationManager $configurationManager */
-        $configurationManager = $objectManager->get(ConfigurationManager::class);
+        $configurationManager = ObjectUtility::makeInstance(ConfigurationManager::class);
         /** @var \TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer $contentObjectRenderer */
-        $contentObjectRenderer = $objectManager->get(ContentObjectRenderer::class);
+        $contentObjectRenderer = ObjectUtility::makeInstance(ContentObjectRenderer::class);
         $configurationManager->setContentObject($contentObjectRenderer);
-        $this->uriBuilder = $objectManager->get(UriBuilder::class);
+        $this->uriBuilder = ObjectUtility::makeInstance(UriBuilder::class);
         $this->uriBuilder->injectConfigurationManager($configurationManager);
     }
 

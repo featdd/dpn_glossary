@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 namespace Featdd\DpnGlossary\Hook;
 
 /***
@@ -8,13 +10,12 @@ namespace Featdd\DpnGlossary\Hook;
  * For the full copyright and license information, please read the
  * LICENSE.txt file that was distributed with this source code.
  *
- *  (c) 2018 Daniel Dorndorf <dorndorf@featdd.de>
+ *  (c) 2019 Daniel Dorndorf <dorndorf@featdd.de>
  *
  ***/
 
 use Featdd\DpnGlossary\Service\ParserService;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Extbase\Object\ObjectManager;
+use Featdd\DpnGlossary\Utility\ObjectUtility;
 use TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController;
 
 /**
@@ -30,9 +31,7 @@ class ContentPostProcHook
 
     public function __construct()
     {
-        /** @var ObjectManager $objectManager */
-        $objectManager = GeneralUtility::makeInstance(ObjectManager::class);
-        $this->parserService = $objectManager->get(ParserService::class);
+        $this->parserService = ObjectUtility::makeInstance(ParserService::class);
     }
 
     /**
@@ -44,7 +43,7 @@ class ContentPostProcHook
     {
         $parsedHTML = $this->parserService->pageParser($typoScriptFrontendController->content);
 
-        if (false !== $parsedHTML) {
+        if (true === is_string($parsedHTML)) {
             $typoScriptFrontendController->content = $parsedHTML;
         }
     }
