@@ -299,7 +299,9 @@ class ParserService implements SingletonInterface
             '',
             ParserUtility::protectScriptsAndCommentsFromDOMReverse(
                 ParserUtility::protectLinkAndSrcPathsFromDOMReverse(
-                    $DOM->saveHTML()
+                    ParserUtility::domHtml5Repairs(
+                        $DOM->saveHTML()
+                    )
                 )
             )
         );

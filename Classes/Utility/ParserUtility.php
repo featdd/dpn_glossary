@@ -135,4 +135,13 @@ class ParserUtility implements SingletonInterface
             $DOMText->parentNode->replaceChild($replacementNode, $DOMText);
         }
     }
+
+    /**
+     * @param string $html
+     * @return string
+     */
+    public static function domHtml5Repairs(string $html): string
+    {
+        return preg_replace('/(<picture.*?>.*?)((<\/source>)+)(.*?<\/picture>)/is', '$1$4', $html);
+    }
 }
