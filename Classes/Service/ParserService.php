@@ -138,9 +138,13 @@ class ParserService implements SingletonInterface
             //Sort terms with an individual counter for max replacement per page
             /** @var Term $term */
             foreach ($terms as $term) {
+                $maxReplacements = -1 === $term->getMaxReplacements()
+                    ? (int) $this->settings['maxReplacementPerPage']
+                    : $term->getMaxReplacements();
+
                 $this->terms[] = [
                     'term' => $term,
-                    'replacements' => (int) $this->settings['maxReplacementPerPage'],
+                    'replacements' => $maxReplacements,
                 ];
             }
         }

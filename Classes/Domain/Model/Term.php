@@ -68,6 +68,11 @@ class Term extends AbstractEntity
     protected $caseSensitive = false;
 
     /**
+     * @var int
+     */
+    protected $maxReplacements = -1;
+
+    /**
      * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\Featdd\DpnGlossary\Domain\Model\Description>
      * @cascade remove
      */
@@ -207,7 +212,7 @@ class Term extends AbstractEntity
     /**
      * @return bool
      */
-    public function getCaseSensitive(): bool
+    public function isCaseSensitive(): bool
     {
         return $this->caseSensitive;
     }
@@ -218,6 +223,22 @@ class Term extends AbstractEntity
     public function setCaseSensitive(bool $caseSensitive): void
     {
         $this->caseSensitive = $caseSensitive;
+    }
+
+    /**
+     * @return int
+     */
+    public function getMaxReplacements(): int
+    {
+        return $this->maxReplacements;
+    }
+
+    /**
+     * @param int $maxReplacements
+     */
+    public function setMaxReplacements(int $maxReplacements): void
+    {
+        $this->maxReplacements = $maxReplacements;
     }
 
     /**

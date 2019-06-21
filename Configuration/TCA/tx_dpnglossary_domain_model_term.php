@@ -29,7 +29,7 @@ return [
         '1' => ['showitem' => 'sys_language_uid, --palette--;;hidden_exludefromparsing_casesensitive, name, url_segment, tooltiptext, term_mode, term_link, synonyms, descriptions, term_type, term_lang, media, --div--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:tabs.access, starttime, endtime'],
     ],
     'palettes' => [
-        'hidden_exludefromparsing_casesensitive' => ['showitem' => 'hidden, case_sensitive, exclude_from_parsing'],
+        'hidden_exludefromparsing_casesensitive' => ['showitem' => 'hidden, case_sensitive, --linebreak--, max_replacements, exclude_from_parsing'],
     ],
     'columns' => [
         'sys_language_uid' => [
@@ -260,6 +260,19 @@ return [
                         1 => '',
                         'invertStateDisplay' => false,
                     ],
+                ],
+            ],
+        ],
+        'max_replacements' => [
+            'exclude' => true,
+            'label' => 'LLL:EXT:dpn_glossary/Resources/Private/Language/locallang.xlf:tx_dpnglossary_domain_model_term.max_replacements',
+            'config' => [
+                'type' => 'input',
+                'default' => -1,
+                'size' => 10,
+                'eval' => 'int',
+                'range' => [
+                    'lower' => -1,
                 ],
             ],
         ],
