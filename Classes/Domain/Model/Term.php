@@ -212,7 +212,7 @@ class Term extends AbstractEntity
     /**
      * @return bool
      */
-    public function isCaseSensitive(): bool
+    public function getCaseSensitive(): bool
     {
         return $this->caseSensitive;
     }
