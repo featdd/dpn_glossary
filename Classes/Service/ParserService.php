@@ -399,7 +399,7 @@ class ParserService implements SingletonInterface
             '($|[\s\<[:punct:]]|\<br*\>)' .
             '(?![^<]*>|[^<>]*<\/)' .
             self::REGEX_DELIMITER .
-            (false === $term->getCaseSensitive() ? 'i' : '');
+            (false === $term->isCaseSensitive() ? 'i' : '');
 
         // replace callback
         $callback = function (array $match) use ($term, &$replacements, $wrapperClosure) {
