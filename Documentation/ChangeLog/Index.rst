@@ -10,6 +10,14 @@
 ChangeLog
 ---------
 
+v3.0.4
+  - Add page title provider
+  - Bugfix for html5 picture issues
+  - Bugfix for cache identifier
+  - Max replacement option for each term
+  - TCA optimizations
+  - Code refactorings
+
 v3.0.3
   - Update composer.json
 
