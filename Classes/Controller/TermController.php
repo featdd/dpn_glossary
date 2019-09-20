@@ -16,6 +16,7 @@ namespace Featdd\DpnGlossary\Controller;
 
 use Featdd\DpnGlossary\Domain\Model\Term;
 use Featdd\DpnGlossary\Domain\Repository\TermRepository;
+use Featdd\DpnGlossary\PageTitle\TermPageTitleProvider;
 use Featdd\DpnGlossary\ViewHelpers\Widget\Controller\PaginateController;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
@@ -106,5 +107,9 @@ class TermController extends ActionController
         }
 
         $this->view->assign('term', $term);
+
+        /** @var TermPageTitleProvider $pageTitleProvider */
+        $pageTitleProvider = GeneralUtility::makeInstance(TermPageTitleProvider::class);
+        $pageTitleProvider->setTitle($term->getName());
     }
 }
