@@ -65,26 +65,6 @@ The following example shows all usable settings for the extension:
     }
 
 
-Add Term as page title
-^^^^^^^^^^^^^^^^^^^^^^
-
-::
-
-  temp.termTitle = RECORDS
-  temp.termTitle {
-    source = {GP:tx_dpnglossary_glossary|term}
-    source.insertData = 1
-    tables = tx_dpnglossary_domain_model_term
-    conf.tx_dpnglossary_domain_model_term >
-    conf.tx_dpnglossary_domain_model_term = TEXT
-    conf.tx_dpnglossary_domain_model_term.field = name
-    wrap = <title>|</title>
-  }
-
-  page.headerData.5 >
-  page.headerData.5 = COA
-  page.headerData.5 < temp.termTitle
-
 Configure Routing for terms and pagination
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
