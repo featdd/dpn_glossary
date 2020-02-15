@@ -329,8 +329,6 @@ class ParserService implements SingletonInterface
 
             //Check replacement counter
             if (0 !== $term['replacements']) {
-                $this->regexParser($text, $termObject, $replacements, $wrapperClosure);
-
                 if (true === (boolean) $this->settings['parseSynonyms']) {
                     /** @var \Featdd\DpnGlossary\Domain\Model\Synonym $synonym */
                     foreach ($termObject->getSynonyms() as $synonym) {
@@ -346,6 +344,8 @@ class ParserService implements SingletonInterface
                         }
                     }
                 }
+
+                $this->regexParser($text, $termObject, $replacements, $wrapperClosure);
             }
         }
 
