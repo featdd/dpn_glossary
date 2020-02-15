@@ -16,6 +16,9 @@ namespace Featdd\DpnGlossary\Hook;
 
 use Featdd\DpnGlossary\Service\ParserService;
 use Featdd\DpnGlossary\Utility\ObjectUtility;
+use TYPO3\CMS\Extbase\Configuration\ConfigurationManager;
+use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
+use TYPO3\CMS\Extbase\Configuration\Exception\InvalidConfigurationTypeException;
 use TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController;
 
 /**
@@ -41,10 +44,26 @@ class ContentPostProcHook
      */
     public function main(array &$params, TypoScriptFrontendController $typoScriptFrontendController): void
     {
-        $parsedHTML = $this->parserService->pageParser($typoScriptFrontendController->content);
+        /** @var \TYPO3\CMS\Extbase\Configuration\ConfigurationManager $configurationManager */
+        $configurationManager = ObjectUtility::makeInstance(ConfigurationManager::class);
 
-        if (true === is_string($parsedHTML)) {
-            $typoScriptFrontendController->content = $parsedHTML;
+        try {
+            $settings = $configurationManager->getConfiguration(
+                ConfigurationManagerInterface::CONFIGURATION_TYPE_SETTINGS,
+                'dpnglossary'
+            );
+
+            $isDisableParser = (bool) $settings['disableParser'];
+        } catch (InvalidConfigurationTypeException $exception) {
+            $isDisableParser = true;
+        }
+
+        if (false === $isDisableParser) {
+            $parsedHTML = $this->parserService->pageParser($typoScriptFrontendController->content);
+
+            if (true === is_string($parsedHTML)) {
+                $typoScriptFrontendController->content = $parsedHTML;
+            }
         }
     }
 }
