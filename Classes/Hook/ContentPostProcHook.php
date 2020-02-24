@@ -42,7 +42,16 @@ class ContentPostProcHook
      * @param \TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController $typoScriptFrontendController
      * @throws \Featdd\DpnGlossary\Service\Exception
      */
-    public function main(array &$params, TypoScriptFrontendController $typoScriptFrontendController): void
+    public function cached(array &$params, TypoScriptFrontendController $typoScriptFrontendController): void
+    {
+        $this->parseHtml($typoScriptFrontendController);
+    }
+
+    /**
+     * @param \TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController $typoScriptFrontendController
+     * @throws \Featdd\DpnGlossary\Service\Exception
+     */
+    protected function parseHtml(TypoScriptFrontendController $typoScriptFrontendController): void
     {
         /** @var \TYPO3\CMS\Extbase\Configuration\ConfigurationManager $configurationManager */
         $configurationManager = ObjectUtility::makeInstance(ConfigurationManager::class);
