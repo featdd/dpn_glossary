@@ -104,7 +104,7 @@ plugin.tx_dpnglossary.settings:
         string
 
    Description
-        Comma list of Tags which are not allowed as parent for a parsing tag
+        Comma list of Tags which are not allowed as parents for a parsing tag
 
    Default
         a,script

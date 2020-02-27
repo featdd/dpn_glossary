@@ -274,7 +274,7 @@ class ParserService implements SingletonInterface
                 );
 
                 // check if element is children of a forbidden parent
-                if (false === \in_array($parentTags, $forbiddenParentTags, true)) {
+                if (0 === count(array_intersect($parentTags, $forbiddenParentTags))) {
                     /** @var \DOMNode $childNode */
                     for ($i = 0; $i < $DOMTag->childNodes->length; $i++) {
                         $childNode = $DOMTag->childNodes->item($i);
