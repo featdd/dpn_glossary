@@ -146,6 +146,9 @@ return [
                 'fallbackCharacter' => '-',
                 'generatorOptions' => [
                     'fields' => ['name'],
+                    'replacements' => [
+                        '/' => '-',
+                    ],
                 ],
             ],
         ],
