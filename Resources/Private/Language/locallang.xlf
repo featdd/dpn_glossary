@@ -148,6 +148,11 @@
       <trans-unit id="tx_dpnglossary.flexforms.preview.limit">
         <source>Limit</source>
       </trans-unit>
+
+
+      <trans-unit id="tx_dpnglossary.error.slug_preview_site_missing">
+        <source>no site configuration</source>
+      </trans-unit>
     </body>
   </file>
 </xliff>

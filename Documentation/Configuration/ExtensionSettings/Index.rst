@@ -15,181 +15,176 @@ plugin.tx_dpnglossary.settings:
 
 .. container:: table-row
 
-   Constant
-        settings.detailPage
+  Constant
+    settings.detailPage
 
-   Data Type
-         integer
+  Data Type
+    integer
 
-   Description
-         Page ID of the detailpage plugin (parser will link to this)
-
-   Default
+  Description
+    Page ID of the detailpage plugin (parser will link to this)
 
 .. container:: table-row
 
-   Constant
-        settings.parsingPids
+  Constant
+    settings.parsingPids
 
-   Data Type
-        string
+  Data Type
+    string
 
-   Description
-        Comma list of pages which should be parsed (0 for all)
+  Description
+    Comma list of pages which should be parsed (0 for all)
 
-   Default
-        0
-
-.. container:: table-row
-
-   Constant
-        settings.parsingExcludePidList
-
-   Data Type
-        string
-
-   Description
-        Comma list of pages which should not be parsed
-
-   Default
+  Default
+    0
 
 .. container:: table-row
 
-   Constant
-        settings.maxReplacementPerPage
+  Constant
+    settings.parsingExcludePidList
 
-   Data Type
-        integer
+  Data Type
+    string
 
-   Description
-        Maximum replacements for each term (-1 = any)
+  Description
+    Comma list of pages which should not be parsed
 
-   Default
-        -1
 
 .. container:: table-row
 
-   Constant
-        settings.maxReplacementPerPageRespectSynonyms
+  Constant
+    settings.maxReplacementPerPage
 
-   Data Type
-        boolean
+  Data Type
+    integer
 
-   Description
-        Respect replacement counter when parsing synonyms
+  Description
+    Maximum replacements for each term (-1 = any)
 
-   Default
-        0
-
-.. container:: table-row
-
-   Constant
-        settings.parsingTags
-
-   Data Type
-        string
-
-   Description
-        Comma list of Tags which content will be parsed for terms
-
-   Default
-        p
+  Default
+    -1
 
 .. container:: table-row
 
-   Constant
-        settings.forbiddenParentTags
+  Constant
+    settings.maxReplacementPerPageRespectSynonyms
 
-   Data Type
-        string
+  Data Type
+    boolean
 
-   Description
-        Comma list of Tags which are not allowed as parents for a parsing tag
+  Description
+    Respect replacement counter when parsing synonyms
 
-   Default
-        a,script
-
-.. container:: table-row
-
-   Constant
-        settings.forbiddenParsingTagClasses
-
-   Data Type
-        string
-
-   Description
-        Comma list of classes which are not allowed for the parsing tag
-
-   Default
+  Default
+    0
 
 .. container:: table-row
 
-   Constant
-        settings.listmode
+  Constant
+    settings.parsingTags
 
-   Data Type
-        options
+  Data Type
+    string
 
-   Description
-        Listmode of the listpage (normal, character, pagination)
+  Description
+    Comma list of Tags which content will be parsed for terms
 
-   Default
-        normal
-
-.. container:: table-row
-
-   Constant
-        settings.previewmode
-
-   Data Type
-        options
-
-   Description
-        Previewmode for the preview plugin (newest or random)
-
-   Default
-        newest
+  Default
+    p
 
 .. container:: table-row
 
-   Constant
-        settings.previewlimit
+  Constant
+    settings.forbiddenParentTags
 
-   Data Type
-        integer
+  Data Type
+    string
 
-   Description
-        Limit for preview list
+  Description
+    Comma list of Tags which are not allowed as parents for a parsing tag
 
-   Default
-        5
-
-.. container:: table-row
-
-   Constant
-        settings.disableParser
-
-   Data Type
-        boolean
-
-   Description
-        Disable the parser
-
-   Default
-        0
+  Default
+    a,script
 
 .. container:: table-row
 
-   Constant
-        settings.parseSynonyms
+  Constant
+    settings.forbiddenParsingTagClasses
 
-   Data Type
-        boolean
+  Data Type
+    string
 
-   Description
-        Enable the parsing of terms synonyms
+  Description
+    Comma list of classes which are not allowed for the parsing tag
 
-   Default
-        1
+.. container:: table-row
+
+  Constant
+    settings.listmode
+
+  Data Type
+    options
+
+  Description
+    Listmode of the listpage (normal, character, pagination)
+
+  Default
+    normal
+
+.. container:: table-row
+
+  Constant
+    settings.previewmode
+
+  Data Type
+    options
+
+  Description
+    Previewmode for the preview plugin (newest or random)
+
+  Default
+    newest
+
+.. container:: table-row
+
+  Constant
+    settings.previewlimit
+
+  Data Type
+    integer
+
+  Description
+    Limit for preview list
+
+  Default
+    5
+
+.. container:: table-row
+
+  Constant
+    settings.disableParser
+
+  Data Type
+    boolean
+
+  Description
+    Disable the parser
+
+  Default
+    0
+
+.. container:: table-row
+
+  Constant
+    settings.parseSynonyms
+
+  Data Type
+    boolean
+
+  Description
+    Enable the parsing of terms synonyms
+
+  Default
+    1
 
 .. ###### END~OF~TABLE ######

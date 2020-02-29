@@ -148,6 +148,11 @@
       <trans-unit id="tx_dpnglossary.flexforms.preview.limit">
         <target>Maximal</target>
       </trans-unit>
+
+
+      <trans-unit id="tx_dpnglossary.error.slug_preview_site_missing">
+        <target>Keine Seitenkonfiguration</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
