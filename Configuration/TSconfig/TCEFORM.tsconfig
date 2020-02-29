@@ -1,0 +1,11 @@
+TCEFORM {
+  tx_dpnglossary_domain_model_term {
+    url_segment.config.previewUrl {
+      action = show
+      controller = Term
+      plugin = glossary
+      extensionName = dpnglossary
+      slugAlias = term
+    }
+  }
+}
