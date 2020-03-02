@@ -142,6 +142,10 @@ class ParserUtility implements SingletonInterface
      */
     public static function domHtml5Repairs(string $html): string
     {
-        return preg_replace('/(<picture.*?>.*?)((<\/source>)+)(.*?<\/picture>)/is', '$1$4', $html);
+        $callback = function(array $match) {
+            return $match[1] . str_ireplace('</source>', '', $match['2']) . $match[3];
+        };
+
+        return preg_replace_callback('/(<picture.*?>)(.*?)(<\/picture>)/is', $callback, $html);
     }
 }
