@@ -142,7 +142,7 @@ class ParserUtility implements SingletonInterface
      */
     public static function domHtml5Repairs(string $html): string
     {
-        $callback = function(array $match) {
+        $callback = function (array $match) {
             return $match[1] . str_ireplace('</source>', '', $match['2']) . $match[3];
         };
 

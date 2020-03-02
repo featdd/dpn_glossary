@@ -10,6 +10,13 @@
 ChangeLog
 ---------
 
+v3.0.5
+  - Update typoscript syntax to prevent deprecation warnings
+  - Parser optimizations
+  - add slash replacement for slug field
+  - Add preview option for the slug field, see: `documentation <https://docs.typo3.org/p/featdd/dpn-glossary/3.0/en-us/Configuration/ExampleTypoScriptSetup/Index.html#configure-full-url-preview-for-the-term-slug-field>`_
+  - Bugfix for dom picture repair function due to backtrack limit issues
+
 v3.0.4
   - Add page title provider
   - Bugfix for html5 picture issues
