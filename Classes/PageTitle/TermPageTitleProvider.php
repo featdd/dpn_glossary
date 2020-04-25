@@ -3,6 +3,9 @@ namespace Featdd\DpnGlossary\PageTitle;
 
 use TYPO3\CMS\Core\PageTitle\AbstractPageTitleProvider;
 
+/**
+ * @package Featdd\DpnGlossary\PageTitle
+ */
 class TermPageTitleProvider extends AbstractPageTitleProvider
 {
     /**

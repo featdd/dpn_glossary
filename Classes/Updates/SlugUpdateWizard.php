@@ -23,8 +23,7 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Install\Updates\DatabaseUpdatedPrerequisite;
 
 /**
- * @package DpnGlossary
- * @subpackage Updates
+ * @package Featdd\DpnGlossary\Updates
  */
 class SlugUpdateWizard extends AbstractUpdateWizard
 {

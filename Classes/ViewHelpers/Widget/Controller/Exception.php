@@ -15,8 +15,7 @@ namespace Featdd\DpnGlossary\ViewHelpers\Widget\Controller;
  ***/
 
 /**
- * @package DpnGlossary
- * @subpackage ViewHelpers\Widget\Controller
+ * @package Featdd\DpnGlossary\ViewHelpers\Widget\Controller
  */
 class Exception extends \TYPO3\CMS\Fluid\Core\Widget\Exception
 {

@@ -22,8 +22,7 @@ use TYPO3\CMS\Extbase\Configuration\Exception\InvalidConfigurationTypeException;
 use TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController;
 
 /**
- * @package DpnGlossary
- * @subpackage Hook
+ * @package Featdd\DpnGlossary\Hook
  */
 class ContentPostProcHook
 {

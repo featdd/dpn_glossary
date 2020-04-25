@@ -17,8 +17,7 @@ namespace Featdd\DpnGlossary\Utility;
 use TYPO3\CMS\Core\SingletonInterface;
 
 /**
- * @package DpnGlossary
- * @subpackage Utility
+ * @package Featdd\DpnGlossary\Utility
  */
 class ParserUtility implements SingletonInterface
 {

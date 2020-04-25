@@ -25,8 +25,7 @@ use TYPO3\CMS\Fluid\Core\Widget\AbstractWidgetController;
 use TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer;
 
 /**
- * @package DpnGlossary
- * @subpackage ViewHelpers\Widget\Controller
+ * @package Featdd\DpnGlossary\ViewHelpers\Widget\Controller
  */
 class PaginateController extends AbstractWidgetController
 {

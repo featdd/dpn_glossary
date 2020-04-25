@@ -19,8 +19,7 @@ use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
 use TYPO3\CMS\Extbase\Domain\Model\FileReference;
 
 /**
- * @package DpnGlossary
- * @subpackage Domain\Model
+ * @package Featdd\DpnGlossary\Domain\Model
  */
 class Term extends AbstractEntity
 {

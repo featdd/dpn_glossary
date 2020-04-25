@@ -24,8 +24,7 @@ use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 use TYPO3\CMS\Extbase\Persistence\Generic\QueryResult;
 
 /**
- * @package DpnGlossary
- * @subpackage Controller
+ * @package Featdd\DpnGlossary\Controller
  */
 class TermController extends ActionController
 {

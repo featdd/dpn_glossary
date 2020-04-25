@@ -18,8 +18,7 @@ use Featdd\DpnGlossary\ViewHelpers\Widget\Controller\PaginateController;
 use TYPO3\CMS\Fluid\Core\Widget\AbstractWidgetViewHelper;
 
 /**
- * @package DpnGlossary
- * @subpackage ViewHelpers\Widget
+ * @package Featdd\DpnGlossary\ViewHelpers\Widget
  */
 class PaginateViewHelper extends AbstractWidgetViewHelper
 {

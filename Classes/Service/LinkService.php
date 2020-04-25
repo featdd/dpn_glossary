@@ -21,8 +21,7 @@ use TYPO3\CMS\Extbase\Mvc\Web\Routing\UriBuilder;
 use TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer;
 
 /**
- * @package DpnGlossary
- * @subpackage Service
+ * @package Featdd\DpnGlossary\Service
  */
 class LinkService implements SingletonInterface
 {

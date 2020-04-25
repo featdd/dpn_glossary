@@ -21,8 +21,7 @@ use TYPO3\CMS\Extbase\Configuration\ConfigurationManager;
 use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractTagBasedViewHelper;
 
 /**
- * @package DpnGlossary
- * @subpackage ViewHelpers
+ * @package Featdd\DpnGlossary\ViewHelpers
  */
 class BacklinkViewHelper extends AbstractTagBasedViewHelper
 {

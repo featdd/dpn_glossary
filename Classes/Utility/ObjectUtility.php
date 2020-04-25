@@ -18,8 +18,7 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Object\ObjectManager;
 
 /**
- * @package MindshapeApi
- * @subpackage Utility
+ * @package Featdd\DpnGlossary\Utility
  */
 class ObjectUtility
 {

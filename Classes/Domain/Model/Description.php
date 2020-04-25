@@ -17,8 +17,7 @@ namespace Featdd\DpnGlossary\Domain\Model;
 use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
 
 /**
- * @package DpnGlossary
- * @subpackage Domain\Model
+ * @package Featdd\DpnGlossary\Domain\Model
  */
 class Description extends AbstractEntity
 {

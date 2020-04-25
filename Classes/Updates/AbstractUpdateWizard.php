@@ -23,8 +23,7 @@ use TYPO3\CMS\Install\Updates\DatabaseUpdatedPrerequisite;
 use TYPO3\CMS\Install\Updates\UpgradeWizardInterface;
 
 /**
- * @package DpnGlossary
- * @subpackage Updates
+ * @package Featdd\DpnGlossary\Updates
  */
 abstract class AbstractUpdateWizard implements UpgradeWizardInterface
 {

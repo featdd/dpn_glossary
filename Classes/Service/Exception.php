@@ -15,8 +15,7 @@ namespace Featdd\DpnGlossary\Service;
  ***/
 
 /**
- * @package DpnGlossary
- * @subpackage Service
+ * @package Featdd\DpnGlossary\Service
  */
 class Exception extends \Exception
 {

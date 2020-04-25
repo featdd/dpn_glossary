@@ -29,8 +29,7 @@ use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
 use TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer;
 
 /**
- * @package DpnGlossary
- * @subpackage Service
+ * @package Featdd\DpnGlossary\Service
  */
 class ParserService implements SingletonInterface
 {

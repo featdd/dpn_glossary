@@ -17,8 +17,7 @@ namespace Featdd\DpnGlossary\Routing\Aspect;
 use TYPO3\CMS\Core\Routing\Aspect\StaticMappableAspectInterface;
 
 /**
- * @package DpnGlossary
- * @subpackage Routing\Aspect
+ * @package Featdd\DpnGlossary\Routing\Aspect
  */
 class StaticMultiRangeMapper implements StaticMappableAspectInterface
 {

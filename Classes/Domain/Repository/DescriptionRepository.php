@@ -18,8 +18,7 @@ use TYPO3\CMS\Extbase\Persistence\QueryInterface;
 use TYPO3\CMS\Extbase\Persistence\Repository;
 
 /**
- * @package DpnGlossary
- * @subpackage Domain\Repository
+ * @package Featdd\DpnGlossary\Domain\Repository
  */
 class DescriptionRepository extends Repository
 {
