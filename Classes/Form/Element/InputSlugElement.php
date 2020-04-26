@@ -16,7 +16,9 @@ namespace Featdd\DpnGlossary\Form\Element;
 
 use TYPO3\CMS\Backend\Form\Element\InputSlugElement as CoreInputSlugElement;
 use TYPO3\CMS\Core\Exception\SiteNotFoundException;
-use TYPO3\CMS\Core\Site\Entity\PseudoSite;
+use TYPO3\CMS\Core\Information\Typo3Version;
+use TYPO3\CMS\Core\Routing\InvalidRouteArgumentsException;
+use TYPO3\CMS\Core\Site\Entity\NullSite;
 use TYPO3\CMS\Core\Site\Entity\SiteInterface;
 use TYPO3\CMS\Core\Site\SiteFinder;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -27,13 +29,51 @@ use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
  */
 class InputSlugElement extends CoreInputSlugElement
 {
+
+    /**
+     * @return array
+     */
+    public function render(): array
+    {
+        if (
+            true === version_compare(TYPO3_version, '10.4', '>=') &&
+            true === empty($this->data['customData']['url_segment']['slugPrefix'])
+        ) {
+            $languageId = 0;
+            $tableName = $this->data['tableName'];
+            $record = $this->data['databaseRow'];
+
+            if (
+                true === isset($GLOBALS['TCA'][$tableName]['ctrl']['languageField']) &&
+                false === empty($GLOBALS['TCA'][$tableName]['ctrl']['languageField'])
+            ) {
+                $languageField = $GLOBALS['TCA'][$tableName]['ctrl']['languageField'];
+                $languageId = (int) (true === is_array($record[$languageField])
+                    ? $record[$languageField][0]
+                    : $record[$languageField] ?? 0
+                );
+            }
+
+            try {
+                $this->data['customData']['url_segment']['slugPrefix'] = $this->getSlugPrefix(
+                    $this->data['site'], $languageId
+                );
+            } catch (SiteNotFoundException | InvalidRouteArgumentsException $exception) {
+                // nothing
+            }
+        }
+
+        return parent::render();
+    }
+
     /**
      * @param \TYPO3\CMS\Core\Site\Entity\SiteInterface $site
-     * @param int $requestLanguageId
+     * @param int $languageId
      * @return string
+     * @throws \TYPO3\CMS\Core\Exception\SiteNotFoundException
      * @throws \TYPO3\CMS\Core\Routing\InvalidRouteArgumentsException
      */
-    protected function getPrefix(SiteInterface $site, int $requestLanguageId = 0): string
+    protected function getSlugPrefix(SiteInterface $site, int $languageId): string
     {
         $pageUid = (int) $this->data['parameterArray']['fieldTSConfig']['config.']['previewUrl.']['pageUid'];
         $action = $this->data['parameterArray']['fieldTSConfig']['config.']['previewUrl.']['action'];
@@ -50,10 +90,10 @@ class InputSlugElement extends CoreInputSlugElement
             true === empty($extensionName) ||
             true === empty($slugAlias)
         ) {
-            return parent::getPrefix($site, $requestLanguageId);
+            return '';
         }
 
-        if ($site instanceof PseudoSite) {
+        if ($this->data['site'] instanceof NullSite) {
             $siteFinder = GeneralUtility::makeInstance(SiteFinder::class);
 
             try {
@@ -68,8 +108,8 @@ class InputSlugElement extends CoreInputSlugElement
         $prefixUrl = (string) $site->getRouter()->generateUri(
             $pageUid,
             [
-                '_language' => 0 < $requestLanguageId
-                    ? $site->getLanguageById($requestLanguageId)
+                '_language' => 0 < $languageId
+                    ? $site->getLanguageById($languageId)
                     : $site->getDefaultLanguage(),
                 $pluginUrlParameter => [
                     'action' => $action,
@@ -80,5 +120,19 @@ class InputSlugElement extends CoreInputSlugElement
         );
 
         return preg_replace('/SLUG\/?$/', '', $prefixUrl);
+    }
+
+    /**
+     * @param \TYPO3\CMS\Core\Site\Entity\SiteInterface $site
+     * @param int $requestLanguageId
+     * @return string
+     */
+    protected function getPrefix(SiteInterface $site, int $requestLanguageId = 0): string
+    {
+        try {
+            return $this->getSlugPrefix($site, $requestLanguageId);
+        } catch (SiteNotFoundException | InvalidRouteArgumentsException $exception) {
+            return '';
+        }
     }
 }

@@ -2,29 +2,19 @@
 defined('TYPO3_MODE') || die('Access denied.');
 
 call_user_func(
-    function ($extKey) {
+    function () {
         \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
-            'Featdd.' . $extKey,
+            'Featdd.DpnGlossary',
             'Glossary',
-            [
-                'Term' => 'list, show',
-            ],
-            // non-cacheable actions
-            [
-                'Term' => '',
-            ]
+            ['Term' => 'list, show'],
+            ['Term' => '']
         );
 
         \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
-            'Featdd.' . $extKey,
+            'Featdd.DpnGlossary',
             'Glossarypreview',
-            [
-                'Term' => 'previewNewest, previewRandom, previewSelected',
-            ],
-            // non-cacheable actions
-            [
-                'Term' => '',
-            ]
+            ['Term' => 'previewNewest, previewRandom, previewSelected'],
+            ['Term' => '']
         );
 
         $GLOBALS['TYPO3_CONF_VARS']['SYS']['formEngine']['nodeRegistry'][1582892166] = [
@@ -54,6 +44,5 @@ call_user_func(
         if (false === \is_array($GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations']['dpnglossary_termscache'])) {
             $GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations']['dpnglossary_termscache'] = [];
         }
-    },
-    $_EXTKEY
+    }
 );

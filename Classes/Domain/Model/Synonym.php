@@ -14,6 +14,7 @@ namespace Featdd\DpnGlossary\Domain\Model;
  *
  ***/
 
+use TYPO3\CMS\Extbase\Annotation\Validate;
 use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
 
 /**
@@ -24,13 +25,13 @@ class Synonym extends AbstractEntity
     public const TABLE = 'tx_dpnglossary_domain_model_synonym';
 
     /**
-     * @var string $name
-     * @validate NotEmpty
+     * @var string
+     * @Validate(validator="NotEmpty")
      */
     protected $name = '';
 
     /**
-     * @return string $name
+     * @return string
      */
     public function getName(): string
     {

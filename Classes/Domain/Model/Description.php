@@ -14,6 +14,7 @@ namespace Featdd\DpnGlossary\Domain\Model;
  *
  ***/
 
+use TYPO3\CMS\Extbase\Annotation\Validate;
 use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
 
 /**
@@ -24,13 +25,13 @@ class Description extends AbstractEntity
     public const TABLE = 'tx_dpnglossary_domain_model_description';
 
     /**
-     * @var string $meaning
-     * @validate NotEmpty
+     * @var string
+     * @Validate(validator="NotEmpty")
      */
     protected $meaning = '';
 
     /**
-     * @var string $text
+     * @var string
      */
     protected $text = '';
 

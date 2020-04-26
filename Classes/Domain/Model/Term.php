@@ -14,6 +14,8 @@ namespace Featdd\DpnGlossary\Domain\Model;
  *
  ***/
 
+use TYPO3\CMS\Extbase\Annotation\ORM\Cascade;
+use TYPO3\CMS\Extbase\Annotation\Validate;
 use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
 use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
 use TYPO3\CMS\Extbase\Domain\Model\FileReference;
@@ -27,7 +29,7 @@ class Term extends AbstractEntity
 
     /**
      * @var string
-     * @validate NotEmpty
+     * @Validate(validator="NotEmpty")
      */
     protected $name = '';
 
@@ -73,19 +75,19 @@ class Term extends AbstractEntity
 
     /**
      * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\Featdd\DpnGlossary\Domain\Model\Description>
-     * @cascade remove
+     * @Cascade("remove")
      */
     protected $descriptions;
 
     /**
      * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\Featdd\DpnGlossary\Domain\Model\Synonym>
-     * @cascade remove
+     * @Cascade("remove")
      */
     protected $synonyms;
 
     /**
      * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\TYPO3\CMS\Extbase\Domain\Model\FileReference>
-     * @cascade remove
+     * @Cascade("remove")
      */
     protected $media;
 

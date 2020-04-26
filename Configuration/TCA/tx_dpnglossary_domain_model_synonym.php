@@ -21,9 +21,6 @@ return [
         'searchFields' => 'name,',
         'iconfile' => 'EXT:dpn_glossary/Resources/Public/Icons/synonym.png',
     ],
-    'interface' => [
-        'showRecordFieldList' => 'l10n_parent, l10n_diffsource, name',
-    ],
     'types' => [
         '1' => ['showitem' => 'l10n_parent, l10n_diffsource, name'],
     ],
@@ -46,7 +43,6 @@ return [
             ],
         ],
         'l10n_parent' => [
-            'exclude' => true,
             'displayCond' => 'FIELD:sys_language_uid:>:0',
             'label' => 'LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.l18n_parent',
             'config' => [

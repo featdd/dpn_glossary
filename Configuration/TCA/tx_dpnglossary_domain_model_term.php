@@ -22,9 +22,6 @@ return [
         'searchFields' => 'name,tooltiptext,descriptions,synonyms,term_type,term_lang,images,',
         'iconfile' => 'EXT:dpn_glossary/Resources/Public/Icons/term.png',
     ],
-    'interface' => [
-        'showRecordFieldList' => 'sys_language_uid, l10n_parent, l10n_diffsource, hidden, name, url_segment, tooltiptext, synonyms, descriptions, term_type, term_lang, term_mode, term_link, media, starttime, endtime',
-    ],
     'types' => [
         '1' => ['showitem' => 'sys_language_uid, --palette--;;hidden_exludefromparsing_casesensitive, name, url_segment, tooltiptext, term_mode, term_link, synonyms, descriptions, term_type, term_lang, media, --div--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:tabs.access, starttime, endtime'],
     ],
@@ -50,7 +47,6 @@ return [
             ],
         ],
         'l10n_parent' => [
-            'exclude' => true,
             'displayCond' => 'FIELD:sys_language_uid:>:0',
             'label' => 'LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.l18n_parent',
             'config' => [
@@ -143,7 +139,6 @@ return [
                 'renderType' => 'recordPreview',
                 'size' => 30,
                 'max' => 255,
-                'eval' => 'uniqueInSite',
                 'fallbackCharacter' => '-',
                 'generatorOptions' => [
                     'fields' => ['name'],
