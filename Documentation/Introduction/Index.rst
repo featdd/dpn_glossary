@@ -24,7 +24,7 @@ Advantage of dpn_glossary
 Screenshots
 -----------
 
-.. figure:: ../Images/term_edit.png
+.. figure:: ../Images/term_edit.jpg
     :alt: Term editing
 
     The editing of one a term

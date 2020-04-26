@@ -10,6 +10,9 @@
 ChangeLog
 ---------
 
+v3.1.0
+  - Add compatibility for TYPO3 10 LTS
+
 v3.0.5
   - Update typoscript syntax to prevent deprecation warnings
   - Parser optimizations
