@@ -153,6 +153,17 @@
       <trans-unit id="tx_dpnglossary.error.slug_preview_site_missing">
         <source>no site configuration</source>
       </trans-unit>
+
+
+      <trans-unit id="extensionsettings.term_slug_evaluation_type">
+        <source>Evaluation type for the term slug</source>
+      </trans-unit>
+      <trans-unit id="extensionsettings.term_slug_evaluation_type.unique_in_site">
+        <source>unique in the site</source>
+      </trans-unit>
+      <trans-unit id="extensionsettings.term_slug_evaluation_type.unique_in_instance">
+        <source>unique in the whole instance</source>
+      </trans-unit>
     </body>
   </file>
 </xliff>

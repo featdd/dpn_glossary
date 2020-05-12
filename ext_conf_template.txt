@@ -1,0 +1,2 @@
+# cat=Settings/enable; type=options[LLL:EXT:dpn_glossary/Resources/Private/Language/locallang.xlf:extensionsettings.term_slug_evaluation_type.unique_in_site=uniqueInSite,LLL:EXT:dpn_glossary/Resources/Private/Language/locallang.xlf:extensionsettings.term_slug_evaluation_type.unique_in_instance=unique]; label=LLL:EXT:dpn_glossary/Resources/Private/Language/locallang.xlf:extensionsettings.term_slug_evaluation_type
+termSlugEvaluation = uniqueInSite

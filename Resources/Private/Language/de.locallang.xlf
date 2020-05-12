@@ -153,6 +153,17 @@
       <trans-unit id="tx_dpnglossary.error.slug_preview_site_missing">
         <target>Keine Seitenkonfiguration</target>
       </trans-unit>
+
+
+      <trans-unit id="extensionsettings.term_slug_evaluation_type">
+        <target>Evaluierungsart der Begriff URL</target>
+      </trans-unit>
+      <trans-unit id="extensionsettings.term_slug_evaluation_type.unique_in_site">
+        <target>Einzigartig innerhalb einer Seite</target>
+      </trans-unit>
+      <trans-unit id="extensionsettings.term_slug_evaluation_type.unique_in_instance">
+        <target>Einzigartig in der gesamten Instanz</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

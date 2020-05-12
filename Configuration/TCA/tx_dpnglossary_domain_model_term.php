@@ -140,6 +140,7 @@ return [
                 'size' => 30,
                 'max' => 255,
                 'fallbackCharacter' => '-',
+                'eval' => 'uniqueInSite',
                 'generatorOptions' => [
                     'fields' => ['name'],
                     'replacements' => [

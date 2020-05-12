@@ -5,6 +5,29 @@
 
 .. include:: ../../Includes.txt
 
+Extension Settings
+^^^^^^^^^^^^^^^^^^
+
+All constants have to be added to
+
+.. ### BEGIN~OF~TABLE ###
+
+.. container:: table-row
+
+  Key
+    termSlugEvaluation
+
+  Data Type
+    string
+
+  Description
+    Set the evaluation type for the term slug.
+
+  Default
+    uniqueInSite
+
+.. ###### END~OF~TABLE ######
+
 Reference
 ^^^^^^^^^
 
