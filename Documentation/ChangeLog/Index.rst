@@ -10,6 +10,9 @@
 ChangeLog
 ---------
 
+v3.1.1
+  - Add better evaluation for the term slug
+
 v3.1.0
   - Add compatibility for TYPO3 10 LTS
 
