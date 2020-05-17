@@ -10,6 +10,9 @@
 ChangeLog
 ---------
 
+v3.1.2
+  - Use "unique" as default evaluation for slug to prevent initial errors
+
 v3.1.1
   - Add better evaluation for the term slug
 
