@@ -14,7 +14,7 @@ call_user_func(
         \TYPO3\CMS\Core\Configuration\Exception\ExtensionConfigurationExtensionNotConfiguredException |
         \TYPO3\CMS\Core\Configuration\Exception\ExtensionConfigurationPathDoesNotExistException $exception
         ) {
-            $termSlugEvaluation = 'uniqueInSite';
+            $termSlugEvaluation = 'unique';
         }
 
         $GLOBALS['TCA'][\Featdd\DpnGlossary\Domain\Model\Term::TABLE]['columns']['url_segment']['config']['eval'] = $termSlugEvaluation;
