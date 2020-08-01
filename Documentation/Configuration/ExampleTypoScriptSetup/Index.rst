@@ -109,3 +109,23 @@ Setting the detailpage uid in the tsconfig will enable the full url preview for 
       url_segment.config.previewUrl.pageUid = [YOUR_PLUGINPAGE_UID]
     }
   }
+
+Push term name to e.g. breadcrumb menu
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+If your website provides breadcrumb navigation, you may want to add the name of the glossary entry on the details page, this is possible with the following MenuProcessor:
+
+::
+
+  page.10.dataProcessing {
+    // Your Breacrumb Configuration
+    // 30 = TYPO3\CMS\Frontend\DataProcessing\MenuProcessor
+    // 30 {
+    //     special = rootline
+    //     special.range = 0|-1
+    //     as = menuBreadcrumb
+    // }
+    // Push Glossary Term to Menu
+    50 = Featdd\DpnGlossary\DataProcessing\AddTermToMenuProcessor
+    50.menus = menuBreadcrumb
+  }
