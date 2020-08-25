@@ -328,6 +328,12 @@ class ParserService implements SingletonInterface
 
             //Check replacement counter
             if (0 !== $term['replacements']) {
+                $isPriorisedSynonymParsing = (boolean) ($this->settings['priorisedSynonymParsing'] ?? true);
+
+                if (false === $isPriorisedSynonymParsing) {
+                    $this->regexParser($text, $termObject, $replacements, $wrapperClosure);
+                }
+
                 if (true === (boolean) $this->settings['parseSynonyms']) {
                     $synonymTermObject = clone $termObject;
                     /** @var \Featdd\DpnGlossary\Domain\Model\Synonym $synonym */
@@ -345,7 +351,9 @@ class ParserService implements SingletonInterface
                     }
                 }
 
-                $this->regexParser($text, $termObject, $replacements, $wrapperClosure);
+                if (true === $isPriorisedSynonymParsing) {
+                    $this->regexParser($text, $termObject, $replacements, $wrapperClosure);
+                }
             }
         }
 

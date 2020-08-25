@@ -47,6 +47,8 @@ plugin.tx_dpnglossary {
     disableParser = {$plugin.tx_dpnglossary.settings.disableParser}
     # Parse the terms synonyms
     parseSynonyms = {$plugin.tx_dpnglossary.settings.parseSynonyms}
+    # Priorise the synonyms for parsing
+    priorisedSynonymParsing = {$plugin.tx_dpnglossary.settings.priorisedSynonymParsing}
 
     useCachingFramework = 1
 
