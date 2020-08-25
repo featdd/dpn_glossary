@@ -10,6 +10,10 @@
 ChangeLog
 ---------
 
+v3.1.3
+  - Add option to priories synonym parsing before the main term
+  - Fixed parsing priority issue with synonyms
+
 v3.1.2
   - Use "unique" as default evaluation for slug to prevent initial errors
 
