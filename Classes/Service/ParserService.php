@@ -329,17 +329,18 @@ class ParserService implements SingletonInterface
             //Check replacement counter
             if (0 !== $term['replacements']) {
                 if (true === (boolean) $this->settings['parseSynonyms']) {
+                    $synonymTermObject = clone $termObject;
                     /** @var \Featdd\DpnGlossary\Domain\Model\Synonym $synonym */
                     foreach ($termObject->getSynonyms() as $synonym) {
-                        $termObject->setName(
+                        $synonymTermObject->setName(
                             $synonym->getName()
                         );
 
                         if (true === (boolean) $this->settings['maxReplacementPerPageRespectSynonyms']) {
-                            $this->regexParser($text, $termObject, $replacements, $wrapperClosure);
+                            $this->regexParser($text, $synonymTermObject, $replacements, $wrapperClosure);
                         } else {
                             $noReplacementCount = -1;
-                            $this->regexParser($text, $termObject, $noReplacementCount, $wrapperClosure);
+                            $this->regexParser($text, $synonymTermObject, $noReplacementCount, $wrapperClosure);
                         }
                     }
                 }
