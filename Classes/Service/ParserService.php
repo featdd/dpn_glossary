@@ -198,12 +198,13 @@ class ParserService implements SingletonInterface
         }
 
         // Classes which are not allowed for the parsing tag
-        $forbiddenParsingTagClasses = array_filter(
-            GeneralUtility::trimExplode(',', $this->settings['forbiddenParsingTagClasses'])
-        );
+        $forbiddenParsingTagClasses = GeneralUtility::trimExplode(',', $this->settings['forbiddenParsingTagClasses'], true);
+
+        // Classes which are not allowed for the parsing tag
+        $forbiddenParentClasses = GeneralUtility::trimExplode(',', $this->settings['forbiddenParentClasses'], true);
 
         // Tags which are not allowed as direct parent for a parsingTag
-        $forbiddenParentTags = array_filter(GeneralUtility::trimExplode(',', $this->settings['forbiddenParentTags']));
+        $forbiddenParentTags = GeneralUtility::trimExplode(',', $this->settings['forbiddenParentTags'], true);
 
         // Add "a" if unknowingly deleted to prevent errors
         if (false === \in_array(self::$alwaysIgnoreParentTags, $forbiddenParentTags, true)) {
@@ -247,14 +248,34 @@ class ParserService implements SingletonInterface
         foreach ($tags as $tag) {
             $xpathQuery = '//' . $tag;
 
-            // if classes given add them to xpath query
-            if (0 < \count($forbiddenParsingTagClasses)) {
+            // if forbidden parsing tag classes given add them to xpath query
+            if (0 < count($forbiddenParsingTagClasses)) {
                 $xpathQuery .= '[not(contains(@class, \'' .
                     implode(
                         '\') or contains(@class, \'',
                         $forbiddenParsingTagClasses
                     ) .
-                    '\'))]';
+                    '\'))';
+
+                $xpathQuery = 0 < count($forbiddenParentClasses) ? $xpathQuery . ' and ' : $xpathQuery . ']';
+            }
+
+            /*
+             * Due to PHP still uses XPath 1.0 up to its latest versions we still have to use "contains" here.
+             * It would make more sense to use the function "matches", but this is only supported from version 2.0.
+             * This inevitably leads to the problem that contains also matches if the class is concatenated.
+             * Example: class="example-andmore" using "contains" for "example" still matches although its different
+             */
+
+            // if forbidden parent classes given add them to xpath query
+            if (0 < count($forbiddenParentClasses)) {
+                $xpathQuery .= (0 < count($forbiddenParsingTagClasses) ? '' : '[') .
+                    'not(./ancestor::*[contains(@class, \'' .
+                    implode(
+                        '\')] or ./ancestor::*[contains(@class, \'',
+                        $forbiddenParentClasses
+                    ) .
+                    '\')])]';
             }
 
             // extract the tags
