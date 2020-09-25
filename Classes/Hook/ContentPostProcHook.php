@@ -41,6 +41,18 @@ class ContentPostProcHook
      * @param \TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController $typoScriptFrontendController
      * @throws \Featdd\DpnGlossary\Service\Exception
      */
+    public function all(array &$params, TypoScriptFrontendController $typoScriptFrontendController): void
+    {
+        if (true === $typoScriptFrontendController->no_cache) {
+            $this->parseHtml($typoScriptFrontendController);
+        }
+    }
+
+    /**
+     * @param array $params
+     * @param \TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController $typoScriptFrontendController
+     * @throws \Featdd\DpnGlossary\Service\Exception
+     */
     public function cached(array &$params, TypoScriptFrontendController $typoScriptFrontendController): void
     {
         $this->parseHtml($typoScriptFrontendController);
