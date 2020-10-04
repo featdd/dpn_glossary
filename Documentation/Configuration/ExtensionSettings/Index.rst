@@ -143,6 +143,17 @@ plugin.tx_dpnglossary.settings:
 .. container:: table-row
 
   Constant
+    settings.forbiddenParentClasses
+
+  Data Type
+    string
+
+  Description
+    Comma list of classes which are not allowed on any parent of the parsing tag
+
+.. container:: table-row
+
+  Constant
     settings.listmode
 
   Data Type

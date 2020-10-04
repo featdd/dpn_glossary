@@ -10,6 +10,10 @@
 ChangeLog
 ---------
 
+v3.1.4
+  - Add hook to also run parser when config.no_cache is true
+  - Add "forbidden parent classes" new parsing exclude feature
+
 v3.1.3
   - Add option to priories synonym parsing before the main term
   - Fixed parsing priority issue with synonyms
