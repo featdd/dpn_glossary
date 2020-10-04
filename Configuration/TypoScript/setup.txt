@@ -37,6 +37,8 @@ plugin.tx_dpnglossary {
     forbiddenParentTags = {$plugin.tx_dpnglossary.settings.forbiddenParentTags}
     # Classes which are not allowed for the parsing tag
     forbiddenParsingTagClasses = {$plugin.tx_dpnglossary.settings.forbiddenParsingTagClasses}
+    # Classes which are not allowed on any parent of the parsing tag
+    forbiddenParentClasses = {$plugin.tx_dpnglossary.settings.forbiddenParentClasses}
     # Listmode normal or character grouped list
     listmode = {$plugin.tx_dpnglossary.settings.listmode}
     # Previewmode newest or random
@@ -149,13 +151,15 @@ plugin.tx_dpnglossary {
   }
 }
 
-["{$plugin.tx_dpnglossary.settings.addStylesheet}" == "1"]
-  page.includeCSS.dpnglossary = EXT:dpn_glossary/Resources/Public/css/styles.css
+["
+
+{$plugin.tx_dpnglossary.settings.addStylesheet}" == "1"]
+page.includeCSS.dpnglossary = EXT:dpn_glossary/Resources/Public/css/styles.css
 [global]
 
 config.pageTitleProviders {
-  glossaryTerm {
-    provider = Featdd\DpnGlossary\PageTitle\TermPageTitleProvider
-    before = altPageTitle
-  }
+glossaryTerm {
+provider = Featdd\DpnGlossary\PageTitle\TermPageTitleProvider
+before = altPageTitle
+}
 }
