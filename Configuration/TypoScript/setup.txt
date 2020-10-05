@@ -151,9 +151,7 @@ plugin.tx_dpnglossary {
   }
 }
 
-["
-
-{$plugin.tx_dpnglossary.settings.addStylesheet}" == "1"]
+["{$plugin.tx_dpnglossary.settings.addStylesheet}" == "1"]
 page.includeCSS.dpnglossary = EXT:dpn_glossary/Resources/Public/css/styles.css
 [global]
 
