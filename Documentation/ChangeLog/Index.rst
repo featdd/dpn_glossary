@@ -10,6 +10,9 @@
 ChangeLog
 ---------
 
+v3.1.5
+  - Fix broken TypoScript due to an auto indent issue
+
 v3.1.4
   - Add hook to also run parser when config.no_cache is true
   - Add "forbidden parent classes" new parsing exclude feature
