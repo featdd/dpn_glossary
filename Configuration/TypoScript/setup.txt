@@ -151,15 +151,13 @@ plugin.tx_dpnglossary {
   }
 }
 
-["
-
-{$plugin.tx_dpnglossary.settings.addStylesheet}" == "1"]
-page.includeCSS.dpnglossary = EXT:dpn_glossary/Resources/Public/css/styles.css
+["{$plugin.tx_dpnglossary.settings.addStylesheet}" == "1"]
+  page.includeCSS.dpnglossary = EXT:dpn_glossary/Resources/Public/css/styles.css
 [global]
 
 config.pageTitleProviders {
-glossaryTerm {
-provider = Featdd\DpnGlossary\PageTitle\TermPageTitleProvider
-before = altPageTitle
-}
+  glossaryTerm {
+    provider = Featdd\DpnGlossary\PageTitle\TermPageTitleProvider
+    before = altPageTitle
+  }
 }
