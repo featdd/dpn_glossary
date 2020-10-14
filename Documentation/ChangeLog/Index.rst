@@ -10,6 +10,9 @@
 ChangeLog
 ---------
 
+v3.1.6
+  - Add missing renderType for preview FlexForm
+
 v3.1.5
   - Fix broken TypoScript due to an auto indent issue
 
