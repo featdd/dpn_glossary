@@ -13,6 +13,8 @@
               <onChange>reload</onChange>
               <config>
                 <type>select</type>
+                <renderType>selectSingle</renderType>
+                <default>Term->previewNewest</default>
                 <items>
                   <numIndex index="1">
                     <numIndex index="0">LLL:EXT:dpn_glossary/Resources/Private/Language/locallang.xlf:tx_dpnglossary.flexforms.preview.mode.newest</numIndex>
