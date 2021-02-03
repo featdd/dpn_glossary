@@ -10,6 +10,10 @@
 ChangeLog
 ---------
 
+v3.2.0
+  - Change parsing order to parse the whole content for each term
+  - Add special wrap character option for term regular expression
+
 v3.1.6
   - Add missing renderType for preview FlexForm
 
