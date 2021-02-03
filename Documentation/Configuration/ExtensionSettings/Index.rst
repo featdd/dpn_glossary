@@ -221,4 +221,29 @@ plugin.tx_dpnglossary.settings:
   Default
     1
 
+.. container:: table-row
+
+  Constant
+    settings.priorisedSynonymParsing
+
+  Data Type
+    boolean
+
+  Description
+    Parse for synonyms before the actual term
+
+  Default
+    1
+
+.. container:: table-row
+
+  Constant
+    settings.parsingSpecialWrapCharacters
+
+  Data Type
+    string
+
+  Description
+    Comma list of special characters allowed to wrap the term
+
 .. ###### END~OF~TABLE ######

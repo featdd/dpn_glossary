@@ -21,6 +21,8 @@ plugin.tx_dpnglossary {
     parsingPids = 0
     # cat=dpn_glossary/settings/a; type=string; label=Pages (comma list) which should not be parsed for glossary terms
     parsingExcludePidList =
+    # cat=dpn_glossary/settings/a; type=string; label=Additional special characters to respect in parser regular expression
+    parsingSpecialWrapCharacters =
     # cat=dpn_glossary/settings/a; type=integer; label=Maximum replacements for each term (default: -1 = any)
     maxReplacementPerPage = -1
     # cat=dpn_glossary/settings/a; type=boolean; label=Respect replacement counter when parsing synonyms (default: off)
