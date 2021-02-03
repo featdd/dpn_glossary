@@ -14,6 +14,11 @@ namespace Featdd\DpnGlossary\Service;
  *
  ***/
 
+use Closure;
+use DOMDocument;
+use DOMNodeList;
+use DOMText;
+use DOMXPath;
 use Featdd\DpnGlossary\Domain\Model\Term;
 use Featdd\DpnGlossary\Domain\Repository\TermRepository;
 use Featdd\DpnGlossary\Utility\ObjectUtility;
@@ -206,6 +211,15 @@ class ParserService implements SingletonInterface
         // Tags which are not allowed as direct parent for a parsingTag
         $forbiddenParentTags = GeneralUtility::trimExplode(',', $this->settings['forbiddenParentTags'], true);
 
+        // Respect synonyms for replacement count
+        $isMaxReplacementPerPageRespectSynonyms = (boolean) ($this->settings['maxReplacementPerPageRespectSynonyms'] ?? false);
+
+        // Parse synonyms
+        $isParseSynonyms = (boolean) ($this->settings['parseSynonyms'] ?? true);
+
+        // Parse synonyms before or after the main term
+        $isPriorisedSynonymParsing = (boolean) ($this->settings['priorisedSynonymParsing'] ?? true);
+
         // Add "a" if unknowingly deleted to prevent errors
         if (false === \in_array(self::$alwaysIgnoreParentTags, $forbiddenParentTags, true)) {
             $forbiddenParentTags = array_unique(
@@ -214,7 +228,7 @@ class ParserService implements SingletonInterface
         }
 
         //Create new DOMDocument
-        $DOM = new \DOMDocument();
+        $DOM = new DOMDocument();
 
         // Prevent crashes caused by HTML5 entities with internal errors
         libxml_use_internal_errors(true);
@@ -237,79 +251,101 @@ class ParserService implements SingletonInterface
         $DOM->preserveWhiteSpace = false;
 
         // Init DOMXPath with main DOMDocument
-        $DOMXPath = new \DOMXPath($DOM);
+        $DOMXPath = new DOMXPath($DOM);
 
         /** @var \DOMNode $DOMBody */
         $DOMBody = $DOM->getElementsByTagName('body')->item(0);
 
-        $wrapperClosure = \Closure::fromCallable([$this, 'termWrapper']);
+        $wrapperClosure = Closure::fromCallable([$this, 'termWrapper']);
 
-        // iterate over tags which are defined to be parsed
-        foreach ($tags as $tag) {
-            $xpathQuery = '//' . $tag;
+        foreach ($this->terms as $term) {
+            /** @var \Featdd\DpnGlossary\Domain\Model\Term $termObject */
+            $termObject = clone $term['term'];
+            $replacements = &$term['replacements'];
 
-            // if forbidden parsing tag classes given add them to xpath query
-            if (0 < count($forbiddenParsingTagClasses)) {
-                $xpathQuery .= '[not(contains(@class, \'' .
-                    implode(
-                        '\') or contains(@class, \'',
-                        $forbiddenParsingTagClasses
-                    ) .
-                    '\'))';
-
-                $xpathQuery = 0 < count($forbiddenParentClasses) ? $xpathQuery . ' and ' : $xpathQuery . ']';
+            if (0 === $replacements || true === $termObject->getExcludeFromParsing()) {
+                continue;
             }
 
-            /*
-             * Due to PHP still uses XPath 1.0 up to its latest versions we still have to use "contains" here.
-             * It would make more sense to use the function "matches", but this is only supported from version 2.0.
-             * This inevitably leads to the problem that contains also matches if the class is concatenated.
-             * Example: class="example-andmore" using "contains" for "example" still matches although its different
-             */
+            $xpathQuery = '';
 
-            // if forbidden parent classes given add them to xpath query
-            if (0 < count($forbiddenParentClasses)) {
-                $xpathQuery .= (0 < count($forbiddenParsingTagClasses) ? '' : '[') .
-                    'not(./ancestor::*[contains(@class, \'' .
-                    implode(
-                        '\')] or ./ancestor::*[contains(@class, \'',
-                        $forbiddenParentClasses
-                    ) .
-                    '\')])]';
+            // iterate over tags which are defined to be parsed
+            foreach ($tags as $tag) {
+                if (false === empty($xpathQuery)) {
+                    $xpathQuery .= ' | ';
+                }
+
+                $xpathQuery .= '//' . $tag;
+
+                // if forbidden parsing tag classes given add them to xpath query
+                if (0 < count($forbiddenParsingTagClasses)) {
+                    $xpathQuery .= '[not(contains(@class, \'' .
+                        implode(
+                            '\') or contains(@class, \'',
+                            $forbiddenParsingTagClasses
+                        ) .
+                        '\'))';
+
+                    $xpathQuery = 0 < count($forbiddenParentClasses) ? $xpathQuery . ' and ' : $xpathQuery . ']';
+                }
+
+                /*
+                 * Due to PHP still uses XPath 1.0 up to its latest versions we still have to use "contains" here.
+                 * It would make more sense to use the function "matches", but this is only supported from version 2.0.
+                 * This inevitably leads to the problem that contains also matches if the class is concatenated.
+                 * Example: class="example-andmore" using "contains" for "example" still matches although its different
+                 */
+
+                // if forbidden parent classes given add them to xpath query
+                if (0 < count($forbiddenParentClasses)) {
+                    $xpathQuery .= (0 < count($forbiddenParsingTagClasses) ? '' : '[') .
+                        'not(./ancestor::*[contains(@class, \'' .
+                        implode(
+                            '\')] or ./ancestor::*[contains(@class, \'',
+                            $forbiddenParentClasses
+                        ) .
+                        '\')])]';
+                }
             }
 
             // extract the tags
             $DOMTags = $DOMXPath->query($xpathQuery, $DOMBody);
-            // call the nodereplacer for each node to parse its content
-            /** @var \DOMNode $DOMTag */
-            foreach ($DOMTags as $DOMTag) {
-                // get parent tags from root tree string
-                $parentTags = explode(
-                    '/',
-                    preg_replace(
-                        '#\[([^\]]*)\]#',
-                        '',
-                        substr($DOMTag->parentNode->getNodePath(), 1)
-                    )
-                );
 
-                // check if element is children of a forbidden parent
-                if (0 === count(array_intersect($parentTags, $forbiddenParentTags))) {
-                    /** @var \DOMNode $childNode */
-                    for ($i = 0; $i < $DOMTag->childNodes->length; $i++) {
-                        $childNode = $DOMTag->childNodes->item($i);
+            if (false === $isPriorisedSynonymParsing) {
+                $this->domTagsParser($DOMTags, $termObject, $replacements, $wrapperClosure, $forbiddenParentTags);
+            }
 
-                        if ($childNode instanceof \DOMText) {
-                            ParserUtility::domTextReplacer(
-                                $childNode,
-                                $this->textParser(
-                                    $childNode->ownerDocument->saveHTML($childNode),
-                                    $wrapperClosure
-                                )
-                            );
-                        }
+            if (true === $isParseSynonyms) {
+                $synonymTermObject = clone $termObject;
+                /** @var \Featdd\DpnGlossary\Domain\Model\Synonym $synonym */
+                foreach ($termObject->getSynonyms() as $synonym) {
+                    $synonymTermObject->setName(
+                        $synonym->getName()
+                    );
+
+                    if (true === $isMaxReplacementPerPageRespectSynonyms) {
+                        $this->domTagsParser(
+                            $DOMTags,
+                            $synonymTermObject,
+                            $replacements,
+                            $wrapperClosure,
+                            $forbiddenParentTags
+                        );
+                    } else {
+                        $noReplacementCount = -1;
+                        $this->domTagsParser(
+                            $DOMTags,
+                            $synonymTermObject,
+                            $noReplacementCount,
+                            $wrapperClosure,
+                            $forbiddenParentTags
+                        );
                     }
                 }
+            }
+
+            if (true === $isPriorisedSynonymParsing) {
+                $this->domTagsParser($DOMTags, $termObject, $replacements, $wrapperClosure, $forbiddenParentTags);
             }
         }
 
@@ -328,57 +364,52 @@ class ParserService implements SingletonInterface
     }
 
     /**
-     * Parse the extracted html for terms
-     *
-     * @param string $text the text to be parsed
-     * @param \Closure $wrapperClosure the wrapping function for parsed terms as callback
-     * @return string
+     * @param \DOMNodeList $domTags
+     * @param \Featdd\DpnGlossary\Domain\Model\Term $term
+     * @param int $replacements
+     * @param \Closure $wrapperClosure
+     * @param string[] $forbiddenParentTags
      */
-    public function textParser(string $text, \Closure $wrapperClosure): string
-    {
-        $text = preg_replace('#\x{00a0}#iu', '&nbsp;', $text);
-        // Iterate over terms and search matches for each of them
-        foreach ($this->terms as &$term) {
-            /** @var \Featdd\DpnGlossary\Domain\Model\Term $termObject */
-            $termObject = clone $term['term'];
-            $replacements = &$term['replacements'];
+    protected function domTagsParser(
+        DOMNodeList $domTags,
+        Term $term,
+        int &$replacements,
+        Closure $wrapperClosure,
+        array $forbiddenParentTags
+    ): void {
+        // call the nodereplacer for each node to parse its content
+        /** @var \DOMNode $DOMTag */
+        foreach ($domTags as $DOMTag) {
+            // get parent tags from root tree string
+            $parentTags = explode(
+                '/',
+                preg_replace(
+                    '#\[([^\]]*)\]#',
+                    '',
+                    substr($DOMTag->parentNode->getNodePath(), 1)
+                )
+            );
 
-            if (true === $termObject->getExcludeFromParsing()) {
-                continue;
-            }
+            // check if element is children of a forbidden parent
+            if (0 === count(array_intersect($parentTags, $forbiddenParentTags))) {
+                /** @var \DOMNode $childNode */
+                for ($i = 0; $i < $DOMTag->childNodes->length; $i++) {
+                    $childNode = $DOMTag->childNodes->item($i);
 
-            //Check replacement counter
-            if (0 !== $term['replacements']) {
-                $isPriorisedSynonymParsing = (boolean) ($this->settings['priorisedSynonymParsing'] ?? true);
-
-                if (false === $isPriorisedSynonymParsing) {
-                    $this->regexParser($text, $termObject, $replacements, $wrapperClosure);
-                }
-
-                if (true === (boolean) $this->settings['parseSynonyms']) {
-                    $synonymTermObject = clone $termObject;
-                    /** @var \Featdd\DpnGlossary\Domain\Model\Synonym $synonym */
-                    foreach ($termObject->getSynonyms() as $synonym) {
-                        $synonymTermObject->setName(
-                            $synonym->getName()
+                    if ($childNode instanceof DOMText) {
+                        $text = preg_replace(
+                            '#\x{00a0}#iu', '&nbsp;',
+                            $childNode->ownerDocument->saveHTML($childNode)
                         );
 
-                        if (true === (boolean) $this->settings['maxReplacementPerPageRespectSynonyms']) {
-                            $this->regexParser($text, $synonymTermObject, $replacements, $wrapperClosure);
-                        } else {
-                            $noReplacementCount = -1;
-                            $this->regexParser($text, $synonymTermObject, $noReplacementCount, $wrapperClosure);
-                        }
+                        ParserUtility::domTextReplacer(
+                            $childNode,
+                            $this->regexParser($text, $term, $replacements, $wrapperClosure)
+                        );
                     }
-                }
-
-                if (true === $isPriorisedSynonymParsing) {
-                    $this->regexParser($text, $termObject, $replacements, $wrapperClosure);
                 }
             }
         }
-
-        return $text;
     }
 
     /**
@@ -388,12 +419,13 @@ class ParserService implements SingletonInterface
      * @param Term $term
      * @param integer $replacements
      * @param \Closure $wrapperClosure
+     * @return string
      */
-    protected function regexParser(string &$text, Term $term, int &$replacements, \Closure $wrapperClosure): void
+    protected function regexParser(string $text, Term $term, int &$replacements, Closure $wrapperClosure): string
     {
         // Try simple search first to save performance
         if (false === mb_stripos($text, $term->getName())) {
-            return;
+            return $text;
         }
 
         /*
@@ -447,7 +479,7 @@ class ParserService implements SingletonInterface
         };
 
         // Use callback to keep allowed chars around the term and his camel case
-        $text = (string) preg_replace_callback($regex, $callback, $text, $replacements);
+        return (string) preg_replace_callback($regex, $callback, $text, $replacements);
     }
 
     /**
