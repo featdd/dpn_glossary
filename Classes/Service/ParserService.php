@@ -41,12 +41,17 @@ class ParserService implements SingletonInterface
     public const REGEX_DELIMITER = '/';
 
     /**
-     * tags to be always ignored by parsing
+     * @var string[]
      */
     public static $alwaysIgnoreParentTags = [
         'a',
         'script',
     ];
+
+    /**
+     * @var string
+     */
+    public static $additionalRegexWrapCharacters = '';
 
     /**
      * @var ContentObjectRenderer
@@ -107,6 +112,14 @@ class ParserService implements SingletonInterface
                     ',',
                     $this->typoScriptConfiguration['persistence.']['storagePid'])
             );
+
+            $parsingSpecialWrapCharacters = GeneralUtility::trimExplode(',', $this->settings['parsingSpecialWrapCharacters'] ?? '', true);
+
+            if (0 < count($parsingSpecialWrapCharacters)) {
+                foreach ($parsingSpecialWrapCharacters as $parsingSpecialWrapCharacter) {
+                    self::$additionalRegexWrapCharacters .= '|' . preg_quote($parsingSpecialWrapCharacter);
+                }
+            }
 
             try {
                 /** @var \TYPO3\CMS\Core\Context\Context $context */
@@ -457,9 +470,9 @@ class ParserService implements SingletonInterface
          * i = ignores camel case
          */
         $regex = self::REGEX_DELIMITER .
-            '(^|\G|[\s\>[:punct:]]|\<br*\>)' .
+            '(^|\G|[\s\>[:punct:]]|\<br*\>' . self::$additionalRegexWrapCharacters . ')' .
             '(' . preg_quote($term->getName(), self::REGEX_DELIMITER) . ')' .
-            '($|[\s\<[:punct:]]|\<br*\>)' .
+            '($|[\s\<[:punct:]]|\<br*\>' . self::$additionalRegexWrapCharacters . ')' .
             '(?![^<]*>|[^<>]*<\/)' .
             self::REGEX_DELIMITER .
             (false === $term->isCaseSensitive() ? 'i' : '');
