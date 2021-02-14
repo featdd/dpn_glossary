@@ -332,7 +332,11 @@ class ParserService implements SingletonInterface
                 $synonymTermObject = clone $termObject;
                 /** @var \Featdd\DpnGlossary\Domain\Model\Synonym $synonym */
                 foreach ($termObject->getSynonyms() as $synonym) {
-                    $synonymTermObject->setName(
+                    $synonymTermObject->{
+                        true === (bool) $this->settings['useTermForSynonymParsingDataWrap']
+                            ? 'setParsingName'
+                            : 'setName'
+                    }(
                         $synonym->getName()
                     );
 
@@ -430,14 +434,14 @@ class ParserService implements SingletonInterface
      *
      * @param string $text
      * @param Term $term
-     * @param integer $replacements
+     * @param int $replacements
      * @param \Closure $wrapperClosure
      * @return string
      */
     protected function regexParser(string $text, Term $term, int &$replacements, Closure $wrapperClosure): string
     {
         // Try simple search first to save performance
-        if (false === mb_stripos($text, $term->getName())) {
+        if (false === mb_stripos($text, $term->getParsingName())) {
             return $text;
         }
 
@@ -471,7 +475,7 @@ class ParserService implements SingletonInterface
          */
         $regex = self::REGEX_DELIMITER .
             '(^|\G|[\s\>[:punct:]]|\<br*\>' . self::$additionalRegexWrapCharacters . ')' .
-            '(' . preg_quote($term->getName(), self::REGEX_DELIMITER) . ')' .
+            '(' . preg_quote($term->getParsingName(), self::REGEX_DELIMITER) . ')' .
             '($|[\s\<[:punct:]]|\<br*\>' . self::$additionalRegexWrapCharacters . ')' .
             '(?![^<]*>|[^<>]*<\/)' .
             self::REGEX_DELIMITER .
@@ -485,7 +489,7 @@ class ParserService implements SingletonInterface
             }
 
             // Use term match to keep original camel case
-            $term->setName($match[2]);
+            $term->setParsingName($match[2]);
 
             // Wrap replacement with original chars
             return $match[1] . $wrapperClosure($term) . $match[3];

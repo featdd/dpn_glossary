@@ -53,6 +53,8 @@ plugin.tx_dpnglossary {
     parseSynonyms = {$plugin.tx_dpnglossary.settings.parseSynonyms}
     # Priorise the synonyms for parsing
     priorisedSynonymParsing = {$plugin.tx_dpnglossary.settings.priorisedSynonymParsing}
+    # Use the origin term for content object data when parsing synonyms
+    useTermForSynonymParsingDataWrap = {$plugin.tx_dpnglossary.settings.useTermForSynonymParsingDataWrap}
 
     useCachingFramework = 1
 
@@ -68,7 +70,7 @@ plugin.tx_dpnglossary {
       key.field = term_type
       default = TEXT
       default {
-        field = name
+        field = parsing_name
         dataWrap = |
         typolink {
           useCacheHash = 0
