@@ -10,6 +10,10 @@
 ChangeLog
 ---------
 
+v3.2.1
+  - Fix TCA sorting for synonyms & descriptions in term inline fields
+  - Add option to keep the origin term for data wrap when parsing synonyms
+
 v3.2.0
   - Change parsing order to parse the whole content for each term
   - Add special wrap character option for term regular expression
