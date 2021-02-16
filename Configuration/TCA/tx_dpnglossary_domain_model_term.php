@@ -285,6 +285,7 @@ return [
                 'foreign_table' => 'tx_dpnglossary_domain_model_description',
                 'foreign_field' => 'term',
                 'foreign_label' => 'meaning',
+                'foreign_sortby' => 'sorting',
                 'minitems' => 1,
                 'maxitems' => 9999,
                 'appearance' => [
@@ -306,6 +307,7 @@ return [
                 'foreign_table' => 'tx_dpnglossary_domain_model_synonym',
                 'foreign_field' => 'term',
                 'foreign_label' => 'name',
+                'foreign_sortby' => 'sorting',
                 'minitems' => 0,
                 'maxitems' => 9999,
                 'appearance' => [

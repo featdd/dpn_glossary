@@ -4,7 +4,6 @@ return [
     'ctrl' => [
         'title' => 'LLL:EXT:dpn_glossary/Resources/Private/Language/locallang.xlf:tx_dpnglossary_domain_model_description',
         'label' => 'meaning',
-        'sortby' => 'sorting',
         'tstamp' => 'tstamp',
         'crdate' => 'crdate',
         'cruser_id' => 'cruser_id',

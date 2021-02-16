@@ -14,8 +14,6 @@ namespace Featdd\DpnGlossary\Domain\Model;
  *
  ***/
 
-use TYPO3\CMS\Extbase\Annotation\ORM\Cascade;
-use TYPO3\CMS\Extbase\Annotation\Validate;
 use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
 use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
 use TYPO3\CMS\Extbase\Domain\Model\FileReference;
@@ -29,9 +27,13 @@ class Term extends AbstractEntity
 
     /**
      * @var string
-     * @Validate(validator="NotEmpty")
      */
     protected $name = '';
+
+    /**
+     * @var string
+     */
+    protected $parsingName = '';
 
     /**
      * @var string
@@ -75,19 +77,16 @@ class Term extends AbstractEntity
 
     /**
      * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\Featdd\DpnGlossary\Domain\Model\Description>
-     * @Cascade("remove")
      */
     protected $descriptions;
 
     /**
      * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\Featdd\DpnGlossary\Domain\Model\Synonym>
-     * @Cascade("remove")
      */
     protected $synonyms;
 
     /**
      * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\TYPO3\CMS\Extbase\Domain\Model\FileReference>
-     * @Cascade("remove")
      */
     protected $media;
 
@@ -111,7 +110,28 @@ class Term extends AbstractEntity
      */
     public function setName(string $name): void
     {
+        $this->parsingName = $name;
         $this->name = $name;
+    }
+
+    /**
+     * @return string
+     */
+    public function getParsingName(): string
+    {
+        if (true === empty($this->parsingName)) {
+            return $this->name;
+        }
+
+        return $this->parsingName;
+    }
+
+    /**
+     * @param string $parsingName
+     */
+    public function setParsingName(string $parsingName): void
+    {
+        $this->parsingName = $parsingName;
     }
 
     /**
@@ -347,6 +367,7 @@ class Term extends AbstractEntity
             'uid' => $this->getUid(),
             'pid' => $this->getPid(),
             'name' => $this->getName(),
+            'parsing_name' => $this->getParsingName(),
             'tooltiptext' => $this->getTooltiptext(),
             'term_type' => $this->getTermType(),
             'term_lang' => $this->getTermLang(),
