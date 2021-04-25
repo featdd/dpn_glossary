@@ -174,15 +174,13 @@ class PaginateController extends AbstractWidgetController
             ];
         }
 
-        $pagination = [
+        return [
             'pages' => $pages,
             'current' => $this->currentCharacter,
             'numberOfPages' => $numberOfCharacters,
             'startCharacter' => $this->characters[0],
             'endCharacter' => $this->characters[\count($this->characters) + 1],
         ];
-
-        return $pagination;
     }
 
     /**
@@ -192,7 +190,7 @@ class PaginateController extends AbstractWidgetController
      * - multiple characters: 'BDEFG'
      * - range of characters: 'B-G'
      *
-     * @param string $characters
+     * @param string|null $characters
      * @return \TYPO3\CMS\Extbase\Persistence\QueryInterface
      */
     protected function getMatchings(string $characters = null): QueryInterface
@@ -203,7 +201,7 @@ class PaginateController extends AbstractWidgetController
             $characters = $this->currentCharacter;
         }
 
-        $characterLength = \strlen($characters);
+        $characterLength = mb_strlen($characters);
 
         if ($characterLength === 1) {
             // single character B
@@ -218,8 +216,8 @@ class PaginateController extends AbstractWidgetController
                 // Build the characters like multiple characters B-G => BCDEFG
 
                 // Fix orderings
-                $firstCharacter = \ord($characters[0]);
-                $lastCharacter = \ord($characters[2]);
+                $firstCharacter = mb_ord($characters[0]);
+                $lastCharacter = mb_ord($characters[2]);
 
                 if ($firstCharacter - $lastCharacter > 0) {
                     $tmp = $firstCharacter;
@@ -231,12 +229,12 @@ class PaginateController extends AbstractWidgetController
                 $characters = '';
 
                 for ($char = $firstCharacter; $char <= $lastCharacter; ++$char) {
-                    $characters .= \chr($char);
+                    $characters .= mb_chr($char);
                 }
             }
 
             // multiple characters BDEFG
-            $charactersArray = str_split($characters);
+            $charactersArray = mb_str_split($characters);
 
             foreach ($charactersArray as $char) {
                 try {
