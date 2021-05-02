@@ -10,6 +10,9 @@
 ChangeLog
 ---------
 
+v3.2.2
+  - Use multibyte functions to properly process non ascii characters for pagination
+
 v3.2.1
   - Fix TCA sorting for synonyms & descriptions in term inline fields
   - Add option to keep the origin term for data wrap when parsing synonyms
