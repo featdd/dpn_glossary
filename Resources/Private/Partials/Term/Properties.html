@@ -32,7 +32,7 @@
           {f:translate(key: 'tx_dpnglossary_domain_model_term.media')}:<br/>
           <f:for each="{term.media}" as="media">
             <div class="mediafile">
-              <f:media file="{media}" title="{media.title}" alt="{media.alt}" width="700" height="m300"/>
+              <f:media file="{media}" title="{media.originalResource.title}" alt="{media.originalResource.alternative}" width="700" height="m300"/>
             </div>
           </f:for>
         </dd>
