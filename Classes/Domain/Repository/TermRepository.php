@@ -94,9 +94,7 @@ class TermRepository extends Repository
     public function findNewest(int $limit = self::DEFAULT_LIMIT): QueryResultInterface
     {
         return $this->createQuery()
-            ->setOrderings([
-                'crdate' => QueryInterface::ORDER_ASCENDING,
-            ])
+            ->setOrderings(['crdate' => QueryInterface::ORDER_DESCENDING])
             ->setLimit($limit)
             ->execute();
     }
