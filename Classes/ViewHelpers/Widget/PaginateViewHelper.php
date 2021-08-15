@@ -10,7 +10,7 @@ namespace Featdd\DpnGlossary\ViewHelpers\Widget;
  * For the full copyright and license information, please read the
  * LICENSE.txt file that was distributed with this source code.
  *
- *  (c) 2020 Daniel Dorndorf <dorndorf@featdd.de>
+ *  (c) 2021 Daniel Dorndorf <dorndorf@featdd.de>
  *
  ***/
 
