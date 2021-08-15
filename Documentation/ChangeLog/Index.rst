@@ -10,6 +10,10 @@
 ChangeLog
 ---------
 
+v3.2.3
+  - Use correct ordering for newest terms query
+  - Use proper title/alt attribute property in file reference
+
 v3.2.2
   - Use multibyte functions to properly process non ascii characters for pagination
 
