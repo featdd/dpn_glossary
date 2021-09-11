@@ -16,7 +16,6 @@ namespace Featdd\DpnGlossary\Form\Element;
 
 use TYPO3\CMS\Backend\Form\Element\InputSlugElement as CoreInputSlugElement;
 use TYPO3\CMS\Core\Exception\SiteNotFoundException;
-use TYPO3\CMS\Core\Information\Typo3Version;
 use TYPO3\CMS\Core\Routing\InvalidRouteArgumentsException;
 use TYPO3\CMS\Core\Site\Entity\NullSite;
 use TYPO3\CMS\Core\Site\Entity\SiteInterface;
@@ -35,10 +34,7 @@ class InputSlugElement extends CoreInputSlugElement
      */
     public function render(): array
     {
-        if (
-            true === version_compare(TYPO3_version, '10.4', '>=') &&
-            true === empty($this->data['customData']['url_segment']['slugPrefix'])
-        ) {
+        if (true === empty($this->data['customData']['url_segment']['slugPrefix'])) {
             $languageId = 0;
             $tableName = $this->data['tableName'];
             $record = $this->data['databaseRow'];
@@ -70,8 +66,6 @@ class InputSlugElement extends CoreInputSlugElement
      * @param \TYPO3\CMS\Core\Site\Entity\SiteInterface $site
      * @param int $languageId
      * @return string
-     * @throws \TYPO3\CMS\Core\Exception\SiteNotFoundException
-     * @throws \TYPO3\CMS\Core\Routing\InvalidRouteArgumentsException
      */
     protected function getSlugPrefix(SiteInterface $site, int $languageId): string
     {

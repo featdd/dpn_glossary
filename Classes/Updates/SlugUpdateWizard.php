@@ -15,7 +15,7 @@ namespace Featdd\DpnGlossary\Updates;
  ***/
 
 use Featdd\DpnGlossary\Domain\Model\Term;
-use Featdd\DpnGlossary\Utility\DatabaseUtility;
+use PDO;
 use TYPO3\CMS\Core\DataHandling\Model\RecordStateFactory;
 use TYPO3\CMS\Core\DataHandling\SlugHelper;
 use TYPO3\CMS\Core\Exception\SiteNotFoundException;
@@ -58,6 +58,7 @@ class SlugUpdateWizard extends AbstractUpdateWizard
 
     /**
      * @return bool
+     * @throws \Doctrine\DBAL\Driver\Exception
      */
     public function executeUpdate(): bool
     {
@@ -92,7 +93,7 @@ class SlugUpdateWizard extends AbstractUpdateWizard
                 ->where(
                     $queryBuilder->expr()->eq(
                         'uid',
-                        $queryBuilder->createNamedParameter($termUid, \PDO::PARAM_INT)
+                        $queryBuilder->createNamedParameter($termUid, PDO::PARAM_INT)
                     )
                 )
                 ->execute();
@@ -103,6 +104,7 @@ class SlugUpdateWizard extends AbstractUpdateWizard
 
     /**
      * @return bool
+     * @throws \Doctrine\DBAL\Driver\Exception
      */
     public function updateNecessary(): bool
     {
@@ -119,13 +121,12 @@ class SlugUpdateWizard extends AbstractUpdateWizard
      */
     public function getPrerequisites(): array
     {
-        return [
-            DatabaseUpdatedPrerequisite::class,
-        ];
+        return [DatabaseUpdatedPrerequisite::class];
     }
 
     /**
      * @return array
+     * @throws \Doctrine\DBAL\Driver\Exception
      */
     protected function getEmptySlugTerms(): array
     {
@@ -136,6 +137,6 @@ class SlugUpdateWizard extends AbstractUpdateWizard
             ->from(Term::TABLE)
             ->where($queryBuilder->expr()->isNotNull(self::SLUG_FIELD))
             ->execute()
-            ->fetchAll();
+            ->fetchAllAssociative();
     }
 }

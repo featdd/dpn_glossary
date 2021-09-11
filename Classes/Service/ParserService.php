@@ -21,16 +21,15 @@ use DOMText;
 use DOMXPath;
 use Featdd\DpnGlossary\Domain\Model\Term;
 use Featdd\DpnGlossary\Domain\Repository\TermRepository;
-use Featdd\DpnGlossary\Utility\ObjectUtility;
 use Featdd\DpnGlossary\Utility\ParserUtility;
-use TYPO3\CMS\Core\Cache\CacheManager;
+use TYPO3\CMS\Core\Cache\Frontend\FrontendInterface;
 use TYPO3\CMS\Core\Context\Context;
 use TYPO3\CMS\Core\Context\Exception\AspectNotFoundException;
 use TYPO3\CMS\Core\SingletonInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Extbase\Persistence\Generic\QuerySettingsInterface;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManager;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
+use TYPO3\CMS\Extbase\Persistence\Generic\Typo3QuerySettings;
 use TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer;
 
 /**
@@ -79,25 +78,22 @@ class ParserService implements SingletonInterface
      *  - contentObjectRenderer for generating links etc.
      *  - termRepository to get the Terms
      *
+     * @param \TYPO3\CMS\Core\Cache\Frontend\FrontendInterface $termsCache
      * @throws \TYPO3\CMS\Extbase\Configuration\Exception\InvalidConfigurationTypeException
-     * @throws \TYPO3\CMS\Core\Cache\Exception\NoSuchCacheException
      */
-    public function __construct()
+    public function __construct(FrontendInterface $termsCache)
     {
         // Get Configuration Manager
         /** @var \TYPO3\CMS\Extbase\Configuration\ConfigurationManager $configurationManager */
-        $configurationManager = ObjectUtility::makeInstance(ConfigurationManager::class);
-        // Get Cache Manager
-        /** @var \TYPO3\CMS\Core\Cache\CacheManager $cacheManager */
-        $cacheManager = ObjectUtility::makeInstance(CacheManager::class);
+        $configurationManager = GeneralUtility::makeInstance(ConfigurationManager::class);
         // Inject Content Object Renderer
-        $this->contentObjectRenderer = ObjectUtility::makeInstance(ContentObjectRenderer::class);
+        $this->contentObjectRenderer = GeneralUtility::makeInstance(ContentObjectRenderer::class);
         // Get Query Settings
-        /** @var \TYPO3\CMS\Extbase\Persistence\Generic\QuerySettingsInterface $querySettings */
-        $querySettings = ObjectUtility::makeInstance(QuerySettingsInterface::class);
+        /** @var \TYPO3\CMS\Extbase\Persistence\Generic\Typo3QuerySettings $querySettings */
+        $querySettings = GeneralUtility::makeInstance(Typo3QuerySettings::class);
         // Get termRepository
         /** @var \Featdd\DpnGlossary\Domain\Repository\TermRepository $termRepository */
-        $termRepository = ObjectUtility::makeInstance(TermRepository::class);
+        $termRepository = GeneralUtility::makeInstance(TermRepository::class);
         // Get Typoscript Configuration
         $this->typoScriptConfiguration = $configurationManager->getConfiguration(ConfigurationManagerInterface::CONFIGURATION_TYPE_FULL_TYPOSCRIPT);
         // Reduce TS config to plugin
@@ -123,7 +119,7 @@ class ParserService implements SingletonInterface
 
             try {
                 /** @var \TYPO3\CMS\Core\Context\Context $context */
-                $context = ObjectUtility::makeInstance(Context::class);
+                $context = GeneralUtility::makeInstance(Context::class);
                 $sysLanguageUid = $context->getPropertyFromAspect('language', 'id');
             } catch (AspectNotFoundException $exception) {
                 $sysLanguageUid = 0;
@@ -141,14 +137,13 @@ class ParserService implements SingletonInterface
                 $terms = $termRepository->findByNameLength();
             } else {
                 $cacheIdentifier = sha1('termsByNameLength' . $querySettings->getLanguageUid() . '_' . implode('', $querySettings->getStoragePageIds()));
-                $cache = $cacheManager->getCache('dpnglossary_termscache');
-                $terms = $cache->get($cacheIdentifier);
+                $terms = $termsCache->get($cacheIdentifier);
 
                 // If $terms is null, it hasn't been cached. Calculate the value and store it in the cache:
                 if ($terms === false) {
                     $terms = $termRepository->findByNameLength();
                     // Save value in cache
-                    $cache->set($cacheIdentifier, $terms, ['dpnglossary_termscache']);
+                    $termsCache->set($cacheIdentifier, $terms, ['dpnglossary_termscache']);
                 }
             }
 

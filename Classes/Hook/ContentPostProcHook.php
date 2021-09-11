@@ -15,7 +15,7 @@ namespace Featdd\DpnGlossary\Hook;
  ***/
 
 use Featdd\DpnGlossary\Service\ParserService;
-use Featdd\DpnGlossary\Utility\ObjectUtility;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManager;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
 use TYPO3\CMS\Extbase\Configuration\Exception\InvalidConfigurationTypeException;
@@ -33,7 +33,7 @@ class ContentPostProcHook
 
     public function __construct()
     {
-        $this->parserService = ObjectUtility::makeInstance(ParserService::class);
+        $this->parserService = GeneralUtility::makeInstance(ParserService::class);
     }
 
     /**
@@ -65,7 +65,7 @@ class ContentPostProcHook
     protected function parseHtml(TypoScriptFrontendController $typoScriptFrontendController): void
     {
         /** @var \TYPO3\CMS\Extbase\Configuration\ConfigurationManager $configurationManager */
-        $configurationManager = ObjectUtility::makeInstance(ConfigurationManager::class);
+        $configurationManager = GeneralUtility::makeInstance(ConfigurationManager::class);
 
         try {
             $settings = $configurationManager->getConfiguration(

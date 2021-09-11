@@ -6,15 +6,15 @@ call_user_func(
         \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
             'Featdd.DpnGlossary',
             'Glossary',
-            ['Term' => 'list, show'],
-            ['Term' => '']
+            [\Featdd\DpnGlossary\Controller\TermController::class => 'list, show'],
+            [\Featdd\DpnGlossary\Controller\TermController::class => '']
         );
 
         \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
             'Featdd.DpnGlossary',
             'Glossarypreview',
-            ['Term' => 'previewNewest, previewRandom, previewSelected'],
-            ['Term' => '']
+            [\Featdd\DpnGlossary\Controller\TermController::class => 'previewNewest, previewRandom, previewSelected'],
+            [\Featdd\DpnGlossary\Controller\TermController::class => '']
         );
 
         $GLOBALS['TYPO3_CONF_VARS']['SYS']['formEngine']['nodeRegistry'][1582892166] = [
@@ -42,7 +42,7 @@ call_user_func(
             ['name' => 'external-link-square']
         );
 
-        if (false === \is_array($GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations']['dpnglossary_termscache'])) {
+        if (false === is_array($GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations']['dpnglossary_termscache'])) {
             $GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations']['dpnglossary_termscache'] = [];
         }
     }
