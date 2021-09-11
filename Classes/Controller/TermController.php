@@ -17,10 +17,10 @@ namespace Featdd\DpnGlossary\Controller;
 use Featdd\DpnGlossary\Domain\Model\Term;
 use Featdd\DpnGlossary\Domain\Repository\TermRepository;
 use Featdd\DpnGlossary\PageTitle\TermPageTitleProvider;
-use Featdd\DpnGlossary\ViewHelpers\Widget\Controller\PaginateController;
+use Featdd\DpnGlossary\Pagination\CharacterPagination;
+use Featdd\DpnGlossary\Pagination\CharacterPaginator;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
-use TYPO3\CMS\Extbase\Persistence\Generic\QueryResult;
 
 /**
  * @package Featdd\DpnGlossary\Controller
@@ -40,16 +40,34 @@ class TermController extends ActionController
         $this->termRepository = $termRepository;
     }
 
-    public function listAction(): void
+    /**
+     * @param string|null $currentCharacter
+     */
+    public function listAction(string $currentCharacter = null): void
     {
-        /** @var array|QueryResult $terms */
+        /** @var array|\TYPO3\CMS\Extbase\Persistence\QueryResultInterface $terms */
         $terms = 'character' === $this->settings['listmode']
             ? $this->termRepository->findAllGroupedByFirstCharacter()
             : $this->termRepository->findAll();
 
-        $this->view->assign('detailPage', $this->settings['detailPage']);
-        $this->view->assign('listmode', $this->settings['listmode']);
-        $this->view->assign('terms', $terms);
+        if ('pagination' === $this->settings['listmode']) {
+            $paginationCharacters = GeneralUtility::trimExplode(',', $this->settings['pagination']['characters'] ?? '', true);
+
+            if (0 < $paginationCharacters) {
+                $paginator = new CharacterPaginator($terms, 'name', $currentCharacter, ...$paginationCharacters);
+                $pagination = new CharacterPagination($paginator, ...$paginationCharacters);
+
+                $this->view->assignMultiple([
+                    'paginator' => $paginator,
+                    'pagination' => $pagination,
+                ]);
+            }
+        }
+
+        $this->view->assignMultiple([
+            'listmode' => $this->settings['listmode'],
+            'terms' => $terms,
+        ]);
     }
 
     public function previewNewestAction(): void
@@ -95,16 +113,6 @@ class TermController extends ActionController
      */
     public function showAction(Term $term): void
     {
-        if ('pagination' === $this->settings['listmode']) {
-            $this->view->assign(
-                'paginateLink',
-                PaginateController::paginationArguments(
-                    $term->getName(),
-                    $this->settings['pagination']['characters']
-                )
-            );
-        }
-
         $this->view->assign('term', $term);
 
         /** @var \Featdd\DpnGlossary\PageTitle\TermPageTitleProvider $pageTitleProvider */

@@ -75,7 +75,7 @@ Configure Routing for terms and pagination
     extension: DpnGlossary
     plugin: glossary
     routes:
-    - { routePath: '/{character}', _controller: 'Term::list', _arguments: {'character': '@widget_0/character'} }
+    - { routePath: '/{character}', _controller: 'Term::list', _arguments: {'character': 'currentCharacter'} }
     - { routePath: '/{localized_term}/{term_name}', _controller: 'Term::show', _arguments: {'term_name': 'term'} }
     defaultController: 'Term::list'
     defaults:
