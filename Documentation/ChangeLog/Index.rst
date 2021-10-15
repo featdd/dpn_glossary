@@ -10,6 +10,9 @@
 ChangeLog
 ---------
 
+v3.2.4
+  - Prevent term parser from self referencing on detail pages
+
 v3.2.3
   - Use correct ordering for newest terms query
   - Use proper title/alt attribute property in file reference
