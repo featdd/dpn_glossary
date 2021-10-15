@@ -10,6 +10,11 @@
 ChangeLog
 ---------
 
+v4.0.0
+  - Add support for TYPO3 v11 (dropped for TYPO3 v9)
+  - Use of symfony dependency injection
+  - Added custom character pagination API to replace widget based pagination
+
 v3.2.4
   - Prevent term parser from self referencing on detail pages
 
