@@ -2,13 +2,13 @@
   "name": "featdd/dpn-glossary",
   "type": "typo3-cms-extension",
   "description": "Glossary extension with page parser",
-  "homepage": "https://featdd.de",
+  "homepage": "https://extensions.typo3.org/extension/dpn_glossary",
   "license": [
     "GPL-2.0-or-later"
   ],
   "require": {
-    "typo3/cms-core": "^10.4.2||~11.4",
-    "php": ">=7.2 <7.5",
+    "typo3/cms-core": "~10.4.2||~11.5",
+    "php": ">=7.2 <7.5||~8.0",
     "ext-dom": "*",
     "ext-libxml": "*"
   },
