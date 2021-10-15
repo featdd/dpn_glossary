@@ -73,7 +73,7 @@ class ContentPostProcHook
                 'dpnglossary'
             );
 
-            $isDisableParser = (bool) $settings['disableParser'];
+            $isDisableParser = (bool) ($settings['disableParser'] ?? false);
         } catch (InvalidConfigurationTypeException $exception) {
             $isDisableParser = true;
         }
