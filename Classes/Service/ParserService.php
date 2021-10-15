@@ -271,12 +271,28 @@ class ParserService implements SingletonInterface
 
         $wrapperClosure = Closure::fromCallable([$this, 'termWrapper']);
 
+        /** @var \TYPO3\CMS\Core\Http\ServerRequest $request */
+        $request = $GLOBALS['TYPO3_REQUEST'];
+        $queryParameters = $request->getQueryParams();
+        $currentDetailPageTermUid = null;
+
+        if (
+            true === array_key_exists('tx_dpnglossary_glossary', $queryParameters) &&
+            true === array_key_exists('term', $queryParameters['tx_dpnglossary_glossary'])
+        ) {
+            $currentDetailPageTermUid = (int) $queryParameters['tx_dpnglossary_glossary']['term'];
+        }
+
         foreach ($this->terms as $term) {
             /** @var \Featdd\DpnGlossary\Domain\Model\Term $termObject */
             $termObject = clone $term['term'];
             $replacements = &$term['replacements'];
 
-            if (0 === $replacements || true === $termObject->getExcludeFromParsing()) {
+            if (
+                0 === $replacements ||
+                true === $termObject->getExcludeFromParsing() ||
+                $currentDetailPageTermUid === $termObject->getUid()
+            ) {
                 continue;
             }
 
@@ -333,9 +349,9 @@ class ParserService implements SingletonInterface
                 /** @var \Featdd\DpnGlossary\Domain\Model\Synonym $synonym */
                 foreach ($termObject->getSynonyms() as $synonym) {
                     $synonymTermObject->{
-                        true === (bool) $this->settings['useTermForSynonymParsingDataWrap']
-                            ? 'setParsingName'
-                            : 'setName'
+                    true === (bool) $this->settings['useTermForSynonymParsingDataWrap']
+                        ? 'setParsingName'
+                        : 'setName'
                     }(
                         $synonym->getName()
                     );
