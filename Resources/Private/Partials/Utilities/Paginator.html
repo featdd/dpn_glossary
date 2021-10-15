@@ -1,0 +1,22 @@
+<html data-namespace-typo3-fluid="true" lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers">
+
+  <div class="dpnglossary pagination">
+    <ul>
+      <f:for each="{pagination.characters}" as="character">
+        <f:if condition="{character.isEmpty} || {character.isCurrent}">
+          <f:then>
+            <li class="character{f:if(condition: character.isEmpty, then: ' empty')}{f:if(condition: character.isCurrent, then: ' current')}">{character}</li>
+          </f:then>
+          <f:else>
+            <li class="character">
+              <f:link.action action="list" controller="Term" arguments="{currentCharacter: character.character}">{character}</f:link.action>
+            </li>
+          </f:else>
+        </f:if>
+      </f:for>
+    </ul>
+  </div>
+
+</html>

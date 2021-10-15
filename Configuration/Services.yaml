@@ -1,0 +1,18 @@
+services:
+  _defaults:
+    autowire: true
+    autoconfigure: true
+    public: false
+
+  cache.dpnglossary_parserterms:
+    class: TYPO3\CMS\Core\Cache\Frontend\FrontendInterface
+    factory: [ '@TYPO3\CMS\Core\Cache\CacheManager', 'getCache' ]
+    arguments: [ 'dpnglossary_termscache' ]
+
+  Featdd\DpnGlossary\:
+    resource: '../Classes/*'
+    exclude: '../Classes/{Domain/Model,Utility}'
+
+  Featdd\DpnGlossary\Service\ParserService:
+    arguments:
+      $termsCache: '@cache.dpnglossary_parserterms'

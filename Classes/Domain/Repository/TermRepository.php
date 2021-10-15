@@ -50,8 +50,8 @@ class TermRepository extends Repository
          * @param Term $termB
          * @return int
          */
-        $sortingCallback = function ($termA, $termB) {
-            return \strlen($termB->getName()) - \strlen($termA->getName());
+        $sortingCallback = function (Term $termA, Term $termB) {
+            return mb_strlen($termB->getName()) - mb_strlen($termA->getName());
         };
 
         // Sort terms
