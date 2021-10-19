@@ -122,7 +122,7 @@ Pages can be statically excluded from parsing via TypoScript::
 Pages can also dynamically excluded from parsing by page properties
 :guilabel:`Page Properties > Behaviour > Settings for DPN Glossary`:
 
-.. figure:: ../Images/ExcludePageFromParsing.png
+.. figure:: /Images/ExcludePageFromParsing.png
     :alt: Exclude page from parsing
 
     Exclude page from parsing
