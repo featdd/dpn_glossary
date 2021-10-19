@@ -157,6 +157,15 @@ plugin.tx_dpnglossary {
   page.includeCSS.dpnglossary = EXT:dpn_glossary/Resources/Public/css/styles.css
 [global]
 
+["{$plugin.tx_dpnglossary.settings.overrideFluidStyledContentLayout}" == "1"]
+  lib.contentElement {
+    layoutRootPaths {
+      50 = EXT:dpn_glossary/Resources/Private/Extensions/FluidStyledContent/Layouts
+    }
+  }
+[global]
+
+
 config.pageTitleProviders {
   glossaryTerm {
     provider = Featdd\DpnGlossary\PageTitle\TermPageTitleProvider

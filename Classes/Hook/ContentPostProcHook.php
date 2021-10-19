@@ -78,6 +78,10 @@ class ContentPostProcHook
             $isDisableParser = true;
         }
 
+        if ($typoScriptFrontendController->page['tx_dpnglossary_parsing_settings'] == 1) {
+            $isDisableParser = true;
+        }
+
         if (false === $isDisableParser) {
             $parsedHTML = $this->parserService->pageParser($typoScriptFrontendController->content);
 

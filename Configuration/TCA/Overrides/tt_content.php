@@ -27,5 +27,33 @@ call_user_func(
 
             \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPiFlexFormValue($plugin, 'FILE:EXT:dpn_glossary' . $flexform);
         }
+
+        \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTCAcolumns('tt_content', [
+            'tx_dpnglossary_parsing_settings' => [
+                'label' => 'LLL:EXT:dpn_glossary/Resources/Private/Language/locallang.xlf:tt_content.glossarySettings',
+                'exclude' => true,
+                'config' => [
+                    'type' => 'check',
+                    'renderType' => 'checkboxToggle',
+                    'items' => [
+                        [
+                            0 => 'LLL:EXT:dpn_glossary/Resources/Private/Language/locallang.xlf:tt_content.parseForGlossary',
+                            1 => '',
+                            'labelChecked' => 'Enabled',
+                            'labelUnchecked' => 'Disabled',
+                            'invertStateDisplay' => true,
+                        ],
+                    ],
+                ],
+            ],
+        ]);
+
+        \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addToAllTCAtypes(
+            'tt_content',
+            'tx_dpnglossary_parsing_settings',
+            '',
+            'after:linkToTop'
+        );
+
     }
 );

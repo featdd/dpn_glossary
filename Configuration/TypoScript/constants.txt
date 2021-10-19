@@ -34,7 +34,7 @@ plugin.tx_dpnglossary {
     # cat=dpn_glossary/settings/a; type=string; label=Classes which are not allowed for the parsing tag
     forbiddenParsingTagClasses =
     # cat=dpn_glossary/settings/a; type=string; label=Classes which are not allowed on any parent of the parsing tag
-    forbiddenParentClasses =
+    forbiddenParentClasses = tx_dpn_glossary_exclude
     # cat=dpn_glossary/settings/a; type=options[normal,character,pagination]; label=Listmode: normal, character or paginated by characters
     listmode = normal
     # cat=dpn_glossary/settings/a; type=options[newest,random]; label=Previewmode: newest or random
@@ -51,5 +51,7 @@ plugin.tx_dpnglossary {
     useTermForSynonymParsingDataWrap = 0
     # cat=dpn_glossary/settings/a; type=boolean; label=Add the extension stylesheet (default: enabled)
     addStylesheet = 1
+    # cat=dpn_glossary/settings/a; type=boolean; label=Override fluid styled content layout to enable dynamic exclusion via content properties (default: enabled)
+    overrideFluidStyledContentLayout = 1
   }
 }

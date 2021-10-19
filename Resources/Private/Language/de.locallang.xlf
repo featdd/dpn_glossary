@@ -164,6 +164,21 @@
       <trans-unit id="extensionsettings.term_slug_evaluation_type.unique_in_instance">
         <target>Einzigartig in der gesamten Instanz</target>
       </trans-unit>
+
+      <trans-unit id="pages.glossarySettings">
+        <target>Einstellungen für das DPN Glossary</target>
+      </trans-unit>
+      <trans-unit id="pages.parseForGlossary">
+        <target>Seite parsen </target>
+      </trans-unit>
+
+
+      <trans-unit id="tt_content.glossarySettings">
+        <target>Einstellungen für das DPN Glossary</target>
+      </trans-unit>
+      <trans-unit id="tt_content.parseForGlossary">
+        <target>Inhalt parsen</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
