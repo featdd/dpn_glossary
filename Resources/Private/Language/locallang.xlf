@@ -164,6 +164,22 @@
       <trans-unit id="extensionsettings.term_slug_evaluation_type.unique_in_instance">
         <source>unique in the whole instance</source>
       </trans-unit>
+
+
+      <trans-unit id="pages.glossary_settings">
+        <source>Settings for dreipunktnull Glossary</source>
+      </trans-unit>
+      <trans-unit id="pages.parse_for_glossary">
+        <source>Parse page for glossary terms</source>
+      </trans-unit>
+
+
+      <trans-unit id="tt_content.glossary_settings">
+        <source>Settings for dreipunktnull Glossary</source>
+      </trans-unit>
+      <trans-unit id="tt_content.parse_for_glossary">
+        <source>Parse content element for glossary terms</source>
+      </trans-unit>
     </body>
   </file>
 </xliff>

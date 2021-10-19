@@ -164,6 +164,22 @@
       <trans-unit id="extensionsettings.term_slug_evaluation_type.unique_in_instance">
         <target>Einzigartig in der gesamten Instanz</target>
       </trans-unit>
+
+
+      <trans-unit id="pages.glossary_settings">
+        <target>Einstellungen für das dreipunktnull Glossar</target>
+      </trans-unit>
+      <trans-unit id="pages.parse_for_glossary">
+        <target>Seite parsen </target>
+      </trans-unit>
+
+
+      <trans-unit id="tt_content.glossary_settings">
+        <target>Einstellungen für das dreipunktnull Glossar</target>
+      </trans-unit>
+      <trans-unit id="tt_content.parse_for_glossary">
+        <target>Inhalt parsen</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

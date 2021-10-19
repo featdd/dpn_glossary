@@ -70,7 +70,8 @@ plugin.tx_dpnglossary.settings:
     string
 
   Description
-    Comma list of pages which should not be parsed
+    Comma list of pages which should not be parsed. Can be used to :ref:`exclude
+    pages from being pages <example-exclude-content>`
 
 
 .. container:: table-row
@@ -148,8 +149,13 @@ plugin.tx_dpnglossary.settings:
   Data Type
     string
 
+  Default
+    tx_dpn_glossary_exclude
+
   Description
-    Comma list of classes which are not allowed on any parent of the parsing tag
+    Comma list of classes which are not allowed on any parent of the parsing tag.
+    can be used to :ref:` exclude content from being parsed
+    <example-exclude-content>`
 
 .. container:: table-row
 
@@ -245,5 +251,22 @@ plugin.tx_dpnglossary.settings:
 
   Description
     Comma list of special characters allowed to wrap the term
+
+
+.. container:: table-row
+
+  Constant
+    settings.overrideFluidStyledContentLayout
+
+  Data Type
+    boolean
+
+  Description
+    If set the default layout of FluidStyledContent is overriden by this
+    extension. Can be used to :ref:`exclude content from being parsed
+    <example-exclude-content>`
+
+  Default
+    0
 
 .. ###### END~OF~TABLE ######
