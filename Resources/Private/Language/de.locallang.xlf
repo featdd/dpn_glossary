@@ -165,18 +165,18 @@
         <target>Einzigartig in der gesamten Instanz</target>
       </trans-unit>
 
-      <trans-unit id="pages.glossarySettings">
-        <target>Einstellungen für das DPN Glossary</target>
+      <trans-unit id="pages.glossary_settings">
+        <target>Einstellungen für das dreipunktnull Glossar</target>
       </trans-unit>
-      <trans-unit id="pages.parseForGlossary">
+      <trans-unit id="pages.parse_for_glossary">
         <target>Seite parsen </target>
       </trans-unit>
 
 
-      <trans-unit id="tt_content.glossarySettings">
-        <target>Einstellungen für das DPN Glossary</target>
+      <trans-unit id="tt_content.glossary_settings">
+        <target>Einstellungen für das dreipunktnull Glossar</target>
       </trans-unit>
-      <trans-unit id="tt_content.parseForGlossary">
+      <trans-unit id="tt_content.parse_for_glossary">
         <target>Inhalt parsen</target>
       </trans-unit>
     </body>

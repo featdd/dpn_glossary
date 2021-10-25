@@ -133,11 +133,11 @@ CREATE TABLE tx_dpnglossary_domain_model_description (
 
 CREATE TABLE pages
 (
-    tx_dpnglossary_parsing_settings     tinyint(4)     DEFAULT '0' NOT NULL
+    tx_dpnglossary_disable_parser     tinyint(4)     DEFAULT '0' NOT NULL
 );
 
 CREATE TABLE tt_content
 (
-    tx_dpnglossary_parsing_settings     tinyint(4)     DEFAULT '0' NOT NULL
+    tx_dpnglossary_disable_parser     tinyint(4)     DEFAULT '0' NOT NULL
 );
 

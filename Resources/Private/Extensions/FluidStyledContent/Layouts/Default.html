@@ -2,7 +2,7 @@
     <f:if condition="{data.frame_class} != none">
         <f:then>
 
-            <div id="c{data.uid}" class="frame frame-{data.frame_class} frame-type-{data.CType} frame-layout-{data.layout}{f:if(condition: data.space_before_class, then: ' frame-space-before-{data.space_before_class}')}{f:if(condition: data.space_after_class, then: ' frame-space-after-{data.space_after_class}')} {f:if(condition: data.tx_dpnglossary_parsing_settings, then: ' tx_dpn_glossary_exclude')}">
+            <div id="c{data.uid}" class="frame frame-{data.frame_class} frame-type-{data.CType} frame-layout-{data.layout}{f:if(condition: data.space_before_class, then: ' frame-space-before-{data.space_before_class}')}{f:if(condition: data.space_after_class, then: ' frame-space-after-{data.space_after_class}')} {f:if(condition: data.tx_dpnglossary_disable_parser, then: ' tx_dpn_glossary_exclude')}">
                 <f:if condition="{data._LOCALIZED_UID}">
                     <a id="c{data._LOCALIZED_UID}"></a>
                 </f:if>

@@ -165,18 +165,18 @@
         <source>unique in the whole instance</source>
       </trans-unit>
 
-      <trans-unit id="pages.glossarySettings">
-        <source>Settings for DPN Glossary</source>
+      <trans-unit id="pages.glossary_settings">
+        <source>Settings for dreipunktnull Glossary</source>
       </trans-unit>
-      <trans-unit id="pages.parseForGlossary">
+      <trans-unit id="pages.parse_for_glossary">
         <source>Parse page for glossary terms</source>
       </trans-unit>
 
 
-      <trans-unit id="tt_content.glossarySettings">
-        <source>Settings for DPN Glossary</source>
+      <trans-unit id="tt_content.glossary_settings">
+        <source>Settings for dreipunktnull Glossary</source>
       </trans-unit>
-      <trans-unit id="tt_content.parseForGlossary">
+      <trans-unit id="tt_content.parse_for_glossary">
         <source>Parse content element for glossary terms</source>
       </trans-unit>
     </body>

@@ -52,6 +52,6 @@ plugin.tx_dpnglossary {
     # cat=dpn_glossary/settings/a; type=boolean; label=Add the extension stylesheet (default: enabled)
     addStylesheet = 1
     # cat=dpn_glossary/settings/a; type=boolean; label=Override fluid styled content layout to enable dynamic exclusion via content properties (default: enabled)
-    overrideFluidStyledContentLayout = 1
+    overrideFluidStyledContentLayout = 0
   }
 }
