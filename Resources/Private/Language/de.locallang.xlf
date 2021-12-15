@@ -31,7 +31,7 @@
         <target>Maximale Ersetzungen beim Parsen (-1 = Alle)</target>
       </trans-unit>
       <trans-unit id="tx_dpnglossary_domain_model_term.term_type">
-        <target>Typ des Begriff</target>
+        <target>Typ des Begriffes</target>
       </trans-unit>
       <trans-unit id="tx_dpnglossary_domain_model_term.term_type_acronym">
         <target>Kurzwort aus Anfangsbuchstaben (Beispiel: NATO)</target>
@@ -46,7 +46,7 @@
         <target>Einfacher Tooltip</target>
       </trans-unit>
       <trans-unit id="tx_dpnglossary_domain_model_term.term_lang">
-        <target>Sprache des Begriffs (2 Zeichen ISO Code)</target>
+        <target>Sprache des Begriffes (2 Zeichen ISO Code)</target>
       </trans-unit>
       <trans-unit id="tx_dpnglossary_domain_model_term.term_mode">
         <target>Begriffsmodus</target>
