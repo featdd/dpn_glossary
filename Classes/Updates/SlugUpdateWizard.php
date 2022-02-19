@@ -137,6 +137,6 @@ class SlugUpdateWizard extends AbstractUpdateWizard
             ->from(Term::TABLE)
             ->where($queryBuilder->expr()->isNotNull(self::SLUG_FIELD))
             ->execute()
-            ->fetchAllAssociative();
+            ->fetchAll();
     }
 }
