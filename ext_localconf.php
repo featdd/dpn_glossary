@@ -17,12 +17,6 @@ call_user_func(
             [\Featdd\DpnGlossary\Controller\TermController::class => '']
         );
 
-        $GLOBALS['TYPO3_CONF_VARS']['SYS']['formEngine']['nodeRegistry'][1582892166] = [
-            'nodeName' => 'recordPreview',
-            'priority' => 70,
-            'class' => \Featdd\DpnGlossary\Form\Element\InputSlugElement::class,
-        ];
-
         $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['tslib/class.tslib_fe.php']['contentPostProc-all'][] = \Featdd\DpnGlossary\Hook\ContentPostProcHook::class . '->all';
         $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['tslib/class.tslib_fe.php']['contentPostProc-cached'][] = \Featdd\DpnGlossary\Hook\ContentPostProcHook::class . '->cached';
         $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['ext/install']['update'][\Featdd\DpnGlossary\Updates\SlugUpdateWizard::class] = \Featdd\DpnGlossary\Updates\SlugUpdateWizard::class;

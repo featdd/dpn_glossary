@@ -136,7 +136,6 @@ return [
             'label' => 'LLL:EXT:dpn_glossary/Resources/Private/Language/locallang.xlf:tx_dpnglossary_domain_model_term.url_segment',
             'config' => [
                 'type' => 'slug',
-                'renderType' => 'recordPreview',
                 'size' => 30,
                 'max' => 255,
                 'fallbackCharacter' => '-',
@@ -146,6 +145,9 @@ return [
                     'replacements' => [
                         '/' => '-',
                     ],
+                ],
+                'appearance' => [
+                    'prefix' => \Featdd\DpnGlossary\UserFunc\SlugPreviewUserFunc::class . '->slugPrefixUserFunc',
                 ],
             ],
         ],

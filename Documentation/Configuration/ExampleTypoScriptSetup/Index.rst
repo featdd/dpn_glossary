@@ -96,16 +96,3 @@ Configure Routing for terms and pagination
         localeMap:
         - locale: 'de_DE.*'
           value: 'begriff'
-
-Configure full url preview for the term slug field
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-Setting the detailpage uid in the tsconfig will enable the full url preview for terms slug fields:
-
-::
-
-  TCEFORM {
-    tx_dpnglossary_domain_model_term {
-      url_segment.config.previewUrl.pageUid = [YOUR_PLUGINPAGE_UID]
-    }
-  }
