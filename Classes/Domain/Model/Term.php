@@ -61,6 +61,16 @@ class Term extends AbstractEntity
     protected $termLink = '';
 
     /**
+     * @var string
+     */
+    protected $seoTitle = '';
+
+    /**
+     * @var string
+     */
+    protected $metaDescription = '';
+
+    /**
      * @var bool
      */
     protected $excludeFromParsing = false;
@@ -212,6 +222,40 @@ class Term extends AbstractEntity
     public function setTermLink(string $termLink): void
     {
         $this->termLink = $termLink;
+    }
+
+    /**
+     * @return string
+     */
+    public function getSeoTitle(): string
+    {
+        return true === empty($this->seoTitle)
+            ? $this->name
+            : $this->seoTitle;
+    }
+
+    /**
+     * @param string $seoTitle
+     */
+    public function setSeoTitle(string $seoTitle): void
+    {
+        $this->seoTitle = $seoTitle;
+    }
+
+    /**
+     * @return string
+     */
+    public function getMetaDescription(): string
+    {
+        return $this->metaDescription;
+    }
+
+    /**
+     * @param string $metaDescription
+     */
+    public function setMetaDescription(string $metaDescription): void
+    {
+        $this->metaDescription = $metaDescription;
     }
 
     /**

@@ -23,7 +23,7 @@ return [
         'iconfile' => 'EXT:dpn_glossary/Resources/Public/Icons/term.png',
     ],
     'types' => [
-        '1' => ['showitem' => 'sys_language_uid, --palette--;;hidden_exludefromparsing_casesensitive, name, url_segment, tooltiptext, term_mode, term_link, synonyms, descriptions, term_type, term_lang, media, --div--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:tabs.access, starttime, endtime'],
+        '1' => ['showitem' => 'sys_language_uid, --palette--;;hidden_exludefromparsing_casesensitive, name, url_segment, tooltiptext, term_mode, term_link, synonyms, descriptions, term_type, term_lang, media, --div--;LLL:EXT:dpn_glossary/Resources/Private/Language/locallang.xlf:tx_dpnglossary_domain_model_term.divider.seo, seo_title, meta_description, --div--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:tabs.access, starttime, endtime'],
     ],
     'palettes' => [
         'hidden_exludefromparsing_casesensitive' => ['showitem' => 'hidden, case_sensitive, --linebreak--, max_replacements, exclude_from_parsing'],
@@ -369,6 +369,26 @@ return [
                 ],
                 $GLOBALS['TYPO3_CONF_VARS']['SYS']['mediafile_ext']
             ),
+        ],
+        'seo_title' => [
+            'exclude' => true,
+            'label' => 'LLL:EXT:dpn_glossary/Resources/Private/Language/locallang.xlf:tx_dpnglossary_domain_model_term.seo_title',
+            'config' => [
+                'type' => 'input',
+                'size' => 30,
+                'max' => 255,
+                'eval' => 'trim',
+            ],
+        ],
+        'meta_description' => [
+            'exclude' => true,
+            'label' => 'LLL:EXT:dpn_glossary/Resources/Private/Language/locallang.xlf:tx_dpnglossary_domain_model_term.meta_description',
+            'config' => [
+                'type' => 'text',
+                'cols' => 30,
+                'rows' => 10,
+                'eval' => 'trim',
+            ],
         ],
     ],
 ];
