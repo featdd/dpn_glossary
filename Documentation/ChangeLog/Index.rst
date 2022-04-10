@@ -10,6 +10,10 @@
 ChangeLog
 ---------
 
+v4.1.0
+  - Add SEO title & description for terms
+  - Optimize slug preview (no extra configuration needed anymore)
+
 v4.0.0
   - Add support for TYPO3 v11 (dropped for TYPO3 v9)
   - Use of symfony dependency injection
