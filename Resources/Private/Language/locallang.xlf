@@ -63,14 +63,14 @@
       <trans-unit id="tx_dpnglossary_domain_model_term.media">
         <source>Media Files</source>
       </trans-unit>
-      <trans-unit id="tx_dpnglossary_domain_model_term.detailheadline">
-        <source>Detailview for term</source>
+      <trans-unit id="tx_dpnglossary_domain_model_term.seo_title">
+        <source>Alternative Title</source>
       </trans-unit>
-      <trans-unit id="tx_dpnglossary_domain_model_term.listheadline">
-        <source>Listview for the terms</source>
+      <trans-unit id="tx_dpnglossary_domain_model_term.meta_description">
+        <source>Meta description</source>
       </trans-unit>
-      <trans-unit id="tx_dpnglossary_domain_model_term.characterheadline">
-        <source>Character Navigation for the terms</source>
+      <trans-unit id="tx_dpnglossary_domain_model_term.divider.seo">
+        <source>SEO</source>
       </trans-unit>
 
 

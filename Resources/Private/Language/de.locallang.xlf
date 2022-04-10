@@ -63,14 +63,14 @@
       <trans-unit id="tx_dpnglossary_domain_model_term.media">
         <target>Multimedia Dateien</target>
       </trans-unit>
-      <trans-unit id="tx_dpnglossary_domain_model_term.detailheadline">
-        <target>Detailansicht für den Begriff</target>
+      <trans-unit id="tx_dpnglossary_domain_model_term.seo_title">
+        <target>Alternativer Titel</target>
       </trans-unit>
-      <trans-unit id="tx_dpnglossary_domain_model_term.listheadline">
-        <target>Listenansicht für die Begriffe</target>
+      <trans-unit id="tx_dpnglossary_domain_model_term.meta_description">
+        <target>Meta Beschreibung</target>
       </trans-unit>
-      <trans-unit id="tx_dpnglossary_domain_model_term.characterheadline">
-        <target>Buchstaben-Navigation für die Begriffe</target>
+      <trans-unit id="tx_dpnglossary_domain_model_term.divider.seo">
+        <target>SEO</target>
       </trans-unit>
 
 

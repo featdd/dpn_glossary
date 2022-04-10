@@ -19,6 +19,7 @@ use Featdd\DpnGlossary\Domain\Repository\TermRepository;
 use Featdd\DpnGlossary\PageTitle\TermPageTitleProvider;
 use Featdd\DpnGlossary\Pagination\CharacterPagination;
 use Featdd\DpnGlossary\Pagination\CharacterPaginator;
+use TYPO3\CMS\Core\MetaTag\MetaTagManagerRegistry;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 
@@ -117,6 +118,16 @@ class TermController extends ActionController
 
         /** @var \Featdd\DpnGlossary\PageTitle\TermPageTitleProvider $pageTitleProvider */
         $pageTitleProvider = GeneralUtility::makeInstance(TermPageTitleProvider::class);
-        $pageTitleProvider->setTitle($term->getName());
+        $pageTitleProvider->setTitle($term->getSeoTitle());
+
+        if (false === empty($term->getMetaDescription())) {
+            /** @var \TYPO3\CMS\Core\MetaTag\MetaTagManagerRegistry $metaTagManagerRegistry */
+            $metaTagManagerRegistry = GeneralUtility::makeInstance(MetaTagManagerRegistry::class);
+            $metaTagManager = $metaTagManagerRegistry->getManagerForProperty('description');
+
+            if (true === empty($metaTagManager->getProperty('description'))) {
+                $metaTagManager->addProperty('description', $term->getMetaDescription());
+            }
+        }
     }
 }
