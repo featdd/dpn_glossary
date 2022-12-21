@@ -11,7 +11,7 @@ CREATE TABLE tx_dpnglossary_domain_model_term (
   term_mode            varchar(255)        DEFAULT ''   NOT NULL,
   term_link            varchar(255)        DEFAULT ''   NOT NULL,
   seo_title            varchar(255)        DEFAULT ''   NOT NULL,
-  meta_description     text                             NOT NULL,
+  meta_description     text,
   exclude_from_parsing tinyint(4) unsigned DEFAULT '0'  NOT NULL,
   case_sensitive       tinyint(4) unsigned DEFAULT '0'  NOT NULL,
   max_replacements     int(11)             DEFAULT '-1' NOT NULL,
