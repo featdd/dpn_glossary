@@ -42,7 +42,9 @@ class StaticMultiRangeMapper implements StaticMappableAspectInterface
                 throw new \InvalidArgumentException('end must be string', 1537277164);
             }
 
-            $this->ranges[] = $this->buildRange($start, $end);
+            !empty($range['special']) && is_array($range['special'])
+                ? $this->ranges[] = array_merge($this->buildRange($start, $end), $range['special'])
+                : $this->ranges[] = $this->buildRange($start, $end);
         }
     }
 
