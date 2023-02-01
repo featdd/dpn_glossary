@@ -105,6 +105,17 @@ plugin.tx_dpnglossary.settings:
 .. container:: table-row
 
   Constant
+    settings.limitParsingId
+
+  Data Type
+    string
+
+  Description
+    Limits parsing for terms to the *one* node/tag having this ID (e.g. 'content' for a `<div id="content">`)
+
+.. container:: table-row
+
+  Constant
     settings.parsingTags
 
   Data Type
