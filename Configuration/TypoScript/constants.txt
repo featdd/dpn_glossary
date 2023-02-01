@@ -47,6 +47,8 @@ plugin.tx_dpnglossary {
     parseSynonyms = 1
     # cat=dpn_glossary/settings/a; type=boolean; label=Priorise the synonyms before the actual term when parsing (default: enabled)
     priorisedSynonymParsing = 1
+    # cat=dpn_glossary/settings/a; type=string; label=Limit parsing to a single node with this ID
+    limitParingId =
     # cat=dpn_glossary/settings/a; type=boolean; label=Use the origin term for content object data when parsing synonyms (default: disabled)
     useTermForSynonymParsingDataWrap = 0
     # cat=dpn_glossary/settings/a; type=boolean; label=Add the extension stylesheet (default: enabled)

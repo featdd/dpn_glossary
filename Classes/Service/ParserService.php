@@ -228,6 +228,9 @@ class ParserService implements SingletonInterface
         // Parse synonyms before or after the main term
         $isPriorisedSynonymParsing = (boolean) ($this->settings['priorisedSynonymParsing'] ?? true);
 
+        // Limit parsing to a single node with this ID
+        $limitParingId = (string)($this->settings['limitParsingId'] ?? '');
+
         // Add "a" if unknowingly deleted to prevent errors
         if (false === \in_array(self::$alwaysIgnoreParentTags, $forbiddenParentTags, true)) {
             $forbiddenParentTags = array_unique(
@@ -241,28 +244,74 @@ class ParserService implements SingletonInterface
         // Prevent crashes caused by HTML5 entities with internal errors
         libxml_use_internal_errors(true);
 
-        // Load Page HTML in DOM and check if HTML is valid else abort
-        // use XHTML tag for avoiding UTF-8 encoding problems
-        if (
-            false === $DOM->loadHTML(
-                '<?xml encoding="UTF-8">' . ParserUtility::protectLinkAndSrcPathsFromDOM(
-                    ParserUtility::protectScrtiptsAndCommentsFromDOM(
-                        $html
+        $limitToXpath = !empty($limitParingId);
+        if ($limitToXpath === true) {
+            //Create new DOMDocument
+            $DOMpage = new DOMDocument();
+
+            // Load Page HTML in DOM and check if HTML is valid else abort
+            // use XHTML tag for avoiding UTF-8 encoding problems
+            if (
+                false === $DOMpage->loadHTML(
+                    '<?xml encoding="UTF-8">' . $html
+                )
+            ) {
+                throw new Exception('Parsers DOM Document could\'nt load the html');
+            }
+
+            // remove unnecessary whitespaces in nodes (no visible whitespace)
+            $DOMpage->preserveWhiteSpace = false;
+
+            // Init DOMXPath with main DOMDocument
+            $DOMXPathPage = new DOMXPath($DOMpage);
+
+            /** @var \DOMNode $DOMcontent */
+            $DOMcontent = $DOMXPathPage
+                ->query(
+                    '//*[@id="' . $limitParingId . '"]',
+                    $DOMpage->getElementsByTagName('body')->item(0)
+                )
+                ->item(0);
+
+            // Load Page HTML in DOM and check if HTML is valid else abort
+            // use XHTML tag for avoiding UTF-8 encoding problems
+            if (
+                false === $DOM->loadHTML(
+                    '<?xml encoding="UTF-8">' . ParserUtility::protectLinkAndSrcPathsFromDOM(
+                        ParserUtility::protectScrtiptsAndCommentsFromDOM(
+                            $DOMpage->saveHTML($DOMcontent)
+                        )
                     )
                 )
-            )
-        ) {
-            throw new Exception('Parsers DOM Document could\'nt load the html');
-        }
+            ) {
+                throw new Exception('Parsers DOM Document could\'nt load the html');
+            }
+            /** @var \DOMNode $DOMBody */
+            $DOMBody = $DOM->getElementById($limitParingId);
+        } else {
+            // Load Page HTML in DOM and check if HTML is valid else abort
+            // use XHTML tag for avoiding UTF-8 encoding problems
+            if (
+                false === $DOM->loadHTML(
+                    '<?xml encoding="UTF-8">' . ParserUtility::protectLinkAndSrcPathsFromDOM(
+                        ParserUtility::protectScrtiptsAndCommentsFromDOM(
+                            $html
+                        )
+                    )
+                )
+            ) {
+                throw new Exception('Parsers DOM Document could\'nt load the html');
+            }
 
-        // remove unnecessary whitespaces in nodes (no visible whitespace)
-        $DOM->preserveWhiteSpace = false;
+            // remove unnecessary whitespaces in nodes (no visible whitespace)
+            $DOM->preserveWhiteSpace = false;
+
+            /** @var \DOMNode $DOMBody */
+            $DOMBody = $DOM->getElementsByTagName('body')->item(0);
+        }
 
         // Init DOMXPath with main DOMDocument
         $DOMXPath = new DOMXPath($DOM);
-
-        /** @var \DOMNode $DOMBody */
-        $DOMBody = $DOM->getElementsByTagName('body')->item(0);
 
         $wrapperClosure = Closure::fromCallable([$this, 'termWrapper']);
 
@@ -377,6 +426,18 @@ class ParserService implements SingletonInterface
             }
         }
 
+        if ($limitToXpath === true) {
+            $content = $DOM->getElementById($limitParingId);
+            $content = $DOMpage->importNode($content, true);
+            $DOMpage
+                ->getElementById($limitParingId)
+                ->parentNode
+                ->replaceChild($content, $DOMpage->getElementById($limitParingId));
+            $html = $DOMpage->saveHTML();
+        } else {
+            $html = $DOM->saveHTML();
+        }
+
         // return the parsed html page and remove XHTML tag which is not needed anymore
         return str_replace(
             '<?xml encoding="UTF-8">',
@@ -384,7 +445,7 @@ class ParserService implements SingletonInterface
             ParserUtility::protectScriptsAndCommentsFromDOMReverse(
                 ParserUtility::protectLinkAndSrcPathsFromDOMReverse(
                     ParserUtility::domHtml5Repairs(
-                        $DOM->saveHTML()
+                        $html
                     )
                 )
             )
