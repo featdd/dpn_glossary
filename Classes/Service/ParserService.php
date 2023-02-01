@@ -229,7 +229,7 @@ class ParserService implements SingletonInterface
         $isPriorisedSynonymParsing = (boolean) ($this->settings['priorisedSynonymParsing'] ?? true);
 
         // Limit parsing to a single node with this ID
-        $limitParingId = (string)($this->settings['limitParsingId'] ?? '');
+        $limitParsingId = (string)($this->settings['limitParsingId'] ?? '');
 
         // Add "a" if unknowingly deleted to prevent errors
         if (false === \in_array(self::$alwaysIgnoreParentTags, $forbiddenParentTags, true)) {
@@ -244,7 +244,7 @@ class ParserService implements SingletonInterface
         // Prevent crashes caused by HTML5 entities with internal errors
         libxml_use_internal_errors(true);
 
-        $limitToXpath = !empty($limitParingId);
+        $limitToXpath = !empty($limitParsingId);
         if ($limitToXpath === true) {
             //Create new DOMDocument
             $DOMpage = new DOMDocument();
@@ -268,7 +268,7 @@ class ParserService implements SingletonInterface
             /** @var \DOMNode $DOMcontent */
             $DOMcontent = $DOMXPathPage
                 ->query(
-                    '//*[@id="' . $limitParingId . '"]',
+                    '//*[@id="' . $limitParsingId . '"]',
                     $DOMpage->getElementsByTagName('body')->item(0)
                 )
                 ->item(0);
@@ -287,7 +287,7 @@ class ParserService implements SingletonInterface
                 throw new Exception('Parsers DOM Document could\'nt load the html');
             }
             /** @var \DOMNode $DOMBody */
-            $DOMBody = $DOM->getElementById($limitParingId);
+            $DOMBody = $DOM->getElementById($limitParsingId);
         } else {
             // Load Page HTML in DOM and check if HTML is valid else abort
             // use XHTML tag for avoiding UTF-8 encoding problems
@@ -427,12 +427,12 @@ class ParserService implements SingletonInterface
         }
 
         if ($limitToXpath === true) {
-            $content = $DOM->getElementById($limitParingId);
+            $content = $DOM->getElementById($limitParsingId);
             $content = $DOMpage->importNode($content, true);
             $DOMpage
-                ->getElementById($limitParingId)
+                ->getElementById($limitParsingId)
                 ->parentNode
-                ->replaceChild($content, $DOMpage->getElementById($limitParingId));
+                ->replaceChild($content, $DOMpage->getElementById($limitParsingId));
             $html = $DOMpage->saveHTML();
         } else {
             $html = $DOM->saveHTML();

@@ -104,7 +104,7 @@ plugin.tx_dpnglossary.settings:
 .. container:: table-row
 
   Constant
-    settings.limitParingId
+    settings.limitParsingId
 
   Data Type
     string

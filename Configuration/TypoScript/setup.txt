@@ -54,7 +54,7 @@ plugin.tx_dpnglossary {
     # Priorise the synonyms for parsing
     priorisedSynonymParsing = {$plugin.tx_dpnglossary.settings.priorisedSynonymParsing}
     # Limit parsing to a single node with this ID
-    limitParingId = {$plugin.tx_dpnglossary.settings.limitParingId}
+    limitParsingId = {$plugin.tx_dpnglossary.settings.limitParsingId}
     # Use the origin term for content object data when parsing synonyms
     useTermForSynonymParsingDataWrap = {$plugin.tx_dpnglossary.settings.useTermForSynonymParsingDataWrap}
 
