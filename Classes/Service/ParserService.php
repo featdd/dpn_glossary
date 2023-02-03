@@ -19,8 +19,9 @@ use DOMDocument;
 use DOMNodeList;
 use DOMText;
 use DOMXPath;
-use Featdd\DpnGlossary\Domain\Model\Term;
-use Featdd\DpnGlossary\Domain\Repository\TermRepository;
+use Featdd\DpnGlossary\Domain\Model\AbstractTerm;
+use Featdd\DpnGlossary\Domain\Model\ParserTerm;
+use Featdd\DpnGlossary\Domain\Repository\ParserTermRepository;
 use Featdd\DpnGlossary\Utility\ParserUtility;
 use TYPO3\CMS\Core\Cache\Frontend\FrontendInterface;
 use TYPO3\CMS\Core\Context\Context;
@@ -92,8 +93,8 @@ class ParserService implements SingletonInterface
         /** @var \TYPO3\CMS\Extbase\Persistence\Generic\Typo3QuerySettings $querySettings */
         $querySettings = GeneralUtility::makeInstance(Typo3QuerySettings::class);
         // Get termRepository
-        /** @var \Featdd\DpnGlossary\Domain\Repository\TermRepository $termRepository */
-        $termRepository = GeneralUtility::makeInstance(TermRepository::class);
+        /** @var \Featdd\DpnGlossary\Domain\Repository\ParserTermRepository $parserTermRepository */
+        $parserTermRepository = GeneralUtility::makeInstance(ParserTermRepository::class);
         // Get Typoscript Configuration
         $this->typoScriptConfiguration = $configurationManager->getConfiguration(ConfigurationManagerInterface::CONFIGURATION_TYPE_FULL_TYPOSCRIPT);
         // Reduce TS config to plugin
@@ -130,25 +131,25 @@ class ParserService implements SingletonInterface
             // Set query to respect the language uid
             $querySettings->setRespectSysLanguage(true);
             // Assign query settings object to repository
-            $termRepository->setDefaultQuerySettings($querySettings);
+            $parserTermRepository->setDefaultQuerySettings($querySettings);
 
             //Find all terms
             if (false === (bool) $this->settings['useCachingFramework']) {
-                $terms = $termRepository->findByNameLength();
+                $terms = $parserTermRepository->findByNameLength();
             } else {
                 $cacheIdentifier = sha1('termsByNameLength' . $querySettings->getLanguageUid() . '_' . implode('', $querySettings->getStoragePageIds()));
                 $terms = $termsCache->get($cacheIdentifier);
 
                 // If $terms is null, it hasn't been cached. Calculate the value and store it in the cache:
                 if ($terms === false) {
-                    $terms = $termRepository->findByNameLength();
+                    $terms = $parserTermRepository->findByNameLength();
                     // Save value in cache
                     $termsCache->set($cacheIdentifier, $terms, ['dpnglossary_termscache']);
                 }
             }
 
             //Sort terms with an individual counter for max replacement per page
-            /** @var Term $term */
+            /** @var \Featdd\DpnGlossary\Domain\Model\ParserTerm $term */
             foreach ($terms as $term) {
                 $maxReplacements = -1 === $term->getMaxReplacements()
                     ? (int) $this->settings['maxReplacementPerPage']
@@ -393,14 +394,14 @@ class ParserService implements SingletonInterface
 
     /**
      * @param \DOMNodeList $domTags
-     * @param \Featdd\DpnGlossary\Domain\Model\Term $term
+     * @param \Featdd\DpnGlossary\Domain\Model\ParserTerm $term
      * @param int $replacements
      * @param \Closure $wrapperClosure
      * @param string[] $forbiddenParentTags
      */
     protected function domTagsParser(
         DOMNodeList $domTags,
-        Term $term,
+        ParserTerm $term,
         int &$replacements,
         Closure $wrapperClosure,
         array $forbiddenParentTags
@@ -444,12 +445,12 @@ class ParserService implements SingletonInterface
      * Regex parser for terms on a text string
      *
      * @param string $text
-     * @param Term $term
+     * @param \Featdd\DpnGlossary\Domain\Model\ParserTerm $term
      * @param int $replacements
      * @param \Closure $wrapperClosure
      * @return string
      */
-    protected function regexParser(string $text, Term $term, int &$replacements, Closure $wrapperClosure): string
+    protected function regexParser(string $text, ParserTerm $term, int &$replacements, Closure $wrapperClosure): string
     {
         // Try simple search first to save performance
         if (false === mb_stripos($text, $term->getParsingName())) {
@@ -546,11 +547,11 @@ class ParserService implements SingletonInterface
     /**
      * Renders the wrapped term using the plugin settings
      *
-     * @param \Featdd\DpnGlossary\Domain\Model\Term $term
+     * @param \Featdd\DpnGlossary\Domain\Model\ParserTerm $term
      * @return string
      * @throws \UnexpectedValueException
      */
-    protected function termWrapper(Term $term): string
+    protected function termWrapper(ParserTerm $term): string
     {
         // get content object type
         $contentObjectType = $this->typoScriptConfiguration['settings.']['termWraps'];
@@ -559,7 +560,7 @@ class ParserService implements SingletonInterface
         // pass term data to the cObject pseudo constructor
         $this->contentObjectRenderer->start(
             $term->__toArray(),
-            Term::TABLE
+            AbstractTerm::TABLE
         );
 
         // return the wrapped term
