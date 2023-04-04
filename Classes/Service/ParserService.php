@@ -339,7 +339,7 @@ class ParserService implements SingletonInterface
                 $this->domTagsParser($DOMTags, $termObject, $replacements, $wrapperClosure, $forbiddenParentTags);
             }
 
-            if (true === $isParseSynonyms) {
+            if ($isParseSynonyms) {
                 $synonymTermObject = clone $termObject;
                 /** @var \Featdd\DpnGlossary\Domain\Model\Synonym $synonym */
                 foreach ($termObject->getSynonyms() as $synonym) {
@@ -456,6 +456,33 @@ class ParserService implements SingletonInterface
             return $text;
         }
 
+        $quotedTerm = preg_quote($term->getParsingName(), self::REGEX_DELIMITER);
+        $termHasUmlauts = 0 < count(array_intersect(mb_str_split($quotedTerm), ['ä', 'Ä', 'ö', 'Ö', 'ü', 'Ü']));
+        $matchArrayEndingCharacterIndex = 3;
+
+        if (!$term->isCaseSensitive() && $termHasUmlauts) {
+            $matchArrayEndingCharacterIndex = 4;
+            $quotedTerm = str_replace(
+                [
+                    'ä',
+                    'Ä',
+                    'ö',
+                    'Ö',
+                    'ü',
+                    'Ü',
+                ],
+                [
+                    '(Ä|ä)',
+                    '(Ä|ä)',
+                    '(Ö|ö)',
+                    '(Ö|ö)',
+                    '(Ü|ü)',
+                    '(Ü|ü)',
+                ],
+                $quotedTerm
+            );
+        }
+
         /*
          * Regex Explanation:
          * Group 1: (^|[\s\>[:punct:]]|\<br*\>)
@@ -486,14 +513,20 @@ class ParserService implements SingletonInterface
          */
         $regex = self::REGEX_DELIMITER .
             '(^|\G|[\s\>[:punct:]]|\<br*\>' . self::$additionalRegexWrapCharacters . ')' .
-            '(' . preg_quote($term->getParsingName(), self::REGEX_DELIMITER) . ')' .
+            '(' . $quotedTerm . ')' .
             '($|[\s\<[:punct:]]|\<br*\>' . self::$additionalRegexWrapCharacters . ')' .
             '(?![^<]*>|[^<>]*<\/)' .
             self::REGEX_DELIMITER .
             (false === $term->isCaseSensitive() ? 'i' : '');
 
         // replace callback
-        $callback = function (array $match) use ($term, &$replacements, $wrapperClosure) {
+        $callback = function (array $match) use (
+            $term,
+            &$replacements,
+            $wrapperClosure,
+            $termHasUmlauts,
+            $matchArrayEndingCharacterIndex
+        ) {
             //decrease replacement counter
             if (0 < $replacements) {
                 $replacements--;
@@ -503,7 +536,7 @@ class ParserService implements SingletonInterface
             $term->setParsingName($match[2]);
 
             // Wrap replacement with original chars
-            return $match[1] . $wrapperClosure($term) . $match[3];
+            return $match[1] . $wrapperClosure($term) . $match[$matchArrayEndingCharacterIndex];
         };
 
         // Use callback to keep allowed chars around the term and his camel case
@@ -513,7 +546,7 @@ class ParserService implements SingletonInterface
     /**
      * Renders the wrapped term using the plugin settings
      *
-     * @param \Featdd\DpnGlossary\Domain\Model\Term
+     * @param \Featdd\DpnGlossary\Domain\Model\Term $term
      * @return string
      * @throws \UnexpectedValueException
      */
