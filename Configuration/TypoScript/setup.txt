@@ -164,4 +164,9 @@ config.pageTitleProviders {
     provider = Featdd\DpnGlossary\PageTitle\TermPageTitleProvider
     before = altPageTitle
   }
+
+  glossaryCharacterPagination {
+    provider = Featdd\DpnGlossary\PageTitle\CharacterPaginationPageTitleProvider
+    before = altPageTitle
+  }
 }

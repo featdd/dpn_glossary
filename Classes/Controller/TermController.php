@@ -16,6 +16,7 @@ namespace Featdd\DpnGlossary\Controller;
 
 use Featdd\DpnGlossary\Domain\Model\Term;
 use Featdd\DpnGlossary\Domain\Repository\TermRepository;
+use Featdd\DpnGlossary\PageTitle\CharacterPaginationPageTitleProvider;
 use Featdd\DpnGlossary\PageTitle\TermPageTitleProvider;
 use Featdd\DpnGlossary\Pagination\CharacterPagination;
 use Featdd\DpnGlossary\Pagination\CharacterPaginator;
@@ -62,6 +63,16 @@ class TermController extends ActionController
                     'paginator' => $paginator,
                     'pagination' => $pagination,
                 ]);
+
+                if ($paginator->getCurrentCharacter() !== null) {
+                    $pageTitle = !empty($GLOBALS['TSFE']->page['seo_title'])
+                        ? $GLOBALS['TSFE']->page['seo_title']
+                        : $GLOBALS['TSFE']->page['title'];
+
+                    /** @var \Featdd\DpnGlossary\PageTitle\CharacterPaginationPageTitleProvider $characterPaginationPageTitleProvider */
+                    $characterPaginationPageTitleProvider = GeneralUtility::makeInstance(CharacterPaginationPageTitleProvider::class);
+                    $characterPaginationPageTitleProvider->setTitle($pageTitle . ' - ' . $paginator->getCurrentCharacter());
+                }
             }
         }
 
