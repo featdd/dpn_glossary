@@ -1,31 +1,45 @@
 <?php
-defined('TYPO3_MODE') || die();
+declare(strict_types=1);
+
+use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
+use TYPO3\CMS\Extbase\Utility\ExtensionUtility;
+
+defined('TYPO3') or die();
 
 call_user_func(
     function () {
-        \TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerPlugin(
-            'Featdd.DpnGlossary',
+        ExtensionUtility::registerPlugin(
+            'DpnGlossary',
             'Glossary',
             'LLL:EXT:dpn_glossary/Resources/Private/Language/locallang.xlf:tx_dpnglossary.wizard_glossary_title',
-            'ext-dpn_glossary-wizard-icon'
+            'ext-dpn_glossary-wizard-icon',
+            'special'
         );
 
-        \TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerPlugin(
-            'Featdd.DpnGlossary',
+        ExtensionUtility::registerPlugin(
+            'DpnGlossary',
             'Glossarypreview',
             'LLL:EXT:dpn_glossary/Resources/Private/Language/locallang.xlf:tx_dpnglossary.wizard_preview_title',
-            'ext-dpn_glossary-preview-wizard-icon'
+            'ext-dpn_glossary-preview-wizard-icon',
+            'special'
         );
 
         $flexforms = [
+            'dpnglossary_glossary' => null,
             'dpnglossary_glossarypreview' => '/Configuration/FlexForms/Preview.xml',
         ];
 
-        foreach ($flexforms as $plugin => $flexform) {
-            $GLOBALS['TCA']['tt_content']['types']['list']['subtypes_excludelist'][$plugin] = 'recursive,select_key,pages';
-            $GLOBALS['TCA']['tt_content']['types']['list']['subtypes_addlist'][$plugin] = 'pi_flexform';
+        foreach ($flexforms as $cType => $flexform) {
+            if ($flexform !== null) {
+                ExtensionManagementUtility::addPiFlexFormValue('*', 'FILE:EXT:dpn_glossary' . $flexform, $cType);
 
-            \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPiFlexFormValue($plugin, 'FILE:EXT:dpn_glossary' . $flexform);
+                ExtensionManagementUtility::addToAllTCAtypes(
+                    'tt_content',
+                    '--div--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:tabs.plugin,pi_flexform',
+                    $cType,
+                    'after:header'
+                );
+            }
         }
 
         \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTCAcolumns('tt_content', [

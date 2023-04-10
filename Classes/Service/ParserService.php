@@ -20,8 +20,8 @@ use DOMNode;
 use DOMNodeList;
 use DOMText;
 use DOMXPath;
-use Featdd\DpnGlossary\Domain\Model\AbstractTerm;
 use Featdd\DpnGlossary\Domain\Model\ParserTerm;
+use Featdd\DpnGlossary\Domain\Model\TermInterface;
 use Featdd\DpnGlossary\Domain\Repository\ParserTermRepository;
 use Featdd\DpnGlossary\Utility\ParserUtility;
 use TYPO3\CMS\Core\Cache\Frontend\FrontendInterface;
@@ -39,12 +39,10 @@ use TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer;
  */
 class ParserService implements SingletonInterface
 {
-    public const REGEX_DELIMITER = '/';
-
     /**
      * @var string[]
      */
-    public static $alwaysIgnoreParentTags = [
+    public static array $alwaysIgnoreParentTags = [
         'a',
         'script',
     ];
@@ -52,27 +50,27 @@ class ParserService implements SingletonInterface
     /**
      * @var string
      */
-    public static $additionalRegexWrapCharacters = '';
+    public static string $additionalRegexWrapCharacters = '';
 
     /**
-     * @var ContentObjectRenderer
+     * @var \TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer
      */
-    protected $contentObjectRenderer;
-
-    /**
-     * @var array
-     */
-    protected $terms = [];
+    protected ContentObjectRenderer $contentObjectRenderer;
 
     /**
      * @var array
      */
-    protected $typoScriptConfiguration = [];
+    protected array $terms = [];
 
     /**
      * @var array
      */
-    protected $settings = [];
+    protected array $typoScriptConfiguration = [];
+
+    /**
+     * @var array
+     */
+    protected array $settings = [];
 
     /**
      * Boots up:
@@ -99,9 +97,9 @@ class ParserService implements SingletonInterface
         // Get Typoscript Configuration
         $this->typoScriptConfiguration = $configurationManager->getConfiguration(ConfigurationManagerInterface::CONFIGURATION_TYPE_FULL_TYPOSCRIPT);
         // Reduce TS config to plugin
-        $this->typoScriptConfiguration = $this->typoScriptConfiguration['plugin.']['tx_dpnglossary.'];
+        $this->typoScriptConfiguration = $this->typoScriptConfiguration['plugin.']['tx_dpnglossary.'] ?? [];
 
-        if (null !== $this->typoScriptConfiguration && 0 < \count($this->typoScriptConfiguration)) {
+        if (count($this->typoScriptConfiguration) > 0) {
             // Save extension settings without ts dots
             $this->settings = GeneralUtility::removeDotsFromTS($this->typoScriptConfiguration['settings.']);
             // Set StoragePid in the query settings object
@@ -113,7 +111,7 @@ class ParserService implements SingletonInterface
 
             $parsingSpecialWrapCharacters = GeneralUtility::trimExplode(',', $this->settings['parsingSpecialWrapCharacters'] ?? '', true);
 
-            if (0 < count($parsingSpecialWrapCharacters)) {
+            if (count($parsingSpecialWrapCharacters) > 0) {
                 foreach ($parsingSpecialWrapCharacters as $parsingSpecialWrapCharacter) {
                     self::$additionalRegexWrapCharacters .= '|' . preg_quote($parsingSpecialWrapCharacter);
                 }
@@ -123,7 +121,7 @@ class ParserService implements SingletonInterface
                 /** @var \TYPO3\CMS\Core\Context\Context $context */
                 $context = GeneralUtility::makeInstance(Context::class);
                 $sysLanguageUid = $context->getPropertyFromAspect('language', 'id');
-            } catch (AspectNotFoundException $exception) {
+            } catch (AspectNotFoundException) {
                 $sysLanguageUid = 0;
             }
 
@@ -135,14 +133,14 @@ class ParserService implements SingletonInterface
             $parserTermRepository->setDefaultQuerySettings($querySettings);
 
             //Find all terms
-            if (false === (bool) $this->settings['useCachingFramework']) {
+            if (!$this->settings['useCachingFramework']) {
                 $terms = $parserTermRepository->findByNameLength();
             } else {
                 $cacheIdentifier = sha1('termsByNameLength' . $querySettings->getLanguageUid() . '_' . implode('', $querySettings->getStoragePageIds()));
                 $terms = $termsCache->get($cacheIdentifier);
 
-                // If $terms is null, it hasn't been cached. Calculate the value and store it in the cache:
-                if ($terms === false) {
+                // If $terms is empty, it hasn't been cached. Calculate the value and store it in the cache:
+                if (empty($terms)) {
                     $terms = $parserTermRepository->findByNameLength();
                     // Save value in cache
                     $termsCache->set($cacheIdentifier, $terms, ['dpnglossary_termscache']);
@@ -152,7 +150,7 @@ class ParserService implements SingletonInterface
             //Sort terms with an individual counter for max replacement per page
             /** @var \Featdd\DpnGlossary\Domain\Model\ParserTerm $term */
             foreach ($terms as $term) {
-                $maxReplacements = -1 === $term->getMaxReplacements()
+                $maxReplacements = $term->getMaxReplacements() === -1
                     ? (int) $this->settings['maxReplacementPerPage']
                     : $term->getMaxReplacements();
 
@@ -169,8 +167,8 @@ class ParserService implements SingletonInterface
      * or false if parsers has to be aborted
      *
      * @param string $html
-     * @return string|null
-     * @throws Exception
+     * @return string
+     * @throws \Featdd\DpnGlossary\Service\Exception
      */
     public function pageParser(string $html): string
     {
@@ -181,7 +179,7 @@ class ParserService implements SingletonInterface
         // Get Tags which content should be parsed
         $tags = GeneralUtility::trimExplode(',', $this->settings['parsingTags']);
         // Remove "a" & "script" from parsingTags if it was added unknowingly
-        if (true === \in_array(self::$alwaysIgnoreParentTags, $tags, true)) {
+        if (in_array(self::$alwaysIgnoreParentTags, $tags, true)) {
             $tags = array_diff($tags, self::$alwaysIgnoreParentTags);
         }
 
@@ -191,26 +189,33 @@ class ParserService implements SingletonInterface
         // Abort parser...
         if (
             // Parser disabled
-            true === (bool) $this->settings['disableParser'] ||
+            $this->settings['disableParser'] ||
             // Pagetype not 0
-            0 !== $currentPageType ||
+            $currentPageType !== 0 ||
             // no tags to parse given
-            0 === \count($tags) ||
+            count($tags) === 0 ||
             // no terms have been found
-            0 === \count($this->terms) ||
+            count($this->terms) === 0 ||
             // no config is given
-            0 === \count($this->typoScriptConfiguration) ||
+            count($this->typoScriptConfiguration) === 0 ||
             // page is excluded
-            true === \in_array($currentPageId, $excludePids, true) ||
+            in_array($currentPageId, $excludePids, true) ||
             (
                 // parsingPids doesn't contain 0 and...
-                false === \in_array(0, $parsingPids, true) &&
+                !in_array(0, $parsingPids, true) &&
                 // page is not whitelisted
-                false === \in_array($currentPageId, $parsingPids, true)
+                !in_array($currentPageId, $parsingPids, true)
             )
         ) {
             return $html;
         }
+
+        // Protect scripts, src & links from unwanted DOM sideffects
+        $protectedHtml = ParserUtility::protectLinkAndSrcPathsFromDOM(
+            ParserUtility::protectScrtiptsAndCommentsFromDOM(
+                $html
+            )
+        );
 
         // Classes which are not allowed for the parsing tag
         $forbiddenParsingTagClasses = GeneralUtility::trimExplode(',', $this->settings['forbiddenParsingTagClasses'], true);
@@ -234,40 +239,45 @@ class ParserService implements SingletonInterface
         $limitParsingId = (string) ($this->settings['limitParsingId'] ?? '');
 
         // Add "a" if unknowingly deleted to prevent errors
-        if (false === \in_array(self::$alwaysIgnoreParentTags, $forbiddenParentTags, true)) {
+        if (!in_array(self::$alwaysIgnoreParentTags, $forbiddenParentTags, true)) {
             $forbiddenParentTags = array_unique(
                 array_merge($forbiddenParentTags, self::$alwaysIgnoreParentTags)
             );
         }
 
-        //Create new DOMDocument
+        // Create new DOMDocument
         $DOM = new DOMDocument();
+
+        // remove unnecessary whitespaces in nodes (no visible whitespace)
+        $DOM->preserveWhiteSpace = false;
 
         // Prevent crashes caused by HTML5 entities with internal errors
         libxml_use_internal_errors(true);
 
         $isLimitToXpath = !empty($limitParsingId);
 
-        if ($isLimitToXpath === true) {
-            //Create new DOMDocument
-            $DOMpage = new DOMDocument();
-
+        if (!$isLimitToXpath) {
             // Load Page HTML in DOM and check if HTML is valid else abort
             // use XHTML tag for avoiding UTF-8 encoding problems
-            if (
-                false === $DOMpage->loadHTML(
-                    '<?xml encoding="UTF-8">' . $html
-                )
-            ) {
+            if (!$DOM->loadHTML('<?xml encoding="UTF-8">' . $protectedHtml)) {
                 throw new Exception('Parsers DOM Document could\'nt load the html');
             }
 
-            // remove unnecessary whitespaces in nodes (no visible whitespace)
-            $DOMpage->preserveWhiteSpace = false;
+            /** @var \DOMNode $DOMNodeToParse */
+            $DOMNodeToParse = $DOM->getElementsByTagName('body')->item(0);
+        } else {
+            // Create new DOMDocument for separately holding the whole HTML
+            $DOMpage = new DOMDocument();
 
-            // Init DOMXPath with main DOMDocument
+            // Load Page HTML in DOM...
+            if (!$DOMpage->loadHTML('<?xml encoding="UTF-8">' . $protectedHtml)) {
+                throw new Exception('Parsers DOM Document could\'nt load the html');
+            }
+
+            // Init DOMXPath with separate DOMDocument
             $DOMXPathPage = new DOMXPath($DOMpage);
 
+            // Extract the DOM Node to wich the parser should limit its parsing
             /** @var \DOMNode $DOMcontent */
             $DOMcontent = $DOMXPathPage
                 ->query(
@@ -281,42 +291,14 @@ class ParserService implements SingletonInterface
                 return $html;
             }
 
-            // Load Page HTML in DOM and check if HTML is valid else abort
-            // use XHTML tag for avoiding UTF-8 encoding problems
-            if (
-                false === $DOM->loadHTML(
-                    '<?xml encoding="UTF-8">' . ParserUtility::protectLinkAndSrcPathsFromDOM(
-                        ParserUtility::protectScrtiptsAndCommentsFromDOM(
-                            $DOMpage->saveHTML($DOMcontent)
-                        )
-                    )
-                )
-            ) {
+            // Only load the extracted nodes content into the main DOM Document for parsing
+            if (!$DOM->loadHTML('<?xml encoding="UTF-8">' . $DOMpage->saveHTML($DOMcontent))) {
                 throw new Exception('Parsers DOM Document could\'nt load the html');
             }
 
-            /** @var \DOMNode $DOMBody */
-            $DOMBody = $DOM->getElementById($limitParsingId);
-        } else {
-            // Load Page HTML in DOM and check if HTML is valid else abort
-            // use XHTML tag for avoiding UTF-8 encoding problems
-            if (
-                false === $DOM->loadHTML(
-                    '<?xml encoding="UTF-8">' . ParserUtility::protectLinkAndSrcPathsFromDOM(
-                        ParserUtility::protectScrtiptsAndCommentsFromDOM(
-                            $html
-                        )
-                    )
-                )
-            ) {
-                throw new Exception('Parsers DOM Document could\'nt load the html');
-            }
-
-            // remove unnecessary whitespaces in nodes (no visible whitespace)
-            $DOM->preserveWhiteSpace = false;
-
-            /** @var \DOMNode $DOMBody */
-            $DOMBody = $DOM->getElementsByTagName('body')->item(0);
+            // Extract the node again from the main DOM
+            /** @var \DOMNode $DOMNodeToParse */
+            $DOMNodeToParse = $DOM->getElementById($limitParsingId);
         }
 
         // Init DOMXPath with main DOMDocument
@@ -330,8 +312,8 @@ class ParserService implements SingletonInterface
         $currentDetailPageTermUid = null;
 
         if (
-            true === array_key_exists('tx_dpnglossary_glossary', $queryParameters) &&
-            true === array_key_exists('term', $queryParameters['tx_dpnglossary_glossary'])
+            array_key_exists('tx_dpnglossary_glossary', $queryParameters) &&
+            array_key_exists('term', $queryParameters['tx_dpnglossary_glossary'])
         ) {
             $currentDetailPageTermUid = (int) $queryParameters['tx_dpnglossary_glossary']['term'];
         }
@@ -342,8 +324,8 @@ class ParserService implements SingletonInterface
             $replacements = &$term['replacements'];
 
             if (
-                0 === $replacements ||
-                true === $termObject->getExcludeFromParsing() ||
+                $replacements === 0 ||
+                $termObject->getExcludeFromParsing() ||
                 $currentDetailPageTermUid === $termObject->getUid()
             ) {
                 continue;
@@ -353,14 +335,14 @@ class ParserService implements SingletonInterface
 
             // iterate over tags which are defined to be parsed
             foreach ($tags as $tag) {
-                if (false === empty($xpathQuery)) {
+                if (!empty($xpathQuery)) {
                     $xpathQuery .= ' | ';
                 }
 
                 $xpathQuery .= '//' . $tag;
 
                 // if forbidden parsing tag classes given add them to xpath query
-                if (0 < count($forbiddenParsingTagClasses)) {
+                if (count($forbiddenParsingTagClasses) > 0) {
                     $xpathQuery .= '[not(contains(@class, \'' .
                         implode(
                             '\') or contains(@class, \'',
@@ -368,19 +350,19 @@ class ParserService implements SingletonInterface
                         ) .
                         '\'))';
 
-                    $xpathQuery = 0 < count($forbiddenParentClasses) ? $xpathQuery . ' and ' : $xpathQuery . ']';
+                    $xpathQuery = count($forbiddenParentClasses) > 0 ? $xpathQuery . ' and ' : $xpathQuery . ']';
                 }
 
                 /*
                  * Due to PHP still uses XPath 1.0 up to its latest versions we still have to use "contains" here.
                  * It would make more sense to use the function "matches", but this is only supported from version 2.0.
                  * This inevitably leads to the problem that contains also matches if the class is concatenated.
-                 * Example: class="example-andmore" using "contains" for "example" still matches although its different
+                 * Example: class="example-andmore" using "contains" for "example" still matches, although it's different
                  */
 
                 // if forbidden parent classes given add them to xpath query
-                if (0 < count($forbiddenParentClasses)) {
-                    $xpathQuery .= (0 < count($forbiddenParsingTagClasses) ? '' : '[') .
+                if (count($forbiddenParentClasses) > 0) {
+                    $xpathQuery .= (count($forbiddenParsingTagClasses) > 0 ? '' : '[') .
                         'not(./ancestor::*[contains(@class, \'' .
                         implode(
                             '\')] or ./ancestor::*[contains(@class, \'',
@@ -391,9 +373,9 @@ class ParserService implements SingletonInterface
             }
 
             // extract the tags
-            $DOMTags = $DOMXPath->query($xpathQuery, $DOMBody);
+            $DOMTags = $DOMXPath->query($xpathQuery, $DOMNodeToParse);
 
-            if (false === $isPriorisedSynonymParsing) {
+            if (!$isPriorisedSynonymParsing) {
                 $this->domTagsParser($DOMTags, $termObject, $replacements, $wrapperClosure, $forbiddenParentTags);
             }
 
@@ -402,14 +384,14 @@ class ParserService implements SingletonInterface
                 /** @var \Featdd\DpnGlossary\Domain\Model\Synonym $synonym */
                 foreach ($termObject->getSynonyms() as $synonym) {
                     $synonymTermObject->{
-                    true === (bool) $this->settings['useTermForSynonymParsingDataWrap']
+                    $this->settings['useTermForSynonymParsingDataWrap']
                         ? 'setParsingName'
                         : 'setName'
                     }(
                         $synonym->getName()
                     );
 
-                    if (true === $isMaxReplacementPerPageRespectSynonyms) {
+                    if ($isMaxReplacementPerPageRespectSynonyms) {
                         $this->domTagsParser(
                             $DOMTags,
                             $synonymTermObject,
@@ -430,35 +412,37 @@ class ParserService implements SingletonInterface
                 }
             }
 
-            if (true === $isPriorisedSynonymParsing) {
+            if ($isPriorisedSynonymParsing) {
                 $this->domTagsParser($DOMTags, $termObject, $replacements, $wrapperClosure, $forbiddenParentTags);
             }
         }
 
-        if ($isLimitToXpath === true) {
-            $content = $DOM->getElementById($limitParsingId);
-            $content = $DOMpage->importNode($content, true);
-            $DOMpage
-                ->getElementById($limitParsingId)
-                ->parentNode
-                ->replaceChild($content, $DOMpage->getElementById($limitParsingId));
-            $html = $DOMpage->saveHTML();
+        if (!$isLimitToXpath) {
+            $parsedHtml = $DOM->saveHTML();
         } else {
-            $html = $DOM->saveHTML();
+            // Extract the original node from the separate DOM
+            $originalContentDOMNode = $DOMpage->getElementById($limitParsingId);
+            // Import the processed node into the separate DOM
+            $parsedContentDOMNode = $DOMpage->importNode($DOMNodeToParse, true);
+            // Replace the parsed node in the separate DOM
+            $originalContentDOMNode
+                ->parentNode
+                ->replaceChild($parsedContentDOMNode, $originalContentDOMNode);
+
+            $parsedHtml = $DOMpage->saveHTML();
         }
 
-        // return the parsed html page and remove XHTML tag which is not needed anymore
-        return str_replace(
-            '<?xml encoding="UTF-8">',
-            '',
-            ParserUtility::protectScriptsAndCommentsFromDOMReverse(
-                ParserUtility::protectLinkAndSrcPathsFromDOMReverse(
-                    ParserUtility::domHtml5Repairs(
-                        $html
-                    )
+        // Reverse DOM sideffects protection and apply some repairs for some unwanted HTML5 adjustments from DOM
+        $parsedHtml = ParserUtility::protectScriptsAndCommentsFromDOMReverse(
+            ParserUtility::protectLinkAndSrcPathsFromDOMReverse(
+                ParserUtility::domHtml5Repairs(
+                    $parsedHtml
                 )
             )
         );
+
+        // return the parsed html page and remove XHTML tag which is not needed anymore
+        return str_replace('<?xml encoding="UTF-8">', '', $parsedHtml);
     }
 
     /**
@@ -482,7 +466,7 @@ class ParserService implements SingletonInterface
             $parentTags = explode(
                 '/',
                 preg_replace(
-                    '#\[([^\]]*)\]#',
+                    '#\[([^]]*)]#',
                     '',
                     substr($DOMTag->parentNode->getNodePath(), 1)
                 )
@@ -496,7 +480,7 @@ class ParserService implements SingletonInterface
 
                     if ($childNode instanceof DOMText) {
                         $text = preg_replace(
-                            '#\x{00a0}#iu', '&nbsp;',
+                            '#\x{00a0}#u', '&nbsp;',
                             $childNode->ownerDocument->saveHTML($childNode)
                         );
 
@@ -522,11 +506,11 @@ class ParserService implements SingletonInterface
     protected function regexParser(string $text, ParserTerm $term, int &$replacements, Closure $wrapperClosure): string
     {
         // Try simple search first to save performance
-        if (false === mb_stripos($text, $term->getParsingName())) {
+        if (mb_stripos($text, $term->getParsingName()) === false) {
             return $text;
         }
 
-        $quotedTerm = preg_quote($term->getParsingName(), self::REGEX_DELIMITER);
+        $quotedTerm = preg_quote($term->getParsingName(), '#');
         $termHasUmlauts = 0 < count(array_intersect(mb_str_split($quotedTerm), ['ä', 'Ä', 'ö', 'Ö', 'ü', 'Ü']));
         $matchArrayEndingCharacterIndex = 3;
 
@@ -555,39 +539,39 @@ class ParserService implements SingletonInterface
 
         /*
          * Regex Explanation:
-         * Group 1: (^|[\s\>[:punct:]]|\<br*\>)
+         * Group 1: (^|[\s\>[:punct:]]|<br*>)
          *  ^         = can be begin of the string
-         *  \G        = can match an other matchs end
+         *  \G        = can match another matchs end
          *  \s        = can have space before term
          *  \>        = can have a > before term (end of some tag)
          *  [:punct:] = can have punctuation characters like .,?!& etc. before term
-         *  \<br*\>   = can have a "br" tag before
+         *  <br*>   = can have a "br" tag before
          *
          * Group 2: (' . preg_quote($term->getName()) . ')
          *  The term to find, preg_quote() escapes special chars
          *
-         * Group 3: ($|[\s\<[:punct:]]|\<br*\>)
+         * Group 3: ($|[\s\<[:punct:]]|<br*>)
          *  Same as Group 1 but with end of string and < (start of some tag)
          *
-         * Group 4: (?![^<]*>|[^<>]*<\/)
+         * Group 4: (?![^<]*>|[^<>]*</)
          *  This Group protects any children element of the tag which should be parsed
          *  ?!        = negative lookahead
          *  [^<]*>    = match is between < & > and some other character
-         *              avoids parsing terms in self closing tags
+         *              avoids parsing terms in self-closing tags
          *              example: <TERM> will work <TERM > not
-         *  [^<>]*<\/ = match is between some tag and tag ending
+         *  [^<>]*</ = match is between some tag and tag ending
          *              example: < or >TERM</>
          *
          * Flags:
          * i = ignores camel case
          */
-        $regex = self::REGEX_DELIMITER .
-            '(^|\G|[\s\>[:punct:]]|\<br*\>' . self::$additionalRegexWrapCharacters . ')' .
+        $regex = '#' .
+            '(^|\G|[\s>[:punct:]]|<br*>' . self::$additionalRegexWrapCharacters . ')' .
             '(' . $quotedTerm . ')' .
-            '($|[\s\<[:punct:]]|\<br*\>' . self::$additionalRegexWrapCharacters . ')' .
-            '(?![^<]*>|[^<>]*<\/)' .
-            self::REGEX_DELIMITER .
-            (false === $term->isCaseSensitive() ? 'i' : '');
+            '($|[\s<[:punct:]]|<br*>' . self::$additionalRegexWrapCharacters . ')' .
+            '(?![^<]*>|[^<>]*</)' .
+            '#' .
+            ($term->isCaseSensitive() ? '' : 'i');
 
         // replace callback
         $callback = function (array $match) use (
@@ -629,7 +613,7 @@ class ParserService implements SingletonInterface
         // pass term data to the cObject pseudo constructor
         $this->contentObjectRenderer->start(
             $term->__toArray(),
-            AbstractTerm::TABLE
+            TermInterface::TABLE
         );
 
         // return the wrapped term

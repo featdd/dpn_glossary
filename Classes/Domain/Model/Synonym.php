@@ -28,7 +28,7 @@ class Synonym extends AbstractEntity
      * @var string
      * @Validate(validator="NotEmpty")
      */
-    protected $name = '';
+    protected string $name = '';
 
     /**
      * @return string

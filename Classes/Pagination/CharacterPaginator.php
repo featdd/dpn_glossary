@@ -25,22 +25,22 @@ class CharacterPaginator implements CharacterPaginatorInterface
     /**
      * @var \TYPO3\CMS\Extbase\Persistence\QueryResultInterface
      */
-    protected $queryResult;
+    protected QueryResultInterface $queryResult;
 
     /**
      * @var string|null
      */
-    protected $currentCharacter;
+    protected ?string $currentCharacter;
 
     /**
      * @var string[]
      */
-    protected $characters;
+    protected array $characters;
 
     /**
      * @var string
      */
-    protected $field;
+    protected string $field;
 
     /**
      * @param \TYPO3\CMS\Extbase\Persistence\QueryResultInterface $queryResult
@@ -55,9 +55,9 @@ class CharacterPaginator implements CharacterPaginatorInterface
         $this->characters = $paginationCharacters;
         $this->currentCharacter = $character;
 
-        if (null === $character) {
+        if ($character === null) {
             foreach ($paginationCharacters as $paginationCharacter) {
-                if (true === $this->characterHasItems($paginationCharacter)) {
+                if ($this->characterHasItems($paginationCharacter)) {
                     $this->currentCharacter = $paginationCharacter;
                     break;
                 }
@@ -78,7 +78,7 @@ class CharacterPaginator implements CharacterPaginatorInterface
      */
     public function getPaginatedItems(): iterable
     {
-        if (null === $this->currentCharacter) {
+        if ($this->currentCharacter === null) {
             return [];
         }
 
@@ -106,7 +106,7 @@ class CharacterPaginator implements CharacterPaginatorInterface
             $query->matching(
                 $query->like($this->field, $character . '%')
             );
-        } catch (InvalidQueryException $exception) {
+        } catch (InvalidQueryException) {
             // ignore
         }
 

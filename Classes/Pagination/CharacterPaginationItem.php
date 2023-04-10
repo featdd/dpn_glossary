@@ -22,17 +22,17 @@ class CharacterPaginationItem implements CharacterPaginationItemInterface
     /**
      * @var string
      */
-    protected $character;
+    protected string $character;
 
     /**
      * @var bool
      */
-    protected $isCurrent;
+    protected bool $isCurrent;
 
     /**
      * @var bool
      */
-    protected $isEmpty;
+    protected bool $isEmpty;
 
     /**
      * @param string $character

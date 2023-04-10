@@ -49,7 +49,7 @@ class TermRepository extends AbstractTermRepository
 
         shuffle($terms);
 
-        return \array_slice($terms, 0, $limit);
+        return array_slice($terms, 0, $limit);
     }
 
     /**
@@ -68,35 +68,27 @@ class TermRepository extends AbstractTermRepository
         foreach ($terms as $term) {
             $firstCharacter = mb_strtolower(mb_substr($term->getName(), 0, 1, 'UTF-8'), 'UTF-8');
 
-            if (true === is_numeric($firstCharacter)) {
+            if (is_numeric($firstCharacter)) {
                 $firstCharacter = (int) $firstCharacter;
             }
 
-            if (true === \in_array($firstCharacter, $numbers, true)) {
+            if (in_array($firstCharacter, $numbers, true)) {
                 $firstCharacter = '0-9';
             } else {
-                if (false === \in_array($firstCharacter, $normalChars, true)) {
-                    switch ($firstCharacter) {
-                        case 'ä':
-                            $firstCharacter = 'a';
-                            break;
-                        case 'ö':
-                            $firstCharacter = 'o';
-                            break;
-                        case 'ü':
-                            $firstCharacter = 'u';
-                            break;
-                        default:
-                            $firstCharacter = '_';
-                            break;
-                    }
+                if (!in_array($firstCharacter, $normalChars, true)) {
+                    $firstCharacter = match ($firstCharacter) {
+                        'ä' => 'a',
+                        'ö' => 'o',
+                        'ü' => 'u',
+                        default => '_',
+                    };
 
                 }
             }
 
             $firstCharacter = mb_strtoupper($firstCharacter, 'UTF-8');
 
-            if (false === isset($sortedTerms[$firstCharacter])) {
+            if (!isset($sortedTerms[$firstCharacter])) {
                 $sortedTerms[$firstCharacter] = [];
             }
 

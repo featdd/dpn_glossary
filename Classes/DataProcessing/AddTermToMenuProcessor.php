@@ -28,7 +28,7 @@ class AddTermToMenuProcessor implements DataProcessorInterface
     /**
      * @var \Featdd\DpnGlossary\Domain\Repository\TermRepository
      */
-    protected $termRepository;
+    protected TermRepository $termRepository;
 
     public function __construct()
     {

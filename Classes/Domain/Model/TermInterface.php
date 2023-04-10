@@ -15,6 +15,8 @@ namespace Featdd\DpnGlossary\Domain\Model;
  ***/
 interface TermInterface
 {
+    public const TABLE = 'tx_dpnglossary_domain_model_term';
+
     /**
      * @return string
      */

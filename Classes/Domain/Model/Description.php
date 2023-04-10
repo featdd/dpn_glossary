@@ -28,12 +28,12 @@ class Description extends AbstractEntity
      * @var string
      * @Validate(validator="NotEmpty")
      */
-    protected $meaning = '';
+    protected string $meaning = '';
 
     /**
      * @var string
      */
-    protected $text = '';
+    protected string $text = '';
 
     /**
      * @return string

@@ -16,64 +16,61 @@ namespace Featdd\DpnGlossary\Domain\Model;
 
 use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
 use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
-use TYPO3\CMS\Extbase\Domain\Model\FileReference;
 
 /**
  * @package Featdd\DpnGlossary\Domain\Model
  */
 abstract class AbstractTerm extends AbstractEntity implements TermInterface
 {
-    public const TABLE = 'tx_dpnglossary_domain_model_term';
+    /**
+     * @var string
+     */
+    protected string $name = '';
 
     /**
      * @var string
      */
-    protected $name = '';
+    protected string $parsingName = '';
 
     /**
      * @var string
      */
-    protected $parsingName = '';
+    protected string $tooltiptext = '';
 
     /**
      * @var string
      */
-    protected $tooltiptext = '';
+    protected string $termType = '';
 
     /**
      * @var string
      */
-    protected $termType = '';
+    protected string $termLang = '';
 
     /**
      * @var string
      */
-    protected $termLang = '';
-
-    /**
-     * @var string
-     */
-    protected $termMode = '';
+    protected string $termMode = '';
 
     /**
      * @var bool
      */
-    protected $excludeFromParsing = false;
+    protected bool $excludeFromParsing = false;
 
     /**
      * @var bool
      */
-    protected $caseSensitive = false;
+    protected bool $caseSensitive = false;
 
     /**
      * @var int
      */
-    protected $maxReplacements = -1;
+    protected int $maxReplacements = -1;
 
     /**
      * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\Featdd\DpnGlossary\Domain\Model\Synonym>
      */
-    protected $synonyms;
+    protected ObjectStorage $synonyms;
 
     public function __construct()
     {
@@ -102,7 +99,7 @@ abstract class AbstractTerm extends AbstractEntity implements TermInterface
      */
     public function getParsingName(): string
     {
-        if (true === empty($this->parsingName)) {
+        if (empty($this->parsingName)) {
             return $this->name;
         }
 

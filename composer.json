@@ -7,10 +7,11 @@
     "GPL-2.0-or-later"
   ],
   "require": {
-    "typo3/cms-core": "~10.4.2||~11.5",
-    "php": ">=7.2 <7.5||~8.0",
+    "typo3/cms-core": "~11.5||~12.4",
+    "php": ">=8.0 <8.3",
     "ext-dom": "*",
-    "ext-libxml": "*"
+    "ext-libxml": "*",
+    "ext-pdo": "*"
   },
   "autoload": {
     "psr-4": {

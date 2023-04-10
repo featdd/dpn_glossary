@@ -14,18 +14,19 @@ namespace Featdd\DpnGlossary\Utility;
  *
  ***/
 
-use TYPO3\CMS\Core\SingletonInterface;
+use DOMDocument;
+use DOMText;
 
 /**
  * @package Featdd\DpnGlossary\Utility
  */
-class ParserUtility implements SingletonInterface
+class ParserUtility
 {
     public const DEFAULT_TAG = 'DPNGLOSSARY';
 
     /**
      * Protect inline JavaScript from DOM Manipulation with HTML comments
-     * Optional you can pass over a alternative comment tag
+     * Optional you can pass over an alternative comment tag
      *
      * @param string $html
      * @param string $tag
@@ -38,7 +39,7 @@ class ParserUtility implements SingletonInterface
         };
 
         return preg_replace_callback(
-            '#(<script[^>]*>)(.*?)(<\/script>)#is',
+            '#(<script[^>]*>)(.*?)(</script>)#is',
             $callback,
             preg_replace_callback(
                 '#(<!--\[[^<]*>|<!--)(.*?)(<!\[[^<]*>|-->)#s',
@@ -82,7 +83,7 @@ class ParserUtility implements SingletonInterface
         };
 
         return preg_replace_callback(
-            '#(href|src)(\=\")(.*?)(\")#is',
+            '#(href|src)(=\")(.*?)(\")#is',
             $callback,
             $html
         );
@@ -102,7 +103,7 @@ class ParserUtility implements SingletonInterface
         };
 
         return preg_replace_callback(
-            '#(href|src)(\=\")(' . preg_quote($tag, '#') . ')(.*?)(\")#is',
+            '#(href|src)(=\")(' . preg_quote($tag, '#') . ')(.*?)(\")#is',
             $callback,
             $html
         );
@@ -116,10 +117,10 @@ class ParserUtility implements SingletonInterface
      * @param string $replacement
      * @return void
      */
-    public static function domTextReplacer(\DOMText $DOMText, string $replacement): void
+    public static function domTextReplacer(DOMText $DOMText, string $replacement): void
     {
         if (false === empty(trim($replacement))) {
-            $tempDOM = new \DOMDocument();
+            $tempDOM = new DOMDocument();
             // use XHTML tag for avoiding UTF-8 encoding problems
             $tempDOM->loadHTML('<?xml encoding="UTF-8">' . '<!DOCTYPE html><html><body><div id="replacement">' . $replacement . '</div></body></html>');
 
@@ -145,6 +146,6 @@ class ParserUtility implements SingletonInterface
             return $match[1] . str_ireplace('</source>', '', $match['2']) . $match[3];
         };
 
-        return preg_replace_callback('/(<picture.*?>)(.*?)(<\/picture>)/is', $callback, $html);
+        return preg_replace_callback('#(<picture.*?>)(.*?)(</picture>)#is', $callback, $html);
     }
 }
