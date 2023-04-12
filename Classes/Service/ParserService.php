@@ -16,6 +16,7 @@ namespace Featdd\DpnGlossary\Service;
 
 use Closure;
 use DOMDocument;
+use DOMNode;
 use DOMNodeList;
 use DOMText;
 use DOMXPath;
@@ -274,6 +275,11 @@ class ParserService implements SingletonInterface
                     $DOMpage->getElementsByTagName('body')->item(0)
                 )
                 ->item(0);
+
+            // Abort if the id for limited parsing was not found
+            if (!$DOMcontent instanceof DOMNode) {
+                return $html;
+            }
 
             // Load Page HTML in DOM and check if HTML is valid else abort
             // use XHTML tag for avoiding UTF-8 encoding problems
