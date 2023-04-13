@@ -10,6 +10,16 @@
 ChangeLog
 ---------
 
+v4.2.0
+  - Limit parsing of DOM to configurable node/tag (ID) (thanks to Julian Hofmann)
+  - Optimize parser performance with separate simplified term parser object (thanks to Julian Hofmann)
+  - Dynamic page based and content based exclusion from parsing (thanks to Lina Wolf)
+  - Add menu processor for terms
+  - Case sensitivity workaround for umlauts
+  - Add page title provider for character pagination and term detailpage
+  - Documentation updates
+  - Add special option for range routing mapper, for adding special chars
+
 v4.1.0
   - Add SEO title & description for terms
   - Optimize slug preview (no extra configuration needed anymore)
