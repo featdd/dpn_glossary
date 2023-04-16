@@ -7,8 +7,9 @@
 
 .. _links:
 
+=====
 Links
------
+=====
 
 :TER:
     `dpn_glossary <https://typo3.org/extensions/repository/view/dpn_glossary>`_

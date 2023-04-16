@@ -5,9 +5,9 @@
 
 .. include:: Includes.txt
 
-======================
-dpn_glossary Extension
-======================
+============
+dpn_glossary
+============
 
 .. only:: html
 
@@ -27,7 +27,7 @@ dpn_glossary Extension
         glossary,glossar,dreipunktnull,dpn,parser,term
 
     :Copyright:
-        2022
+        2023
 
     :Author:
         Daniel Dorndorf
@@ -45,7 +45,7 @@ dpn_glossary Extension
     **Table of Contents**
 
 .. toctree::
-    :maxdepth: 2
+    :maxdepth: 1
     :titlesonly:
     :glob:
 

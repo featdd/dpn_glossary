@@ -5,10 +5,12 @@
 
 .. include:: ../../Includes.txt
 
-Extension Settings
-^^^^^^^^^^^^^^^^^^
+=========
+Reference
+=========
 
-All constants have to be added to
+Extension Settings
+------------------
 
 .. ### BEGIN~OF~TABLE ###
 
@@ -28,11 +30,8 @@ All constants have to be added to
 
 .. ###### END~OF~TABLE ######
 
-Reference
-^^^^^^^^^
-
-All constants have to be added to
-plugin.tx_dpnglossary.settings:
+TypoScript
+----------
 
 .. ### BEGIN~OF~TABLE ###
 

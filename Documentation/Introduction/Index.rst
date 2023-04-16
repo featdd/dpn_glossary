@@ -5,6 +5,9 @@
 
 .. include:: ../Includes.txt
 
+.. _introduction:
+
+============
 Introduction
 ============
 
@@ -12,14 +15,14 @@ What does it do?
 ----------------
 
 This extension lets you integrate a simple glossar for your website.
-A special functionality is the configurable parser of terms on your pages.
+In addition, created terms can be automatically linked with a configurable parser.
 
-Advantage of dpn_glossary
--------------------------
+Advantages of dpn_glossary
+--------------------------
 
-+ Simple configuration
+* Simple configuration
 
-+ Automatic parsing of terms on pages
+* Automatic parsing of terms on pages
 
 Screenshots
 -----------
@@ -27,9 +30,9 @@ Screenshots
 .. figure:: ../Images/term_edit.jpg
     :alt: Term editing
 
-    The editing of one a term
+    The editing of a term record
 
 .. figure:: ../Images/parser.png
     :alt: Parsing
 
-    The automatic parser finds terms you defined and links them to your detailpage
+    The automatic parser finds terms you created and links them to your detailpage
