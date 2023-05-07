@@ -22,3 +22,16 @@ services:
       - name: event.listener
         identifier: 'dpnglossary-parse-content-for-terms'
         event: TYPO3\CMS\Frontend\Event\AfterCacheableContentIsGeneratedEvent
+
+  Featdd\DpnGlossary\EventListener\ModifyUrlForCanonicalTagEventListener:
+    arguments:
+      $settings: '@dpnglossary.typoscript_settings'
+    tags:
+      - name: event.listener
+        identifier: 'dpnglossary-canonical-url'
+        event: TYPO3\CMS\Seo\Event\ModifyUrlForCanonicalTagEvent
+
+  dpnglossary.typoscript_settings:
+    class: 'array'
+    factory: [ '@TYPO3\CMS\Extbase\Configuration\ConfigurationManager', 'getConfiguration' ]
+    arguments: [ 'Settings', 'dpnglossary' ]
