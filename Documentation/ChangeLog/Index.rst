@@ -11,6 +11,10 @@
 ChangeLog
 =========
 
+v5.0.0
+  * Add support for TYPO3 v12 (dropped for TYPO3 v10)
+  * Add canonical URL for character pagination index
+
 v4.2.0
   * Limit parsing of DOM to configurable node/tag (ID) (thanks to Julian Hofmann)
   * Optimize parser performance with separate simplified term parser object (thanks to Julian Hofmann)
