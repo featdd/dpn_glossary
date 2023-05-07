@@ -14,10 +14,7 @@ namespace Featdd\DpnGlossary\ViewHelpers;
  *
  ***/
 
-use Featdd\DpnGlossary\Service\LinkService;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Extbase\Configuration\ConfigurationManager;
-use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
 use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractTagBasedViewHelper;
 
 /**
@@ -30,41 +27,9 @@ class BacklinkViewHelper extends AbstractTagBasedViewHelper
      */
     protected $tagName = 'a';
 
-    /**
-     * @var array
-     */
-    protected $settings = [];
-
-    /**
-     * @var \Featdd\DpnGlossary\Service\LinkService
-     */
-    protected $linkService;
-
-    /**
-     * @param \Featdd\DpnGlossary\Service\LinkService $linkService
-     */
-    public function injectLinkService(LinkService $linkService): void
-    {
-        $this->linkService = $linkService;
-    }
-
-    /**
-     * @throws \TYPO3\CMS\Extbase\Configuration\Exception\InvalidConfigurationTypeException
-     */
-    public function initialize(): void
-    {
-        parent::initialize();
-
-        /** @var \TYPO3\CMS\Extbase\Configuration\ConfigurationManager $configurationManager */
-        $configurationManager = GeneralUtility::makeInstance(ConfigurationManager::class);
-
-        $this->settings = $configurationManager->getConfiguration(ConfigurationManagerInterface::CONFIGURATION_TYPE_SETTINGS, 'dpnglossary');
-    }
-
     public function initializeArguments(): void
     {
         $this->registerUniversalTagAttributes();
-        $this->registerArgument('absolute', 'bool', 'Should the link be absolute', false, false);
     }
 
     /**

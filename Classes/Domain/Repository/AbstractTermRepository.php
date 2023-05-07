@@ -70,7 +70,7 @@ abstract class AbstractTermRepository extends Repository
     {
         $query = $this->createQuery();
 
-        if (0 === count($uids)) {
+        if (count($uids) === 0) {
             return [];
         }
 
@@ -78,7 +78,7 @@ abstract class AbstractTermRepository extends Repository
             $query->matching(
                 $query->in('uid', $uids)
             );
-        } catch (InvalidQueryException $e) {
+        } catch (InvalidQueryException) {
             // nothing
         }
 

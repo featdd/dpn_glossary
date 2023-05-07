@@ -14,6 +14,8 @@ namespace Featdd\DpnGlossary\Routing\Aspect;
  *
  ***/
 
+use InvalidArgumentException;
+use LengthException;
 use TYPO3\CMS\Core\Routing\Aspect\StaticMappableAspectInterface;
 
 /**
@@ -24,7 +26,7 @@ class StaticMultiRangeMapper implements StaticMappableAspectInterface
     /**
      * @var array
      */
-    protected $ranges;
+    protected array $ranges = [];
 
     /**
      * @param array $settings
@@ -35,11 +37,11 @@ class StaticMultiRangeMapper implements StaticMappableAspectInterface
             $start = $range['start'] ?? null;
             $end = $range['end'] ?? null;
 
-            if (false === \is_string($start)) {
-                throw new \InvalidArgumentException('start must be string', 1537277163);
+            if (false === is_string($start)) {
+                throw new InvalidArgumentException('start must be string', 1537277163);
             }
-            if (false === \is_string($end)) {
-                throw new \InvalidArgumentException('end must be string', 1537277164);
+            if (false === is_string($end)) {
+                throw new InvalidArgumentException('end must be string', 1537277164);
             }
 
             !empty($range['special']) && is_array($range['special'])
@@ -73,7 +75,7 @@ class StaticMultiRangeMapper implements StaticMappableAspectInterface
     protected function respondWhenInRange(string $value): ?string
     {
         foreach ($this->ranges as $range) {
-            if (true === \in_array($value, $range, true)) {
+            if (in_array($value, $range, true)) {
                 return $value;
             }
         }
@@ -90,8 +92,8 @@ class StaticMultiRangeMapper implements StaticMappableAspectInterface
     {
         $range = array_map('\strval', range($start, $end));
 
-        if (1000 < \count($range)) {
-            throw new \LengthException(
+        if (1000 < count($range)) {
+            throw new LengthException(
                 'Range is larger than 1000 items',
                 1537696771
             );

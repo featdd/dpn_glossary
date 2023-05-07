@@ -32,7 +32,7 @@ class SlugPreviewUserFunc
     /**
      * @var array
      */
-    protected $settings = [];
+    protected array $settings = [];
 
     public function __construct()
     {
@@ -40,7 +40,7 @@ class SlugPreviewUserFunc
 
         try {
             $this->settings = $configurationManager->getConfiguration(ConfigurationManagerInterface::CONFIGURATION_TYPE_SETTINGS, 'dpnglossary');
-        } catch (InvalidConfigurationTypeException $exception) {
+        } catch (InvalidConfigurationTypeException) {
             $this->settings = [];
         }
     }
@@ -64,7 +64,7 @@ class SlugPreviewUserFunc
 
                 try {
                     $site = $siteFinder->getSiteByPageId($detailPageUid);
-                } catch (SiteNotFoundException $exception) {
+                } catch (SiteNotFoundException) {
                     return LocalizationUtility::translate('tx_dpnglossary.error.slug_preview_site_missing', 'dpn_glossary');
                 }
             }
@@ -83,7 +83,7 @@ class SlugPreviewUserFunc
                 ]
             );
 
-            return preg_replace('/SLUG\/?$/', '', $prefixUrl);
+            return preg_replace('#SLUG/?$#', '', $prefixUrl);
         }
 
         return null;

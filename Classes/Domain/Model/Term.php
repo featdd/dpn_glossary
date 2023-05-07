@@ -15,7 +15,6 @@ namespace Featdd\DpnGlossary\Domain\Model;
  ***/
 
 use TYPO3\CMS\Extbase\Annotation as Extbase;
-use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
 use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
 use TYPO3\CMS\Extbase\Domain\Model\FileReference;
 
@@ -27,29 +26,29 @@ class Term extends AbstractTerm
     /**
      * @var string
      */
-    protected $termLink = '';
+    protected string $termLink = '';
 
     /**
      * @var string
      */
-    protected $seoTitle = '';
+    protected string $seoTitle = '';
 
     /**
      * @var string
      */
-    protected $metaDescription = '';
+    protected string $metaDescription = '';
 
     /**
      * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\Featdd\DpnGlossary\Domain\Model\Description>
      * @Extbase\ORM\Lazy
      */
-    protected $descriptions;
+    protected ObjectStorage $descriptions;
 
     /**
      * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\TYPO3\CMS\Extbase\Domain\Model\FileReference>
      * @Extbase\ORM\Lazy
      */
-    protected $media;
+    protected ObjectStorage $media;
 
     public function __construct()
     {

@@ -16,3 +16,9 @@ services:
   Featdd\DpnGlossary\Service\ParserService:
     arguments:
       $termsCache: '@cache.dpnglossary_parserterms'
+
+  Featdd\DpnGlossary\EventListener\AfterCacheableContentIsGeneratedEventListener:
+    tags:
+      - name: event.listener
+        identifier: 'dpnglossary-parse-content-for-terms'
+        event: TYPO3\CMS\Frontend\Event\AfterCacheableContentIsGeneratedEvent

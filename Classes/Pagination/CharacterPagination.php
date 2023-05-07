@@ -22,12 +22,12 @@ class CharacterPagination implements CharacterPaginationInterface
     /**
      * @var \Featdd\DpnGlossary\Pagination\CharacterPaginatorInterface
      */
-    protected $paginator;
+    protected CharacterPaginatorInterface $paginator;
 
     /**
      * @var \Featdd\DpnGlossary\Pagination\CharacterPaginationItemInterface[]
      */
-    protected $characters = [];
+    protected array $characters = [];
 
     /**
      * @param \Featdd\DpnGlossary\Pagination\CharacterPaginatorInterface $characterPaginator
@@ -41,7 +41,7 @@ class CharacterPagination implements CharacterPaginationInterface
             $this->characters[] = new CharacterPaginationItem(
                 $character,
                 $character === $characterPaginator->getCurrentCharacter(),
-                false === $characterPaginator->characterHasItems($character)
+                !$characterPaginator->characterHasItems($character)
             );
         }
     }

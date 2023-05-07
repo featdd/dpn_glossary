@@ -1,0 +1,33 @@
+{
+  "name": "dpn_glossary",
+  "version": "5.0.0",
+  "private": true,
+  "engines": {
+    "node": "^19.9"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.21",
+    "@babel/preset-env": "^7.21",
+    "@babel/register": "^7.21",
+    "cross-env": "^7.0",
+    "css-loader": "^6.7",
+    "mini-css-extract-plugin": "^2.7",
+    "sass": "^1.62",
+    "sass-loader": "^13.2",
+    "webpack": "^5.79",
+    "webpack-cli": "^5.0",
+    "webpack-fix-style-only-entries": "^0.6.1"
+  },
+  "babel": {
+    "presets": [
+      "@babel/preset-env"
+    ]
+  },
+  "browserslist": [
+    "defaults"
+  ],
+  "scripts": {
+    "build:production": "cross-env NODE_ENV=production webpack --config ./Build/webpack.config.babel.js --progress",
+    "build:development": "cross-env NODE_ENV=development webpack --config ./Build/webpack.config.babel.js --progress"
+  }
+}

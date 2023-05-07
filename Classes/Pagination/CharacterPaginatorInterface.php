@@ -34,7 +34,7 @@ interface CharacterPaginatorInterface
     public function getPaginatedItems(): iterable;
 
     /**
-     * @return string
+     * @return string|null
      */
     public function getCurrentCharacter(): ?string;
 

@@ -14,12 +14,11 @@ namespace Featdd\DpnGlossary\Updates;
  *
  ***/
 
-use Featdd\DpnGlossary\Domain\Model\Term;
+use Featdd\DpnGlossary\Domain\Model\TermInterface;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Database\Query\QueryBuilder;
 use TYPO3\CMS\Core\Database\Query\Restriction\DeletedRestriction;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Install\Updates\DatabaseUpdatedPrerequisite;
 use TYPO3\CMS\Install\Updates\UpgradeWizardInterface;
 
 /**
@@ -31,7 +30,7 @@ abstract class AbstractUpdateWizard implements UpgradeWizardInterface
      * @param string $tablename
      * @return \TYPO3\CMS\Core\Database\Query\QueryBuilder
      */
-    protected function getQueryBuilder(string $tablename = Term::TABLE): QueryBuilder
+    protected function getQueryBuilder(string $tablename = TermInterface::TABLE): QueryBuilder
     {
         /** @var \TYPO3\CMS\Core\Database\ConnectionPool $connectionPool */
         $connectionPool = GeneralUtility::makeInstance(ConnectionPool::class);

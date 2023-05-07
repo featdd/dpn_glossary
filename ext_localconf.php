@@ -1,39 +1,56 @@
 <?php
-defined('TYPO3_MODE') || die('Access denied.');
+declare(strict_types=1);
+
+use Featdd\DpnGlossary\Controller\TermController;
+use Featdd\DpnGlossary\Hook\ContentPostProcHook;
+use Featdd\DpnGlossary\Routing\Aspect\StaticMultiRangeMapper;
+use Featdd\DpnGlossary\Updates\PluginCTypeMigrationUpdateWizard;
+use Featdd\DpnGlossary\Updates\SlugUpdateWizard;
+use TYPO3\CMS\Core\Imaging\IconProvider\SvgIconProvider;
+use TYPO3\CMS\Core\Imaging\IconRegistry;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extbase\Utility\ExtensionUtility;
+
+defined('TYPO3') or die();
 
 call_user_func(
     function () {
-        \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
-            'Featdd.DpnGlossary',
+        ExtensionUtility::configurePlugin(
+            'DpnGlossary',
             'Glossary',
-            [\Featdd\DpnGlossary\Controller\TermController::class => 'list, show'],
-            [\Featdd\DpnGlossary\Controller\TermController::class => '']
+            [TermController::class => 'list, show'],
+            [TermController::class => ''],
+            ExtensionUtility::PLUGIN_TYPE_CONTENT_ELEMENT
         );
 
-        \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
-            'Featdd.DpnGlossary',
+        ExtensionUtility::configurePlugin(
+            'DpnGlossary',
             'Glossarypreview',
-            [\Featdd\DpnGlossary\Controller\TermController::class => 'previewNewest, previewRandom, previewSelected'],
-            [\Featdd\DpnGlossary\Controller\TermController::class => '']
+            [TermController::class => 'previewNewest, previewRandom, previewSelected'],
+            [TermController::class => ''],
+            ExtensionUtility::PLUGIN_TYPE_CONTENT_ELEMENT
         );
 
-        $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['tslib/class.tslib_fe.php']['contentPostProc-all'][] = \Featdd\DpnGlossary\Hook\ContentPostProcHook::class . '->all';
-        $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['tslib/class.tslib_fe.php']['contentPostProc-cached'][] = \Featdd\DpnGlossary\Hook\ContentPostProcHook::class . '->cached';
-        $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['ext/install']['update'][\Featdd\DpnGlossary\Updates\SlugUpdateWizard::class] = \Featdd\DpnGlossary\Updates\SlugUpdateWizard::class;
-        $GLOBALS['TYPO3_CONF_VARS']['SYS']['routing']['aspects']['StaticMultiRangeMapper'] = \Featdd\DpnGlossary\Routing\Aspect\StaticMultiRangeMapper::class;
+        // These hooks were removed in v12 but still needed in v11
+        $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['tslib/class.tslib_fe.php']['contentPostProc-all'][] = ContentPostProcHook::class . '->all';
+        $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['tslib/class.tslib_fe.php']['contentPostProc-cached'][] = ContentPostProcHook::class . '->cached';
 
-        $iconRegistry = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Imaging\IconRegistry::class);
+        $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['ext/install']['update'][SlugUpdateWizard::class] = SlugUpdateWizard::class;
+        $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['ext/install']['update'][PluginCTypeMigrationUpdateWizard::class] = PluginCTypeMigrationUpdateWizard::class;
+        $GLOBALS['TYPO3_CONF_VARS']['SYS']['routing']['aspects']['StaticMultiRangeMapper'] = StaticMultiRangeMapper::class;
+
+        $iconRegistry = GeneralUtility::makeInstance(IconRegistry::class);
 
         $iconRegistry->registerIcon(
             'ext-dpn_glossary-wizard-icon',
-            \TYPO3\CMS\Core\Imaging\IconProvider\FontawesomeIconProvider::class,
-            ['name' => 'list']
+            SvgIconProvider::class,
+            ['source' => 'EXT:dpn_glossary/Resources/Public/Icons/Plugin_Glossary.svg']
         );
 
         $iconRegistry->registerIcon(
             'ext-dpn_glossary-preview-wizard-icon',
-            \TYPO3\CMS\Core\Imaging\IconProvider\FontawesomeIconProvider::class,
-            ['name' => 'external-link-square']
+            SvgIconProvider::class,
+            ['source' => 'EXT:dpn_glossary/Resources/Public/Icons/Plugin_Glossarypreview.svg']
         );
 
         if (false === isset($GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations']['dpnglossary_termscache'])) {

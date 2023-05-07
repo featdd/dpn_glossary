@@ -14,7 +14,7 @@ namespace Featdd\DpnGlossary\Updates;
  *
  ***/
 
-use Featdd\DpnGlossary\Domain\Model\Term;
+use Featdd\DpnGlossary\Domain\Model\TermInterface;
 use PDO;
 use TYPO3\CMS\Core\DataHandling\Model\RecordStateFactory;
 use TYPO3\CMS\Core\DataHandling\SlugHelper;
@@ -31,6 +31,8 @@ class SlugUpdateWizard extends AbstractUpdateWizard
     public const SLUG_FIELD = 'url_segment';
 
     /**
+     * This method is still necessary in TYPO3 v11
+     *
      * @return string
      */
     public function getIdentifier(): string
@@ -58,7 +60,7 @@ class SlugUpdateWizard extends AbstractUpdateWizard
 
     /**
      * @return bool
-     * @throws \Doctrine\DBAL\Driver\Exception
+     * @throws \Doctrine\DBAL\Exception
      */
     public function executeUpdate(): bool
     {
@@ -66,9 +68,9 @@ class SlugUpdateWizard extends AbstractUpdateWizard
         /** @var \TYPO3\CMS\Core\DataHandling\SlugHelper $slugHelper */
         $slugHelper = GeneralUtility::makeInstance(
             SlugHelper::class,
-            Term::TABLE,
+            TermInterface::TABLE,
             self::SLUG_FIELD,
-            $GLOBALS['TCA'][Term::TABLE]['columns'][self::SLUG_FIELD]['config'] ?? []
+            $GLOBALS['TCA'][TermInterface::TABLE]['columns'][self::SLUG_FIELD]['config'] ?? []
         );
 
         $terms = $this->getEmptySlugTerms();
@@ -77,18 +79,18 @@ class SlugUpdateWizard extends AbstractUpdateWizard
             $termUid = (int) $term['uid'];
             $termPid = (int) $term['pid'];
             $termSlug = $slugHelper->generate($term, $termPid);
-            $state = RecordStateFactory::forName(Term::TABLE)->fromArray($term, $termPid, $termUid);
+            $state = RecordStateFactory::forName(TermInterface::TABLE)->fromArray($term, $termPid, $termUid);
 
             try {
-                if (false === $slugHelper->isUniqueInSite($termSlug, $state)) {
+                if (!$slugHelper->isUniqueInSite($termSlug, $state)) {
                     $termSlug .= '-' . $termUid;
                 }
-            } catch (SiteNotFoundException $e) {
+            } catch (SiteNotFoundException) {
                 // nothing
             }
 
             $queryBuilder
-                ->update(Term::TABLE)
+                ->update(TermInterface::TABLE)
                 ->set(self::SLUG_FIELD, $termSlug)
                 ->where(
                     $queryBuilder->expr()->eq(
@@ -96,7 +98,7 @@ class SlugUpdateWizard extends AbstractUpdateWizard
                         $queryBuilder->createNamedParameter($termUid, PDO::PARAM_INT)
                     )
                 )
-                ->execute();
+                ->executeStatement();
         }
 
         return true;
@@ -104,11 +106,11 @@ class SlugUpdateWizard extends AbstractUpdateWizard
 
     /**
      * @return bool
-     * @throws \Doctrine\DBAL\Driver\Exception
+     * @throws \Doctrine\DBAL\Exception
      */
     public function updateNecessary(): bool
     {
-        return 0 < \count($this->getEmptySlugTerms());
+        return 0 < count($this->getEmptySlugTerms());
     }
 
     /**
@@ -126,7 +128,7 @@ class SlugUpdateWizard extends AbstractUpdateWizard
 
     /**
      * @return array
-     * @throws \Doctrine\DBAL\Driver\Exception
+     * @throws \Doctrine\DBAL\Exception
      */
     protected function getEmptySlugTerms(): array
     {
@@ -134,9 +136,9 @@ class SlugUpdateWizard extends AbstractUpdateWizard
 
         return $queryBuilder
             ->select('pid', 'uid', 'sys_language_uid', self::SEGMENT_FIELD, self::SLUG_FIELD)
-            ->from(Term::TABLE)
+            ->from(TermInterface::TABLE)
             ->where($queryBuilder->expr()->isNotNull(self::SLUG_FIELD))
-            ->execute()
-            ->fetchAll();
+            ->executeQuery()
+            ->fetchAllAssociative();
     }
 }

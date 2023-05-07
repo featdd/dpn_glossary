@@ -1,9 +1,13 @@
 <?php
-defined('TYPO3_MODE') || die();
+declare(strict_types=1);
+
+use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
+
+defined('TYPO3') or die();
 
 call_user_func(function () {
 
-    \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTCAcolumns('pages', [
+    ExtensionManagementUtility::addTCAcolumns('pages', [
         'tx_dpnglossary_disable_parser' => [
             'label' => 'LLL:EXT:dpn_glossary/Resources/Private/Language/locallang.xlf:pages.glossary_settings',
             'exclude' => true,
@@ -23,7 +27,7 @@ call_user_func(function () {
         ],
     ]);
 
-    \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addToAllTCAtypes(
+    ExtensionManagementUtility::addToAllTCAtypes(
         'pages',
         'tx_dpnglossary_disable_parser',
         '',

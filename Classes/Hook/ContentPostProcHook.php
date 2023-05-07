@@ -14,11 +14,7 @@ namespace Featdd\DpnGlossary\Hook;
  *
  ***/
 
-use Featdd\DpnGlossary\Service\ParserService;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Extbase\Configuration\ConfigurationManager;
-use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
-use TYPO3\CMS\Extbase\Configuration\Exception\InvalidConfigurationTypeException;
+use Featdd\DpnGlossary\EventListener\ParseHtmlEventTrait;
 use TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController;
 
 /**
@@ -26,15 +22,7 @@ use TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController;
  */
 class ContentPostProcHook
 {
-    /**
-     * @var \Featdd\DpnGlossary\Service\ParserService
-     */
-    protected $parserService;
-
-    public function __construct()
-    {
-        $this->parserService = GeneralUtility::makeInstance(ParserService::class);
-    }
+    use ParseHtmlEventTrait;
 
     /**
      * @param array $params
@@ -43,7 +31,7 @@ class ContentPostProcHook
      */
     public function all(array &$params, TypoScriptFrontendController $typoScriptFrontendController): void
     {
-        if (true === $typoScriptFrontendController->no_cache) {
+        if ($typoScriptFrontendController->no_cache) {
             $this->parseHtml($typoScriptFrontendController);
         }
     }
@@ -56,38 +44,5 @@ class ContentPostProcHook
     public function cached(array &$params, TypoScriptFrontendController $typoScriptFrontendController): void
     {
         $this->parseHtml($typoScriptFrontendController);
-    }
-
-    /**
-     * @param \TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController $typoScriptFrontendController
-     * @throws \Featdd\DpnGlossary\Service\Exception
-     */
-    protected function parseHtml(TypoScriptFrontendController $typoScriptFrontendController): void
-    {
-        /** @var \TYPO3\CMS\Extbase\Configuration\ConfigurationManager $configurationManager */
-        $configurationManager = GeneralUtility::makeInstance(ConfigurationManager::class);
-
-        try {
-            $settings = $configurationManager->getConfiguration(
-                ConfigurationManagerInterface::CONFIGURATION_TYPE_SETTINGS,
-                'dpnglossary'
-            );
-
-            $isDisableParser = (bool) ($settings['disableParser'] ?? false);
-        } catch (InvalidConfigurationTypeException $exception) {
-            $isDisableParser = true;
-        }
-
-        if ((bool) $typoScriptFrontendController->page['tx_dpnglossary_disable_parser'] === true) {
-            $isDisableParser = true;
-        }
-
-        if (false === $isDisableParser) {
-            $parsedHTML = $this->parserService->pageParser($typoScriptFrontendController->content);
-
-            if (true === is_string($parsedHTML)) {
-                $typoScriptFrontendController->content = $parsedHTML;
-            }
-        }
     }
 }

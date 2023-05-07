@@ -17,8 +17,11 @@ return [
         'enablecolumns' => [
             'disabled' => 'hidden',
         ],
+        'security' => [
+            'ignorePageTypeRestriction' => true,
+        ],
         'searchFields' => 'name,',
-        'iconfile' => 'EXT:dpn_glossary/Resources/Public/Icons/synonym.png',
+        'iconfile' => 'EXT:dpn_glossary/Resources/Public/Icons/Synonym.png',
     ],
     'types' => [
         '1' => ['showitem' => 'l10n_parent, l10n_diffsource, name'],
@@ -28,17 +31,7 @@ return [
             'exclude' => true,
             'label' => 'LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.language',
             'config' => [
-                'type' => 'select',
-                'renderType' => 'selectSingle',
-                'special' => 'languages',
-                'items' => [
-                    [
-                        'LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.allLanguages',
-                        -1,
-                        'flags-multiple',
-                    ],
-                ],
-                'default' => 0,
+                'type' => 'language',
             ],
         ],
         'l10n_parent' => [
