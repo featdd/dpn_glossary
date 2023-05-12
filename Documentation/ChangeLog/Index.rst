@@ -11,6 +11,9 @@
 ChangeLog
 =========
 
+v5.0.1
+  * Add missing switchable controller actions migration for preview plugin
+
 v5.0.0
   * Add support for TYPO3 v12 (dropped for TYPO3 v10)
   * Add canonical URL for character pagination index
