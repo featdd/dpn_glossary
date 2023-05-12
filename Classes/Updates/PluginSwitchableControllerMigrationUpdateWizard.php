@@ -15,11 +15,13 @@ namespace Featdd\DpnGlossary\Updates;
  ***/
 
 use PDO;
+use TYPO3\CMS\Core\Service\FlexFormService;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
  * @package Featdd\DpnGlossary\Updates
  */
-class PluginCTypeMigrationUpdateWizard extends AbstractUpdateWizard
+class PluginSwitchableControllerMigrationUpdateWizard extends AbstractUpdateWizard
 {
     /**
      * This method is still necessary in TYPO3 v11
@@ -36,7 +38,7 @@ class PluginCTypeMigrationUpdateWizard extends AbstractUpdateWizard
      */
     public function getTitle(): string
     {
-        return 'Update old plugin registration style';
+        return 'Migrate switchable controller previews plugins to new seperate plugins';
     }
 
     /**
@@ -44,9 +46,7 @@ class PluginCTypeMigrationUpdateWizard extends AbstractUpdateWizard
      */
     public function getDescription(): string
     {
-        return 'Having the vendor name in the plugin registration'
-            . ' is not needed anymore, and breaks the plugin in v12.'
-            . ' This update migrates your existing plugins to an own CType.';
+        return 'Switchable controller actions were removed and should be replaced.';
     }
 
     /**
@@ -54,7 +54,7 @@ class PluginCTypeMigrationUpdateWizard extends AbstractUpdateWizard
      */
     public function getPrerequisites(): array
     {
-        return [PluginSwitchableControllerMigrationUpdateWizard::class];
+        return [];
     }
 
     /**
@@ -72,17 +72,24 @@ class PluginCTypeMigrationUpdateWizard extends AbstractUpdateWizard
      */
     public function executeUpdate(): bool
     {
+        /** @var \TYPO3\CMS\Core\Service\FlexFormService $flexFormService */
+        $flexFormService = GeneralUtility::makeInstance(FlexFormService::class);
+
         $queryBuilder = $this->getQueryBuilder('tt_content');
         $pluginRecords = $this->getOldPluginRecords();
 
         foreach ($pluginRecords as $pluginRecord) {
+            $flexFormXml = $pluginRecord['pi_flexform'];
+            $flexForm = $flexFormService->convertFlexFormContentToArray($flexFormXml);
+
             $queryBuilder
                 ->update('tt_content')
                 ->set(
                     'CType',
-                    match ($pluginRecord['list_type']) {
-                        'dpnglossary_glossary', 'featdd.dpnglossary_glossary' => 'dpnglossary_glossary',
-                        'dpnglossary_glossarypreview', 'featdd.dpnglossary_glossarypreview' => 'dpnglossary_glossarypreview',
+                    match ($flexForm['switchableControllerActions'] ?? '') {
+                        'Term->previewRandom' => 'dpnglossary_glossarypreviewrandom',
+                        'Term->previewSelected' => 'dpnglossary_glossarypreviewselected',
+                        default => 'dpnglossary_glossarypreviewnewest',
                     }
                 )
                 ->set('list_type', '')
@@ -107,18 +114,23 @@ class PluginCTypeMigrationUpdateWizard extends AbstractUpdateWizard
         $queryBuilder = $this->getQueryBuilder('tt_content');
 
         return $queryBuilder
-            ->select('uid', 'list_type')
+            ->select('uid', 'list_type', 'pi_flexform')
             ->from('tt_content')
             ->where(
-                $queryBuilder->expr()->eq('CType', $queryBuilder->createNamedParameter('list')),
                 $queryBuilder->expr()->or(
-                    $queryBuilder->expr()->eq(
-                        'list_type',
-                        $queryBuilder->createNamedParameter('featdd.dpnglossary_glossary')
-                    ),
-                    $queryBuilder->expr()->eq(
-                        'list_type',
-                        $queryBuilder->createNamedParameter('dpnglossary_glossary')
+                    $queryBuilder->expr()->eq('CType', $queryBuilder->createNamedParameter('dpnglossary_glossarypreview')),
+                    $queryBuilder->expr()->and(
+                        $queryBuilder->expr()->eq('CType', $queryBuilder->createNamedParameter('list')),
+                        $queryBuilder->expr()->or(
+                            $queryBuilder->expr()->eq(
+                                'list_type',
+                                $queryBuilder->createNamedParameter('featdd.dpnglossary_glossarypreview')
+                            ),
+                            $queryBuilder->expr()->eq(
+                                'list_type',
+                                $queryBuilder->createNamedParameter('dpnglossary_glossarypreview')
+                            )
+                        )
                     ),
                 )
             )

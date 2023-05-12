@@ -106,16 +106,28 @@
         <target>Es wurden keine Objekte gefunden</target>
       </trans-unit>
       <trans-unit id="tx_dpnglossary.wizard_glossary_title">
-        <target>Glossar Listenansicht</target>
+        <target>Glossar (Listen- &amp; Detailansicht)</target>
       </trans-unit>
       <trans-unit id="tx_dpnglossary.wizard_glossary_description">
         <target>Plugin für das Glossar der dpn_glossary Extension</target>
       </trans-unit>
-      <trans-unit id="tx_dpnglossary.wizard_preview_title">
-        <target>Glossar Vorschau</target>
+      <trans-unit id="tx_dpnglossary.wizard_preview_newest_title">
+        <target>Glossar Vorschau (Aktuell)</target>
       </trans-unit>
-      <trans-unit id="tx_dpnglossary.wizard_preview_description">
-        <target>Plugin für die Vorschau der dpn_glossary Extension</target>
+      <trans-unit id="tx_dpnglossary.wizard_preview_newest_description">
+        <target>Zeigt die aktuellsten Begriffe des Glossars an</target>
+      </trans-unit>
+      <trans-unit id="tx_dpnglossary.wizard_preview_random_title">
+        <target>Glossar Vorschau (Zusfällig)</target>
+      </trans-unit>
+      <trans-unit id="tx_dpnglossary.wizard_preview_random_description">
+        <target>Zeigt zufällige Begriffe des Glossars an</target>
+      </trans-unit>
+      <trans-unit id="tx_dpnglossary.wizard_preview_selected_title">
+        <target>Glossar Vorschau (Ausgewählt)</target>
+      </trans-unit>
+      <trans-unit id="tx_dpnglossary.wizard_preview_selected_description">
+        <target>Zeigt ausgewählte Begriffe des Glossars an</target>
       </trans-unit>
 
 
@@ -133,17 +145,8 @@
       <trans-unit id="tx_dpnglossary.flexforms.preview">
         <target>Vorschau Einstellungen</target>
       </trans-unit>
-      <trans-unit id="tx_dpnglossary.flexforms.preview.mode">
-        <target>Vorschau Modus</target>
-      </trans-unit>
-      <trans-unit id="tx_dpnglossary.flexforms.preview.mode.newest">
-        <target>Neueste</target>
-      </trans-unit>
-      <trans-unit id="tx_dpnglossary.flexforms.preview.mode.random">
-        <target>Zufällige</target>
-      </trans-unit>
-      <trans-unit id="tx_dpnglossary.flexforms.preview.mode.selected">
-        <target>Ausgewählte</target>
+      <trans-unit id="tx_dpnglossary.flexforms.preview.selected">
+        <target>Ausgewählte Begriffe</target>
       </trans-unit>
       <trans-unit id="tx_dpnglossary.flexforms.preview.limit">
         <target>Maximal</target>

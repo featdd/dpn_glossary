@@ -5,6 +5,7 @@ use Featdd\DpnGlossary\Controller\TermController;
 use Featdd\DpnGlossary\Hook\ContentPostProcHook;
 use Featdd\DpnGlossary\Routing\Aspect\StaticMultiRangeMapper;
 use Featdd\DpnGlossary\Updates\PluginCTypeMigrationUpdateWizard;
+use Featdd\DpnGlossary\Updates\PluginSwitchableControllerMigrationUpdateWizard;
 use Featdd\DpnGlossary\Updates\SlugUpdateWizard;
 use TYPO3\CMS\Core\Imaging\IconProvider\SvgIconProvider;
 use TYPO3\CMS\Core\Imaging\IconRegistry;
@@ -25,8 +26,24 @@ call_user_func(
 
         ExtensionUtility::configurePlugin(
             'DpnGlossary',
-            'Glossarypreview',
-            [TermController::class => 'previewNewest, previewRandom, previewSelected'],
+            'Glossarypreviewnewest',
+            [TermController::class => 'previewNewest'],
+            [TermController::class => ''],
+            ExtensionUtility::PLUGIN_TYPE_CONTENT_ELEMENT
+        );
+
+        ExtensionUtility::configurePlugin(
+            'DpnGlossary',
+            'Glossarypreviewrandom',
+            [TermController::class => 'previewRandom'],
+            [TermController::class => ''],
+            ExtensionUtility::PLUGIN_TYPE_CONTENT_ELEMENT
+        );
+
+        ExtensionUtility::configurePlugin(
+            'DpnGlossary',
+            'Glossarypreviewselected',
+            [TermController::class => 'previewSelected'],
             [TermController::class => ''],
             ExtensionUtility::PLUGIN_TYPE_CONTENT_ELEMENT
         );
@@ -37,6 +54,7 @@ call_user_func(
 
         $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['ext/install']['update'][SlugUpdateWizard::class] = SlugUpdateWizard::class;
         $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['ext/install']['update'][PluginCTypeMigrationUpdateWizard::class] = PluginCTypeMigrationUpdateWizard::class;
+        $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['ext/install']['update'][PluginSwitchableControllerMigrationUpdateWizard::class] = PluginSwitchableControllerMigrationUpdateWizard::class;
         $GLOBALS['TYPO3_CONF_VARS']['SYS']['routing']['aspects']['StaticMultiRangeMapper'] = StaticMultiRangeMapper::class;
 
         $iconRegistry = GeneralUtility::makeInstance(IconRegistry::class);

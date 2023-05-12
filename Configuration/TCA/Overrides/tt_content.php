@@ -18,15 +18,33 @@ call_user_func(
 
         ExtensionUtility::registerPlugin(
             'DpnGlossary',
-            'Glossarypreview',
-            'LLL:EXT:dpn_glossary/Resources/Private/Language/locallang.xlf:tx_dpnglossary.wizard_preview_title',
+            'Glossarypreviewnewest',
+            'LLL:EXT:dpn_glossary/Resources/Private/Language/locallang.xlf:tx_dpnglossary.wizard_preview_newest_title',
+            'ext-dpn_glossary-preview-wizard-icon',
+            'special'
+        );
+
+        ExtensionUtility::registerPlugin(
+            'DpnGlossary',
+            'Glossarypreviewrandom',
+            'LLL:EXT:dpn_glossary/Resources/Private/Language/locallang.xlf:tx_dpnglossary.wizard_preview_random_title',
+            'ext-dpn_glossary-preview-wizard-icon',
+            'special'
+        );
+
+        ExtensionUtility::registerPlugin(
+            'DpnGlossary',
+            'Glossarypreviewselected',
+            'LLL:EXT:dpn_glossary/Resources/Private/Language/locallang.xlf:tx_dpnglossary.wizard_preview_selected_title',
             'ext-dpn_glossary-preview-wizard-icon',
             'special'
         );
 
         $flexforms = [
             'dpnglossary_glossary' => null,
-            'dpnglossary_glossarypreview' => '/Configuration/FlexForms/Preview.xml',
+            'dpnglossary_glossarypreviewnewest' => '/Configuration/FlexForms/PreviewNewest.xml',
+            'dpnglossary_glossarypreviewrandom' => '/Configuration/FlexForms/PreviewRandom.xml',
+            'dpnglossary_glossarypreviewselected' => '/Configuration/FlexForms/PreviewSelected.xml',
         ];
 
         foreach ($flexforms as $cType => $flexform) {

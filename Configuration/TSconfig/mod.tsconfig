@@ -10,12 +10,30 @@ mod {
         }
       }
 
-      dpnglossary_preview {
+      dpnglossary_previewnewest {
         iconIdentifier = ext-dpn_glossary-preview-wizard-icon
-        title = LLL:EXT:dpn_glossary/Resources/Private/Language/locallang.xlf:tx_dpnglossary.wizard_preview_title
-        description = LLL:EXT:dpn_glossary/Resources/Private/Language/locallang.xlf:tx_dpnglossary.wizard_preview_description
+        title = LLL:EXT:dpn_glossary/Resources/Private/Language/locallang.xlf:tx_dpnglossary.wizard_preview_newest_title
+        description = LLL:EXT:dpn_glossary/Resources/Private/Language/locallang.xlf:tx_dpnglossary.wizard_preview_newest_description
         tt_content_defValues {
-          CType = dpnglossary_glossarypreview
+          CType = dpnglossary_glossarypreviewnewest
+        }
+      }
+
+      dpnglossary_previewrandom {
+        iconIdentifier = ext-dpn_glossary-preview-wizard-icon
+        title = LLL:EXT:dpn_glossary/Resources/Private/Language/locallang.xlf:tx_dpnglossary.wizard_preview_random_title
+        description = LLL:EXT:dpn_glossary/Resources/Private/Language/locallang.xlf:tx_dpnglossary.wizard_preview_random_description
+        tt_content_defValues {
+          CType = dpnglossary_glossarypreviewrandom
+        }
+      }
+
+      dpnglossary_previewselected {
+        iconIdentifier = ext-dpn_glossary-preview-wizard-icon
+        title = LLL:EXT:dpn_glossary/Resources/Private/Language/locallang.xlf:tx_dpnglossary.wizard_preview_selected_title
+        description = LLL:EXT:dpn_glossary/Resources/Private/Language/locallang.xlf:tx_dpnglossary.wizard_preview_selected_description
+        tt_content_defValues {
+          CType = dpnglossary_glossarypreviewselected
         }
       }
     }

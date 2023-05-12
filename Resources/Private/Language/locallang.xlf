@@ -106,16 +106,28 @@
         <source>No objects were found</source>
       </trans-unit>
       <trans-unit id="tx_dpnglossary.wizard_glossary_title">
-        <source>Glossary</source>
+        <source>Glossar (List- &amp; Detailview)</source>
       </trans-unit>
       <trans-unit id="tx_dpnglossary.wizard_glossary_description">
         <source>Plugin for the glossar of the dpn_glossary extension</source>
       </trans-unit>
-      <trans-unit id="tx_dpnglossary.wizard_preview_title">
-        <source>Glossary preview list</source>
+      <trans-unit id="tx_dpnglossary.wizard_preview_newest_title">
+        <source>Glossary preview (newest)</source>
       </trans-unit>
-      <trans-unit id="tx_dpnglossary.wizard_preview_description">
-        <source>Plugin for the preview for the dpn_glossary extension</source>
+      <trans-unit id="tx_dpnglossary.wizard_preview_newest_description">
+        <source>Displays the most recent terms in the glossary</source>
+      </trans-unit>
+      <trans-unit id="tx_dpnglossary.wizard_preview_random_title">
+        <source>Glossar preview (random)</source>
+      </trans-unit>
+      <trans-unit id="tx_dpnglossary.wizard_preview_random_description">
+        <source>Displays random terms of the glossary</source>
+      </trans-unit>
+      <trans-unit id="tx_dpnglossary.wizard_preview_selected_title">
+        <source>Glossar preview (selected)</source>
+      </trans-unit>
+      <trans-unit id="tx_dpnglossary.wizard_preview_selected_description">
+        <source>Displays selected terms of the glossary</source>
       </trans-unit>
 
 
@@ -133,17 +145,8 @@
       <trans-unit id="tx_dpnglossary.flexforms.preview">
         <source>Preview Settings</source>
       </trans-unit>
-      <trans-unit id="tx_dpnglossary.flexforms.preview.mode">
-        <source>Preview Mode</source>
-      </trans-unit>
-      <trans-unit id="tx_dpnglossary.flexforms.preview.mode.newest">
-        <source>Newest</source>
-      </trans-unit>
-      <trans-unit id="tx_dpnglossary.flexforms.preview.mode.random">
-        <source>Random</source>
-      </trans-unit>
-      <trans-unit id="tx_dpnglossary.flexforms.preview.mode.selected">
-        <source>Selected</source>
+      <trans-unit id="tx_dpnglossary.flexforms.preview.selected">
+        <source>Selected terms</source>
       </trans-unit>
       <trans-unit id="tx_dpnglossary.flexforms.preview.limit">
         <source>Limit</source>
