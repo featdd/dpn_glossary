@@ -9,6 +9,7 @@ use Featdd\DpnGlossary\Updates\PluginSwitchableControllerMigrationUpdateWizard;
 use Featdd\DpnGlossary\Updates\SlugUpdateWizard;
 use TYPO3\CMS\Core\Imaging\IconProvider\SvgIconProvider;
 use TYPO3\CMS\Core\Imaging\IconRegistry;
+use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Utility\ExtensionUtility;
 
@@ -47,6 +48,8 @@ call_user_func(
             [TermController::class => ''],
             ExtensionUtility::PLUGIN_TYPE_CONTENT_ELEMENT
         );
+
+        ExtensionManagementUtility::addPageTSConfig('@import \'EXT:dpn_glossary/Configuration/TSconfig/*.tsconfig\'');
 
         // These hooks were removed in v12 but still needed in v11
         $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['tslib/class.tslib_fe.php']['contentPostProc-all'][] = ContentPostProcHook::class . '->all';
