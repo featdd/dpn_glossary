@@ -9,6 +9,7 @@ use Featdd\DpnGlossary\Updates\PluginSwitchableControllerMigrationUpdateWizard;
 use Featdd\DpnGlossary\Updates\SlugUpdateWizard;
 use TYPO3\CMS\Core\Imaging\IconProvider\SvgIconProvider;
 use TYPO3\CMS\Core\Imaging\IconRegistry;
+use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Utility\ExtensionUtility;
 
@@ -74,5 +75,7 @@ call_user_func(
         if (false === isset($GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations']['dpnglossary_termscache'])) {
             $GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations']['dpnglossary_termscache'] = [];
         }
+
+        ExtensionManagementUtility::addPageTSConfig('@import \'EXT:dpn_glossary/Configuration/TSconfig/*.tsconfig\'');
     }
 );
