@@ -11,6 +11,10 @@
 ChangeLog
 =========
 
+v5.0.2
+  * Use custom replacement function for umlaut matching groups
+  * Move ExtensionManagementUtility::addPageTSConfig() to ext_localconf.php
+
 v5.0.1
   * Add missing switchable controller actions migration for preview plugin
 
