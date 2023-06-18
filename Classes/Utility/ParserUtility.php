@@ -23,6 +23,14 @@ use DOMText;
 class ParserUtility
 {
     public const DEFAULT_TAG = 'DPNGLOSSARY';
+    public const UMLAUT_MATCHING_GROUPS = [
+        'ä' => '(Ä|ä)',
+        'Ä' => '(Ä|ä)',
+        'ö' => '(Ö|ö)',
+        'Ö' => '(Ö|ö)',
+        'ü' => '(Ü|ü)',
+        'Ü' => '(Ü|ü)',
+    ];
 
     /**
      * Protect inline JavaScript from DOM Manipulation with HTML comments
@@ -147,5 +155,22 @@ class ParserUtility
         };
 
         return preg_replace_callback('#(<picture.*?>)(.*?)(</picture>)#is', $callback, $html);
+    }
+
+    /**
+     * @param string $quotedTerm
+     * @return string
+     */
+    public static function replaceTermUmlautsWithMatchingGroups(string $quotedTerm): string
+    {
+        $replacedQuotedTerm = '';
+
+        foreach (mb_str_split($quotedTerm) as $character) {
+            $replacedQuotedTerm .= array_key_exists($character, static::UMLAUT_MATCHING_GROUPS)
+                ? static::UMLAUT_MATCHING_GROUPS[$character]
+                : $character;
+        }
+
+        return $replacedQuotedTerm;
     }
 }

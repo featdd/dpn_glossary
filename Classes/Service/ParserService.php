@@ -511,30 +511,12 @@ class ParserService implements SingletonInterface
         }
 
         $quotedTerm = preg_quote($term->getParsingName(), '#');
-        $termHasUmlauts = 0 < count(array_intersect(mb_str_split($quotedTerm), ['ä', 'Ä', 'ö', 'Ö', 'ü', 'Ü']));
+        $termHasUmlauts = 0 < count(array_intersect(mb_str_split($quotedTerm), array_keys(ParserUtility::UMLAUT_MATCHING_GROUPS)));
         $matchArrayEndingCharacterIndex = 3;
 
         if (!$term->isCaseSensitive() && $termHasUmlauts) {
             $matchArrayEndingCharacterIndex = 4;
-            $quotedTerm = str_replace(
-                [
-                    'ä',
-                    'Ä',
-                    'ö',
-                    'Ö',
-                    'ü',
-                    'Ü',
-                ],
-                [
-                    '(Ä|ä)',
-                    '(Ä|ä)',
-                    '(Ö|ö)',
-                    '(Ö|ö)',
-                    '(Ü|ü)',
-                    '(Ü|ü)',
-                ],
-                $quotedTerm
-            );
+            $quotedTerm = ParserUtility::replaceTermUmlautsWithMatchingGroups($quotedTerm);
         }
 
         /*
