@@ -11,6 +11,9 @@
 ChangeLog
 =========
 
+v5.0.3
+  * Use umlaut count to update matching group index
+
 v5.0.2
   * Use custom replacement function for umlaut matching groups
   * Move ExtensionManagementUtility::addPageTSConfig() to ext_localconf.php
