@@ -173,11 +173,11 @@ class ParserService implements SingletonInterface
     public function pageParser(string $html): string
     {
         // extract Pids which should be parsed
-        $parsingPids = GeneralUtility::intExplode(',', $this->settings['parsingPids']);
+        $parsingPids = GeneralUtility::intExplode(',', $this->settings['parsingPids'] ?? '');
         // extract Pids which should NOT be parsed
-        $excludePids = GeneralUtility::intExplode(',', $this->settings['parsingExcludePidList']);
+        $excludePids = GeneralUtility::intExplode(',', $this->settings['parsingExcludePidList'] ?? '');
         // Get Tags which content should be parsed
-        $tags = GeneralUtility::trimExplode(',', $this->settings['parsingTags']);
+        $tags = GeneralUtility::trimExplode(',', $this->settings['parsingTags'] ?? '');
         // Remove "a" & "script" from parsingTags if it was added unknowingly
         if (in_array(self::$alwaysIgnoreParentTags, $tags, true)) {
             $tags = array_diff($tags, self::$alwaysIgnoreParentTags);
