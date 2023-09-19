@@ -16,7 +16,7 @@
     "sass-loader": "^13.2",
     "webpack": "^5.79",
     "webpack-cli": "^5.0",
-    "webpack-fix-style-only-entries": "^0.6.1"
+    "webpack-remove-empty-scripts": "^1.0.4"
   },
   "babel": {
     "presets": [

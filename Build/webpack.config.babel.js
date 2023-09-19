@@ -1,6 +1,6 @@
 import path from 'path';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
-import FixStyleOnlyEntriesPlugin from "webpack-fix-style-only-entries";
+import RemoveEmptyScripts from 'webpack-remove-empty-scripts';
 
 module.exports = {
   mode: process.env.NODE_ENV,
@@ -11,7 +11,7 @@ module.exports = {
     path: path.resolve(__dirname, './../Resources/Public'),
   },
   plugins: [
-    new FixStyleOnlyEntriesPlugin(),
+    new RemoveEmptyScripts(),
     new MiniCssExtractPlugin({
       filename: './Css/styles.css'
     })
