@@ -118,7 +118,7 @@
         <target>Zeigt die aktuellsten Begriffe des Glossars an</target>
       </trans-unit>
       <trans-unit id="tx_dpnglossary.wizard_preview_random_title">
-        <target>Glossar Vorschau (Zusfällig)</target>
+        <target>Glossar Vorschau (Zufällig)</target>
       </trans-unit>
       <trans-unit id="tx_dpnglossary.wizard_preview_random_description">
         <target>Zeigt zufällige Begriffe des Glossars an</target>
