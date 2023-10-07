@@ -3,7 +3,7 @@
   "version": "5.0.0",
   "private": true,
   "engines": {
-    "node": "^19.9"
+    "node": "^20.8"
   },
   "devDependencies": {
     "@babel/core": "^7.21",
@@ -16,7 +16,7 @@
     "sass-loader": "^13.2",
     "webpack": "^5.79",
     "webpack-cli": "^5.0",
-    "webpack-remove-empty-scripts": "^1.0.4"
+    "webpack-remove-empty-scripts": "^1.0"
   },
   "babel": {
     "presets": [
