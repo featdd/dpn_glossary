@@ -160,6 +160,7 @@ class Term extends AbstractTerm
             'pid' => $this->getPid(),
             'name' => $this->getName(),
             'parsing_name' => $this->getParsingName(),
+            'url_segment' => $this->getUrlSegment(),
             'tooltiptext' => $this->getTooltiptext(),
             'term_type' => $this->getTermType(),
             'term_lang' => $this->getTermLang(),

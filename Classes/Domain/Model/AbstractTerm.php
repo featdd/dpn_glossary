@@ -36,6 +36,11 @@ abstract class AbstractTerm extends AbstractEntity implements TermInterface
     /**
      * @var string
      */
+    protected string $urlSegment = '';
+
+    /**
+     * @var string
+     */
     protected string $tooltiptext = '';
 
     /**
@@ -118,6 +123,22 @@ abstract class AbstractTerm extends AbstractEntity implements TermInterface
     public function setParsingName(string $parsingName): void
     {
         $this->parsingName = $parsingName;
+    }
+
+    /**
+     * @return string
+     */
+    public function getUrlSegment(): string
+    {
+        return $this->urlSegment;
+    }
+
+    /**
+     * @param string $urlSegment
+     */
+    public function setUrlSegment(string $urlSegment): void
+    {
+        $this->urlSegment = $urlSegment;
     }
 
     /**
@@ -290,6 +311,7 @@ abstract class AbstractTerm extends AbstractEntity implements TermInterface
             'pid' => $this->getPid(),
             'name' => $this->getName(),
             'parsing_name' => $this->getParsingName(),
+            'url_segment' => $this->getUrlSegment(),
             'tooltiptext' => $this->getTooltiptext(),
             'term_type' => $this->getTermType(),
             'term_lang' => $this->getTermLang(),
