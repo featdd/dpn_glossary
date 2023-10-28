@@ -106,7 +106,8 @@ class ParserService implements SingletonInterface
             $querySettings->setStoragePageIds(
                 GeneralUtility::trimExplode(
                     ',',
-                    $this->typoScriptConfiguration['persistence.']['storagePid'])
+                    $this->typoScriptConfiguration['persistence.']['storagePid'] ?? ''
+                )
             );
 
             $parsingSpecialWrapCharacters = GeneralUtility::trimExplode(',', $this->settings['parsingSpecialWrapCharacters'] ?? '', true);
@@ -133,7 +134,7 @@ class ParserService implements SingletonInterface
             $parserTermRepository->setDefaultQuerySettings($querySettings);
 
             //Find all terms
-            if (!$this->settings['useCachingFramework']) {
+            if (!($this->settings['useCachingFramework'] ?? true)) {
                 $terms = $parserTermRepository->findByNameLength();
             } else {
                 $cacheIdentifier = sha1('termsByNameLength' . $querySettings->getLanguageUid() . '_' . implode('', $querySettings->getStoragePageIds()));
@@ -151,7 +152,7 @@ class ParserService implements SingletonInterface
             /** @var \Featdd\DpnGlossary\Domain\Model\ParserTerm $term */
             foreach ($terms as $term) {
                 $maxReplacements = $term->getMaxReplacements() === -1
-                    ? (int) $this->settings['maxReplacementPerPage']
+                    ? (int) ($this->settings['maxReplacementPerPage'] ?? -1)
                     : $term->getMaxReplacements();
 
                 $this->terms[] = [
@@ -189,7 +190,7 @@ class ParserService implements SingletonInterface
         // Abort parser...
         if (
             // Parser disabled
-            $this->settings['disableParser'] ||
+            ($this->settings['disableParser'] ?? false) ||
             // Pagetype not 0
             $currentPageType !== 0 ||
             // no tags to parse given
@@ -218,13 +219,13 @@ class ParserService implements SingletonInterface
         );
 
         // Classes which are not allowed for the parsing tag
-        $forbiddenParsingTagClasses = GeneralUtility::trimExplode(',', $this->settings['forbiddenParsingTagClasses'], true);
+        $forbiddenParsingTagClasses = GeneralUtility::trimExplode(',', $this->settings['forbiddenParsingTagClasses'] ?? '', true);
 
         // Classes which are not allowed for the parsing tag
-        $forbiddenParentClasses = GeneralUtility::trimExplode(',', $this->settings['forbiddenParentClasses'], true);
+        $forbiddenParentClasses = GeneralUtility::trimExplode(',', $this->settings['forbiddenParentClasses'] ?? '', true);
 
         // Tags which are not allowed as direct parent for a parsingTag
-        $forbiddenParentTags = GeneralUtility::trimExplode(',', $this->settings['forbiddenParentTags'], true);
+        $forbiddenParentTags = GeneralUtility::trimExplode(',', $this->settings['forbiddenParentTags'] ?? '', true);
 
         // Respect synonyms for replacement count
         $isMaxReplacementPerPageRespectSynonyms = (boolean) ($this->settings['maxReplacementPerPageRespectSynonyms'] ?? false);
@@ -384,7 +385,7 @@ class ParserService implements SingletonInterface
                 /** @var \Featdd\DpnGlossary\Domain\Model\Synonym $synonym */
                 foreach ($termObject->getSynonyms() as $synonym) {
                     $synonymTermObject->{
-                    $this->settings['useTermForSynonymParsingDataWrap']
+                    ($this->settings['useTermForSynonymParsingDataWrap'] ?? false)
                         ? 'setParsingName'
                         : 'setName'
                     }(
