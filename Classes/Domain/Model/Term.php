@@ -26,11 +26,6 @@ class Term extends AbstractTerm
     /**
      * @var string
      */
-    protected string $termLink = '';
-
-    /**
-     * @var string
-     */
     protected string $seoTitle = '';
 
     /**
@@ -55,22 +50,6 @@ class Term extends AbstractTerm
         parent::__construct();
         $this->descriptions = new ObjectStorage();
         $this->media = new ObjectStorage();
-    }
-
-    /**
-     * @return string
-     */
-    public function getTermLink(): string
-    {
-        return $this->termLink;
-    }
-
-    /**
-     * @param string $termLink
-     */
-    public function setTermLink(string $termLink): void
-    {
-        $this->termLink = $termLink;
     }
 
     /**

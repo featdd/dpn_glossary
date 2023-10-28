@@ -42,4 +42,17 @@ class LinkUtility
             'forceAbsoluteUrl' => $absolute,
         ]);
     }
+
+    /**
+     * @param string $text
+     * @return string
+     */
+    public static function createAnchorFromString(string $text): string
+    {
+        $anchor = mb_strtolower($text);
+        $anchor = str_replace(['ä', 'ö', 'ü'], ['ae', 'oe', 'ue'], $anchor);
+        $anchor = preg_replace(['/\s/', '/[^A-Za-z0-9\-]/'], ['-', ''], $anchor);
+
+        return urlencode($anchor);
+    }
 }

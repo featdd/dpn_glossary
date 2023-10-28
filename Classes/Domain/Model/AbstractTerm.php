@@ -14,6 +14,7 @@ namespace Featdd\DpnGlossary\Domain\Model;
  *
  ***/
 
+use Featdd\DpnGlossary\Utility\LinkUtility;
 use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
 use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
 
@@ -51,6 +52,11 @@ abstract class AbstractTerm extends AbstractEntity implements TermInterface
      * @var string
      */
     protected string $termMode = '';
+
+    /**
+     * @var string
+     */
+    protected string $termLink = '';
 
     /**
      * @var bool
@@ -179,6 +185,22 @@ abstract class AbstractTerm extends AbstractEntity implements TermInterface
     }
 
     /**
+     * @return string
+     */
+    public function getTermLink(): string
+    {
+        return $this->termLink;
+    }
+
+    /**
+     * @param string $termLink
+     */
+    public function setTermLink(string $termLink): void
+    {
+        $this->termLink = $termLink;
+    }
+
+    /**
      * @return bool
      */
     public function getExcludeFromParsing(): bool
@@ -272,6 +294,8 @@ abstract class AbstractTerm extends AbstractEntity implements TermInterface
             'term_type' => $this->getTermType(),
             'term_lang' => $this->getTermLang(),
             'term_mode' => $this->getTermMode(),
+            'term_link' => $this->getTermLink(),
+            'term_anchor' => LinkUtility::createAnchorFromString($this->getName()),
             'exclude_from_parsing' => $this->getExcludeFromParsing(),
             'synonyms' => $this->getSynonyms(),
         ];
