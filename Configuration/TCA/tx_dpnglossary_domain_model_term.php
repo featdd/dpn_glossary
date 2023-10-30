@@ -131,6 +131,7 @@ return [
         'url_segment' => [
             'exclude' => true,
             'label' => 'LLL:EXT:dpn_glossary/Resources/Private/Language/locallang.xlf:tx_dpnglossary_domain_model_term.url_segment',
+            'description' => 'LLL:EXT:dpn_glossary/Resources/Private/Language/locallang.xlf:tx_dpnglossary_domain_model_term.url_segment.description',
             'config' => [
                 'type' => 'slug',
                 'size' => 30,

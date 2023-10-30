@@ -12,6 +12,9 @@
       <trans-unit id="tx_dpnglossary_domain_model_term.url_segment">
         <source>URL segment</source>
       </trans-unit>
+      <trans-unit id="tx_dpnglossary_domain_model_term.url_segment.description">
+        <source>This can either be the detailpage URL part or used as an anchor link</source>
+      </trans-unit>
       <trans-unit id="tx_dpnglossary_domain_model_term.tooltiptext">
         <source>text shown in the css tooltip</source>
       </trans-unit>

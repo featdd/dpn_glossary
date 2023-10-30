@@ -12,6 +12,9 @@
       <trans-unit id="tx_dpnglossary_domain_model_term.url_segment">
         <target>URL Segment</target>
       </trans-unit>
+      <trans-unit id="tx_dpnglossary_domain_model_term.url_segment.description">
+        <target>Dies kann entweder der URL-Teil der Detailseite sein oder als Ankerlink verwendet werden</target>
+      </trans-unit>
       <trans-unit id="tx_dpnglossary_domain_model_term.tooltiptext">
         <target>Text der im CSS Tooltip angezeigt wird</target>
       </trans-unit>
