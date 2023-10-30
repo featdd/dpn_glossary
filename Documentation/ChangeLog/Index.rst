@@ -11,6 +11,12 @@
 ChangeLog
 =========
 
+v5.0.4
+  * Add missing term link to parsing term
+  * Prevent array key warnings
+  * Add URL segment to term model
+  * Simplify term anchor links and adjust slug preview prefix
+
 v5.0.3
   * Use umlaut count to update matching group index
 
