@@ -53,8 +53,11 @@ class SlugPreviewUserFunc
     public function slugPrefixUserFunc(array $parameters, TcaSlug $tcaSlug): ?string
     {
         $detailPageUid = (int) ($this->settings['detailPage'] ?? null);
+        $termMode = is_array($parameters['row']['term_mode'])
+            ? reset($parameters['row']['term_mode'])
+            : $parameters['row']['term_mode'];
 
-        if (0 < $detailPageUid) {
+        if (0 < $detailPageUid && $termMode !== 'link') {
             /** @var \TYPO3\CMS\Core\Site\Entity\Site $site */
             $site = $parameters['site'];
             $languageId = $parameters['languageId'];
@@ -86,6 +89,6 @@ class SlugPreviewUserFunc
             return preg_replace('#SLUG/?$#', '', $prefixUrl);
         }
 
-        return null;
+        return '#';
     }
 }

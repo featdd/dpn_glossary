@@ -317,7 +317,6 @@ abstract class AbstractTerm extends AbstractEntity implements TermInterface
             'term_lang' => $this->getTermLang(),
             'term_mode' => $this->getTermMode(),
             'term_link' => $this->getTermLink(),
-            'term_anchor' => LinkUtility::createAnchorFromString($this->getName()),
             'exclude_from_parsing' => $this->getExcludeFromParsing(),
             'synonyms' => $this->getSynonyms(),
         ];

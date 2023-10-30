@@ -75,7 +75,7 @@ plugin.tx_dpnglossary {
         typolink {
           useCacheHash = 0
 
-          parameter = #{field:term_anchor}
+          parameter = #{field:url_segment}
           parameter {
             insertData = 1
             htmlSpecialChars = 1
