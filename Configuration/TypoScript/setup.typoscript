@@ -57,6 +57,8 @@ plugin.tx_dpnglossary {
     limitParsingId = {$plugin.tx_dpnglossary.settings.limitParsingId}
     # Use the origin term for content object data when parsing synonyms
     useTermForSynonymParsingDataWrap = {$plugin.tx_dpnglossary.settings.useTermForSynonymParsingDataWrap}
+    # Excludes a term if the term link target page is the current page
+    excludeTermLinksTargetPages = {$plugin.tx_dpnglossary.settings.excludeTermLinksTargetPages}
 
     useCachingFramework = 1
 

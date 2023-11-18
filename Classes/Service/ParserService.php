@@ -152,7 +152,7 @@ class ParserService implements SingletonInterface
             /** @var \Featdd\DpnGlossary\Domain\Model\ParserTerm $term */
             foreach ($terms as $term) {
                 $maxReplacements = $term->getMaxReplacements() === -1
-                    ? (int) ($this->settings['maxReplacementPerPage'] ?? -1)
+                    ? (int)($this->settings['maxReplacementPerPage'] ?? -1)
                     : $term->getMaxReplacements();
 
                 $this->terms[] = [
@@ -184,8 +184,8 @@ class ParserService implements SingletonInterface
             $tags = array_diff($tags, self::$alwaysIgnoreParentTags);
         }
 
-        $currentPageId = (int) $GLOBALS['TSFE']->id;
-        $currentPageType = (int) $GLOBALS['TSFE']->type;
+        $currentPageId = (int)$GLOBALS['TSFE']->id;
+        $currentPageType = (int)$GLOBALS['TSFE']->type;
 
         // Abort parser...
         if (
@@ -228,16 +228,19 @@ class ParserService implements SingletonInterface
         $forbiddenParentTags = GeneralUtility::trimExplode(',', $this->settings['forbiddenParentTags'] ?? '', true);
 
         // Respect synonyms for replacement count
-        $isMaxReplacementPerPageRespectSynonyms = (boolean) ($this->settings['maxReplacementPerPageRespectSynonyms'] ?? false);
+        $isMaxReplacementPerPageRespectSynonyms = (bool)($this->settings['maxReplacementPerPageRespectSynonyms'] ?? false);
 
         // Parse synonyms
-        $isParseSynonyms = (boolean) ($this->settings['parseSynonyms'] ?? true);
+        $isParseSynonyms = (bool)($this->settings['parseSynonyms'] ?? true);
 
         // Parse synonyms before or after the main term
-        $isPriorisedSynonymParsing = (boolean) ($this->settings['priorisedSynonymParsing'] ?? true);
+        $isPriorisedSynonymParsing = (bool)($this->settings['priorisedSynonymParsing'] ?? true);
 
         // Limit parsing to a single node with this ID
-        $limitParsingId = (string) ($this->settings['limitParsingId'] ?? '');
+        $limitParsingId = (string)($this->settings['limitParsingId'] ?? '');
+
+        // Excludes a term if the term link target page is the current page
+        $isExcludeTermLinksTargetPages = (bool)($this->settings['excludeTermLinksTargetPages'] ?? false);
 
         // Add "a" if unknowingly deleted to prevent errors
         if (!in_array(self::$alwaysIgnoreParentTags, $forbiddenParentTags, true)) {
@@ -316,13 +319,28 @@ class ParserService implements SingletonInterface
             array_key_exists('tx_dpnglossary_glossary', $queryParameters) &&
             array_key_exists('term', $queryParameters['tx_dpnglossary_glossary'])
         ) {
-            $currentDetailPageTermUid = (int) $queryParameters['tx_dpnglossary_glossary']['term'];
+            $currentDetailPageTermUid = (int)$queryParameters['tx_dpnglossary_glossary']['term'];
         }
 
         foreach ($this->terms as $term) {
             /** @var \Featdd\DpnGlossary\Domain\Model\ParserTerm $termObject */
             $termObject = clone $term['term'];
             $replacements = &$term['replacements'];
+
+            if ($isExcludeTermLinksTargetPages && $termObject->getTermMode() === 'link') {
+                if (str_starts_with($termObject->getTermLink(), 't3://page')) {
+                    parse_str(htmlspecialchars_decode(parse_url($termObject->getTermLink(), PHP_URL_QUERY)), $queryParameters);
+                    $linkTargetPage = (int)($queryParameters['uid'] ?? null);
+                    $termLinkIsCurrentPage = $linkTargetPage === $currentPageId;
+                } else {
+                    $currentUrl = strtok(GeneralUtility::getIndpEnv('TYPO3_REQUEST_URL'), '?');
+                    $termLinkIsCurrentPage = $termObject->getTermLink() === $currentUrl;
+                }
+
+                if ($termLinkIsCurrentPage) {
+                    continue;
+                }
+            }
 
             if (
                 $replacements === 0 ||
@@ -516,7 +534,7 @@ class ParserService implements SingletonInterface
         $matchArrayEndingCharacterIndex = 3;
 
         if (!$term->isCaseSensitive() && $umlautsInTerm > 0) {
-            $matchArrayEndingCharacterIndex +=$umlautsInTerm;
+            $matchArrayEndingCharacterIndex += $umlautsInTerm;
             $quotedTerm = ParserUtility::replaceTermUmlautsWithMatchingGroups($quotedTerm);
         }
 
@@ -576,7 +594,7 @@ class ParserService implements SingletonInterface
         };
 
         // Use callback to keep allowed chars around the term and his camel case
-        return (string) preg_replace_callback($regex, $callback, $text, $replacements);
+        return (string)preg_replace_callback($regex, $callback, $text, $replacements);
     }
 
     /**

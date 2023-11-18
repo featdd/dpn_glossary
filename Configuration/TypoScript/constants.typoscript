@@ -55,5 +55,7 @@ plugin.tx_dpnglossary {
     addStylesheet = 1
     # cat=dpn_glossary/settings/a; type=boolean; label=Override fluid styled content layout to enable dynamic exclusion via content properties (default: enabled)
     overrideFluidStyledContentLayout = 0
+    # cat=dpn_glossary/settings/a; type=boolean; label=Don't parse terms when current page is the term links target (default: disabled)
+    excludeTermLinksTargetPages = 0
   }
 }
