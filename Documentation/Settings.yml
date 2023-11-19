@@ -2,7 +2,7 @@
 conf.py:
   copyright: 2023
   project: dreipunktnull Glossar
-  version: 5.0
+  version: 5.1
   latex_documents:
   - - Index
       - dpn_glossary.tex

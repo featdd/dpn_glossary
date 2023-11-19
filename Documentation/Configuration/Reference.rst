@@ -279,4 +279,19 @@ TypoScript
   Default
     0
 
+
+.. container:: table-row
+
+  Constant
+    settings.excludeTermLinksTargetPages
+
+  Data Type
+    boolean
+
+  Description
+    Don't parse terms when current page is the term links target
+
+  Default
+    0
+
 .. ###### END~OF~TABLE ######

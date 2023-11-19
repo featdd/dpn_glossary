@@ -11,6 +11,9 @@
 ChangeLog
 =========
 
+v5.1.0
+  * Add option to exclude parsing for term links target pages
+
 v5.0.4
   * Add missing term link to parsing term
   * Prevent array key warnings
