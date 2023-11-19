@@ -328,13 +328,17 @@ class ParserService implements SingletonInterface
             $replacements = &$term['replacements'];
 
             if ($isExcludeTermLinksTargetPages && $termObject->getTermMode() === 'link') {
-                if (str_starts_with($termObject->getTermLink(), 't3://page')) {
-                    parse_str(htmlspecialchars_decode(parse_url($termObject->getTermLink(), PHP_URL_QUERY)), $queryParameters);
+                $termLink = trim($termObject->getTermLink());
+
+                if (filter_var($termLink, FILTER_VALIDATE_INT) !== false) {
+                    $termLinkIsCurrentPage = (int)$termLink === $currentPageId;
+                } elseif (str_starts_with($termLink, 't3://page')) {
+                    parse_str(htmlspecialchars_decode(parse_url($termLink, PHP_URL_QUERY)), $queryParameters);
                     $linkTargetPage = (int)($queryParameters['uid'] ?? null);
                     $termLinkIsCurrentPage = $linkTargetPage === $currentPageId;
                 } else {
                     $currentUrl = strtok(GeneralUtility::getIndpEnv('TYPO3_REQUEST_URL'), '?');
-                    $termLinkIsCurrentPage = $termObject->getTermLink() === $currentUrl;
+                    $termLinkIsCurrentPage = $termLink === $currentUrl;
                 }
 
                 if ($termLinkIsCurrentPage) {
