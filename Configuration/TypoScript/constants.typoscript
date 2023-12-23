@@ -25,6 +25,8 @@ plugin.tx_dpnglossary {
     parsingExcludePidList =
     # cat=dpn_glossary/settings/e; type=string; label=Additional special characters to respect in parser regular expression
     parsingSpecialWrapCharacters =
+    # cat=dpn_glossary/settings/f; type=options[Minimal (better performance)=Featdd\DpnGlossary\Domain\Repository\ParserTermRepository,Full (More fields available)=Featdd\DpnGlossary\Domain\Repository\TermRepository]; label=The repository class used in the parser service
+    parserRepositoryClass = Featdd\DpnGlossary\Domain\Repository\ParserTermRepository
     # cat=dpn_glossary/settings/g; type=integer; label=Maximum replacements for each term (default: -1 = any)
     maxReplacementPerPage = -1
     # cat=dpn_glossary/settings/h; type=boolean; label=Respect replacement counter when parsing synonyms (default: off)

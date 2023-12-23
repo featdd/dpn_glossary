@@ -262,6 +262,26 @@ TypoScript
   Description
     Comma list of special characters allowed to wrap the term
 
+.. container:: table-row
+
+  Constant
+    settings.parserRepositoryClass
+
+  Data Type
+    string
+
+  Description
+    | The repository class the parser service should use, for example the normal TermRepository instead of the ParserTermRepository.
+    | This can be useful for advanced scenarios like using the first description meaning as a tooltip text.
+    | Example:
+    ..  code-block:: typoscript
+
+        plugin.tx_dpnglossary.settings {
+          termWraps {
+            default.typolink.ATagParams.dataWrap = title="{field:descriptions|0|meaning}" class="dpnglossary link"
+          }
+        }
+
 
 .. container:: table-row
 

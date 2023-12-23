@@ -66,4 +66,15 @@ class Description extends AbstractEntity
     {
         $this->text = $text;
     }
+
+    /**
+     * @return array
+     */
+    public function __toArray(): array
+    {
+        return [
+            'meaning' => $this->getMeaning(),
+            'text' => $this->getText(),
+        ];
+    }
 }

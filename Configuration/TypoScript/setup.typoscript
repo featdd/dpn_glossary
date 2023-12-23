@@ -29,6 +29,8 @@ plugin.tx_dpnglossary {
     parsingExcludePidList = {$plugin.tx_dpnglossary.settings.parsingExcludePidList}
     # special characters for the regex
     parsingSpecialWrapCharacters = {$plugin.tx_dpnglossary.settings.parsingSpecialWrapCharacters}
+    # Repository class used in the parser service
+    parserRepositoryClass = {$plugin.tx_dpnglossary.settings.parserRepositoryClass}
     # max replacemnet per page, default = -1 (any matches)
     maxReplacementPerPage = {$plugin.tx_dpnglossary.settings.maxReplacementPerPage}
     # respect max replacement when parsing synonyms

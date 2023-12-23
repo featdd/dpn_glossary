@@ -155,21 +155,19 @@ class Term extends AbstractTerm
      */
     public function __toArray(): array
     {
-        return [
-            'uid' => $this->getUid(),
-            'pid' => $this->getPid(),
-            'name' => $this->getName(),
-            'parsing_name' => $this->getParsingName(),
-            'url_segment' => $this->getUrlSegment(),
-            'tooltiptext' => $this->getTooltiptext(),
-            'term_type' => $this->getTermType(),
-            'term_lang' => $this->getTermLang(),
-            'term_mode' => $this->getTermMode(),
-            'term_link' => $this->getTermLink(),
-            'exclude_from_parsing' => $this->getExcludeFromParsing(),
-            'descriptions' => $this->getDescriptions(),
-            'synonyms' => $this->getSynonyms(),
-            'media' => $this->getMedia(),
-        ];
+        $record = parent::__toArray();
+
+        $record['descriptions'] = [];
+        $record['media'] = [];
+
+        foreach ($this->getDescriptions() as $description) {
+            $record['descriptions'][] = $description->__toArray();
+        }
+
+        foreach ($this->getMedia() as $media) {
+            $record['media'][] = $media->getOriginalResource()->toArray();
+        }
+
+        return $record;
     }
 }

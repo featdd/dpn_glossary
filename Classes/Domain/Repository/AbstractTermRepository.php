@@ -23,7 +23,7 @@ use TYPO3\CMS\Extbase\Persistence\Repository;
 /**
  * @package Featdd\DpnGlossary\Domain\Repository
  */
-abstract class AbstractTermRepository extends Repository
+abstract class AbstractTermRepository extends Repository implements TermRepositoryInterface
 {
     public const DEFAULT_LIMIT = 5;
 
@@ -37,7 +37,7 @@ abstract class AbstractTermRepository extends Repository
     /**
      * find all terms sorted by name length
      *
-     * @return array
+     * @return \Featdd\DpnGlossary\Domain\Model\TermInterface[]
      */
     public function findByNameLength(): array
     {

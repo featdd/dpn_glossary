@@ -224,7 +224,7 @@ abstract class AbstractTerm extends AbstractEntity implements TermInterface
     /**
      * @return bool
      */
-    public function getExcludeFromParsing(): bool
+    public function isExcludeFromParsing(): bool
     {
         return $this->excludeFromParsing;
     }
@@ -306,6 +306,12 @@ abstract class AbstractTerm extends AbstractEntity implements TermInterface
      */
     public function __toArray(): array
     {
+        $synonyms = [];
+
+        foreach ($this->getSynonyms() as $synonym) {
+            $synonyms[] = $synonym->__toArray();
+        }
+
         return [
             'uid' => $this->getUid(),
             'pid' => $this->getPid(),
@@ -317,8 +323,8 @@ abstract class AbstractTerm extends AbstractEntity implements TermInterface
             'term_lang' => $this->getTermLang(),
             'term_mode' => $this->getTermMode(),
             'term_link' => $this->getTermLink(),
-            'exclude_from_parsing' => $this->getExcludeFromParsing(),
-            'synonyms' => $this->getSynonyms(),
+            'exclude_from_parsing' => $this->isExcludeFromParsing(),
+            'synonyms' => $synonyms,
         ];
     }
 }

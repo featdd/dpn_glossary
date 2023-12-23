@@ -45,4 +45,12 @@ class Synonym extends AbstractEntity
     {
         $this->name = $name;
     }
+
+    /**
+     * @return array
+     */
+    public function __toArray(): array
+    {
+        return ['name' => $this->getName()];
+    }
 }

@@ -3,6 +3,9 @@ declare(strict_types=1);
 
 namespace Featdd\DpnGlossary\Domain\Model;
 
+use TYPO3\CMS\Extbase\DomainObject\DomainObjectInterface;
+use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
+
 /***
  *
  * This file is part of the "dreipunktnull Glossar" Extension for TYPO3 CMS.
@@ -13,7 +16,7 @@ namespace Featdd\DpnGlossary\Domain\Model;
  *  (c) 2023 Daniel Dorndorf <dorndorf@featdd.de>
  *
  ***/
-interface TermInterface
+interface TermInterface extends DomainObjectInterface
 {
     public const TABLE = 'tx_dpnglossary_domain_model_term';
 
@@ -21,4 +24,34 @@ interface TermInterface
      * @return string
      */
     public function getName(): string;
+
+    /**
+     * @return string
+     */
+    public function getTermMode(): string;
+
+    /**
+     * @return string
+     */
+    public function getTermLink(): string;
+
+    /**
+     * @return bool
+     */
+    public function isExcludeFromParsing(): bool;
+
+    /**
+     * @return int
+     */
+    public function getMaxReplacements(): int;
+
+    /**
+     * @return \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\Featdd\DpnGlossary\Domain\Model\Synonym>
+     */
+    public function getSynonyms(): ObjectStorage;
+
+    /**
+     * @return array
+     */
+    public function __toArray(): array;
 }

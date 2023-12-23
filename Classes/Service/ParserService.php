@@ -20,9 +20,9 @@ use DOMNode;
 use DOMNodeList;
 use DOMText;
 use DOMXPath;
-use Featdd\DpnGlossary\Domain\Model\ParserTerm;
 use Featdd\DpnGlossary\Domain\Model\TermInterface;
 use Featdd\DpnGlossary\Domain\Repository\ParserTermRepository;
+use Featdd\DpnGlossary\Domain\Repository\TermRepository;
 use Featdd\DpnGlossary\Utility\ParserUtility;
 use TYPO3\CMS\Core\Cache\Frontend\FrontendInterface;
 use TYPO3\CMS\Core\Context\Context;
@@ -91,9 +91,6 @@ class ParserService implements SingletonInterface
         // Get Query Settings
         /** @var \TYPO3\CMS\Extbase\Persistence\Generic\Typo3QuerySettings $querySettings */
         $querySettings = GeneralUtility::makeInstance(Typo3QuerySettings::class);
-        // Get termRepository
-        /** @var \Featdd\DpnGlossary\Domain\Repository\ParserTermRepository $parserTermRepository */
-        $parserTermRepository = GeneralUtility::makeInstance(ParserTermRepository::class);
         // Get Typoscript Configuration
         $this->typoScriptConfiguration = $configurationManager->getConfiguration(ConfigurationManagerInterface::CONFIGURATION_TYPE_FULL_TYPOSCRIPT);
         // Reduce TS config to plugin
@@ -126,30 +123,33 @@ class ParserService implements SingletonInterface
                 $sysLanguageUid = 0;
             }
 
+            /** @var \Featdd\DpnGlossary\Domain\Repository\TermRepositoryInterface $termRepository */
+            $termRepository = GeneralUtility::makeInstance($this->settings['parserRepositoryClass'] ?? ParserTermRepository::class);
+
             // Set current language uid
             $querySettings->setLanguageUid($sysLanguageUid);
             // Set query to respect the language uid
             $querySettings->setRespectSysLanguage(true);
             // Assign query settings object to repository
-            $parserTermRepository->setDefaultQuerySettings($querySettings);
+            $termRepository->setDefaultQuerySettings($querySettings);
 
             //Find all terms
             if (!($this->settings['useCachingFramework'] ?? true)) {
-                $terms = $parserTermRepository->findByNameLength();
+                $terms = $termRepository->findByNameLength();
             } else {
                 $cacheIdentifier = sha1('termsByNameLength' . $querySettings->getLanguageUid() . '_' . implode('', $querySettings->getStoragePageIds()));
                 $terms = $termsCache->get($cacheIdentifier);
 
                 // If $terms is empty, it hasn't been cached. Calculate the value and store it in the cache:
                 if (empty($terms)) {
-                    $terms = $parserTermRepository->findByNameLength();
+                    $terms = $termRepository->findByNameLength();
                     // Save value in cache
                     $termsCache->set($cacheIdentifier, $terms, ['dpnglossary_termscache']);
                 }
             }
 
             //Sort terms with an individual counter for max replacement per page
-            /** @var \Featdd\DpnGlossary\Domain\Model\ParserTerm $term */
+            /** @var \Featdd\DpnGlossary\Domain\Model\TermInterface $term */
             foreach ($terms as $term) {
                 $maxReplacements = $term->getMaxReplacements() === -1
                     ? (int)($this->settings['maxReplacementPerPage'] ?? -1)
@@ -308,6 +308,7 @@ class ParserService implements SingletonInterface
         // Init DOMXPath with main DOMDocument
         $DOMXPath = new DOMXPath($DOM);
 
+        // This can be changed to "$this->termWrapper(...)" when dropping PHP 8.0 support
         $wrapperClosure = Closure::fromCallable([$this, 'termWrapper']);
 
         /** @var \TYPO3\CMS\Core\Http\ServerRequest $request */
@@ -323,7 +324,7 @@ class ParserService implements SingletonInterface
         }
 
         foreach ($this->terms as $term) {
-            /** @var \Featdd\DpnGlossary\Domain\Model\ParserTerm $termObject */
+            /** @var \Featdd\DpnGlossary\Domain\Model\TermInterface $termObject */
             $termObject = clone $term['term'];
             $replacements = &$term['replacements'];
 
@@ -348,7 +349,7 @@ class ParserService implements SingletonInterface
 
             if (
                 $replacements === 0 ||
-                $termObject->getExcludeFromParsing() ||
+                $termObject->isExcludeFromParsing() ||
                 $currentDetailPageTermUid === $termObject->getUid()
             ) {
                 continue;
@@ -477,7 +478,7 @@ class ParserService implements SingletonInterface
      */
     protected function domTagsParser(
         DOMNodeList $domTags,
-        ParserTerm $term,
+        TermInterface $term,
         int &$replacements,
         Closure $wrapperClosure,
         array $forbiddenParentTags
@@ -521,12 +522,12 @@ class ParserService implements SingletonInterface
      * Regex parser for terms on a text string
      *
      * @param string $text
-     * @param \Featdd\DpnGlossary\Domain\Model\ParserTerm $term
+     * @param \Featdd\DpnGlossary\Domain\Model\TermInterface $term
      * @param int $replacements
      * @param \Closure $wrapperClosure
      * @return string
      */
-    protected function regexParser(string $text, ParserTerm $term, int &$replacements, Closure $wrapperClosure): string
+    protected function regexParser(string $text, TermInterface $term, int &$replacements, Closure $wrapperClosure): string
     {
         // Try simple search first to save performance
         if (mb_stripos($text, $term->getParsingName()) === false) {
@@ -604,11 +605,11 @@ class ParserService implements SingletonInterface
     /**
      * Renders the wrapped term using the plugin settings
      *
-     * @param \Featdd\DpnGlossary\Domain\Model\ParserTerm $term
+     * @param \Featdd\DpnGlossary\Domain\Model\TermInterface $term
      * @return string
      * @throws \UnexpectedValueException
      */
-    protected function termWrapper(ParserTerm $term): string
+    protected function termWrapper(TermInterface $term): string
     {
         // get content object type
         $contentObjectType = $this->typoScriptConfiguration['settings.']['termWraps'];
