@@ -17,7 +17,7 @@
 .. role:: typoscript(code)
 .. role:: sql(code)
 
-.. role:: ts(typoscript)
+.. role:: tsconfig(code)
    :class: typoscript
 
 .. default-role:: code
