@@ -1,5 +1,10 @@
 plugin.tx_dpnglossary {
   view {
+    layoutRootPaths {
+      0 = EXT:dpn_glossary/Resources/Private/Layouts/
+      1 = {$plugin.tx_dpnglossary.view.layoutRootPath}
+    }
+
     templateRootPaths {
       0 = EXT:dpn_glossary/Resources/Private/Templates/
       1 = {$plugin.tx_dpnglossary.view.templateRootPath}
@@ -8,11 +13,6 @@ plugin.tx_dpnglossary {
     partialRootPaths {
       0 = EXT:dpn_glossary/Resources/Private/Partials/
       1 = {$plugin.tx_dpnglossary.view.partialRootPath}
-    }
-
-    layoutRootPaths {
-      0 = EXT:dpn_glossary/Resources/Private/Layouts/
-      1 = {$plugin.tx_dpnglossary.view.layoutRootPath}
     }
   }
 

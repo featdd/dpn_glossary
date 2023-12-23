@@ -1,11 +1,14 @@
+# customcategory=dpn_glossary=dreipunktnull Glossar
+# customsubcategory=settings=Settings
+
 plugin.tx_dpnglossary {
   view {
-    # cat=dpn_glossary/file; type=string; label=Path to template root (FE)
-    templateRootPath = EXT:dpn_glossary/Resources/Private/Templates/
-    # cat=dpn_glossary/file; type=string; label=Path to template partials (FE)
-    partialRootPath = EXT:dpn_glossary/Resources/Private/Partials/
-    # cat=dpn_glossary/file; type=string; label=Path to template layouts (FE)
+    # cat=dpn_glossary/file/a; type=string; label=Path to template layouts (FE)
     layoutRootPath = EXT:dpn_glossary/Resources/Private/Layouts/
+    # cat=dpn_glossary/file/b; type=string; label=Path to template root (FE)
+    templateRootPath = EXT:dpn_glossary/Resources/Private/Templates/
+    # cat=dpn_glossary/file/c; type=string; label=Path to template partials (FE)
+    partialRootPath = EXT:dpn_glossary/Resources/Private/Partials/
   }
 
   persistence {
@@ -13,49 +16,48 @@ plugin.tx_dpnglossary {
     storagePid =
   }
 
-  # customsubcategory=settings=Settings
   settings {
-    # cat=dpn_glossary/settings/a; type=integer; label=Page ID of the detailpage for parsed terms
+    # cat=dpn_glossary/settings/b; type=integer; label=Page ID of the detailpage for parsed terms
     detailPage =
-    # cat=dpn_glossary/settings/a; type=string; label=Pages which should be parsed for glossary terms
+    # cat=dpn_glossary/settings/c; type=string; label=Pages which should be parsed for glossary terms
     parsingPids = 0
-    # cat=dpn_glossary/settings/a; type=string; label=Pages (comma list) which should not be parsed for glossary terms
+    # cat=dpn_glossary/settings/d; type=string; label=Pages (comma list) which should not be parsed for glossary terms
     parsingExcludePidList =
-    # cat=dpn_glossary/settings/a; type=string; label=Additional special characters to respect in parser regular expression
+    # cat=dpn_glossary/settings/e; type=string; label=Additional special characters to respect in parser regular expression
     parsingSpecialWrapCharacters =
-    # cat=dpn_glossary/settings/a; type=integer; label=Maximum replacements for each term (default: -1 = any)
+    # cat=dpn_glossary/settings/g; type=integer; label=Maximum replacements for each term (default: -1 = any)
     maxReplacementPerPage = -1
-    # cat=dpn_glossary/settings/a; type=boolean; label=Respect replacement counter when parsing synonyms (default: off)
+    # cat=dpn_glossary/settings/h; type=boolean; label=Respect replacement counter when parsing synonyms (default: off)
     maxReplacementPerPageRespectSynonyms = 0
-    # cat=dpn_glossary/settings/a; type=string; label=Tags which content will be parsed for terms
+    # cat=dpn_glossary/settings/i; type=string; label=Tags which content will be parsed for terms
     parsingTags = p
-    # cat=dpn_glossary/settings/a; type=string; label=Tags which are not allowed as direct parent for a parsingTag
+    # cat=dpn_glossary/settings/j; type=string; label=Tags which are not allowed as direct parent for a parsingTag
     forbiddenParentTags = a,script
-    # cat=dpn_glossary/settings/a; type=string; label=Classes which are not allowed for the parsing tag
+    # cat=dpn_glossary/settings/k; type=string; label=Classes which are not allowed for the parsing tag
     forbiddenParsingTagClasses =
-    # cat=dpn_glossary/settings/a; type=string; label=Classes which are not allowed on any parent of the parsing tag
+    # cat=dpn_glossary/settings/l; type=string; label=Classes which are not allowed on any parent of the parsing tag
     forbiddenParentClasses = tx_dpn_glossary_exclude
-    # cat=dpn_glossary/settings/a; type=options[normal,character,pagination]; label=Listmode: normal, character or paginated by characters
+    # cat=dpn_glossary/settings/m; type=options[normal,character,pagination]; label=Listmode: normal, character or paginated by characters
     listmode = normal
-    # cat=dpn_glossary/settings/a; type=options[newest,random]; label=Previewmode: newest or random
+    # cat=dpn_glossary/settings/n; type=options[newest,random]; label=Previewmode: newest or random
     previewmode = newest
-    # cat=dpn_glossary/settings/a; type=integer; label=Previewlimit
+    # cat=dpn_glossary/settings/o; type=integer; label=Previewlimit
     previewlimit = 5
-    # cat=dpn_glossary/settings/a; type=boolean; label=Disable parser (default: enabled)
+    # cat=dpn_glossary/settings/p; type=boolean; label=Disable parser (default: enabled)
     disableParser = 0
-    # cat=dpn_glossary/settings/a; type=boolean; label=Parse the terms synonyms (default: enabled)
+    # cat=dpn_glossary/settings/q; type=boolean; label=Parse the terms synonyms (default: enabled)
     parseSynonyms = 1
-    # cat=dpn_glossary/settings/a; type=boolean; label=Priorise the synonyms before the actual term when parsing (default: enabled)
+    # cat=dpn_glossary/settings/r; type=boolean; label=Priorise the synonyms before the actual term when parsing (default: enabled)
     priorisedSynonymParsing = 1
-    # cat=dpn_glossary/settings/a; type=string; label=Limit parsing to a single node with this ID
+    # cat=dpn_glossary/settings/s; type=string; label=Limit parsing to a single node with this ID
     limitParsingId =
-    # cat=dpn_glossary/settings/a; type=boolean; label=Use the origin term for content object data when parsing synonyms (default: disabled)
+    # cat=dpn_glossary/settings/t; type=boolean; label=Use the origin term for content object data when parsing synonyms (default: disabled)
     useTermForSynonymParsingDataWrap = 0
-    # cat=dpn_glossary/settings/a; type=boolean; label=Add the extension stylesheet (default: enabled)
+    # cat=dpn_glossary/settings/u; type=boolean; label=Add the extension stylesheet (default: enabled)
     addStylesheet = 1
-    # cat=dpn_glossary/settings/a; type=boolean; label=Override fluid styled content layout to enable dynamic exclusion via content properties (default: enabled)
+    # cat=dpn_glossary/settings/v; type=boolean; label=Override fluid styled content layout to enable dynamic exclusion via content properties (default: enabled)
     overrideFluidStyledContentLayout = 0
-    # cat=dpn_glossary/settings/a; type=boolean; label=Don't parse terms when current page is the term links target (default: disabled)
+    # cat=dpn_glossary/settings/w; type=boolean; label=Don't parse terms when current page is the term links target (default: disabled)
     excludeTermLinksTargetPages = 0
   }
 }
