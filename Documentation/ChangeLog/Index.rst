@@ -11,6 +11,10 @@
 ChangeLog
 =========
 
+v5.2.0
+  * Make the repository used in the parser configurable
+  * Add hidden palette for language fields to prevent errors for editors
+
 v5.1.0
   * Add option to exclude parsing for term links target pages
 
