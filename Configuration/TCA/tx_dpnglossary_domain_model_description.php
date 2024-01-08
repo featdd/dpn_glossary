@@ -25,10 +25,13 @@ return [
         'iconfile' => 'EXT:dpn_glossary/Resources/Public/Icons/Description.png',
     ],
     'types' => [
-        '1' => ['showitem' => 'l10n_diffsource, meaning, text'],
+        '1' => ['showitem' => 'l10n_diffsource, meaning, text, --palette--;;language'],
     ],
     'palettes' => [
-        '1' => ['showitem' => ''],
+        'language' => [
+            'showitem' => 'sys_language_uid, l10n_parent',
+            'isHiddenPalette' => true,
+        ],
     ],
     'columns' => [
         'sys_language_uid' => [

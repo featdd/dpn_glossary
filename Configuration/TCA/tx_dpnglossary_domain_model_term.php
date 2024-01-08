@@ -287,7 +287,6 @@ return [
                 'foreign_label' => 'meaning',
                 'foreign_sortby' => 'sorting',
                 'minitems' => 1,
-                'maxitems' => 9999,
                 'appearance' => [
                     'newRecordLinkTitle' => 'LLL:EXT:dpn_glossary/Resources/Private/Language/locallang.xlf:tx_dpnglossary.new_description',
                     'useSortable' => true,
@@ -309,7 +308,6 @@ return [
                 'foreign_label' => 'name',
                 'foreign_sortby' => 'sorting',
                 'minitems' => 0,
-                'maxitems' => 9999,
                 'appearance' => [
                     'newRecordLinkTitle' => 'LLL:EXT:dpn_glossary/Resources/Private/Language/locallang.xlf:tx_dpnglossary.new_synonym',
                     'useSortable' => true,
