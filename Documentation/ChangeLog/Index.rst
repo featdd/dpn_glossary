@@ -36,6 +36,9 @@ v5.0.1
 
 v5.0.0
   * Add support for TYPO3 v12 (dropped for TYPO3 v10)
+
+    * The extension TypoScript file extensions have been changed from .txt to .typoscript
+
   * Add canonical URL for character pagination index
 
 v4.2.0
