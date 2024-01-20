@@ -11,6 +11,9 @@
 ChangeLog
 =========
 
+v5.2.1
+  * Update required PHP version
+
 v5.2.0
   * Make the repository used in the parser configurable
   * Add hidden palette for language fields to prevent errors for editors
