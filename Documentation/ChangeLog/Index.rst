@@ -11,6 +11,9 @@
 ChangeLog
 =========
 
+v5.2.2
+  * Use proper version constraint to allow all PHP 8.3.X versions
+
 v5.2.1
   * Update required PHP version
 
