@@ -308,7 +308,12 @@ abstract class AbstractTerm extends AbstractEntity implements TermInterface
     {
         $synonyms = [];
 
-        foreach ($this->getSynonyms() as $synonym) {
+        /*
+         * "toArray" is here necessary to prevent ObjectStorage complications when calling this function while
+         * already iterating over the synonyms, otherwise the internal storage array pointer gets resettet.
+         * See: https://github.com/featdd/dpn_glossary/issues/213
+         */
+        foreach ($this->getSynonyms()->toArray() as $synonym) {
             $synonyms[] = $synonym->__toArray();
         }
 
