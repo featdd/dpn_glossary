@@ -12,7 +12,7 @@ use TYPO3\CMS\Extbase\Persistence\QueryResultInterface;
  * For the full copyright and license information, please read the
  * LICENSE.txt file that was distributed with this source code.
  *
- *  (c) 2023 Daniel Dorndorf <dorndorf@featdd.de>
+ *  (c) 2024 Daniel Dorndorf <dorndorf@featdd.de>
  *
  ***/
 
