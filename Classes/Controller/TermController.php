@@ -21,6 +21,7 @@ use Featdd\DpnGlossary\PageTitle\CharacterPaginationPageTitleProvider;
 use Featdd\DpnGlossary\PageTitle\TermPageTitleProvider;
 use Featdd\DpnGlossary\Pagination\CharacterPagination;
 use Featdd\DpnGlossary\Pagination\CharacterPaginator;
+use Featdd\DpnGlossary\Utility\ObjectUtility;
 use Psr\Http\Message\ResponseInterface;
 use TYPO3\CMS\Core\MetaTag\MetaTagManagerRegistry;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -50,15 +51,28 @@ class TermController extends ActionController
      */
     public function listAction(string $currentCharacter = null): ResponseInterface
     {
-        /** @var array|\TYPO3\CMS\Extbase\Persistence\QueryResultInterface $terms */
-        $terms = ($this->settings['listmode'] ?? 'normal') === 'character'
-            ? $this->termRepository->findAllGroupedByFirstCharacter()
-            : $this->termRepository->findAll();
+        $listMode = $this->settings['listmode'] ?? 'normal';
+        $terms = $this->termRepository->findAll();
 
-        if (($this->settings['listmode'] ?? 'normal') === 'pagination') {
-            $paginationCharacters = GeneralUtility::trimExplode(',', $this->settings['pagination']['characters'] ?? '', true);
+        switch ($listMode) {
+            case 'character':
+                $terms = ObjectUtility::groupObjectsByFirstCharacter(
+                    $terms,
+                    'name',
+                    GeneralUtility::trimExplode(
+                        ',',
+                        $this->settings['groupedListCharacters'] ?? range('A', 'Z'),
+                        true
+                    )
+                );
+                break;
+            case 'pagination':
+                $paginationCharacters = GeneralUtility::trimExplode(
+                    ',',
+                    $this->settings['pagination']['characters'] ?? range('A', 'Z'),
+                    true
+                );
 
-            if (0 < $paginationCharacters) {
                 $paginator = new CharacterPaginator($terms, 'name', $currentCharacter, ...$paginationCharacters);
                 $pagination = new CharacterPagination($paginator, ...$paginationCharacters);
 
@@ -76,11 +90,11 @@ class TermController extends ActionController
                     $characterPaginationPageTitleProvider = GeneralUtility::makeInstance(CharacterPaginationPageTitleProvider::class);
                     $characterPaginationPageTitleProvider->setTitle($pageTitle . ' - ' . $paginator->getCurrentCharacter());
                 }
-            }
+                break;
         }
 
         $this->view->assignMultiple([
-            'listmode' => $this->settings['listmode'] ?? 'normal',
+            'listmode' => $listMode,
             'terms' => $terms,
         ]);
 

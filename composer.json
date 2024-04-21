@@ -13,6 +13,9 @@
     "ext-libxml": "*",
     "ext-pdo": "*"
   },
+  "suggest": {
+    "ext-intl": "Used for transliterate characters of terms for grouped list view"
+  },
   "autoload": {
     "psr-4": {
       "Featdd\\DpnGlossary\\": "Classes"
