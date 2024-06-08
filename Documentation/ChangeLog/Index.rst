@@ -11,6 +11,9 @@
 ChangeLog
 =========
 
+v5.2.4
+  * Prevent parser href/src protection from redundant base64 encoding
+
 v5.2.3
   * Prevent nested ObjectStorage iterations on synonyms
 
