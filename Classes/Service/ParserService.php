@@ -22,7 +22,6 @@ use DOMText;
 use DOMXPath;
 use Featdd\DpnGlossary\Domain\Model\TermInterface;
 use Featdd\DpnGlossary\Domain\Repository\ParserTermRepository;
-use Featdd\DpnGlossary\Domain\Repository\TermRepository;
 use Featdd\DpnGlossary\Utility\ParserUtility;
 use TYPO3\CMS\Core\Cache\Frontend\FrontendInterface;
 use TYPO3\CMS\Core\Context\Context;

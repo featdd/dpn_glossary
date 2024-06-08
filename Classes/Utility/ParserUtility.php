@@ -91,7 +91,7 @@ class ParserUtility
         };
 
         return preg_replace_callback(
-            '#(href|src)(=\")(.*?)(\")#is',
+            '#(href|src)(=\")(?!data:.+;base64)(.*?)(\")#is',
             $callback,
             $html
         );
