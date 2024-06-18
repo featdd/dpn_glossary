@@ -11,6 +11,9 @@
 ChangeLog
 =========
 
+v5.3.0
+  * Add transliteration for character grouped term list
+
 v5.2.4
   * Prevent parser href/src protection from redundant base64 encoding
 

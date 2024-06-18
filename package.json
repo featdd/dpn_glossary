@@ -1,6 +1,6 @@
 {
   "name": "dpn_glossary",
-  "version": "5.2",
+  "version": "5.3",
   "private": true,
   "engines": {
     "node": "^21.6"
