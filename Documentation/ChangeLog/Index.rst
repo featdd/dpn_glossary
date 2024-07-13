@@ -11,6 +11,9 @@
 ChangeLog
 =========
 
+v5.3.1
+  * Add safety check for accidentally empty created synonyms
+
 v5.3.0
   * Add transliteration for character grouped term list
 
