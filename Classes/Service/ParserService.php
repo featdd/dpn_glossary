@@ -406,6 +406,10 @@ class ParserService implements SingletonInterface
                 $synonymTermObject = clone $termObject;
                 /** @var \Featdd\DpnGlossary\Domain\Model\Synonym $synonym */
                 foreach ($termObject->getSynonyms() as $synonym) {
+                    if (empty($synonym->getName())) {
+                        continue;
+                    }
+
                     $synonymTermObject->{
                     ($this->settings['useTermForSynonymParsingDataWrap'] ?? false)
                         ? 'setParsingName'
