@@ -7,10 +7,7 @@ use Featdd\DpnGlossary\Routing\Aspect\StaticMultiRangeMapper;
 use Featdd\DpnGlossary\Updates\PluginCTypeMigrationUpdateWizard;
 use Featdd\DpnGlossary\Updates\PluginSwitchableControllerMigrationUpdateWizard;
 use Featdd\DpnGlossary\Updates\SlugUpdateWizard;
-use TYPO3\CMS\Core\Imaging\IconProvider\SvgIconProvider;
-use TYPO3\CMS\Core\Imaging\IconRegistry;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Utility\ExtensionUtility;
 
 defined('TYPO3') or die();
@@ -59,21 +56,6 @@ call_user_func(
         $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['ext/install']['update'][PluginCTypeMigrationUpdateWizard::class] = PluginCTypeMigrationUpdateWizard::class;
         $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['ext/install']['update'][PluginSwitchableControllerMigrationUpdateWizard::class] = PluginSwitchableControllerMigrationUpdateWizard::class;
         $GLOBALS['TYPO3_CONF_VARS']['SYS']['routing']['aspects']['StaticMultiRangeMapper'] = StaticMultiRangeMapper::class;
-
-        /** @var \TYPO3\CMS\Core\Imaging\IconRegistry $iconRegistry */
-        $iconRegistry = GeneralUtility::makeInstance(IconRegistry::class);
-
-        $iconRegistry->registerIcon(
-            'ext-dpn_glossary-wizard-icon',
-            SvgIconProvider::class,
-            ['source' => 'EXT:dpn_glossary/Resources/Public/Icons/Plugin_Glossary.svg']
-        );
-
-        $iconRegistry->registerIcon(
-            'ext-dpn_glossary-preview-wizard-icon',
-            SvgIconProvider::class,
-            ['source' => 'EXT:dpn_glossary/Resources/Public/Icons/Plugin_Glossarypreview.svg']
-        );
 
         if (false === isset($GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations']['dpnglossary_termscache'])) {
             $GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations']['dpnglossary_termscache'] = [];
