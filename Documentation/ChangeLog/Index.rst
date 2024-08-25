@@ -11,6 +11,9 @@
 ChangeLog
 =========
 
+v5.3.2
+  * Use proper icon registry configuration file (thanks to Achim Fritz)
+
 v5.3.1
   * Add safety check for accidentally empty created synonyms
 
