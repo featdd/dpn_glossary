@@ -71,6 +71,10 @@ plugin.tx_dpnglossary {
 
     groupedListCharacters < .pagination.characters
 
+    list {
+      enableSearchForm = 0
+    }
+
     termWraps = CASE
     termWraps {
       key.field = term_type

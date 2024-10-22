@@ -15,6 +15,8 @@ namespace Featdd\DpnGlossary\Domain\Repository;
  ***/
 
 use Featdd\DpnGlossary\Domain\Model\Term;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extbase\Persistence\Generic\Storage\Typo3DbQueryParser;
 use TYPO3\CMS\Extbase\Persistence\QueryInterface;
 use TYPO3\CMS\Extbase\Persistence\QueryResultInterface;
 
@@ -23,6 +25,27 @@ use TYPO3\CMS\Extbase\Persistence\QueryResultInterface;
  */
 class TermRepository extends AbstractTermRepository
 {
+    public function findByTerm(
+        string $term
+    ): QueryResultInterface {
+        $query = $this->createQuery();
+
+        $queryParser = GeneralUtility::makeInstance(Typo3DbQueryParser::class);
+        $queryBuilder = $queryParser->convertQueryToDoctrineQueryBuilder($query);
+
+        $searchTerm = $queryBuilder->getConnection()->escapeLikeWildcards($term) . '%';
+
+        $query->matching($query->logicalOr(
+            $query->like('name', $searchTerm),
+            $query->like('synonyms.name', $searchTerm),
+            $query->like('descriptions.meaning', $searchTerm),
+        ));
+        $queryBuilder = $queryParser->convertQueryToDoctrineQueryBuilder($query);
+
+        $result = $query->execute();
+        return $result;
+    }
+
     /**
      * finds the newest terms
      *

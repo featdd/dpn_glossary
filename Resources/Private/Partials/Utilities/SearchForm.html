@@ -1,0 +1,16 @@
+<html data-namespace-typo3-fluid="true" lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers">
+
+  <f:if condition="{settings.list.enableSearchForm}">
+    <f:form action="list">
+      <div class="mb-3">
+        <f:form.textfield name="searchTerm" value="{searchTerm}" class="form-control" />
+        <f:form.button type="submit" class="btn btn-primary">
+          {f:translate(key: 'list.searchform.submitButton.label')}
+        </f:form.button>
+      </div>
+    </f:form>
+  </f:if>
+
+</html>

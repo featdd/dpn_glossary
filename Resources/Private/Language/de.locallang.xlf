@@ -186,6 +186,12 @@
       <trans-unit id="tt_content.parse_for_glossary">
         <target>Inhalt parsen</target>
       </trans-unit>
+
+
+      <trans-unit id="list.searchform.submitButton.label">
+        <source>Submit</source>
+        <target>Absenden</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
