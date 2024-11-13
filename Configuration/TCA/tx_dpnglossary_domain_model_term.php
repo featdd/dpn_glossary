@@ -323,50 +323,47 @@ return [
             'exclude' => true,
             'label' => 'LLL:EXT:dpn_glossary/Resources/Private/Language/locallang.xlf:tx_dpnglossary_domain_model_term.media',
             'displayCond' => 'FIELD:term_mode:!=:link',
-            'config' => ExtensionManagementUtility::getFileFieldTCAConfig(
-                'media',
-                [
-                    'maxitems' => 999,
-                    'appearance' => [
-                        'createNewRelationLinkTitle' => 'LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:images.addFileReference',
-                    ],
-                    'overrideChildTca' => [
-                        'types' => [
-                            '0' => [
-                                'showitem' => '
+            'config' => [
+                'type' => 'file',
+                'allowed' => 'common-image-types',
+                'appearance' => [
+                    'createNewRelationLinkTitle' => 'LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:images.addFileReference',
+                ],
+                'overrideChildTca' => [
+                    'types' => [
+                        '0' => [
+                            'showitem' => '
                             --palette--;LLL:EXT:lang/locallang_tca.xlf:sys_file_reference.imageoverlayPalette;imageoverlayPalette,
                             --palette--;;filePalette',
-                            ],
-                            AbstractFile::FILETYPE_TEXT => [
-                                'showitem' => '
+                        ],
+                        AbstractFile::FILETYPE_TEXT => [
+                            'showitem' => '
                             --palette--;LLL:EXT:lang/locallang_tca.xlf:sys_file_reference.imageoverlayPalette;imageoverlayPalette,
                             --palette--;;filePalette',
-                            ],
-                            AbstractFile::FILETYPE_IMAGE => [
-                                'showitem' => '
+                        ],
+                        AbstractFile::FILETYPE_IMAGE => [
+                            'showitem' => '
                             --palette--;LLL:EXT:lang/locallang_tca.xlf:sys_file_reference.imageoverlayPalette;imageoverlayPalette,
                             --palette--;;filePalette',
-                            ],
-                            AbstractFile::FILETYPE_AUDIO => [
-                                'showitem' => '
+                        ],
+                        AbstractFile::FILETYPE_AUDIO => [
+                            'showitem' => '
                             --palette--;LLL:EXT:lang/locallang_tca.xlf:sys_file_reference.imageoverlayPalette;imageoverlayPalette,
                             --palette--;;filePalette',
-                            ],
-                            AbstractFile::FILETYPE_VIDEO => [
-                                'showitem' => '
+                        ],
+                        AbstractFile::FILETYPE_VIDEO => [
+                            'showitem' => '
                             --palette--;LLL:EXT:lang/locallang_tca.xlf:sys_file_reference.imageoverlayPalette;imageoverlayPalette,
                             --palette--;;filePalette',
-                            ],
-                            AbstractFile::FILETYPE_APPLICATION => [
-                                'showitem' => '
+                        ],
+                        AbstractFile::FILETYPE_APPLICATION => [
+                            'showitem' => '
                             --palette--;LLL:EXT:lang/locallang_tca.xlf:sys_file_reference.imageoverlayPalette;imageoverlayPalette,
                             --palette--;;filePalette',
-                            ],
                         ],
                     ],
                 ],
-                $GLOBALS['TYPO3_CONF_VARS']['SYS']['mediafile_ext']
-            ),
+            ],
         ],
         'seo_title' => [
             'exclude' => true,

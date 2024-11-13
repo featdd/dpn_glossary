@@ -26,6 +26,7 @@ use Featdd\DpnGlossary\Utility\ParserUtility;
 use TYPO3\CMS\Core\Cache\Frontend\FrontendInterface;
 use TYPO3\CMS\Core\Context\Context;
 use TYPO3\CMS\Core\Context\Exception\AspectNotFoundException;
+use TYPO3\CMS\Core\Context\LanguageAspect;
 use TYPO3\CMS\Core\SingletonInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManager;
@@ -114,19 +115,21 @@ class ParserService implements SingletonInterface
                 }
             }
 
-            try {
-                /** @var \TYPO3\CMS\Core\Context\Context $context */
-                $context = GeneralUtility::makeInstance(Context::class);
-                $sysLanguageUid = $context->getPropertyFromAspect('language', 'id');
-            } catch (AspectNotFoundException) {
-                $sysLanguageUid = 0;
-            }
 
             /** @var \Featdd\DpnGlossary\Domain\Repository\TermRepositoryInterface $termRepository */
             $termRepository = GeneralUtility::makeInstance($this->settings['parserRepositoryClass'] ?? ParserTermRepository::class);
+            try {
+                /** @var \TYPO3\CMS\Core\Context\Context $context */
+                $context = GeneralUtility::makeInstance(Context::class);
 
-            // Set current language uid
-            $querySettings->setLanguageUid($sysLanguageUid);
+                $aspect = $context->getAspect('language');
+                // Set current language uid
+                if ($aspect instanceof LanguageAspect) {
+                    $querySettings->setLanguageAspect($aspect);
+                }
+            } catch (AspectNotFoundException) {
+            }
+
             // Set query to respect the language uid
             $querySettings->setRespectSysLanguage(true);
             // Assign query settings object to repository
@@ -136,7 +139,8 @@ class ParserService implements SingletonInterface
             if (!($this->settings['useCachingFramework'] ?? true)) {
                 $terms = $termRepository->findByNameLength();
             } else {
-                $cacheIdentifier = sha1('termsByNameLength' . $querySettings->getLanguageUid() . '_' . implode('', $querySettings->getStoragePageIds()));
+                $languageUid = $querySettings->getLanguageAspect()->getId();
+                $cacheIdentifier = sha1('termsByNameLength' . $languageUid . '_' . implode('', $querySettings->getStoragePageIds()));
                 $terms = $termsCache->get($cacheIdentifier);
 
                 // If $terms is empty, it hasn't been cached. Calculate the value and store it in the cache:
