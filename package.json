@@ -3,18 +3,18 @@
   "version": "5.3",
   "private": true,
   "engines": {
-    "node": "^21.6"
+    "node": "^23.2"
   },
   "devDependencies": {
-    "@babel/core": "^7.24",
-    "@babel/preset-env": "^7.24",
-    "@babel/register": "^7.23",
+    "@babel/core": "^7.26",
+    "@babel/preset-env": "^7.26",
+    "@babel/register": "^7.25",
     "cross-env": "^7.0",
-    "css-loader": "^6.10",
-    "mini-css-extract-plugin": "^2.8",
-    "sass": "^1.71",
-    "sass-loader": "^14.1",
-    "webpack": "^5.90",
+    "css-loader": "^7.1",
+    "mini-css-extract-plugin": "^2.9",
+    "sass": "^1.81",
+    "sass-loader": "^16.0",
+    "webpack": "^5.96",
     "webpack-cli": "^5.1",
     "webpack-remove-empty-scripts": "^1.0"
   },

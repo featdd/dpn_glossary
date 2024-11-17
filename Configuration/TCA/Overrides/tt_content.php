@@ -60,7 +60,7 @@ call_user_func(
             }
         }
 
-        \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTCAcolumns('tt_content', [
+        ExtensionManagementUtility::addTCAcolumns('tt_content', [
             'tx_dpnglossary_disable_parser' => [
                 'label' => 'LLL:EXT:dpn_glossary/Resources/Private/Language/locallang.xlf:tt_content.glossary_settings',
                 'exclude' => true,
@@ -69,8 +69,7 @@ call_user_func(
                     'renderType' => 'checkboxToggle',
                     'items' => [
                         [
-                            0 => 'LLL:EXT:dpn_glossary/Resources/Private/Language/locallang.xlf:tt_content.parse_for_glossary',
-                            1 => '',
+                            'label' => 'LLL:EXT:dpn_glossary/Resources/Private/Language/locallang.xlf:tt_content.parse_for_glossary',
                             'labelChecked' => 'Enabled',
                             'labelUnchecked' => 'Disabled',
                             'invertStateDisplay' => true,
@@ -80,7 +79,7 @@ call_user_func(
             ],
         ]);
 
-        \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addToAllTCAtypes(
+        ExtensionManagementUtility::addToAllTCAtypes(
             'tt_content',
             'tx_dpnglossary_disable_parser',
             '',

@@ -1,4 +1,4 @@
-@import "Variables";
+@use "variables";
 
 .dpnglossary {
   &.pagination ul {
@@ -24,7 +24,7 @@
       }
 
       &.empty {
-        color: $red;
+        color: variables.$red;
       }
     }
   }
@@ -49,7 +49,7 @@
         background: rgba(0, 0, 0, .8);
         border-radius: 5px;
         bottom: 26px;
-        color: $white;
+        color: variables.$white;
         content: attr(title);
         left: 20%;
         padding: 5px 15px;
@@ -60,7 +60,7 @@
 
       &:before {
         border: solid;
-        border-color: $grey transparent;
+        border-color: variables.$grey transparent;
         border-width: 6px 6px 0;
         bottom: 20px;
         content: '';

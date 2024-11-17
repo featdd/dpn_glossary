@@ -6,7 +6,6 @@ return [
         'label' => 'meaning',
         'tstamp' => 'tstamp',
         'crdate' => 'crdate',
-        'cruser_id' => 'cruser_id',
         'dividers2tabs' => true,
         'hideTable' => true,
         'versioningWS' => true,
@@ -25,7 +24,7 @@ return [
         'iconfile' => 'EXT:dpn_glossary/Resources/Public/Icons/Description.png',
     ],
     'types' => [
-        '1' => ['showitem' => 'l10n_diffsource, meaning, text, --palette--;;language'],
+        '1' => ['showitem' => 'meaning, text, --palette--;;language'],
     ],
     'palettes' => [
         'language' => [
@@ -41,33 +40,6 @@ return [
                 'type' => 'language',
             ],
         ],
-        'l10n_parent' => [
-            'displayCond' => 'FIELD:sys_language_uid:>:0',
-            'label' => 'LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.l18n_parent',
-            'config' => [
-                'type' => 'select',
-                'renderType' => 'selectSingle',
-                'default' => 0,
-                'items' => [
-                    ['', 0],
-                ],
-                'foreign_table' => 'tx_dpnglossary_domain_model_description',
-                'foreign_table_where' => 'AND tx_dpnglossary_domain_model_description.pid=###CURRENT_PID### AND tx_dpnglossary_domain_model_description.sys_language_uid IN (-1,0)',
-            ],
-        ],
-        'l10n_diffsource' => [
-            'config' => [
-                'type' => 'passthrough',
-            ],
-        ],
-        't3ver_label' => [
-            'label' => 'LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.versionLabel',
-            'config' => [
-                'type' => 'input',
-                'size' => 30,
-                'max' => 255,
-            ],
-        ],
         'hidden' => [
             'exclude' => true,
             'label' => 'LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.hidden',
@@ -77,8 +49,8 @@ return [
                 'default' => 0,
                 'items' => [
                     [
-                        0 => '',
-                        1 => '',
+                        'label' => '',
+                        'value' => 0,
                         'invertStateDisplay' => false,
                     ],
                 ],
@@ -96,7 +68,8 @@ return [
                 'type' => 'input',
                 'size' => 30,
                 'max' => 255,
-                'eval' => 'trim,required',
+                'eval' => 'trim',
+                'required' => true,
             ],
         ],
         'text' => [

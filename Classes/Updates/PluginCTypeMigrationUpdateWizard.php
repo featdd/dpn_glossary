@@ -14,7 +14,7 @@ namespace Featdd\DpnGlossary\Updates;
  *
  ***/
 
-use PDO;
+use Doctrine\DBAL\ParameterType;
 
 /**
  * @package Featdd\DpnGlossary\Updates
@@ -89,7 +89,7 @@ class PluginCTypeMigrationUpdateWizard extends AbstractUpdateWizard
                 ->where(
                     $queryBuilder->expr()->eq(
                         'uid',
-                        $queryBuilder->createNamedParameter($pluginRecord['uid'], PDO::PARAM_INT)
+                        $queryBuilder->createNamedParameter($pluginRecord['uid'], ParameterType::INTEGER)
                     )
                 )
                 ->executeStatement();
