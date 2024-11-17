@@ -11,6 +11,10 @@
 ChangeLog
 =========
 
+v6.0.0
+  * Add support for TYPO3 v13
+  * Drop support for TYPO3 v11
+
 v5.3.2
   * Use proper icon registry configuration file (thanks to Achim Fritz)
 
