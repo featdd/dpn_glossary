@@ -1,10 +1,3 @@
-.. ==================================================
-.. FOR YOUR INFORMATION
-.. --------------------------------------------------
-.. -*- coding: utf-8 -*- with BOM.
-
-.. include:: Includes.txt
-
 .. _links:
 
 =====
@@ -19,6 +12,3 @@ Links
 
 :Git Repository:
     `GitHub <https://github.com/featdd/dpn_glossary>`_
-
-:Contact:
-    `Daniel Dorndorf <mailto:dorndorf@featdd.de>`_

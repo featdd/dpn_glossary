@@ -1,11 +1,4 @@
-﻿.. ==================================================
-.. FOR YOUR INFORMATION
-.. --------------------------------------------------
-.. -*- coding: utf-8 -*- with BOM.
-
-.. include:: ../../Includes.txt
-
-=========
+﻿=========
 Reference
 =========
 
@@ -274,6 +267,7 @@ TypoScript
     | The repository class the parser service should use, for example the normal TermRepository instead of the ParserTermRepository.
     | This can be useful for advanced scenarios like using the first description meaning as a tooltip text.
     | Example:
+
     ..  code-block:: typoscript
 
         plugin.tx_dpnglossary.settings {
