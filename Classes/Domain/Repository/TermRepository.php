@@ -33,7 +33,7 @@ class TermRepository extends AbstractTermRepository
         $queryParser = GeneralUtility::makeInstance(Typo3DbQueryParser::class);
         $queryBuilder = $queryParser->convertQueryToDoctrineQueryBuilder($query);
 
-        $searchTerm = $queryBuilder->getConnection()->escapeLikeWildcards($term) . '%';
+        $searchTerm = '%' . $queryBuilder->getConnection()->escapeLikeWildcards($term) . '%';
 
         $query->matching($query->logicalOr(
             $query->like('name', $searchTerm),
