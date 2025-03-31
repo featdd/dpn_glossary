@@ -10,7 +10,6 @@ return [
         'label' => 'name',
         'tstamp' => 'tstamp',
         'crdate' => 'crdate',
-        'cruser_id' => 'cruser_id',
         'default_sortby' => 'ORDER BY name ASC',
         'versioningWS' => true,
         'languageField' => 'sys_language_uid',
@@ -43,33 +42,6 @@ return [
                 'type' => 'language',
             ],
         ],
-        'l10n_parent' => [
-            'displayCond' => 'FIELD:sys_language_uid:>:0',
-            'label' => 'LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.l18n_parent',
-            'config' => [
-                'type' => 'select',
-                'renderType' => 'selectSingle',
-                'default' => 0,
-                'items' => [
-                    ['', 0],
-                ],
-                'foreign_table' => 'tx_dpnglossary_domain_model_term',
-                'foreign_table_where' => 'AND tx_dpnglossary_domain_model_term.pid=###CURRENT_PID### AND tx_dpnglossary_domain_model_term.sys_language_uid IN (-1,0)',
-            ],
-        ],
-        'l10n_diffsource' => [
-            'config' => [
-                'type' => 'passthrough',
-            ],
-        ],
-        't3ver_label' => [
-            'label' => 'LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.versionLabel',
-            'config' => [
-                'type' => 'input',
-                'size' => 30,
-                'max' => 255,
-            ],
-        ],
         'hidden' => [
             'exclude' => true,
             'label' => 'LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.hidden',
@@ -79,8 +51,8 @@ return [
                 'default' => 0,
                 'items' => [
                     [
-                        0 => '',
-                        1 => '',
+                        'label' => '',
+                        'value' => 0,
                         'invertStateDisplay' => false,
                     ],
                 ],
@@ -93,10 +65,8 @@ return [
             ],
             'label' => 'LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.starttime',
             'config' => [
-                'type' => 'input',
-                'renderType' => 'inputDateTime',
+                'type' => 'datetime',
                 'size' => 13,
-                'eval' => 'datetime',
                 'default' => 0,
             ],
         ],
@@ -107,10 +77,8 @@ return [
             ],
             'label' => 'LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.endtime',
             'config' => [
-                'type' => 'input',
-                'renderType' => 'inputDateTime',
+                'type' => 'datetime',
                 'size' => 13,
-                'eval' => 'datetime',
                 'default' => 0,
                 'range' => [
                     'upper' => mktime(0, 0, 0, 1, 1, 2038),
@@ -125,7 +93,8 @@ return [
                 'type' => 'input',
                 'size' => 30,
                 'max' => 255,
-                'eval' => 'trim,required',
+                'eval' => 'trim',
+                'required' => true,
             ],
         ],
         'url_segment' => [
@@ -169,20 +138,20 @@ return [
                 'maxitems' => 1,
                 'items' => [
                     [
-                        'LLL:EXT:dpn_glossary/Resources/Private/Language/locallang.xlf:tx_dpnglossary_domain_model_term.term_type_none',
-                        '',
+                        'label' => 'LLL:EXT:dpn_glossary/Resources/Private/Language/locallang.xlf:tx_dpnglossary_domain_model_term.term_type_none',
+                        'value' => '',
                     ],
                     [
-                        'LLL:EXT:dpn_glossary/Resources/Private/Language/locallang.xlf:tx_dpnglossary_domain_model_term.term_type_definition',
-                        'definition',
+                        'label' => 'LLL:EXT:dpn_glossary/Resources/Private/Language/locallang.xlf:tx_dpnglossary_domain_model_term.term_type_definition',
+                        'value' => 'definition',
                     ],
                     [
-                        'LLL:EXT:dpn_glossary/Resources/Private/Language/locallang.xlf:tx_dpnglossary_domain_model_term.term_type_abbreviation',
-                        'abbreviation',
+                        'label' => 'LLL:EXT:dpn_glossary/Resources/Private/Language/locallang.xlf:tx_dpnglossary_domain_model_term.term_type_abbreviation',
+                        'value' => 'abbreviation',
                     ],
                     [
-                        'LLL:EXT:dpn_glossary/Resources/Private/Language/locallang.xlf:tx_dpnglossary_domain_model_term.term_type_acronym',
-                        'acronym',
+                        'label' => 'LLL:EXT:dpn_glossary/Resources/Private/Language/locallang.xlf:tx_dpnglossary_domain_model_term.term_type_acronym',
+                        'value' => 'acronym',
                     ],
                 ],
             ],
@@ -208,12 +177,12 @@ return [
                 'maxitems' => 1,
                 'items' => [
                     [
-                        'LLL:EXT:dpn_glossary/Resources/Private/Language/locallang.xlf:tx_dpnglossary_domain_model_term.term_mode_normal',
-                        '',
+                        'label' => 'LLL:EXT:dpn_glossary/Resources/Private/Language/locallang.xlf:tx_dpnglossary_domain_model_term.term_mode_normal',
+                        'value' => '',
                     ],
                     [
-                        'LLL:EXT:dpn_glossary/Resources/Private/Language/locallang.xlf:tx_dpnglossary_domain_model_term.term_mode_link',
-                        'link',
+                        'label' => 'LLL:EXT:dpn_glossary/Resources/Private/Language/locallang.xlf:tx_dpnglossary_domain_model_term.term_mode_link',
+                        'value' => 'link',
                     ],
                 ],
             ],
@@ -223,12 +192,9 @@ return [
             'displayCond' => 'FIELD:term_mode:=:link',
             'label' => 'LLL:EXT:dpn_glossary/Resources/Private/Language/locallang.xlf:tx_dpnglossary_domain_model_term.term_link',
             'config' => [
-                'type' => 'input',
-                'renderType' => 'inputLink',
+                'type' => 'link',
                 'size' => 30,
                 'max' => 255,
-                'eval' => 'trim',
-                'softref' => 'typolink',
             ],
         ],
         'exclude_from_parsing' => [
@@ -240,8 +206,8 @@ return [
                 'default' => 0,
                 'items' => [
                     [
-                        0 => '',
-                        1 => '',
+                        'label' => '',
+                        'value' => 0,
                         'invertStateDisplay' => false,
                     ],
                 ],
@@ -256,8 +222,8 @@ return [
                 'default' => 0,
                 'items' => [
                     [
-                        0 => '',
-                        1 => '',
+                        'label' => '',
+                        'value' => 0,
                         'invertStateDisplay' => false,
                     ],
                 ],
@@ -267,10 +233,9 @@ return [
             'exclude' => true,
             'label' => 'LLL:EXT:dpn_glossary/Resources/Private/Language/locallang.xlf:tx_dpnglossary_domain_model_term.max_replacements',
             'config' => [
-                'type' => 'input',
+                'type' => 'number',
                 'default' => -1,
                 'size' => 10,
-                'eval' => 'int',
                 'range' => [
                     'lower' => -1,
                 ],
@@ -323,50 +288,10 @@ return [
             'exclude' => true,
             'label' => 'LLL:EXT:dpn_glossary/Resources/Private/Language/locallang.xlf:tx_dpnglossary_domain_model_term.media',
             'displayCond' => 'FIELD:term_mode:!=:link',
-            'config' => ExtensionManagementUtility::getFileFieldTCAConfig(
-                'media',
-                [
-                    'maxitems' => 999,
-                    'appearance' => [
-                        'createNewRelationLinkTitle' => 'LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:images.addFileReference',
-                    ],
-                    'overrideChildTca' => [
-                        'types' => [
-                            '0' => [
-                                'showitem' => '
-                            --palette--;LLL:EXT:lang/locallang_tca.xlf:sys_file_reference.imageoverlayPalette;imageoverlayPalette,
-                            --palette--;;filePalette',
-                            ],
-                            AbstractFile::FILETYPE_TEXT => [
-                                'showitem' => '
-                            --palette--;LLL:EXT:lang/locallang_tca.xlf:sys_file_reference.imageoverlayPalette;imageoverlayPalette,
-                            --palette--;;filePalette',
-                            ],
-                            AbstractFile::FILETYPE_IMAGE => [
-                                'showitem' => '
-                            --palette--;LLL:EXT:lang/locallang_tca.xlf:sys_file_reference.imageoverlayPalette;imageoverlayPalette,
-                            --palette--;;filePalette',
-                            ],
-                            AbstractFile::FILETYPE_AUDIO => [
-                                'showitem' => '
-                            --palette--;LLL:EXT:lang/locallang_tca.xlf:sys_file_reference.imageoverlayPalette;imageoverlayPalette,
-                            --palette--;;filePalette',
-                            ],
-                            AbstractFile::FILETYPE_VIDEO => [
-                                'showitem' => '
-                            --palette--;LLL:EXT:lang/locallang_tca.xlf:sys_file_reference.imageoverlayPalette;imageoverlayPalette,
-                            --palette--;;filePalette',
-                            ],
-                            AbstractFile::FILETYPE_APPLICATION => [
-                                'showitem' => '
-                            --palette--;LLL:EXT:lang/locallang_tca.xlf:sys_file_reference.imageoverlayPalette;imageoverlayPalette,
-                            --palette--;;filePalette',
-                            ],
-                        ],
-                    ],
-                ],
-                $GLOBALS['TYPO3_CONF_VARS']['SYS']['mediafile_ext']
-            ),
+            'config' => [
+                'type' => 'file',
+                'allowed' => 'common-media-types',
+            ],
         ],
         'seo_title' => [
             'exclude' => true,

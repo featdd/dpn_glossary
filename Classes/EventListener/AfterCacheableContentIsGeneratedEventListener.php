@@ -14,6 +14,12 @@ namespace Featdd\DpnGlossary\EventListener;
  *
  ***/
 
+use Featdd\DpnGlossary\Service\ParserService;
+use RuntimeException;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extbase\Configuration\ConfigurationManager;
+use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
+use TYPO3\CMS\Extbase\Configuration\Exception\InvalidConfigurationTypeException;
 use TYPO3\CMS\Frontend\Event\AfterCacheableContentIsGeneratedEvent;
 
 /**
@@ -21,7 +27,15 @@ use TYPO3\CMS\Frontend\Event\AfterCacheableContentIsGeneratedEvent;
  */
 class AfterCacheableContentIsGeneratedEventListener
 {
-    use ParseHtmlEventTrait;
+    /**
+     * @var \Featdd\DpnGlossary\Service\ParserService
+     */
+    protected ParserService $parserService;
+
+    public function __construct()
+    {
+        $this->parserService = GeneralUtility::makeInstance(ParserService::class);
+    }
 
     /**
      * @param \TYPO3\CMS\Frontend\Event\AfterCacheableContentIsGeneratedEvent $afterCacheableContentIsGeneratedEvent
@@ -29,6 +43,33 @@ class AfterCacheableContentIsGeneratedEventListener
      */
     public function __invoke(AfterCacheableContentIsGeneratedEvent $afterCacheableContentIsGeneratedEvent): void
     {
-        $this->parseHtml($afterCacheableContentIsGeneratedEvent->getController());
+        $typoScriptFrontendController = $afterCacheableContentIsGeneratedEvent->getController();
+        $request = $afterCacheableContentIsGeneratedEvent->getRequest();
+
+        /** @var \TYPO3\CMS\Extbase\Configuration\ConfigurationManager $configurationManager */
+        $configurationManager = GeneralUtility::makeInstance(ConfigurationManager::class);
+
+        try {
+            $settings = $configurationManager->getConfiguration(
+                ConfigurationManagerInterface::CONFIGURATION_TYPE_SETTINGS,
+                'dpnglossary'
+            );
+
+            $isDisableParser = (bool)($settings['disableParser'] ?? false);
+        } catch (InvalidConfigurationTypeException|RuntimeException) {
+            $isDisableParser = true;
+        }
+
+        if ($typoScriptFrontendController->page['tx_dpnglossary_disable_parser']) {
+            $isDisableParser = true;
+        }
+
+        if (!$isDisableParser) {
+            $parsedHTML = $this->parserService->pageParser($request, $typoScriptFrontendController->content);
+
+            if (is_string($parsedHTML)) {
+                $typoScriptFrontendController->content = $parsedHTML;
+            }
+        }
     }
 }

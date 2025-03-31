@@ -14,8 +14,8 @@ namespace Featdd\DpnGlossary\Updates;
  *
  ***/
 
+use Doctrine\DBAL\ParameterType;
 use Featdd\DpnGlossary\Domain\Model\TermInterface;
-use PDO;
 use TYPO3\CMS\Core\DataHandling\Model\RecordStateFactory;
 use TYPO3\CMS\Core\DataHandling\SlugHelper;
 use TYPO3\CMS\Core\Exception\SiteNotFoundException;
@@ -95,7 +95,7 @@ class SlugUpdateWizard extends AbstractUpdateWizard
                 ->where(
                     $queryBuilder->expr()->eq(
                         'uid',
-                        $queryBuilder->createNamedParameter($termUid, PDO::PARAM_INT)
+                        $queryBuilder->createNamedParameter($termUid, ParameterType::INTEGER)
                     )
                 )
                 ->executeStatement();

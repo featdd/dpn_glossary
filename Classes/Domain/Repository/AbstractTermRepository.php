@@ -43,19 +43,14 @@ abstract class AbstractTermRepository extends Repository implements TermReposito
     {
         $terms = $this->findAll()->toArray();
 
-        /**
-         * Sorting Callback
-         *
-         * @param Term $termA
-         * @param Term $termB
-         * @return int
-         */
-        $sortingCallback = function (TermInterface $termA, TermInterface $termB) {
-            return mb_strlen($termB->getName()) - mb_strlen($termA->getName());
-        };
-
         // Sort terms
-        usort($terms, $sortingCallback);
+        usort(
+            $terms,
+            fn(
+                TermInterface $termA,
+                TermInterface $termB
+            ) => mb_strlen($termB->getName()) - mb_strlen($termA->getName())
+        );
 
         return $terms;
     }

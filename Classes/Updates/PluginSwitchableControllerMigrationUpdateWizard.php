@@ -14,7 +14,7 @@ namespace Featdd\DpnGlossary\Updates;
  *
  ***/
 
-use PDO;
+use Doctrine\DBAL\ParameterType;
 use TYPO3\CMS\Core\Service\FlexFormService;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
@@ -96,7 +96,7 @@ class PluginSwitchableControllerMigrationUpdateWizard extends AbstractUpdateWiza
                 ->where(
                     $queryBuilder->expr()->eq(
                         'uid',
-                        $queryBuilder->createNamedParameter($pluginRecord['uid'], PDO::PARAM_INT)
+                        $queryBuilder->createNamedParameter($pluginRecord['uid'], ParameterType::INTEGER)
                     )
                 )
                 ->executeStatement();

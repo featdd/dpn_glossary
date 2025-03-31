@@ -16,8 +16,7 @@ call_user_func(function () {
                 'renderType' => 'checkboxToggle',
                 'items' => [
                     [
-                        0 => 'LLL:EXT:dpn_glossary/Resources/Private/Language/locallang.xlf:pages.parse_for_glossary',
-                        1 => '',
+                        'label' => 'LLL:EXT:dpn_glossary/Resources/Private/Language/locallang.xlf:pages.parse_for_glossary',
                         'labelChecked' => 'Enabled',
                         'labelUnchecked' => 'Disabled',
                         'invertStateDisplay' => true,

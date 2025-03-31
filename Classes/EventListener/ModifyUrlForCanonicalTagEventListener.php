@@ -16,7 +16,7 @@ namespace Featdd\DpnGlossary\EventListener;
 
 use Featdd\DpnGlossary\Domain\Repository\TermRepository;
 use Featdd\DpnGlossary\Pagination\CharacterPaginator;
-use Featdd\DpnGlossary\Utility\LinkUtility;
+use TYPO3\CMS\Core\Site\Entity\Site;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Seo\Event\ModifyUrlForCanonicalTagEvent;
 
@@ -25,8 +25,6 @@ use TYPO3\CMS\Seo\Event\ModifyUrlForCanonicalTagEvent;
  */
 class ModifyUrlForCanonicalTagEventListener
 {
-    use ParseHtmlEventTrait;
-
     /**
      * @var \Featdd\DpnGlossary\Domain\Repository\TermRepository
      */
@@ -61,9 +59,13 @@ class ModifyUrlForCanonicalTagEventListener
         $queryParameters = $request->getQueryParams();
         /** @var \TYPO3\CMS\Core\Routing\PageArguments $pageArguments */
         $pageArguments = $request->getAttribute('routing');
+        /** @var \TYPO3\CMS\Core\Site\Entity\Site $site */
+        $site = $request->getAttribute('site');
 
         if (
+            $site instanceof Site &&
             !isset($queryParameters['tx_dpnglossary_glossary']['currentCharacter']) &&
+            !isset($queryParameters['tx_dpnglossary_glossary']['term']) &&
             $listMode === 'pagination' &&
             $pageArguments->getPageId() === $detailPage
         ) {
@@ -77,8 +79,8 @@ class ModifyUrlForCanonicalTagEventListener
 
             if (!empty($currentCharacter)) {
                 $modifyUrlForCanonicalTagEvent->setUrl(
-                    LinkUtility::renderTypoLink(
-                        't3://page?uid=' . $detailPage,
+                    (string)$site->getRouter()->generateUri(
+                        $detailPage,
                         [
                             'tx_dpnglossary_glossary' => [
                                 'action' => 'list',
@@ -86,7 +88,6 @@ class ModifyUrlForCanonicalTagEventListener
                                 'currentCharacter' => $currentCharacter,
                             ],
                         ],
-                        true
                     )
                 );
             }
