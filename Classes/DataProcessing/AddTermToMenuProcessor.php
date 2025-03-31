@@ -52,7 +52,7 @@ class AddTermToMenuProcessor implements DataProcessorInterface
             return $processedData;
         }
 
-        $parameters = GeneralUtility::_GET('tx_dpnglossary_glossary');
+        $parameters = $cObj->getRequest()->getQueryParams()['tx_dpnglossary_glossary'] ?? null;
 
         if (is_array($parameters) && (int) ($parameters['term'] ?? 0) > 0) {
             $term = $this->termRepository->findByUid((int) $parameters['term']);
