@@ -21,7 +21,7 @@ use TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer;
 use TYPO3\CMS\Frontend\ContentObject\DataProcessorInterface;
 
 /**
- * @package Featdd\DpnGlossary\Hook
+ * @package Featdd\DpnGlossary\DataProcessing
  */
 class AddTermToMenuProcessor implements DataProcessorInterface
 {
@@ -41,6 +41,7 @@ class AddTermToMenuProcessor implements DataProcessorInterface
      * @param array $processorConfiguration
      * @param array $processedData
      * @return array
+     * @throws \TYPO3\CMS\Frontend\ContentObject\Exception\ContentRenderingException
      */
     public function process(
         ContentObjectRenderer $cObj,
