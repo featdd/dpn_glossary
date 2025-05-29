@@ -20,7 +20,7 @@ dpn_glossary
         glossary,glossar,dreipunktnull,dpn,parser,term
 
     :Copyright:
-        2024
+        2025
 
     :Author:
         Daniel Dorndorf
