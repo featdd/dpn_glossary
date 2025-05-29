@@ -49,7 +49,7 @@ class TermController extends ActionController
      * @param string|null $currentCharacter
      * @return \Psr\Http\Message\ResponseInterface
      */
-    public function listAction(string $currentCharacter = null): ResponseInterface
+    public function listAction(?string $currentCharacter = null): ResponseInterface
     {
         $listMode = $this->settings['listmode'] ?? 'normal';
         $terms = $this->termRepository->findAll();
