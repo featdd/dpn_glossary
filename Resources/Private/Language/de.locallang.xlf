@@ -108,6 +108,9 @@
       <trans-unit id="tx_dpnglossary.no_objects_found">
         <target>Es wurden keine Objekte gefunden</target>
       </trans-unit>
+      <trans-unit id="tx_dpnglossary.no_term_found">
+        <target>Es wurde kein Begriff gefunden</target>
+      </trans-unit>
       <trans-unit id="tx_dpnglossary.wizard_glossary_title">
         <target>Glossar (Listen- &amp; Detailansicht)</target>
       </trans-unit>

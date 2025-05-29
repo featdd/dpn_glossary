@@ -108,6 +108,9 @@
       <trans-unit id="tx_dpnglossary.no_objects_found">
         <source>No objects were found</source>
       </trans-unit>
+      <trans-unit id="tx_dpnglossary.no_term_found">
+        <source>Term not found</source>
+      </trans-unit>
       <trans-unit id="tx_dpnglossary.wizard_glossary_title">
         <source>Glossar (List- &amp; Detailview)</source>
       </trans-unit>
