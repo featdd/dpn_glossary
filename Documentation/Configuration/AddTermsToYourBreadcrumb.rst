@@ -4,7 +4,7 @@ Add terms to your breadcrumb
 
 You can add terms to your breadcrumb using the data processor in your TypoScript configuration.
 
-Example:
+**Example:**
 
 ::
 

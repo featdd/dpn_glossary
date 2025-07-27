@@ -27,6 +27,7 @@ If you want to add umlauts to the pagination you have to check the terms table c
     Reference
     ExampleTypoScriptSetup
     AddTermsToYourBreadcrumb
+    RenderTermsWithFluidTemplate
     ConfigureRoutingForTermsAndPagination
     CreateXmlSitemapForTerms
     ExcludeContentFromParser
