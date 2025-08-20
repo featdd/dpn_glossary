@@ -4,6 +4,10 @@
 ChangeLog
 =========
 
+v6.1.1
+  * Add missing upgrade wizard registration via PHP attributes
+  * Add documentation updates
+
 v6.1.0
   * Add support for PHP 8.4
   * Remove deprecated function calls and other optimizations
