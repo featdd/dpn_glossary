@@ -15,10 +15,9 @@ namespace Featdd\DpnGlossary\Updates;
  ***/
 
 use Doctrine\DBAL\ParameterType;
+use TYPO3\CMS\Install\Attribute\UpgradeWizard;
 
-/**
- * @package Featdd\DpnGlossary\Updates
- */
+#[UpgradeWizard('PluginCTypeMigrationUpdateWizard')]
 class PluginCTypeMigrationUpdateWizard extends AbstractUpdateWizard
 {
     /**

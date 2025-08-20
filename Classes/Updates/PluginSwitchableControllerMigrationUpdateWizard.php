@@ -17,10 +17,9 @@ namespace Featdd\DpnGlossary\Updates;
 use Doctrine\DBAL\ParameterType;
 use TYPO3\CMS\Core\Service\FlexFormService;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Install\Attribute\UpgradeWizard;
 
-/**
- * @package Featdd\DpnGlossary\Updates
- */
+#[UpgradeWizard('PluginSwitchableControllerMigrationUpdateWizard')]
 class PluginSwitchableControllerMigrationUpdateWizard extends AbstractUpdateWizard
 {
     /**

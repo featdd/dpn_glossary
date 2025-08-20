@@ -20,11 +20,10 @@ use TYPO3\CMS\Core\DataHandling\Model\RecordStateFactory;
 use TYPO3\CMS\Core\DataHandling\SlugHelper;
 use TYPO3\CMS\Core\Exception\SiteNotFoundException;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Install\Attribute\UpgradeWizard;
 use TYPO3\CMS\Install\Updates\DatabaseUpdatedPrerequisite;
 
-/**
- * @package Featdd\DpnGlossary\Updates
- */
+#[UpgradeWizard('SlugUpdateWizard')]
 class SlugUpdateWizard extends AbstractUpdateWizard
 {
     public const SEGMENT_FIELD = 'name';
