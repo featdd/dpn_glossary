@@ -1,23 +1,20 @@
+<?xml version="1.0"?>
 <T3DataStructure>
   <sheets>
     <sDEF>
       <ROOT>
-        <TCEforms>
-          <sheetTitle>LLL:EXT:dpn_glossary/Resources/Private/Language/locallang.xlf:tx_dpnglossary.flexforms.preview</sheetTitle>
-        </TCEforms>
+        <sheetTitle>LLL:EXT:dpn_glossary/Resources/Private/Language/locallang.xlf:tx_dpnglossary.flexforms.preview</sheetTitle>
         <type>array</type>
         <el>
           <settings.previewSelected>
-            <TCEforms>
-              <label>LLL:EXT:dpn_glossary/Resources/Private/Language/locallang.xlf:tx_dpnglossary.flexforms.preview.selected</label>
-              <config>
-                <type>select</type>
-                <renderType>selectMultipleSideBySide</renderType>
-                <size>10</size>
-                <maxitems>9999</maxitems>
-                <foreign_table>tx_dpnglossary_domain_model_term</foreign_table>
-              </config>
-            </TCEforms>
+            <label>LLL:EXT:dpn_glossary/Resources/Private/Language/locallang.xlf:tx_dpnglossary.flexforms.preview.selected</label>
+            <config>
+              <type>select</type>
+              <renderType>selectMultipleSideBySide</renderType>
+              <size>10</size>
+              <maxitems>9999</maxitems>
+              <foreign_table>tx_dpnglossary_domain_model_term</foreign_table>
+            </config>
           </settings.previewSelected>
         </el>
       </ROOT>

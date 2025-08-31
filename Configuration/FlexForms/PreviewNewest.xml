@@ -1,21 +1,18 @@
+<?xml version="1.0"?>
 <T3DataStructure>
   <sheets>
     <sDEF>
       <ROOT>
-        <TCEforms>
-          <sheetTitle>LLL:EXT:dpn_glossary/Resources/Private/Language/locallang.xlf:tx_dpnglossary.flexforms.preview</sheetTitle>
-        </TCEforms>
+        <sheetTitle>LLL:EXT:dpn_glossary/Resources/Private/Language/locallang.xlf:tx_dpnglossary.flexforms.preview</sheetTitle>
         <type>array</type>
         <el>
           <settings.previewlimit>
-            <TCEforms>
-              <label>LLL:EXT:dpn_glossary/Resources/Private/Language/locallang.xlf:tx_dpnglossary.flexforms.preview.limit</label>
-              <config>
-                <type>input</type>
-                <eval>int</eval>
-                <default>5</default>
-              </config>
-            </TCEforms>
+            <label>LLL:EXT:dpn_glossary/Resources/Private/Language/locallang.xlf:tx_dpnglossary.flexforms.preview.limit</label>
+            <config>
+              <type>input</type>
+              <eval>int</eval>
+              <default>5</default>
+            </config>
           </settings.previewlimit>
         </el>
       </ROOT>
