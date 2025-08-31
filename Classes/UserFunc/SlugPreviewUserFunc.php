@@ -61,6 +61,8 @@ class SlugPreviewUserFunc
             /** @var \TYPO3\CMS\Core\Site\Entity\Site $site */
             $site = $parameters['site'];
             $languageId = $parameters['languageId'];
+            $termUid = $parameters['row']['uid'];
+            $slugValue = $parameters['row']['url_segment'];
 
             if ($site instanceof NullSite) {
                 $siteFinder = GeneralUtility::makeInstance(SiteFinder::class);
@@ -81,12 +83,12 @@ class SlugPreviewUserFunc
                     'tx_dpnglossary_glossary' => [
                         'action' => 'show',
                         'controller' => 'Term',
-                        'term' => 'SLUG',
+                        'term' => $termUid,
                     ],
                 ]
             );
 
-            return preg_replace('#SLUG/?$#', '', $prefixUrl);
+            return preg_replace('#' . preg_quote($slugValue) . '/?$#', '', $prefixUrl);
         }
 
         return '#';
