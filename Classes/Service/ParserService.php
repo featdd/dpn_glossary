@@ -144,7 +144,7 @@ class ParserService implements SingletonInterface
                 $terms = $termRepository->findByNameLength();
             } else {
                 $cacheIdentifier = sha1(
-                    'termsByNameLength' . $languageId . '_' . implode('', $querySettings->getStoragePageIds())
+                    sprintf('termsByNameLength_%s_%s', $languageId, implode('', $querySettings->getStoragePageIds()))
                 );
                 $terms = $termsCache->get($cacheIdentifier);
 
@@ -152,7 +152,13 @@ class ParserService implements SingletonInterface
                 if (empty($terms)) {
                     $terms = $termRepository->findByNameLength();
                     // Save value in cache
-                    $termsCache->set($cacheIdentifier, $terms, ['dpnglossary_termscache']);
+                    $termsCache->set($cacheIdentifier, $terms, [
+                        ...array_map(
+                            fn(int $storagePid) => sprintf('storage-%d', $storagePid),
+                            $querySettings->getStoragePageIds()
+                        ),
+                        sprintf('language-%d', $languageId),
+                    ]);
                 }
             }
 
@@ -436,11 +442,7 @@ class ParserService implements SingletonInterface
                         continue;
                     }
 
-                    $synonymTermObject->{
-                    ($this->settings['useTermForSynonymParsingDataWrap'] ?? false)
-                        ? 'setParsingName'
-                        : 'setName'
-                    }(
+                    $synonymTermObject->{($this->settings['useTermForSynonymParsingDataWrap'] ?? false) ? 'setParsingName' : 'setName'}(
                         $synonym->getName()
                     );
 
