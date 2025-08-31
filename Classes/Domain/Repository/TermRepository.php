@@ -14,7 +14,6 @@ namespace Featdd\DpnGlossary\Domain\Repository;
  *
  ***/
 
-use Featdd\DpnGlossary\Domain\Model\Term;
 use TYPO3\CMS\Extbase\Persistence\QueryInterface;
 use TYPO3\CMS\Extbase\Persistence\QueryResultInterface;
 

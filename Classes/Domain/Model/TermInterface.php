@@ -36,6 +36,21 @@ interface TermInterface extends DomainObjectInterface
     public function getTermLink(): string;
 
     /**
+     * @return string
+    */
+    public function getParsingName(): string;
+
+    /**
+     * @param string $parsingName
+     */
+    public function setParsingName(string $parsingName): void;
+
+    /**
+     * @return bool
+     */
+    public function isCaseSensitive(): bool;
+
+    /**
      * @return bool
      */
     public function isExcludeFromParsing(): bool;

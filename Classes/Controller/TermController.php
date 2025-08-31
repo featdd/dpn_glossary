@@ -62,8 +62,8 @@ class TermController extends ActionController
         );
 
         $this->storagePids = GeneralUtility::intExplode(
-            ',', 
-            $frameworkConfiguration['persistence']['storagePid'] ?? '', 
+            ',',
+            $frameworkConfiguration['persistence']['storagePid'] ?? '',
             true
         );
     }
@@ -167,7 +167,7 @@ class TermController extends ActionController
      */
     public function previewSelectedAction(): ResponseInterface
     {
-        $previewSelectedUids = GeneralUtility::intExplode(',', $this->settings['previewSelected']);
+        $previewSelectedUids = GeneralUtility::intExplode(',', $this->settings['previewSelected'], true);
 
         $this->view->assign(
             'terms',

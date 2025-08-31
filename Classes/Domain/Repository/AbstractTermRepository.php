@@ -14,10 +14,10 @@ namespace Featdd\DpnGlossary\Domain\Repository;
  *
  ***/
 
-use Featdd\DpnGlossary\Domain\Model\Term;
 use Featdd\DpnGlossary\Domain\Model\TermInterface;
 use TYPO3\CMS\Extbase\Persistence\Exception\InvalidQueryException;
 use TYPO3\CMS\Extbase\Persistence\QueryInterface;
+use TYPO3\CMS\Extbase\Persistence\QueryResultInterface;
 use TYPO3\CMS\Extbase\Persistence\Repository;
 
 /**
@@ -59,14 +59,14 @@ abstract class AbstractTermRepository extends Repository implements TermReposito
      * finds terms by multiple uids
      *
      * @param int[] $uids
-     * @return array
+     * @return array|null
      */
-    public function findByUids(array $uids): array
+    public function findByUids(array $uids): ?QueryResultInterface
     {
         $query = $this->createQuery();
 
         if (count($uids) === 0) {
-            return [];
+            return null;
         }
 
         try {
@@ -77,6 +77,6 @@ abstract class AbstractTermRepository extends Repository implements TermReposito
             // nothing
         }
 
-        return $query->execute()->toArray();
+        return $query->execute();
     }
 }
