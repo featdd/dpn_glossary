@@ -2,6 +2,7 @@
 declare(strict_types=1);
 
 use Featdd\DpnGlossary\Controller\TermController;
+use Featdd\DpnGlossary\Hook\DataHandlerClearCachePostProcHook;
 use Featdd\DpnGlossary\Routing\Aspect\StaticMultiRangeMapper;
 use TYPO3\CMS\Extbase\Utility\ExtensionUtility;
 
@@ -42,6 +43,7 @@ call_user_func(
         );
 
         $GLOBALS['TYPO3_CONF_VARS']['SYS']['routing']['aspects']['StaticMultiRangeMapper'] = StaticMultiRangeMapper::class;
+        $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['t3lib/class.t3lib_tcemain.php']['clearCachePostProc']['dpn_glossary'] = DataHandlerClearCachePostProcHook::class . '->clearCache';
 
         if (false === isset($GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations']['dpnglossary_termscache'])) {
             $GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations']['dpnglossary_termscache'] = [];
