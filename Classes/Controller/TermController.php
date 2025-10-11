@@ -82,19 +82,15 @@ class TermController extends ActionController
                 $terms = ObjectUtility::groupObjectsByFirstCharacter(
                     $terms,
                     'name',
-                    GeneralUtility::trimExplode(
-                        ',',
-                        $this->settings['groupedListCharacters'] ?? range('A', 'Z'),
-                        true
-                    )
+                    !empty($this->settings['groupedListCharacters'])
+                        ? GeneralUtility::trimExplode(',', $this->settings['groupedListCharacters'], true)
+                        : range('A', 'Z')
                 );
                 break;
             case 'pagination':
-                $paginationCharacters = GeneralUtility::trimExplode(
-                    ',',
-                    $this->settings['pagination']['characters'] ?? range('A', 'Z'),
-                    true
-                );
+                $paginationCharacters = !empty($this->settings['pagination']['characters'])
+                    ? GeneralUtility::trimExplode(',', $this->settings['pagination']['characters'], true)
+                    : range('A', 'Z');
 
                 $paginator = new CharacterPaginator($terms, 'name', $currentCharacter, ...$paginationCharacters);
                 $pagination = new CharacterPagination($paginator, ...$paginationCharacters);
