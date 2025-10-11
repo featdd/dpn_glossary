@@ -4,6 +4,13 @@
 ChangeLog
 =========
 
+v6.1.2
+  * Remove "TCEforms" tag from FlexForm XML
+  * Use real slug value instead of dummy due to restrictions
+  * Code optimizations
+  * Add hook to auto clear terms cache if term in storage was edited
+  * Don't use range array for trim function if characters are empty
+
 v6.1.1
   * Add missing upgrade wizard registration via PHP attributes
   * Add documentation updates
