@@ -155,7 +155,7 @@ class ParserService implements SingletonInterface
                     $termsCache->set($cacheIdentifier, $terms, [
                         ...array_map(
                             fn(int $storagePid) => sprintf('storage-%d', $storagePid),
-                            $querySettings->getStoragePageIds()
+                            array_map('intval', $querySettings->getStoragePageIds())
                         ),
                         sprintf('language-%d', $languageId),
                     ]);
