@@ -102,14 +102,6 @@ class ParserService implements SingletonInterface
         if (count($this->typoScriptConfiguration) > 0) {
             // Save extension settings without ts dots
             $this->settings = GeneralUtility::removeDotsFromTS($this->typoScriptConfiguration['settings.'] ?? []);
-            // Set StoragePid in the query settings object
-            // (this is necessary outside extbase context due to storagePid not getting injected automatically)
-            $querySettings->setStoragePageIds(
-                GeneralUtility::trimExplode(
-                    ',',
-                    $this->typoScriptConfiguration['persistence.']['storagePid'] ?? ''
-                )
-            );
 
             $parsingSpecialWrapCharacters = GeneralUtility::trimExplode(
                 ',',
@@ -136,43 +128,55 @@ class ParserService implements SingletonInterface
                 $this->settings['parserRepositoryClass'] ?? ParserTermRepository::class
             );
 
-            // Assign query settings object to repository
-            $termRepository->setDefaultQuerySettings($querySettings);
+            $storagePids = GeneralUtility::intExplode(
+                ',',
+                $this->typoScriptConfiguration['persistence.']['storagePid'] ?? '',
+                true
+            );
 
-            //Find all terms
-            if (!($this->settings['useCachingFramework'] ?? true)) {
-                $terms = $termRepository->findByNameLength();
-            } else {
-                $cacheIdentifier = sha1(
-                    sprintf('termsByNameLength_%s_%s', $languageId, implode('', $querySettings->getStoragePageIds()))
-                );
-                $terms = $termsCache->get($cacheIdentifier);
+            if (!empty($storagePids)) {
+                // Set StoragePid in the query settings object
+                // (this is necessary outside extbase context due to storagePid not getting injected automatically)
+                $querySettings->setStoragePageIds($storagePids);
 
-                // If $terms is empty, it hasn't been cached. Calculate the value and store it in the cache:
-                if (empty($terms)) {
+                // Assign query settings object to repository
+                $termRepository->setDefaultQuerySettings($querySettings);
+
+                //Find all terms
+                if (!($this->settings['useCachingFramework'] ?? true)) {
                     $terms = $termRepository->findByNameLength();
-                    // Save value in cache
-                    $termsCache->set($cacheIdentifier, $terms, [
-                        ...array_map(
-                            fn(int $storagePid) => sprintf('storage-%d', $storagePid),
-                            $querySettings->getStoragePageIds()
-                        ),
-                        sprintf('language-%d', $languageId),
-                    ]);
+                } else {
+                    $cacheIdentifier = sha1(
+                        sprintf('termsByNameLength_%s_%s', $languageId, implode('', $querySettings->getStoragePageIds()))
+                    );
+                    $terms = $termsCache->get($cacheIdentifier);
+
+                    // If $terms is empty, it hasn't been cached. Calculate the value and store it in the cache:
+                    if (empty($terms)) {
+                        $terms = $termRepository->findByNameLength();
+                        // Save value in cache
+                        $termsCache->set($cacheIdentifier, $terms, [
+                            ...array_map(
+                                fn(int $storagePid) => sprintf('storage-%d', $storagePid),
+                                $querySettings->getStoragePageIds()
+                            ),
+                            sprintf('language-%d', $languageId),
+                        ]);
+                    }
                 }
-            }
 
-            //Sort terms with an individual counter for max replacement per page
-            /** @var \Featdd\DpnGlossary\Domain\Model\TermInterface $term */
-            foreach ($terms as $term) {
-                $maxReplacements = $term->getMaxReplacements() === -1
-                    ? (int)($this->settings['maxReplacementPerPage'] ?? -1)
-                    : $term->getMaxReplacements();
+                //Sort terms with an individual counter for max replacement per page
+                /** @var \Featdd\DpnGlossary\Domain\Model\TermInterface $term */
+                foreach ($terms as $term) {
+                    $maxReplacements = $term->getMaxReplacements() === -1
+                        ? (int)($this->settings['maxReplacementPerPage'] ?? -1)
+                        : $term->getMaxReplacements();
 
-                $this->terms[] = [
-                    'term' => $term,
-                    'replacements' => $maxReplacements,
-                ];
+                    $this->terms[] = [
+                        'term' => $term,
+                        'replacements' => $maxReplacements,
+                    ];
+                }
             }
         }
     }
