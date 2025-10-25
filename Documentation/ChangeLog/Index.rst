@@ -4,6 +4,9 @@
 ChangeLog
 =========
 
+v6.1.3
+  * Prevent TypeErrors and handle missing StoragePids properly
+
 v6.1.2
   * Remove "TCEforms" tag from FlexForm XML
   * Use real slug value instead of dummy due to restrictions
