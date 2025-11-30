@@ -239,9 +239,11 @@ class ParserService implements SingletonInterface
         }
 
         // Protect scripts, src & links from unwanted DOM sideffects
-        $protectedHtml = ParserUtility::protectLinkAndSrcPathsFromDOM(
-            ParserUtility::protectScrtiptsAndCommentsFromDOM(
-                $html
+        $protectedHtml = ParserUtility::injectTemporaryUtf8MetaTag(
+            ParserUtility::protectLinkAndSrcPathsFromDOM(
+                ParserUtility::protectScrtiptsAndCommentsFromDOM(
+                    $html
+                )
             )
         );
 
@@ -331,7 +333,7 @@ class ParserService implements SingletonInterface
             }
 
             // Only load the extracted nodes content into the main DOM Document for parsing
-            if (!$DOM->loadHTML('<?xml encoding="UTF-8">' . $DOMpage->saveHTML($DOMcontent))) {
+            if (!$DOM->loadHTML('<?xml encoding="UTF-8">' . ParserUtility::injectTemporaryUtf8MetaTag($DOMpage->saveHTML($DOMcontent)))) {
                 throw new Exception('Parsers DOM Document could\'nt load the html');
             }
 
@@ -492,10 +494,12 @@ class ParserService implements SingletonInterface
         }
 
         // Reverse DOM sideffects protection and apply some repairs for some unwanted HTML5 adjustments from DOM
-        $parsedHtml = ParserUtility::protectScriptsAndCommentsFromDOMReverse(
-            ParserUtility::protectLinkAndSrcPathsFromDOMReverse(
-                ParserUtility::domHtml5Repairs(
-                    $parsedHtml
+        $parsedHtml = ParserUtility::removeTemporaryUtf8MetaTag(
+            ParserUtility::protectScriptsAndCommentsFromDOMReverse(
+                ParserUtility::protectLinkAndSrcPathsFromDOMReverse(
+                    ParserUtility::domHtml5Repairs(
+                        $parsedHtml
+                    )
                 )
             )
         );

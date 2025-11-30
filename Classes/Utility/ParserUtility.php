@@ -22,6 +22,8 @@ use DOMText;
  */
 class ParserUtility
 {
+    private const TEMP_META_ATTRIBUTE = 'data-dpnglossary-temp-meta';
+    private const TEMP_META_TAG = '<meta content="text/html; charset=utf-8" http-equiv="Content-Type" data-dpnglossary-temp-meta>';
     public const DEFAULT_TAG = 'DPNGLOSSARY';
     public const UMLAUT_MATCHING_GROUPS = [
         'ä' => '(Ä|ä)',
@@ -130,7 +132,7 @@ class ParserUtility
         if (false === empty(trim($replacement))) {
             $tempDOM = new DOMDocument();
             // use XHTML tag for avoiding UTF-8 encoding problems
-            $tempDOM->loadHTML('<?xml encoding="UTF-8">' . '<!DOCTYPE html><html><body><div id="replacement">' . $replacement . '</div></body></html>');
+            $tempDOM->loadHTML('<?xml encoding="UTF-8">' . '<!DOCTYPE html><html><head><meta content="text/html; charset=utf-8" http-equiv="Content-Type"></head><body><div id="replacement">' . $replacement . '</div></body></html>');
 
             $replacementNode = $DOMText->ownerDocument->createDocumentFragment();
 
@@ -155,6 +157,57 @@ class ParserUtility
         };
 
         return preg_replace_callback('#(<picture.*?>)(.*?)(</picture>)#is', $callback, $html);
+    }
+
+    /**
+     * Injects a temporary UTF-8 meta declaration so DOMDocument keeps umlauts intact
+     *
+     * @param string $html
+     * @return string
+     */
+    public static function injectTemporaryUtf8MetaTag(string $html): string
+    {
+        if (strpos($html, self::TEMP_META_ATTRIBUTE) !== false) {
+            return $html;
+        }
+
+        if (stripos($html, '<head') !== false) {
+            return preg_replace(
+                '#(<head\b[^>]*>)#i',
+                '$1' . self::TEMP_META_TAG,
+                $html,
+                1
+            ) ?? $html;
+        }
+
+        if (stripos($html, '<html') !== false) {
+            return preg_replace(
+                '#(<html\b[^>]*>)#i',
+                '$1<head>' . self::TEMP_META_TAG . '</head>',
+                $html,
+                1
+            ) ?? $html;
+        }
+
+        return self::TEMP_META_TAG . $html;
+    }
+
+    /**
+     * Removes the temporary UTF-8 meta declaration after DOMDocument processing
+     *
+     * @param string $html
+     * @return string
+     */
+    public static function removeTemporaryUtf8MetaTag(string $html): string
+    {
+        return preg_replace(
+            sprintf(
+                '#<meta\b[^>]*%s[^>]*>\s*#i',
+                preg_quote(self::TEMP_META_ATTRIBUTE, '#')
+            ),
+            '',
+            $html
+        ) ?? $html;
     }
 
     /**
