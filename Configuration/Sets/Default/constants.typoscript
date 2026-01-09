@@ -1,0 +1,34 @@
+@import 'EXT:dpn_glossary/Configuration/TypoScript/constants.typoscript'
+
+# Map Site-Settings to TypoScript Constants
+plugin.tx_dpnglossary {
+  persistence {
+    storagePid = {$site:settings.glossary.storagePidList}
+  }
+
+  settings {
+    detailPage = {$site:settings.glossary.glossaryPage}
+    parsingPids = {$site:settings.glossary.parsingPids}
+    parsingExcludePidList = {$site:settings.glossary.parsingExcludePidList}
+    parsingSpecialWrapCharacters = {$site:settings.glossary.parsingSpecialWrapCharacters}
+    parserRepositoryClass = {$site:settings.glossary.parserRepositoryClass}
+    maxReplacementPerPage = {$site:settings.glossary.maxReplacementPerPage}
+    maxReplacementPerPageRespectSynonyms = {$site:settings.glossary.maxReplacementPerPageRespectSynonyms}
+    parsingTags = {$site:settings.glossary.parsingTags}
+    forbiddenParentTags = {$site:settings.glossary.forbiddenParentTags}
+    forbiddenParsingTagClasses = {$site:settings.glossary.forbiddenParsingTagClasses}
+    forbiddenParentClasses = {$site:settings.glossary.forbiddenParentClasses}
+    listmode = {$site:settings.glossary.listmode}
+    previewmode = {$site:settings.glossary.previewmode}
+    previewlimit = {$site:settings.glossary.previewlimit}
+    disableParser = {$site:settings.glossary.disableParser}
+    parseSynonyms = {$site:settings.glossary.parseSynonyms}
+    priorisedSynonymParsing = {$site:settings.glossary.priorisedSynonymParsing}
+    limitParsingId = {$site:settings.glossary.limitParsingId}
+    useTermForSynonymParsingDataWrap = {$site:settings.glossary.useTermForSynonymParsingDataWrap}
+    addStylesheet = {$site:settings.glossary.addStylesheet}
+    overrideFluidStyledContentLayout = {$site:settings.glossary.overrideFluidStyledContentLayout}
+    excludeTermLinksTargetPages = {$site:settings.glossary.excludeTermLinksTargetPages}
+  }
+}
+

@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+	<file source-language="en" target-language="de" datatype="plaintext" original="EXT:dpn_glossary/Configuration/Sets/Default/de.labels.xlf" date="2025-01-01T00:00:00" product-name="dpn_glossary">
+		<header />
+		<body>
+			<!-- Default Settings Category -->
+			<trans-unit id="categories.dpn.functions.glossary">
+				<source>Glossary</source>
+				<target>Glossar</target>
+			</trans-unit>
+
+			<!-- Glossary Settings -->
+			<trans-unit id="settings.glossary.storagePidList">
+				<source>Glossary term storage PageID list</source>
+				<target>Glossar-Begriffe Speicherort PageID Liste</target>
+			</trans-unit>
+			<trans-unit id="settings.description.glossary.storagePidList">
+				<source>Folders PageIDs (comma list) which contains the glossary terms</source>
+				<target>Ordner PageIDs (kommagetrennte Liste), welche die Glossar-Begriffe beinhalten</target>
+			</trans-unit>
+
+			<trans-unit id="settings.glossary.glossaryPage">
+				<source>Glossary page PageID</source>
+				<target>Glossarseiten PageID</target>
+			</trans-unit>
+			<trans-unit id="settings.description.glossary.glossaryPage">
+				<source>PageID of the detailpage for parsed terms</source>
+				<target>PageID der Detailseite für geparste Begriffe</target>
+			</trans-unit>
+
+			<trans-unit id="settings.glossary.parsingPids">
+				<source>Parsing Pages</source>
+				<target>Zu parsende Seiten</target>
+			</trans-unit>
+			<trans-unit id="settings.description.glossary.parsingPids">
+				<source>Pages PageIDs (comma list) which should be parsed for glossary terms (0 = all)</source>
+				<target>Seiten PageIDs (kommagetrennte Liste), die nach Glossar-Begriffen durchsucht werden sollen (0 = alle)</target>
+			</trans-unit>
+
+			<trans-unit id="settings.glossary.parsingExcludePidList">
+				<source>Exclude Pages</source>
+				<target>Ausgeschlossene Seiten</target>
+			</trans-unit>
+			<trans-unit id="settings.description.glossary.parsingExcludePidList">
+				<source>Pages PageIDs (comma list) which should not be parsed for glossary terms</source>
+				<target>Seiten PageIDs (kommagetrennte Liste), die nicht nach Glossar-Begriffen durchsucht werden sollen</target>
+			</trans-unit>
+
+			<trans-unit id="settings.glossary.parsingSpecialWrapCharacters">
+				<source>Parsing Special Wrap Characters</source>
+				<target>Parsing-Spezialzeichen</target>
+			</trans-unit>
+			<trans-unit id="settings.description.glossary.parsingSpecialWrapCharacters">
+				<source>Additional special characters to respect in parser regular expression</source>
+				<target>Zusätzliche Sonderzeichen, die in der Parser-Regular-Expression berücksichtigt werden sollen</target>
+			</trans-unit>
+
+			<trans-unit id="settings.glossary.parserRepositoryClass">
+				<source>Parser Repository Class</source>
+				<target>Parser Repository Klasse</target>
+			</trans-unit>
+			<trans-unit id="settings.description.glossary.parserRepositoryClass">
+				<source>The repository class used in the parser service</source>
+				<target>Die im Parser-Service verwendete Repository-Klasse</target>
+			</trans-unit>
+
+			<trans-unit id="settings.glossary.maxReplacementPerPage">
+				<source>Maximum Replacements Per Page</source>
+				<target>Maximale Ersetzungen pro Seite</target>
+			</trans-unit>
+			<trans-unit id="settings.description.glossary.maxReplacementPerPage">
+				<source>Maximum replacements for each term (-1 = any)</source>
+				<target>Maximale Ersetzungen für jeden Begriff (-1 = unbegrenzt)</target>
+			</trans-unit>
+
+			<trans-unit id="settings.glossary.maxReplacementPerPageRespectSynonyms">
+				<source>Respect Replacement Counter for Synonyms</source>
+				<target>Ersetzungszähler für Synonyme berücksichtigen</target>
+			</trans-unit>
+			<trans-unit id="settings.description.glossary.maxReplacementPerPageRespectSynonyms">
+				<source>Respect replacement counter when parsing synonyms</source>
+				<target>Ersetzungszähler beim Parsen von Synonymen berücksichtigen</target>
+			</trans-unit>
+
+			<trans-unit id="settings.glossary.parsingTags">
+				<source>Parsing Tags</source>
+				<target>Parsing-Tags</target>
+			</trans-unit>
+			<trans-unit id="settings.description.glossary.parsingTags">
+				<source>Tags which content will be parsed for terms</source>
+				<target>Tags, deren Inhalt nach Begriffen durchsucht wird</target>
+			</trans-unit>
+
+			<trans-unit id="settings.glossary.forbiddenParentTags">
+				<source>Forbidden Parent Tags</source>
+				<target>Verbotene Eltern-Tags</target>
+			</trans-unit>
+			<trans-unit id="settings.description.glossary.forbiddenParentTags">
+				<source>Tags which are not allowed as direct parent for a parsingTag</source>
+				<target>Tags, die nicht als direktes Elternelement für ein Parsing-Tag erlaubt sind</target>
+			</trans-unit>
+
+			<trans-unit id="settings.glossary.forbiddenParsingTagClasses">
+				<source>Forbidden Parsing Tag Classes</source>
+				<target>Verbotene Parsing-Tag-Klassen</target>
+			</trans-unit>
+			<trans-unit id="settings.description.glossary.forbiddenParsingTagClasses">
+				<source>Classes which are not allowed for the parsing tag</source>
+				<target>Klassen, die für das Parsing-Tag nicht erlaubt sind</target>
+			</trans-unit>
+
+			<trans-unit id="settings.glossary.forbiddenParentClasses">
+				<source>Forbidden Parent Classes</source>
+				<target>Verbotene Eltern-Klassen</target>
+			</trans-unit>
+			<trans-unit id="settings.description.glossary.forbiddenParentClasses">
+				<source>Classes which are not allowed on any parent of the parsing tag</source>
+				<target>Klassen, die auf keinem Elternelement des Parsing-Tags erlaubt sind</target>
+			</trans-unit>
+
+			<trans-unit id="settings.glossary.listmode">
+				<source>List Mode</source>
+				<target>Listen-Modus</target>
+			</trans-unit>
+			<trans-unit id="settings.description.glossary.listmode">
+				<source>Listmode: normal, character or paginated by characters</source>
+				<target>Listen-Modus: normal, zeichenbasiert oder nach Zeichen paginiert</target>
+			</trans-unit>
+
+			<trans-unit id="settings.glossary.previewmode">
+				<source>Preview Mode</source>
+				<target>Vorschau-Modus</target>
+			</trans-unit>
+			<trans-unit id="settings.description.glossary.previewmode">
+				<source>Previewmode: newest or random</source>
+				<target>Vorschau-Modus: neueste oder zufällig</target>
+			</trans-unit>
+
+			<trans-unit id="settings.glossary.previewlimit">
+				<source>Preview Limit</source>
+				<target>Vorschau-Limit</target>
+			</trans-unit>
+			<trans-unit id="settings.description.glossary.previewlimit">
+				<source>Previewlimit</source>
+				<target>Vorschau-Limit</target>
+			</trans-unit>
+
+			<trans-unit id="settings.glossary.disableParser">
+				<source>Disable Parser</source>
+				<target>Parser deaktivieren</target>
+			</trans-unit>
+			<trans-unit id="settings.description.glossary.disableParser">
+				<source>Disable parser (default: enabled)</source>
+				<target>Parser deaktivieren (Standard: aktiviert)</target>
+			</trans-unit>
+
+			<trans-unit id="settings.glossary.parseSynonyms">
+				<source>Parse Synonyms</source>
+				<target>Synonyme parsen</target>
+			</trans-unit>
+			<trans-unit id="settings.description.glossary.parseSynonyms">
+				<source>Parse the terms synonyms (default: enabled)</source>
+				<target>Synonyme der Begriffe parsen (Standard: aktiviert)</target>
+			</trans-unit>
+
+			<trans-unit id="settings.glossary.priorisedSynonymParsing">
+				<source>Priorise Synonym Parsing</source>
+				<target>Synonym-Parsing priorisieren</target>
+			</trans-unit>
+			<trans-unit id="settings.description.glossary.priorisedSynonymParsing">
+				<source>Priorise the synonyms before the actual term when parsing (default: enabled)</source>
+				<target>Synonyme vor dem eigentlichen Begriff beim Parsen priorisieren (Standard: aktiviert)</target>
+			</trans-unit>
+
+			<trans-unit id="settings.glossary.limitParsingId">
+				<source>Limit Parsing ID</source>
+				<target>Parsing-ID begrenzen</target>
+			</trans-unit>
+			<trans-unit id="settings.description.glossary.limitParsingId">
+				<source>Limit parsing to a single node with this ID</source>
+				<target>Parsing auf einen einzelnen Knoten mit dieser ID begrenzen</target>
+			</trans-unit>
+
+			<trans-unit id="settings.glossary.useTermForSynonymParsingDataWrap">
+				<source>Use Term for Synonym Parsing Data Wrap</source>
+				<target>Begriff für Synonym-Parsing Data Wrap verwenden</target>
+			</trans-unit>
+			<trans-unit id="settings.description.glossary.useTermForSynonymParsingDataWrap">
+				<source>Use the origin term for content object data when parsing synonyms (default: disabled)</source>
+				<target>Ursprünglichen Begriff für Content-Object-Daten beim Parsen von Synonymen verwenden (Standard: deaktiviert)</target>
+			</trans-unit>
+
+			<trans-unit id="settings.glossary.addStylesheet">
+				<source>Add Stylesheet</source>
+				<target>Stylesheet hinzufügen</target>
+			</trans-unit>
+			<trans-unit id="settings.description.glossary.addStylesheet">
+				<source>Add the extension stylesheet (default: enabled)</source>
+				<target>Erweiterungs-Stylesheet hinzufügen (Standard: aktiviert)</target>
+			</trans-unit>
+
+			<trans-unit id="settings.glossary.overrideFluidStyledContentLayout">
+				<source>Override Fluid Styled Content Layout</source>
+				<target>Fluid Styled Content Layout überschreiben</target>
+			</trans-unit>
+			<trans-unit id="settings.description.glossary.overrideFluidStyledContentLayout">
+				<source>Override fluid styled content layout to enable dynamic exclusion via content properties (default: enabled)</source>
+				<target>Fluid Styled Content Layout überschreiben, um dynamischen Ausschluss über Content-Eigenschaften zu ermöglichen (Standard: aktiviert)</target>
+			</trans-unit>
+
+			<trans-unit id="settings.glossary.excludeTermLinksTargetPages">
+				<source>Exclude Term Links Target Pages</source>
+				<target>Zielseiten von Begriffs-Links ausschließen</target>
+			</trans-unit>
+			<trans-unit id="settings.description.glossary.excludeTermLinksTargetPages">
+				<source>Don't parse terms when current page is the term links target (default: disabled)</source>
+				<target>Begriffe nicht parsen, wenn die aktuelle Seite das Ziel der Begriff-Links ist (Standard: deaktiviert)</target>
+			</trans-unit>
+		</body>
+	</file>
+</xliff>
+
