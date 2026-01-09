@@ -28,6 +28,7 @@ use TYPO3\CMS\Core\MetaTag\MetaTagManagerRegistry;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
+use TYPO3\CMS\Extbase\Persistence\Generic\Typo3QuerySettings;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 use TYPO3\CMS\Frontend\Controller\ErrorController;
 
@@ -66,6 +67,26 @@ class TermController extends ActionController
             $frameworkConfiguration['persistence']['storagePid'] ?? '',
             true
         );
+
+        // Override storagePids with startingpoint from FlexForm if set
+        if (
+            isset($this->settings['startingpoint']) &&
+            (string)$this->settings['startingpoint'] !== ''
+        ) {
+            $startingPointPids = GeneralUtility::intExplode(
+                ',',
+                $this->settings['startingpoint'],
+                true
+            );
+            if (count($startingPointPids)) {
+                $this->storagePids = $startingPointPids;
+            }
+        }
+
+        // Set query settings with storagePids
+        $querySettings = GeneralUtility::makeInstance(Typo3QuerySettings::class);
+        $querySettings->setStoragePageIds($this->storagePids);
+        $this->termRepository->setDefaultQuerySettings($querySettings);
     }
 
     /**
