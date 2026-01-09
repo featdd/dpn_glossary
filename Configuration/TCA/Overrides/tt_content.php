@@ -40,23 +40,46 @@ call_user_func(
             'special'
         );
 
+        // Add FlexForm for main glossary plugin
+        ExtensionManagementUtility::addPiFlexFormValue(
+            '*',
+            'FILE:EXT:dpn_glossary/Configuration/FlexForms/List.xml',
+            'dpnglossary_glossary'
+        );
+        ExtensionManagementUtility::addToAllTCAtypes(
+            'tt_content',
+            '--div--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:tabs.plugin,pi_flexform',
+            'dpnglossary_glossary',
+            'after:header'
+        );
+
         $flexforms = [
-            'dpnglossary_glossary' => null,
             'dpnglossary_glossarypreviewnewest' => '/Configuration/FlexForms/PreviewNewest.xml',
             'dpnglossary_glossarypreviewrandom' => '/Configuration/FlexForms/PreviewRandom.xml',
             'dpnglossary_glossarypreviewselected' => '/Configuration/FlexForms/PreviewSelected.xml',
         ];
 
         foreach ($flexforms as $cType => $flexform) {
-            if ($flexform !== null) {
-                ExtensionManagementUtility::addPiFlexFormValue('*', 'FILE:EXT:dpn_glossary' . $flexform, $cType);
+            ExtensionManagementUtility::addPiFlexFormValue('*', 'FILE:EXT:dpn_glossary' . $flexform, $cType);
 
-                ExtensionManagementUtility::addToAllTCAtypes(
-                    'tt_content',
-                    '--div--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:tabs.plugin,pi_flexform',
-                    $cType,
-                    'after:header'
-                );
+            ExtensionManagementUtility::addToAllTCAtypes(
+                'tt_content',
+                '--div--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:tabs.plugin,pi_flexform',
+                $cType,
+                'after:header'
+            );
+        }
+
+        // Hide preview plugins from CType selector
+        $pluginsToHide = [
+            'dpnglossary_glossarypreviewnewest',
+            'dpnglossary_glossarypreviewrandom',
+            'dpnglossary_glossarypreviewselected',
+        ];
+
+        foreach ($GLOBALS['TCA']['tt_content']['columns']['CType']['config']['items'] as $key => $item) {
+            if (isset($item['value']) && in_array($item['value'], $pluginsToHide, true)) {
+                unset($GLOBALS['TCA']['tt_content']['columns']['CType']['config']['items'][$key]);
             }
         }
 
