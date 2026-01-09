@@ -1,0 +1,120 @@
+categories:
+  dpn.functions.glossary:
+    parent: dpn.functions
+
+settings:
+  glossary.storagePidList:
+    category: dpn.functions.glossary
+    type: string
+    default: ''
+
+  glossary.glossaryPage:
+    category: dpn.functions.glossary
+    type: page
+    default: 0
+
+  glossary.parsingPids:
+    category: dpn.functions.glossary
+    type: string
+    default: '0'
+
+  glossary.parsingExcludePidList:
+    category: dpn.functions.glossary
+    type: string
+    default: ''
+
+  glossary.parsingSpecialWrapCharacters:
+    category: dpn.functions.glossary
+    type: string
+    default: ''
+
+  glossary.parserRepositoryClass:
+    category: dpn.functions.glossary
+    type: string
+    default: 'Featdd\DpnGlossary\Domain\Repository\ParserTermRepository'
+
+  glossary.maxReplacementPerPage:
+    category: dpn.functions.glossary
+    type: int
+    default: -1
+
+  glossary.maxReplacementPerPageRespectSynonyms:
+    category: dpn.functions.glossary
+    type: bool
+    default: false
+
+  glossary.parsingTags:
+    category: dpn.functions.glossary
+    type: string
+    default: 'p'
+
+  glossary.forbiddenParentTags:
+    category: dpn.functions.glossary
+    type: string
+    default: 'a,script'
+
+  glossary.forbiddenParsingTagClasses:
+    category: dpn.functions.glossary
+    type: string
+    default: ''
+
+  glossary.forbiddenParentClasses:
+    category: dpn.functions.glossary
+    type: string
+    default: 'tx_dpn_glossary_exclude'
+
+  glossary.listmode:
+    category: dpn.functions.glossary
+    type: string
+    default: 'normal'
+
+  glossary.previewmode:
+    category: dpn.functions.glossary
+    type: string
+    default: 'newest'
+
+  glossary.previewlimit:
+    category: dpn.functions.glossary
+    type: int
+    default: 5
+
+  glossary.disableParser:
+    category: dpn.functions.glossary
+    type: bool
+    default: false
+
+  glossary.parseSynonyms:
+    category: dpn.functions.glossary
+    type: bool
+    default: true
+
+  glossary.priorisedSynonymParsing:
+    category: dpn.functions.glossary
+    type: bool
+    default: true
+
+  glossary.limitParsingId:
+    category: dpn.functions.glossary
+    type: string
+    default: ''
+
+  glossary.useTermForSynonymParsingDataWrap:
+    category: dpn.functions.glossary
+    type: bool
+    default: false
+
+  glossary.addStylesheet:
+    category: dpn.functions.glossary
+    type: bool
+    default: true
+
+  glossary.overrideFluidStyledContentLayout:
+    category: dpn.functions.glossary
+    type: bool
+    default: false
+
+  glossary.excludeTermLinksTargetPages:
+    category: dpn.functions.glossary
+    type: bool
+    default: false
+
