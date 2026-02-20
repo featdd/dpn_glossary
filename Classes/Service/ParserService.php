@@ -111,7 +111,7 @@ class ParserService implements SingletonInterface
 
             if (count($parsingSpecialWrapCharacters) > 0) {
                 foreach ($parsingSpecialWrapCharacters as $parsingSpecialWrapCharacter) {
-                    self::$additionalRegexWrapCharacters .= '|' . preg_quote($parsingSpecialWrapCharacter);
+                    self::$additionalRegexWrapCharacters .= '|' . str_replace('#', '\#', $parsingSpecialWrapCharacter);
                 }
             }
 
