@@ -6,15 +6,15 @@
     "node": "^24.1"
   },
   "devDependencies": {
-    "@babel/core": "^7.27",
-    "@babel/preset-env": "^7.27",
-    "@babel/register": "^7.27",
-    "cross-env": "^7.0",
+    "@babel/core": "^7.29",
+    "@babel/preset-env": "^7.29",
+    "@babel/register": "^7.28",
+    "cross-env": "^10.1",
     "css-loader": "^7.1",
-    "mini-css-extract-plugin": "^2.9",
-    "sass": "^1.89",
+    "mini-css-extract-plugin": "^2.10",
+    "sass": "^1.97",
     "sass-loader": "^16.0",
-    "webpack": "^5.99",
+    "webpack": "^5.105",
     "webpack-cli": "^6.0",
     "webpack-remove-empty-scripts": "^1.1"
   },
