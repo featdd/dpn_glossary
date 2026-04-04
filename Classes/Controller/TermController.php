@@ -63,7 +63,7 @@ class TermController extends ActionController
 
         $this->storagePids = GeneralUtility::intExplode(
             ',',
-            $frameworkConfiguration['persistence']['storagePid'] ?? '',
+            (string) $frameworkConfiguration['persistence']['storagePid'] ?? '',
             true
         );
     }
@@ -101,9 +101,11 @@ class TermController extends ActionController
                 ]);
 
                 if ($paginator->getCurrentCharacter() !== null) {
-                    $pageTitle = !empty($GLOBALS['TSFE']->page['seo_title'])
-                        ? $GLOBALS['TSFE']->page['seo_title']
-                        : $GLOBALS['TSFE']->page['title'];
+                    $pageRecord = $this->request->getAttribute('frontend.page.information')->getPageRecord();
+
+                    $pageTitle = !empty($pageRecord['seo_title'])
+                        ? $pageRecord['seo_title']
+                        : $pageRecord['title'];
 
                     /** @var \Featdd\DpnGlossary\PageTitle\CharacterPaginationPageTitleProvider $characterPaginationPageTitleProvider */
                     $characterPaginationPageTitleProvider = GeneralUtility::makeInstance(CharacterPaginationPageTitleProvider::class);

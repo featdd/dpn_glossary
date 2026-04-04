@@ -43,7 +43,18 @@ class AfterCacheableContentIsGeneratedEventListener
      */
     public function __invoke(AfterCacheableContentIsGeneratedEvent $afterCacheableContentIsGeneratedEvent): void
     {
-        $typoScriptFrontendController = $afterCacheableContentIsGeneratedEvent->getController();
+        $request = $afterCacheableContentIsGeneratedEvent->getRequest();
+
+        // Fallback for v13 event where content still lays in the TypoScriptFrontendController
+        if (method_exists($afterCacheableContentIsGeneratedEvent, 'getController')) {
+            $typoScriptFrontendController = $afterCacheableContentIsGeneratedEvent->getController();
+            $setContentCallback = fn($content) => $typoScriptFrontendController->content = $content;
+            $content = $typoScriptFrontendController->content;
+        } else {
+            $setContentCallback = fn($content) => $afterCacheableContentIsGeneratedEvent->setContent($content);
+            $content = $afterCacheableContentIsGeneratedEvent->getContent();
+        }
+
         $request = $afterCacheableContentIsGeneratedEvent->getRequest();
 
         /** @var \TYPO3\CMS\Extbase\Configuration\ConfigurationManager $configurationManager */
@@ -60,15 +71,17 @@ class AfterCacheableContentIsGeneratedEventListener
             $isDisableParser = true;
         }
 
-        if ($typoScriptFrontendController->page['tx_dpnglossary_disable_parser']) {
+        $pageRecord = $request->getAttribute('frontend.page.information')->getPageRecord();
+
+        if ($pageRecord['tx_dpnglossary_disable_parser'] ?? false) {
             $isDisableParser = true;
         }
 
         if (!$isDisableParser) {
-            $parsedHTML = $this->parserService->pageParser($request, $typoScriptFrontendController->content);
+            $parsedHTML = $this->parserService->pageParser($request, $content);
 
             if (is_string($parsedHTML)) {
-                $typoScriptFrontendController->content = $parsedHTML;
+                $setContentCallback($parsedHTML);
             }
         }
     }
