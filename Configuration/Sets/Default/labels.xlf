@@ -1,175 +1,224 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
-	<file source-language="en" datatype="plaintext" original="EXT:dpn_glossary/Configuration/Sets/Default/labels.xlf" date="2025-01-01T00:00:00" product-name="dpn_glossary">
+	<file
+        source-language="en"
+        datatype="plaintext"
+        original="EXT:dpn_glossary/Configuration/Sets/Default/labels.xlf"
+        product-name="dpn_glossary"
+    >
 		<header />
 		<body>
 			<!-- Default Settings Category -->
-			<trans-unit id="categories.dpn.functions.glossary">
+			<trans-unit id="categories.dpn-glossary">
 				<source>Glossary</source>
+			</trans-unit>
+			<trans-unit id="categories.dpn-glossary.templates">
+				<source>Templates</source>
+			</trans-unit>
+			<trans-unit id="categories.dpn-glossary.pages">
+				<source>Pages</source>
+			</trans-unit>
+			<trans-unit id="categories.dpn-glossary.parser">
+				<source>Parser</source>
+			</trans-unit>
+			<trans-unit id="categories.dpn-glossary.plugin">
+				<source>Plugin</source>
+			</trans-unit>
+			<trans-unit id="categories.dpn-glossary.additional">
+				<source>Additional</source>
 			</trans-unit>
 
 			<!-- Glossary Settings -->
-			<trans-unit id="settings.glossary.storagePidList">
+			<trans-unit id="settings.dpn-glossary.view.layoutRootPath">
+				<source>Path of Fluid Layouts</source>
+			</trans-unit>
+			<trans-unit id="settings.dpn-glossary.view.templateRootPath">
+				<source>Path of Fluid Templates</source>
+			</trans-unit>
+			<trans-unit id="settings.dpn-glossary.view.partialRootPath">
+				<source>Path of Fluid Partials</source>
+			</trans-unit>
+			<trans-unit id="settings.dpn-glossary.storagePidList">
 				<source>Glossary term storage PageID list</source>
 			</trans-unit>
-			<trans-unit id="settings.description.glossary.storagePidList">
+			<trans-unit id="settings.description.dpn-glossary.storagePidList">
 				<source>Folders PageIDs (comma list) which contains the glossary terms</source>
 			</trans-unit>
 
-			<trans-unit id="settings.glossary.glossaryPage">
+			<trans-unit id="settings.dpn-glossary.dpn-glossaryPage">
 				<source>Glossary page PageID</source>
 			</trans-unit>
-			<trans-unit id="settings.description.glossary.glossaryPage">
+			<trans-unit id="settings.description.dpn-glossary.glossaryPage">
 				<source>PageID of the detailpage for parsed terms</source>
 			</trans-unit>
 
-			<trans-unit id="settings.glossary.parsingPids">
+			<trans-unit id="settings.dpn-glossary.parsingPids">
 				<source>Parsing Pages</source>
 			</trans-unit>
-			<trans-unit id="settings.description.glossary.parsingPids">
+			<trans-unit id="settings.description.dpn-glossary.parsingPids">
 				<source>Pages PageIDs (comma list) which should be parsed for glossary terms (0 = all)</source>
 			</trans-unit>
 
-			<trans-unit id="settings.glossary.parsingExcludePidList">
+			<trans-unit id="settings.dpn-glossary.parsingExcludePidList">
 				<source>Exclude Pages</source>
 			</trans-unit>
-			<trans-unit id="settings.description.glossary.parsingExcludePidList">
+			<trans-unit id="settings.description.dpn-glossary.parsingExcludePidList">
 				<source>Pages PageIDs (comma list) which should not be parsed for glossary terms</source>
 			</trans-unit>
 
-			<trans-unit id="settings.glossary.parsingSpecialWrapCharacters">
+			<trans-unit id="settings.dpn-glossary.parsingSpecialWrapCharacters">
 				<source>Parsing Special Wrap Characters</source>
 			</trans-unit>
-			<trans-unit id="settings.description.glossary.parsingSpecialWrapCharacters">
+			<trans-unit id="settings.description.dpn-glossary.parsingSpecialWrapCharacters">
 				<source>Additional special characters to respect in parser regular expression</source>
 			</trans-unit>
 
-			<trans-unit id="settings.glossary.parserRepositoryClass">
+			<trans-unit id="settings.dpn-glossary.parserRepositoryClass">
 				<source>Parser Repository Class</source>
 			</trans-unit>
-			<trans-unit id="settings.description.glossary.parserRepositoryClass">
+			<trans-unit id="settings.description.dpn-glossary.parserRepositoryClass">
 				<source>The repository class used in the parser service</source>
 			</trans-unit>
+			<trans-unit id="settings.dpn-glossary.parserRepositoryClass.enum.minimal">
+				<source>Minimal (better performance)</source>
+			</trans-unit>
+			<trans-unit id="settings.dpn-glossary.parserRepositoryClass.enum.full">
+				<source>Full (More fields available)</source>
+			</trans-unit>
 
-			<trans-unit id="settings.glossary.maxReplacementPerPage">
+			<trans-unit id="settings.dpn-glossary.maxReplacementPerPage">
 				<source>Maximum Replacements Per Page</source>
 			</trans-unit>
-			<trans-unit id="settings.description.glossary.maxReplacementPerPage">
+			<trans-unit id="settings.description.dpn-glossary.maxReplacementPerPage">
 				<source>Maximum replacements for each term (-1 = any)</source>
 			</trans-unit>
 
-			<trans-unit id="settings.glossary.maxReplacementPerPageRespectSynonyms">
+			<trans-unit id="settings.dpn-glossary.maxReplacementPerPageRespectSynonyms">
 				<source>Respect Replacement Counter for Synonyms</source>
 			</trans-unit>
-			<trans-unit id="settings.description.glossary.maxReplacementPerPageRespectSynonyms">
+			<trans-unit id="settings.description.dpn-glossary.maxReplacementPerPageRespectSynonyms">
 				<source>Respect replacement counter when parsing synonyms</source>
 			</trans-unit>
 
-			<trans-unit id="settings.glossary.parsingTags">
+			<trans-unit id="settings.dpn-glossary.parsingTags">
 				<source>Parsing Tags</source>
 			</trans-unit>
-			<trans-unit id="settings.description.glossary.parsingTags">
+			<trans-unit id="settings.description.dpn-glossary.parsingTags">
 				<source>Tags which content will be parsed for terms</source>
 			</trans-unit>
 
-			<trans-unit id="settings.glossary.forbiddenParentTags">
+			<trans-unit id="settings.dpn-glossary.forbiddenParentTags">
 				<source>Forbidden Parent Tags</source>
 			</trans-unit>
-			<trans-unit id="settings.description.glossary.forbiddenParentTags">
+			<trans-unit id="settings.description.dpn-glossary.forbiddenParentTags">
 				<source>Tags which are not allowed as direct parent for a parsingTag</source>
 			</trans-unit>
 
-			<trans-unit id="settings.glossary.forbiddenParsingTagClasses">
+			<trans-unit id="settings.dpn-glossary.forbiddenParsingTagClasses">
 				<source>Forbidden Parsing Tag Classes</source>
 			</trans-unit>
-			<trans-unit id="settings.description.glossary.forbiddenParsingTagClasses">
+			<trans-unit id="settings.description.dpn-glossary.forbiddenParsingTagClasses">
 				<source>Classes which are not allowed for the parsing tag</source>
 			</trans-unit>
 
-			<trans-unit id="settings.glossary.forbiddenParentClasses">
+			<trans-unit id="settings.dpn-glossary.forbiddenParentClasses">
 				<source>Forbidden Parent Classes</source>
 			</trans-unit>
-			<trans-unit id="settings.description.glossary.forbiddenParentClasses">
+			<trans-unit id="settings.description.dpn-glossary.forbiddenParentClasses">
 				<source>Classes which are not allowed on any parent of the parsing tag</source>
 			</trans-unit>
 
-			<trans-unit id="settings.glossary.listmode">
+			<trans-unit id="settings.dpn-glossary.listmode">
 				<source>List Mode</source>
 			</trans-unit>
-			<trans-unit id="settings.description.glossary.listmode">
+			<trans-unit id="settings.description.dpn-glossary.listmode">
 				<source>Listmode: normal, character or paginated by characters</source>
 			</trans-unit>
+			<trans-unit id="settings.dpn-glossary.listmode.enum.normal">
+				<source>Normal</source>
+			</trans-unit>
+			<trans-unit id="settings.dpn-glossary.listmode.enum.character">
+				<source>Gouped by characters</source>
+			</trans-unit>
+			<trans-unit id="settings.dpn-glossary.listmode.enum.pagination">
+				<source>Pagination by characters</source>
+			</trans-unit>
 
-			<trans-unit id="settings.glossary.previewmode">
+			<trans-unit id="settings.dpn-glossary.previewmode">
 				<source>Preview Mode</source>
 			</trans-unit>
-			<trans-unit id="settings.description.glossary.previewmode">
+			<trans-unit id="settings.description.dpn-glossary.previewmode">
 				<source>Previewmode: newest or random</source>
 			</trans-unit>
+			<trans-unit id="settings.dpn-glossary.previewmode.enum.newest">
+				<source>Newest</source>
+			</trans-unit>
+			<trans-unit id="settings.dpn-glossary.previewmode.enum.random">
+				<source>Random</source>
+			</trans-unit>
 
-			<trans-unit id="settings.glossary.previewlimit">
+			<trans-unit id="settings.dpn-glossary.previewlimit">
 				<source>Preview Limit</source>
 			</trans-unit>
-			<trans-unit id="settings.description.glossary.previewlimit">
+			<trans-unit id="settings.description.dpn-glossary.previewlimit">
 				<source>Previewlimit</source>
 			</trans-unit>
 
-			<trans-unit id="settings.glossary.disableParser">
+			<trans-unit id="settings.dpn-glossary.disableParser">
 				<source>Disable Parser</source>
 			</trans-unit>
-			<trans-unit id="settings.description.glossary.disableParser">
+			<trans-unit id="settings.description.dpn-glossary.disableParser">
 				<source>Disable parser (default: enabled)</source>
 			</trans-unit>
 
-			<trans-unit id="settings.glossary.parseSynonyms">
+			<trans-unit id="settings.dpn-glossary.parseSynonyms">
 				<source>Parse Synonyms</source>
 			</trans-unit>
-			<trans-unit id="settings.description.glossary.parseSynonyms">
+			<trans-unit id="settings.description.dpn-glossary.parseSynonyms">
 				<source>Parse the terms synonyms (default: enabled)</source>
 			</trans-unit>
 
-			<trans-unit id="settings.glossary.priorisedSynonymParsing">
+			<trans-unit id="settings.dpn-glossary.priorisedSynonymParsing">
 				<source>Priorise Synonym Parsing</source>
 			</trans-unit>
-			<trans-unit id="settings.description.glossary.priorisedSynonymParsing">
+			<trans-unit id="settings.description.dpn-glossary.priorisedSynonymParsing">
 				<source>Priorise the synonyms before the actual term when parsing (default: enabled)</source>
 			</trans-unit>
 
-			<trans-unit id="settings.glossary.limitParsingId">
+			<trans-unit id="settings.dpn-glossary.limitParsingId">
 				<source>Limit Parsing ID</source>
 			</trans-unit>
-			<trans-unit id="settings.description.glossary.limitParsingId">
+			<trans-unit id="settings.description.dpn-glossary.limitParsingId">
 				<source>Limit parsing to a single node with this ID</source>
 			</trans-unit>
 
-			<trans-unit id="settings.glossary.useTermForSynonymParsingDataWrap">
+			<trans-unit id="settings.dpn-glossary.useTermForSynonymParsingDataWrap">
 				<source>Use Term for Synonym Parsing Data Wrap</source>
 			</trans-unit>
-			<trans-unit id="settings.description.glossary.useTermForSynonymParsingDataWrap">
+			<trans-unit id="settings.description.dpn-glossary.useTermForSynonymParsingDataWrap">
 				<source>Use the origin term for content object data when parsing synonyms (default: disabled)</source>
 			</trans-unit>
 
-			<trans-unit id="settings.glossary.addStylesheet">
+			<trans-unit id="settings.dpn-glossary.addStylesheet">
 				<source>Add Stylesheet</source>
 			</trans-unit>
-			<trans-unit id="settings.description.glossary.addStylesheet">
+			<trans-unit id="settings.description.dpn-glossary.addStylesheet">
 				<source>Add the extension stylesheet (default: enabled)</source>
 			</trans-unit>
 
-			<trans-unit id="settings.glossary.overrideFluidStyledContentLayout">
+			<trans-unit id="settings.dpn-glossary.overrideFluidStyledContentLayout">
 				<source>Override Fluid Styled Content Layout</source>
 			</trans-unit>
-			<trans-unit id="settings.description.glossary.overrideFluidStyledContentLayout">
+			<trans-unit id="settings.description.dpn-glossary.overrideFluidStyledContentLayout">
 				<source>Override fluid styled content layout to enable dynamic exclusion via content properties (default: enabled)</source>
 			</trans-unit>
 
-			<trans-unit id="settings.glossary.excludeTermLinksTargetPages">
+			<trans-unit id="settings.dpn-glossary.excludeTermLinksTargetPages">
 				<source>Exclude Term Links Target Pages</source>
 			</trans-unit>
-			<trans-unit id="settings.description.glossary.excludeTermLinksTargetPages">
+			<trans-unit id="settings.description.dpn-glossary.excludeTermLinksTargetPages">
 				<source>Don't parse terms when current page is the term links target (default: disabled)</source>
 			</trans-unit>
 		</body>
 	</file>
 </xliff>
-

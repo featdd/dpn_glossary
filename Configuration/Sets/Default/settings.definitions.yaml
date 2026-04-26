@@ -1,120 +1,154 @@
 categories:
-  dpn.functions.glossary:
-    parent: dpn.functions
+  dpn-glossary:
+    label: "dreipunktnull Glossar"
+  dpn-glossary.templates:
+    parent: dpn-glossary
+  dpn-glossary.pages:
+    parent: dpn-glossary
+  dpn-glossary.parser:
+    parent: dpn-glossary
+  dpn-glossary.plugin:
+    parent: dpn-glossary
+  dpn-glossary.additional:
+    parent: dpn-glossary
 
 settings:
-  glossary.storagePidList:
-    category: dpn.functions.glossary
+  dpn-glossary.view.layoutRootPath:
+    default: "EXT:dpn_glossary/Resources/Private/Layouts/"
     type: string
-    default: ''
+    category: dpn-glossary.templates
 
-  glossary.glossaryPage:
-    category: dpn.functions.glossary
+  dpn-glossary.view.templateRootPath:
+    default: "EXT:dpn_glossary/Resources/Private/Templates/"
+    type: string
+    category: dpn-glossary.templates
+
+  dpn-glossary.view.partialRootPath:
+    default: "EXT:dpn_glossary/Resources/Private/Partials/"
+    type: string
+    category: dpn-glossary.templates
+
+  dpn-glossary.storagePidList:
+    category: dpn-glossary.pages
+    type: string
+    default: ""
+
+  dpn-glossary.glossaryPage:
+    category: dpn-glossary.pages
     type: page
     default: 0
 
-  glossary.parsingPids:
-    category: dpn.functions.glossary
+  dpn-glossary.parsingPids:
+    category: dpn-glossary.pages
     type: string
-    default: '0'
+    default: ""
 
-  glossary.parsingExcludePidList:
-    category: dpn.functions.glossary
+  dpn-glossary.parsingExcludePidList:
+    category: dpn-glossary.pages
     type: string
-    default: ''
+    default: ""
 
-  glossary.parsingSpecialWrapCharacters:
-    category: dpn.functions.glossary
+  dpn-glossary.disableParser:
+    category: dpn-glossary.parser
+    type: bool
+    default: false
+
+  dpn-glossary.parsingSpecialWrapCharacters:
+    category: dpn-glossary.parser
     type: string
-    default: ''
+    default: ""
 
-  glossary.parserRepositoryClass:
-    category: dpn.functions.glossary
+  dpn-glossary.parserRepositoryClass:
+    category: dpn-glossary.parser
     type: string
     default: 'Featdd\DpnGlossary\Domain\Repository\ParserTermRepository'
+    enum:
+      'Featdd\DpnGlossary\Domain\Repository\ParserTermRepository': "LLL:EXT:dpn_glossary/Configuration/Sets/Default/labels.xlf:settings.dpn-glossary.parserRepositoryClass.enum.minimal"
+      'Featdd\DpnGlossary\Domain\Repository\TermRepository': "LLL:EXT:dpn_glossary/Configuration/Sets/Default/labels.xlf:settings.dpn-glossary.parserRepositoryClass.enum.full"
 
-  glossary.maxReplacementPerPage:
-    category: dpn.functions.glossary
+  dpn-glossary.maxReplacementPerPage:
+    category: dpn-glossary.parser
     type: int
     default: -1
 
-  glossary.maxReplacementPerPageRespectSynonyms:
-    category: dpn.functions.glossary
+  dpn-glossary.maxReplacementPerPageRespectSynonyms:
+    category: dpn-glossary.parser
     type: bool
     default: false
 
-  glossary.parsingTags:
-    category: dpn.functions.glossary
+  dpn-glossary.parsingTags:
+    category: dpn-glossary.parser
     type: string
-    default: 'p'
+    default: "p"
 
-  glossary.forbiddenParentTags:
-    category: dpn.functions.glossary
+  dpn-glossary.forbiddenParentTags:
+    category: dpn-glossary.parser
     type: string
-    default: 'a,script'
+    default: "a,script"
 
-  glossary.forbiddenParsingTagClasses:
-    category: dpn.functions.glossary
+  dpn-glossary.forbiddenParsingTagClasses:
+    category: dpn-glossary.parser
     type: string
-    default: ''
+    default: ""
 
-  glossary.forbiddenParentClasses:
-    category: dpn.functions.glossary
+  dpn-glossary.forbiddenParentClasses:
+    category: dpn-glossary.parser
     type: string
-    default: 'tx_dpn_glossary_exclude'
+    default: "tx_dpn_dpn-glossary_exclude"
 
-  glossary.listmode:
-    category: dpn.functions.glossary
+  dpn-glossary.parseSynonyms:
+    category: dpn-glossary.parser
+    type: bool
+    default: true
+
+  dpn-glossary.priorisedSynonymParsing:
+    category: dpn-glossary.parser
+    type: bool
+    default: true
+
+  dpn-glossary.limitParsingId:
+    category: dpn-glossary.parser
     type: string
-    default: 'normal'
+    default: ""
 
-  glossary.previewmode:
-    category: dpn.functions.glossary
+  dpn-glossary.useTermForSynonymParsingDataWrap:
+    category: dpn-glossary.parser
+    type: bool
+    default: false
+
+  dpn-glossary.excludeTermLinksTargetPages:
+    category: dpn-glossary.parser
+    type: bool
+    default: false
+
+  dpn-glossary.listmode:
+    category: dpn-glossary.plugin
     type: string
-    default: 'newest'
+    default: "normal"
+    enum:
+      normal: "LLL:EXT:dpn_glossary/Configuration/Sets/Default/labels.xlf:settings.dpn-glossary.listmode.enum.normal"
+      character: "LLL:EXT:dpn_glossary/Configuration/Sets/Default/labels.xlf:settings.dpn-glossary.listmode.enum.character"
+      pagination: "LLL:EXT:dpn_glossary/Configuration/Sets/Default/labels.xlf:settings.dpn-glossary.listmode.enum.pagination"
 
-  glossary.previewlimit:
-    category: dpn.functions.glossary
+  dpn-glossary.previewmode:
+    category: dpn-glossary.plugin
+    type: string
+    default: "newest"
+    enum:
+      newest: "LLL:EXT:dpn_glossary/Configuration/Sets/Default/labels.xlf:settings.dpn-glossary.previewmode.enum.newest"
+      random: "LLL:EXT:dpn_glossary/Configuration/Sets/Default/labels.xlf:settings.dpn-glossary.previewmode.enum.random"
+
+  dpn-glossary.previewlimit:
+    category: dpn-glossary.plugin
     type: int
     default: 5
 
-  glossary.disableParser:
-    category: dpn.functions.glossary
-    type: bool
-    default: false
-
-  glossary.parseSynonyms:
-    category: dpn.functions.glossary
+  dpn-glossary.addStylesheet:
+    category: dpn-glossary.additional
     type: bool
     default: true
 
-  glossary.priorisedSynonymParsing:
-    category: dpn.functions.glossary
-    type: bool
-    default: true
-
-  glossary.limitParsingId:
-    category: dpn.functions.glossary
-    type: string
-    default: ''
-
-  glossary.useTermForSynonymParsingDataWrap:
-    category: dpn.functions.glossary
+  dpn-glossary.overrideFluidStyledContentLayout:
+    category: dpn-glossary.additional
     type: bool
     default: false
-
-  glossary.addStylesheet:
-    category: dpn.functions.glossary
-    type: bool
-    default: true
-
-  glossary.overrideFluidStyledContentLayout:
-    category: dpn.functions.glossary
-    type: bool
-    default: false
-
-  glossary.excludeTermLinksTargetPages:
-    category: dpn.functions.glossary
-    type: bool
-    default: false
-
