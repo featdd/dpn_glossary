@@ -4,6 +4,13 @@
 ChangeLog
 =========
 
+v7.0.0
+  * Add support for TYPO3 v14
+  * Drop support for TYPO3 v12
+  * Add site set configuration
+  * Add additional plugin configuration options
+  * Bugfixes, optimizations and refactorings
+
 v6.1.3
   * Prevent TypeErrors and handle missing StoragePids properly
 
