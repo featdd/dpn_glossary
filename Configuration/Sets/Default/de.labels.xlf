@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+	<file
+        source-language="en"
+        target-language="de"
+        datatype="plaintext"
+        original="EXT:dpn_glossary/Configuration/Sets/Default/de.labels.xlf"
+        product-name="dpn_glossary"
+    >
+		<header />
+		<body>
+			<!-- Default Settings Category -->
+			<trans-unit id="categories.dpn.functions.glossary">
+				<target>Glossar</target>
+			</trans-unit>
+			<trans-unit id="categories.dpn-glossary.templates">
+				<target>Templates</target>
+			</trans-unit>
+			<trans-unit id="categories.dpn-glossary.pages">
+				<target>Seiten</target>
+			</trans-unit>
+			<trans-unit id="categories.dpn-glossary.parser">
+				<target>Parser</target>
+			</trans-unit>
+			<trans-unit id="categories.dpn-glossary.plugin">
+				<target>Plugin</target>
+			</trans-unit>
+			<trans-unit id="categories.dpn-glossary.additional">
+				<target>Erweitert</target>
+			</trans-unit>
+
+			<!-- Glossary Settings -->
+			<trans-unit id="settings.dpn-glossary.view.layoutRootPath">
+				<target>Pfad zu den Fluid Layouts</target>
+			</trans-unit>
+			<trans-unit id="settings.dpn-glossary.view.templateRootPath">
+				<target>Pfad zu den Fluid Templates</target>
+			</trans-unit>
+			<trans-unit id="settings.dpn-glossary.view.partialRootPath">
+				<target>Pfad zu den Fluid Partials</target>
+			</trans-unit>
+			<trans-unit id="settings.dpn-glossary.storagePidList">
+				<target>Glossar-Begriffe Speicherort PageID Liste</target>
+			</trans-unit>
+			<trans-unit id="settings.description.dpn-glossary.storagePidList">
+				<target>Ordner PageIDs (kommagetrennte Liste), welche die Glossar-Begriffe beinhalten</target>
+			</trans-unit>
+
+			<trans-unit id="settings.dpn-glossary.glossaryPage">
+				<target>Glossarseiten PageID</target>
+			</trans-unit>
+			<trans-unit id="settings.description.dpn-glossary.glossaryPage">
+				<target>PageID der Detailseite für geparste Begriffe</target>
+			</trans-unit>
+
+			<trans-unit id="settings.dpn-glossary.parsingPids">
+				<target>Zu parsende Seiten</target>
+			</trans-unit>
+			<trans-unit id="settings.description.dpn-glossary.parsingPids">
+				<target>Seiten PageIDs (kommagetrennte Liste), die nach Glossar-Begriffen durchsucht werden sollen (0 = alle)</target>
+			</trans-unit>
+
+			<trans-unit id="settings.dpn-glossary.parsingExcludePidList">
+				<target>Ausgeschlossene Seiten</target>
+			</trans-unit>
+			<trans-unit id="settings.description.dpn-glossary.parsingExcludePidList">
+				<target
+                >Seiten PageIDs (kommagetrennte Liste), die nicht nach Glossar-Begriffen durchsucht werden sollen</target>
+			</trans-unit>
+
+			<trans-unit id="settings.dpn-glossary.parsingSpecialWrapCharacters">
+				<target>Parsing-Spezialzeichen</target>
+			</trans-unit>
+			<trans-unit id="settings.description.dpn-glossary.parsingSpecialWrapCharacters">
+				<target>Zusätzliche Sonderzeichen, die in der Parser-Regular-Expression berücksichtigt werden sollen</target>
+			</trans-unit>
+
+			<trans-unit id="settings.dpn-glossary.parserRepositoryClass">
+				<target>Parser Repository Klasse</target>
+			</trans-unit>
+			<trans-unit id="settings.description.dpn-glossary.parserRepositoryClass">
+				<target>Die im Parser-Service verwendete Repository-Klasse</target>
+			</trans-unit>
+			<trans-unit id="settings.dpn-glossary.parserRepositoryClass.enum.minimal">
+				<target>Minial (bessere Performance)</target>
+			</trans-unit>
+			<trans-unit id="settings.dpn-glossary.parserRepositoryClass.enum.full">
+				<target>Vollständig (mehr Felder verfügbar)</target>
+			</trans-unit>
+
+			<trans-unit id="settings.dpn-glossary.maxReplacementPerPage">
+				<target>Maximale Ersetzungen pro Seite</target>
+			</trans-unit>
+			<trans-unit id="settings.description.dpn-glossary.maxReplacementPerPage">
+				<target>Maximale Ersetzungen für jeden Begriff (-1 = unbegrenzt)</target>
+			</trans-unit>
+
+			<trans-unit id="settings.dpn-glossary.maxReplacementPerPageRespectSynonyms">
+				<target>Ersetzungszähler für Synonyme berücksichtigen</target>
+			</trans-unit>
+			<trans-unit id="settings.description.dpn-glossary.maxReplacementPerPageRespectSynonyms">
+				<target>Ersetzungszähler beim Parsen von Synonymen berücksichtigen</target>
+			</trans-unit>
+
+			<trans-unit id="settings.dpn-glossary.parsingTags">
+				<target>Parsing-Tags</target>
+			</trans-unit>
+			<trans-unit id="settings.description.dpn-glossary.parsingTags">
+				<target>Tags, deren Inhalt nach Begriffen durchsucht wird</target>
+			</trans-unit>
+
+			<trans-unit id="settings.dpn-glossary.forbiddenParentTags">
+				<target>Verbotene Eltern-Tags</target>
+			</trans-unit>
+			<trans-unit id="settings.description.dpn-glossary.forbiddenParentTags">
+				<target>Tags, die nicht als direktes Elternelement für ein Parsing-Tag erlaubt sind</target>
+			</trans-unit>
+
+			<trans-unit id="settings.dpn-glossary.forbiddenParsingTagClasses">
+				<target>Verbotene Parsing-Tag-Klassen</target>
+			</trans-unit>
+			<trans-unit id="settings.description.dpn-glossary.forbiddenParsingTagClasses">
+				<target>Klassen, die für das Parsing-Tag nicht erlaubt sind</target>
+			</trans-unit>
+
+			<trans-unit id="settings.dpn-glossary.forbiddenParentClasses">
+				<target>Verbotene Eltern-Klassen</target>
+			</trans-unit>
+			<trans-unit id="settings.description.dpn-glossary.forbiddenParentClasses">
+				<target>Klassen, die auf keinem Elternelement des Parsing-Tags erlaubt sind</target>
+			</trans-unit>
+
+			<trans-unit id="settings.dpn-glossary.listmode">
+				<target>Listen-Modus</target>
+			</trans-unit>
+			<trans-unit id="settings.description.dpn-glossary.listmode">
+				<target>Listen-Modus: normal, zeichenbasiert oder nach Zeichen paginiert</target>
+			</trans-unit>
+			<trans-unit id="settings.dpn-glossary.listmode.enum.normal">
+				<target>Normal</target>
+			</trans-unit>
+			<trans-unit id="settings.dpn-glossary.listmode.enum.character">
+				<target>Gruppiert nach Buchstaben</target>
+			</trans-unit>
+			<trans-unit id="settings.dpn-glossary.listmode.enum.pagination">
+				<target>Seiten nach Buchstaben</target>
+			</trans-unit>
+
+			<trans-unit id="settings.dpn-glossary.previewmode">
+				<target>Vorschau-Modus</target>
+			</trans-unit>
+			<trans-unit id="settings.description.dpn-glossary.previewmode">
+				<target>Vorschau-Modus: neueste oder zufällig</target>
+			</trans-unit>
+			<trans-unit id="settings.dpn-glossary.previewmode.enum.newest">
+				<target>Neueste</target>
+			</trans-unit>
+			<trans-unit id="settings.dpn-glossary.previewmode.enum.random">
+				<target>Zufällig</target>
+			</trans-unit>
+
+			<trans-unit id="settings.dpn-glossary.previewlimit">
+				<target>Vorschau-Limit</target>
+			</trans-unit>
+			<trans-unit id="settings.description.dpn-glossary.previewlimit">
+				<target>Vorschau-Limit</target>
+			</trans-unit>
+
+			<trans-unit id="settings.dpn-glossary.disableParser">
+				<target>Parser deaktivieren</target>
+			</trans-unit>
+			<trans-unit id="settings.description.dpn-glossary.disableParser">
+				<target>Parser deaktivieren (Standard: aktiviert)</target>
+			</trans-unit>
+
+			<trans-unit id="settings.dpn-glossary.parseSynonyms">
+				<target>Synonyme parsen</target>
+			</trans-unit>
+			<trans-unit id="settings.description.dpn-glossary.parseSynonyms">
+				<target>Synonyme der Begriffe parsen (Standard: aktiviert)</target>
+			</trans-unit>
+
+			<trans-unit id="settings.dpn-glossary.priorisedSynonymParsing">
+				<target>Synonym-Parsing priorisieren</target>
+			</trans-unit>
+			<trans-unit id="settings.description.dpn-glossary.priorisedSynonymParsing">
+				<target>Synonyme vor dem eigentlichen Begriff beim Parsen priorisieren (Standard: aktiviert)</target>
+			</trans-unit>
+
+			<trans-unit id="settings.dpn-glossary.limitParsingId">
+				<target>Parsing-ID begrenzen</target>
+			</trans-unit>
+			<trans-unit id="settings.description.dpn-glossary.limitParsingId">
+				<target>Parsing auf einen einzelnen Knoten mit dieser ID begrenzen</target>
+			</trans-unit>
+
+			<trans-unit id="settings.dpn-glossary.useTermForSynonymParsingDataWrap">
+				<target>Begriff für Synonym-Parsing Data Wrap verwenden</target>
+			</trans-unit>
+			<trans-unit id="settings.description.dpn-glossary.useTermForSynonymParsingDataWrap">
+				<target>Ursprünglichen Begriff für Content-Object-Daten beim Parsen von Synonymen verwenden (Standard: deaktiviert)</target>
+			</trans-unit>
+
+			<trans-unit id="settings.dpn-glossary.addStylesheet">
+				<target>Stylesheet hinzufügen</target>
+			</trans-unit>
+			<trans-unit id="settings.description.dpn-glossary.addStylesheet">
+				<target>Erweiterungs-Stylesheet hinzufügen (Standard: aktiviert)</target>
+			</trans-unit>
+
+			<trans-unit id="settings.dpn-glossary.overrideFluidStyledContentLayout">
+				<target>Fluid Styled Content Layout überschreiben</target>
+			</trans-unit>
+			<trans-unit id="settings.description.dpn-glossary.overrideFluidStyledContentLayout">
+				<target>Fluid Styled Content Layout überschreiben, um dynamischen Ausschluss über Content-Eigenschaften zu ermöglichen (Standard: aktiviert)</target>
+			</trans-unit>
+
+			<trans-unit id="settings.dpn-glossary.excludeTermLinksTargetPages">
+				<target>Zielseiten von Begriffs-Links ausschließen</target>
+			</trans-unit>
+			<trans-unit id="settings.description.dpn-glossary.excludeTermLinksTargetPages">
+				<target>Begriffe nicht parsen, wenn die aktuelle Seite das Ziel der Begriff-Links ist (Standard: deaktiviert)</target>
+			</trans-unit>
+		</body>
+	</file>
+</xliff>

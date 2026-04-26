@@ -10,11 +10,11 @@ namespace Featdd\DpnGlossary\ViewHelpers;
  * For the full copyright and license information, please read the
  * LICENSE.txt file that was distributed with this source code.
  *
- *  (c) 2025 Daniel Dorndorf <dorndorf@featdd.de>
+ *  (c) 2026 Daniel Dorndorf <dorndorf@featdd.de>
  *
  ***/
 
-use TYPO3\CMS\Core\Utility\GeneralUtility;
+use Psr\Http\Message\ServerRequestInterface;
 use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractTagBasedViewHelper;
 
 /**
@@ -27,17 +27,13 @@ class BacklinkViewHelper extends AbstractTagBasedViewHelper
      */
     protected $tagName = 'a';
 
-    public function initializeArguments(): void
-    {
-        $this->registerUniversalTagAttributes();
-    }
-
     /**
      * @return string
      */
     public function render(): string
     {
-        $httpReferer = GeneralUtility::getIndpEnv('HTTP_REFERER');
+        $request = $this->renderingContext->getAttribute(ServerRequestInterface::class);
+        $httpReferer = $request?->getServerParams()['HTTP_REFERER'] ?? '';
 
         $url = false === empty($httpReferer)
             ? $httpReferer

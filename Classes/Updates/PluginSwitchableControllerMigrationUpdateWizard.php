@@ -10,7 +10,7 @@ namespace Featdd\DpnGlossary\Updates;
  * For the full copyright and license information, please read the
  * LICENSE.txt file that was distributed with this source code.
  *
- *  (c) 2025 Daniel Dorndorf <dorndorf@featdd.de>
+ *  (c) 2026 Daniel Dorndorf <dorndorf@featdd.de>
  *
  ***/
 
@@ -110,6 +110,10 @@ class PluginSwitchableControllerMigrationUpdateWizard extends AbstractUpdateWiza
      */
     protected function getOldPluginRecords(): array
     {
+        if (!$this->tableColumnExists('tt_content', 'list_type')) {
+            return [];
+        }
+
         $queryBuilder = $this->getQueryBuilder('tt_content');
 
         return $queryBuilder

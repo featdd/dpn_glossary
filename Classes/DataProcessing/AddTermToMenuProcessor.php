@@ -10,12 +10,13 @@ namespace Featdd\DpnGlossary\DataProcessing;
  * For the full copyright and license information, please read the
  * LICENSE.txt file that was distributed with this source code.
  *
- *  (c) 2025 Daniel Dorndorf <dorndorf@featdd.de>
+ *  (c) 2026 Daniel Dorndorf <dorndorf@featdd.de>
  *
  ***/
 
 use Featdd\DpnGlossary\Domain\Model\Term;
 use Featdd\DpnGlossary\Domain\Repository\TermRepository;
+use Psr\Http\Message\ServerRequestInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer;
 use TYPO3\CMS\Frontend\ContentObject\DataProcessorInterface;
@@ -53,7 +54,8 @@ class AddTermToMenuProcessor implements DataProcessorInterface
             return $processedData;
         }
 
-        $parameters = $cObj->getRequest()->getQueryParams()['tx_dpnglossary_glossary'] ?? null;
+        $request = $cObj->getRequest();
+        $parameters = $request->getQueryParams()['tx_dpnglossary_glossary'] ?? null;
 
         if (is_array($parameters) && (int) ($parameters['term'] ?? 0) > 0) {
             $term = $this->termRepository->findByUid((int) $parameters['term']);
@@ -63,7 +65,7 @@ class AddTermToMenuProcessor implements DataProcessorInterface
 
                 foreach ($menus as $menu) {
                     if (isset($processedData[$menu])) {
-                        $this->addTermToMenu($term, $processedData[$menu]);
+                        $this->addTermToMenu($term, $processedData[$menu], $request);
                     }
                 }
             }
@@ -76,7 +78,7 @@ class AddTermToMenuProcessor implements DataProcessorInterface
      * @param \Featdd\DpnGlossary\Domain\Model\Term $term
      * @param array $menu
      */
-    protected function addTermToMenu(Term $term, array &$menu): void
+    protected function addTermToMenu(Term $term, array &$menu, ServerRequestInterface $request): void
     {
         foreach ($menu as &$menuItem) {
             $menuItem['current'] = 0;
@@ -87,7 +89,7 @@ class AddTermToMenuProcessor implements DataProcessorInterface
             'title' => $term->getName(),
             'active' => 1,
             'current' => 1,
-            'link' => GeneralUtility::getIndpEnv('TYPO3_REQUEST_URL'),
+            'link' => (string)$request->getUri(),
             'isTerm' => true,
         ];
     }

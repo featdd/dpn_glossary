@@ -18,7 +18,7 @@
     <project title="dpn_glossary"
              release="6.1"
              version="6.1"
-             copyright="Daniel Dorndorf 2025"
+             copyright="Daniel Dorndorf 2026"
     />
 
     <inventory id="t3tsref" url="https://docs.typo3.org/typo3cms/TyposcriptReference/"/>

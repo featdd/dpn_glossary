@@ -10,7 +10,7 @@ namespace Featdd\DpnGlossary\Controller;
  * For the full copyright and license information, please read the
  * LICENSE.txt file that was distributed with this source code.
  *
- *  (c) 2025 Daniel Dorndorf <dorndorf@featdd.de>
+ *  (c) 2026 Daniel Dorndorf <dorndorf@featdd.de>
  *
  ***/
 
@@ -28,6 +28,7 @@ use TYPO3\CMS\Core\MetaTag\MetaTagManagerRegistry;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
+use TYPO3\CMS\Extbase\Persistence\Generic\Typo3QuerySettings;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 use TYPO3\CMS\Frontend\Controller\ErrorController;
 
@@ -63,9 +64,27 @@ class TermController extends ActionController
 
         $this->storagePids = GeneralUtility::intExplode(
             ',',
-            $frameworkConfiguration['persistence']['storagePid'] ?? '',
+            (string) $frameworkConfiguration['persistence']['storagePid'] ?? '',
             true
         );
+
+        // Override storagePids with startingpoint from FlexForm if set
+        if (!empty($this->settings['startingpoint'])) {
+            $startingPointPids = GeneralUtility::intExplode(
+                ',',
+                $this->settings['startingpoint'],
+                true
+            );
+
+            if (count($startingPointPids)) {
+                $this->storagePids = $startingPointPids;
+            }
+        }
+
+        /** @var \TYPO3\CMS\Extbase\Persistence\Generic\Typo3QuerySettings $querySettings */
+        $querySettings = GeneralUtility::makeInstance(Typo3QuerySettings::class);
+        $querySettings->setStoragePageIds($this->storagePids);
+        $this->termRepository->setDefaultQuerySettings($querySettings);
     }
 
     /**
@@ -74,8 +93,12 @@ class TermController extends ActionController
      */
     public function listAction(?string $currentCharacter = null): ResponseInterface
     {
-        $listMode = $this->settings['listmode'] ?? 'normal';
         $terms = $this->termRepository->findAll();
+        $listMode = !empty($this->settings['overrideListmode'])
+          ? $this->settings['overrideListmode']
+          : (!empty($this->settings['listmode'])
+            ? $this->settings['listmode']
+            : 'normal');
 
         switch ($listMode) {
             case 'character':
@@ -101,9 +124,11 @@ class TermController extends ActionController
                 ]);
 
                 if ($paginator->getCurrentCharacter() !== null) {
-                    $pageTitle = !empty($GLOBALS['TSFE']->page['seo_title'])
-                        ? $GLOBALS['TSFE']->page['seo_title']
-                        : $GLOBALS['TSFE']->page['title'];
+                    $pageRecord = $this->request->getAttribute('frontend.page.information')->getPageRecord();
+
+                    $pageTitle = !empty($pageRecord['seo_title'])
+                        ? $pageRecord['seo_title']
+                        : $pageRecord['title'];
 
                     /** @var \Featdd\DpnGlossary\PageTitle\CharacterPaginationPageTitleProvider $characterPaginationPageTitleProvider */
                     $characterPaginationPageTitleProvider = GeneralUtility::makeInstance(CharacterPaginationPageTitleProvider::class);

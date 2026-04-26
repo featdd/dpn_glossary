@@ -1,0 +1,154 @@
+categories:
+  dpn-glossary:
+    label: "dreipunktnull Glossar"
+  dpn-glossary.templates:
+    parent: dpn-glossary
+  dpn-glossary.pages:
+    parent: dpn-glossary
+  dpn-glossary.parser:
+    parent: dpn-glossary
+  dpn-glossary.plugin:
+    parent: dpn-glossary
+  dpn-glossary.additional:
+    parent: dpn-glossary
+
+settings:
+  dpn-glossary.view.layoutRootPath:
+    default: "EXT:dpn_glossary/Resources/Private/Layouts/"
+    type: string
+    category: dpn-glossary.templates
+
+  dpn-glossary.view.templateRootPath:
+    default: "EXT:dpn_glossary/Resources/Private/Templates/"
+    type: string
+    category: dpn-glossary.templates
+
+  dpn-glossary.view.partialRootPath:
+    default: "EXT:dpn_glossary/Resources/Private/Partials/"
+    type: string
+    category: dpn-glossary.templates
+
+  dpn-glossary.storagePidList:
+    category: dpn-glossary.pages
+    type: string
+    default: ""
+
+  dpn-glossary.glossaryPage:
+    category: dpn-glossary.pages
+    type: page
+    default: 0
+
+  dpn-glossary.parsingPids:
+    category: dpn-glossary.pages
+    type: string
+    default: ""
+
+  dpn-glossary.parsingExcludePidList:
+    category: dpn-glossary.pages
+    type: string
+    default: ""
+
+  dpn-glossary.disableParser:
+    category: dpn-glossary.parser
+    type: bool
+    default: false
+
+  dpn-glossary.parsingSpecialWrapCharacters:
+    category: dpn-glossary.parser
+    type: string
+    default: ""
+
+  dpn-glossary.parserRepositoryClass:
+    category: dpn-glossary.parser
+    type: string
+    default: 'Featdd\DpnGlossary\Domain\Repository\ParserTermRepository'
+    enum:
+      'Featdd\DpnGlossary\Domain\Repository\ParserTermRepository': "LLL:EXT:dpn_glossary/Configuration/Sets/Default/labels.xlf:settings.dpn-glossary.parserRepositoryClass.enum.minimal"
+      'Featdd\DpnGlossary\Domain\Repository\TermRepository': "LLL:EXT:dpn_glossary/Configuration/Sets/Default/labels.xlf:settings.dpn-glossary.parserRepositoryClass.enum.full"
+
+  dpn-glossary.maxReplacementPerPage:
+    category: dpn-glossary.parser
+    type: int
+    default: -1
+
+  dpn-glossary.maxReplacementPerPageRespectSynonyms:
+    category: dpn-glossary.parser
+    type: bool
+    default: false
+
+  dpn-glossary.parsingTags:
+    category: dpn-glossary.parser
+    type: string
+    default: "p"
+
+  dpn-glossary.forbiddenParentTags:
+    category: dpn-glossary.parser
+    type: string
+    default: "a,script"
+
+  dpn-glossary.forbiddenParsingTagClasses:
+    category: dpn-glossary.parser
+    type: string
+    default: ""
+
+  dpn-glossary.forbiddenParentClasses:
+    category: dpn-glossary.parser
+    type: string
+    default: "tx_dpn_dpn-glossary_exclude"
+
+  dpn-glossary.parseSynonyms:
+    category: dpn-glossary.parser
+    type: bool
+    default: true
+
+  dpn-glossary.priorisedSynonymParsing:
+    category: dpn-glossary.parser
+    type: bool
+    default: true
+
+  dpn-glossary.limitParsingId:
+    category: dpn-glossary.parser
+    type: string
+    default: ""
+
+  dpn-glossary.useTermForSynonymParsingDataWrap:
+    category: dpn-glossary.parser
+    type: bool
+    default: false
+
+  dpn-glossary.excludeTermLinksTargetPages:
+    category: dpn-glossary.parser
+    type: bool
+    default: false
+
+  dpn-glossary.listmode:
+    category: dpn-glossary.plugin
+    type: string
+    default: "normal"
+    enum:
+      normal: "LLL:EXT:dpn_glossary/Configuration/Sets/Default/labels.xlf:settings.dpn-glossary.listmode.enum.normal"
+      character: "LLL:EXT:dpn_glossary/Configuration/Sets/Default/labels.xlf:settings.dpn-glossary.listmode.enum.character"
+      pagination: "LLL:EXT:dpn_glossary/Configuration/Sets/Default/labels.xlf:settings.dpn-glossary.listmode.enum.pagination"
+
+  dpn-glossary.previewmode:
+    category: dpn-glossary.plugin
+    type: string
+    default: "newest"
+    enum:
+      newest: "LLL:EXT:dpn_glossary/Configuration/Sets/Default/labels.xlf:settings.dpn-glossary.previewmode.enum.newest"
+      random: "LLL:EXT:dpn_glossary/Configuration/Sets/Default/labels.xlf:settings.dpn-glossary.previewmode.enum.random"
+
+  dpn-glossary.previewlimit:
+    category: dpn-glossary.plugin
+    type: int
+    default: 5
+
+  dpn-glossary.addStylesheet:
+    category: dpn-glossary.additional
+    type: bool
+    default: true
+
+  dpn-glossary.overrideFluidStyledContentLayout:
+    category: dpn-glossary.additional
+    type: bool
+    default: false

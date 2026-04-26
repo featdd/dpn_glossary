@@ -40,24 +40,23 @@ call_user_func(
             'special'
         );
 
-        $flexforms = [
-            'dpnglossary_glossary' => null,
-            'dpnglossary_glossarypreviewnewest' => '/Configuration/FlexForms/PreviewNewest.xml',
-            'dpnglossary_glossarypreviewrandom' => '/Configuration/FlexForms/PreviewRandom.xml',
-            'dpnglossary_glossarypreviewselected' => '/Configuration/FlexForms/PreviewSelected.xml',
-        ];
+        foreach ([
+            'dpnglossary_glossary' => 'Glossary.xml',
+            'dpnglossary_glossarypreviewnewest' => 'PreviewNewest.xml',
+            'dpnglossary_glossarypreviewrandom' => 'PreviewRandom.xml',
+            'dpnglossary_glossarypreviewselected' => 'PreviewSelected.xml',
+        ] as $cType => $flexform) {
+            $GLOBALS['TCA']['tt_content']['types'][$cType]['columnsOverrides']['pi_flexform']['config']['ds'] = sprintf(
+                'FILE:EXT:dpn_glossary/Configuration/FlexForms/%s',
+                $flexform
+            );
 
-        foreach ($flexforms as $cType => $flexform) {
-            if ($flexform !== null) {
-                ExtensionManagementUtility::addPiFlexFormValue('*', 'FILE:EXT:dpn_glossary' . $flexform, $cType);
-
-                ExtensionManagementUtility::addToAllTCAtypes(
-                    'tt_content',
-                    '--div--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:tabs.plugin,pi_flexform',
-                    $cType,
-                    'after:header'
-                );
-            }
+            ExtensionManagementUtility::addToAllTCAtypes(
+                'tt_content',
+                '--div--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:tabs.plugin,pi_flexform',
+                $cType,
+                'after:header'
+            );
         }
 
         ExtensionManagementUtility::addTCAcolumns('tt_content', [

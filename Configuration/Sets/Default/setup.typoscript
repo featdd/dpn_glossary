@@ -1,0 +1,44 @@
+@import 'EXT:dpn_glossary/Configuration/TypoScript/setup.typoscript'
+
+plugin.tx_dpnglossary {
+  view {
+    layoutRootPaths.1 = {$dpn-glossary.view.layoutRootPath}
+    templateRootPaths.1 = {$dpn-glossary.view.templateRootPath}
+    partialRootPaths.1 = {$dpn-glossary.view.partialRootPath}
+  }
+
+  persistence {
+    storagePid = {$dpn-glossary.storagePidList}
+  }
+
+  settings {
+    detailPage = {$dpn-glossary.glossaryPage}
+    parsingPids = {$dpn-glossary.parsingPids}
+    parsingExcludePidList = {$dpn-glossary.parsingExcludePidList}
+    parsingSpecialWrapCharacters = {$dpn-glossary.parsingSpecialWrapCharacters}
+    parserRepositoryClass = {$dpn-glossary.parserRepositoryClass}
+    maxReplacementPerPage = {$dpn-glossary.maxReplacementPerPage}
+    maxReplacementPerPageRespectSynonyms = {$dpn-glossary.maxReplacementPerPageRespectSynonyms}
+    parsingTags = {$dpn-glossary.parsingTags}
+    forbiddenParentTags = {$dpn-glossary.forbiddenParentTags}
+    forbiddenParsingTagClasses = {$dpn-glossary.forbiddenParsingTagClasses}
+    forbiddenParentClasses = {$dpn-glossary.forbiddenParentClasses}
+    listmode = {$dpn-glossary.listmode}
+    previewmode = {$dpn-glossary.previewmode}
+    previewlimit = {$dpn-glossary.previewlimit}
+    disableParser = {$dpn-glossary.disableParser}
+    parseSynonyms = {$dpn-glossary.parseSynonyms}
+    priorisedSynonymParsing = {$dpn-glossary.priorisedSynonymParsing}
+    limitParsingId = {$dpn-glossary.limitParsingId}
+    useTermForSynonymParsingDataWrap = {$dpn-glossary.useTermForSynonymParsingDataWrap}
+    addStylesheet = {$dpn-glossary.addStylesheet}
+    overrideFluidStyledContentLayout = {$dpn-glossary.overrideFluidStyledContentLayout}
+    excludeTermLinksTargetPages = {$dpn-glossary.excludeTermLinksTargetPages}
+
+    termWraps.default.typolink {
+        parameter.stdWrap.override = {$dpn-glossary.glossaryPage}
+        parameter.stdWrap.override.if.isGreaterThan = {$dpn-glossary.glossaryPage}
+        additionalParams.if.isGreaterThan = {$dpn-glossary.glossaryPage}
+    }
+  }
+}
