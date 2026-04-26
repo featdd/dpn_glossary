@@ -25,7 +25,6 @@ return [
         'security' => [
             'ignorePageTypeRestriction' => true,
         ],
-        'searchFields' => 'name,tooltiptext,descriptions,synonyms,term_type,term_lang,images,',
         'iconfile' => 'EXT:dpn_glossary/Resources/Public/Icons/Term.png',
     ],
     'types' => [

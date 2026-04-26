@@ -19,7 +19,6 @@ return [
         'security' => [
             'ignorePageTypeRestriction' => true,
         ],
-        'searchFields' => 'name,',
         'iconfile' => 'EXT:dpn_glossary/Resources/Public/Icons/Synonym.png',
     ],
     'types' => [

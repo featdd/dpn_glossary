@@ -20,7 +20,6 @@ return [
         'security' => [
             'ignorePageTypeRestriction' => true,
         ],
-        'searchFields' => 'meaning,text,',
         'iconfile' => 'EXT:dpn_glossary/Resources/Public/Icons/Description.png',
     ],
     'types' => [
