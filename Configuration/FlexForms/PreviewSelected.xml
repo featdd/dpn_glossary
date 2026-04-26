@@ -12,7 +12,6 @@
               <type>select</type>
               <renderType>selectMultipleSideBySide</renderType>
               <size>10</size>
-              <maxitems>9999</maxitems>
               <foreign_table>tx_dpnglossary_domain_model_term</foreign_table>
             </config>
           </settings.previewSelected>

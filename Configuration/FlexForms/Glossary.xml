@@ -1,0 +1,49 @@
+<?xml version="1.0" ?>
+<T3DataStructure>
+  <sheets>
+    <sDEF>
+      <ROOT>
+        <sheetTitle>LLL:EXT:dpn_glossary/Resources/Private/Language/locallang.xlf:tx_dpnglossary.flexforms.preview</sheetTitle>
+        <type>array</type>
+        <el>
+          <settings.overrideListmode>
+            <label>
+              LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.layout
+            </label>
+            <config>
+              <type>select</type>
+              <renderType>selectSingle</renderType>
+              <items>
+                <numIndex index="0">
+                  <numIndex index="0">LLL:EXT:dpn_glossary/Resources/Private/Language/locallang.xlf:tx_dpnglossary.flexforms.glossary.list_mode.default</numIndex>
+                  <numIndex index="1"></numIndex>
+                </numIndex>
+                <numIndex index="1">
+                  <numIndex index="0">LLL:EXT:dpn_glossary/Resources/Private/Language/locallang.xlf:tx_dpnglossary.flexforms.glossary.list_mode.normal</numIndex>
+                  <numIndex index="1">normal</numIndex>
+                </numIndex>
+                <numIndex index="2">
+                  <numIndex index="0">LLL:EXT:dpn_glossary/Resources/Private/Language/locallang.xlf:tx_dpnglossary.flexforms.glossary.list_mode.character</numIndex>
+                  <numIndex index="1">character</numIndex>
+                </numIndex>
+                <numIndex index="3">
+                  <numIndex index="0">LLL:EXT:dpn_glossary/Resources/Private/Language/locallang.xlf:tx_dpnglossary.flexforms.glossary.list_mode.pagination</numIndex>
+                  <numIndex index="1">pagination</numIndex>
+                </numIndex>
+              </items>
+            </config>
+          </settings.overrideListmode>
+          <settings.startingpoint>
+            <label>LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.startingpoint</label>
+            <config>
+              <type>group</type>
+              <internal_type>db</internal_type>
+              <allowed>pages</allowed>
+              <size>3</size>
+            </config>
+          </settings.startingpoint>
+        </el>
+      </ROOT>
+    </sDEF>
+  </sheets>
+</T3DataStructure>

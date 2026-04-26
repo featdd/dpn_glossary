@@ -157,6 +157,18 @@
       <trans-unit id="tx_dpnglossary.flexforms.preview.limit">
         <target>Maximal</target>
       </trans-unit>
+      <trans-unit id="tx_dpnglossary.flexforms.glossary.list_mode.default">
+        <target>Standard</target>
+      </trans-unit>
+      <trans-unit id="tx_dpnglossary.flexforms.glossary.list_mode.normal">
+        <target>Normal</target>
+      </trans-unit>
+      <trans-unit id="tx_dpnglossary.flexforms.glossary.list_mode.character">
+        <target>Gruppiert nach Anfangsbuchstaben</target>
+      </trans-unit>
+      <trans-unit id="tx_dpnglossary.flexforms.glossary.list_mode.pagination">
+        <target>Seiten nach Buchstaben</target>
+      </trans-unit>
 
 
       <trans-unit id="tx_dpnglossary.error.slug_preview_site_missing">

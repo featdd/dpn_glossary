@@ -69,21 +69,19 @@ class TermController extends ActionController
         );
 
         // Override storagePids with startingpoint from FlexForm if set
-        if (
-            isset($this->settings['startingpoint']) &&
-            (string)$this->settings['startingpoint'] !== ''
-        ) {
+        if (!empty($this->settings['startingpoint'])) {
             $startingPointPids = GeneralUtility::intExplode(
                 ',',
                 $this->settings['startingpoint'],
                 true
             );
+
             if (count($startingPointPids)) {
                 $this->storagePids = $startingPointPids;
             }
         }
 
-        // Set query settings with storagePids
+        /** @var \TYPO3\CMS\Extbase\Persistence\Generic\Typo3QuerySettings $querySettings */
         $querySettings = GeneralUtility::makeInstance(Typo3QuerySettings::class);
         $querySettings->setStoragePageIds($this->storagePids);
         $this->termRepository->setDefaultQuerySettings($querySettings);
@@ -95,8 +93,12 @@ class TermController extends ActionController
      */
     public function listAction(?string $currentCharacter = null): ResponseInterface
     {
-        $listMode = $this->settings['listmode'] ?? 'normal';
         $terms = $this->termRepository->findAll();
+        $listMode = !empty($this->settings['overrideListmode'])
+          ? $this->settings['overrideListmode']
+          : (!empty($this->settings['listmode'])
+            ? $this->settings['listmode']
+            : 'normal');
 
         switch ($listMode) {
             case 'character':
