@@ -14,6 +14,7 @@ namespace Featdd\DpnGlossary\Updates;
  *
  ***/
 
+use Doctrine\DBAL\Schema\Column;
 use Featdd\DpnGlossary\Domain\Model\TermInterface;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Database\Query\QueryBuilder;
@@ -43,5 +44,24 @@ abstract class AbstractUpdateWizard implements UpgradeWizardInterface
         $queryBuilder->getRestrictions()->add($deletedRestriction);
 
         return $queryBuilder;
+    }
+
+    /**
+     * @param string $tableName
+     * @param string $columnName
+     */
+    protected function tableColumnExists(string $tableName, string $columnName): bool
+    {
+        /** @var \TYPO3\CMS\Core\Database\ConnectionPool $connectionPool */
+        $connectionPool = GeneralUtility::makeInstance(ConnectionPool::class);
+        $schemaManager = $connectionPool->getConnectionForTable($tableName)->createSchemaManager();
+
+        $tableColumns = array_filter(
+            // TODO: Switch method to "introspectTableColumns" when upgrading to TYPO3 v15
+            $schemaManager->listTableColumns($tableName),
+            fn(Column $column) => $column->getObjectName()->getIdentifier()->getValue() === $columnName
+        );
+
+        return count($tableColumns) > 0;
     }
 }

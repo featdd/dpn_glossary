@@ -103,6 +103,10 @@ class PluginCTypeMigrationUpdateWizard extends AbstractUpdateWizard
      */
     protected function getOldPluginRecords(): array
     {
+        if (!$this->tableColumnExists('tt_content', 'list_type')) {
+            return [];
+        }
+
         $queryBuilder = $this->getQueryBuilder('tt_content');
 
         return $queryBuilder
