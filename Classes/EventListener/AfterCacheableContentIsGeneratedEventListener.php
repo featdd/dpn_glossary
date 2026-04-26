@@ -27,14 +27,11 @@ use TYPO3\CMS\Frontend\Event\AfterCacheableContentIsGeneratedEvent;
  */
 class AfterCacheableContentIsGeneratedEventListener
 {
-    /**
-     * @var \Featdd\DpnGlossary\Service\ParserService
-     */
     protected ParserService $parserService;
 
-    public function __construct()
+    public function __construct(ParserService $parserService)
     {
-        $this->parserService = GeneralUtility::makeInstance(ParserService::class);
+        $this->parserService = $parserService;
     }
 
     /**
@@ -43,8 +40,6 @@ class AfterCacheableContentIsGeneratedEventListener
      */
     public function __invoke(AfterCacheableContentIsGeneratedEvent $afterCacheableContentIsGeneratedEvent): void
     {
-        $request = $afterCacheableContentIsGeneratedEvent->getRequest();
-
         // Fallback for v13 event where content still lays in the TypoScriptFrontendController
         if (method_exists($afterCacheableContentIsGeneratedEvent, 'getController')) {
             $typoScriptFrontendController = $afterCacheableContentIsGeneratedEvent->getController();

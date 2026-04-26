@@ -50,8 +50,7 @@ class ModifyUrlForCanonicalTagEventListener
      */
     public function __invoke(ModifyUrlForCanonicalTagEvent $modifyUrlForCanonicalTagEvent): void
     {
-        /** @var \TYPO3\CMS\Extbase\Mvc\Request $request */
-        $request = $GLOBALS['TYPO3_REQUEST'];
+        $request = $modifyUrlForCanonicalTagEvent->getRequest();
 
         $detailPage = (int)($this->settings["detailPage"] ?? 0);
         $listMode = $this->settings["listmode"] ?? '';

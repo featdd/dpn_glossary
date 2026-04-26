@@ -27,6 +27,7 @@ use Psr\Http\Message\ServerRequestInterface;
 use TYPO3\CMS\Core\Cache\Frontend\FrontendInterface;
 use TYPO3\CMS\Core\Context\Context;
 use TYPO3\CMS\Core\Context\Exception\AspectNotFoundException;
+use TYPO3\CMS\Core\Http\NormalizedParams;
 use TYPO3\CMS\Core\Routing\PageArguments;
 use TYPO3\CMS\Core\SingletonInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -346,8 +347,6 @@ class ParserService implements SingletonInterface
         // This can be changed to "$this->termWrapper(...)" when dropping PHP 8.0 support
         $wrapperClosure = Closure::fromCallable([$this, 'termWrapper']);
 
-        /** @var \TYPO3\CMS\Core\Http\ServerRequest $request */
-        $request = $GLOBALS['TYPO3_REQUEST'];
         $queryParameters = $request->getQueryParams();
         $currentDetailPageTermUid = null;
 
@@ -357,6 +356,8 @@ class ParserService implements SingletonInterface
         ) {
             $currentDetailPageTermUid = (int)$queryParameters['tx_dpnglossary_glossary']['term'];
         }
+
+        $currentUrl = strtok((string)$request->getUri(), '?');
 
         foreach ($this->terms as $term) {
             /** @var \Featdd\DpnGlossary\Domain\Model\TermInterface $termObject */
@@ -373,7 +374,6 @@ class ParserService implements SingletonInterface
                     $linkTargetPage = (int)($queryParameters['uid'] ?? null);
                     $termLinkIsCurrentPage = $linkTargetPage === $currentPageId;
                 } else {
-                    $currentUrl = strtok(GeneralUtility::getIndpEnv('TYPO3_REQUEST_URL'), '?');
                     $termLinkIsCurrentPage = $termLink === $currentUrl;
                 }
 
