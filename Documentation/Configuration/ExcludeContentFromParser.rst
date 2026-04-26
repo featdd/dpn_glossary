@@ -7,13 +7,14 @@ Exclude contents from the parser
 Exclude whole pages from being parsed
 -------------------------------------
 
-Pages can be statically excluded from parsing via TypoScript::
+Pages can be statically excluded from parsing via site settings:
 
-    plugin.tx_dpnglossary {
-        settings.parsingExcludePidList = 42, 185, 365
-    }
+.. code-block:: yaml
+   :caption: config/sites/<your-site>/settings.yaml
 
-Pages can also dynamically excluded from parsing by page properties
+   dpn-glossary.parsingExcludePidList: '42,185,365'
+
+Pages can also be dynamically excluded from parsing by page properties
 :guilabel:`Page Properties > Behaviour > Settings for dreipunktnull Glossary`:
 
 .. figure:: /Images/ExcludePageFromParsing.png
@@ -30,28 +31,30 @@ editors decide, which pages should be parsed.
 Exclude content elements from being parsed
 ------------------------------------------
 
-The following TypoScript constant defines HTML classes whose content will be
-excluded from parsing::
+The following site setting defines HTML classes whose content will be excluded
+from parsing:
 
-    plugin.tx_dpnglossary {
-        settings.forbiddenParsingTagClasses = tx_dpn_glossary_exclude, my_search_results
-    }
+.. code-block:: yaml
+   :caption: config/sites/<your-site>/settings.yaml
+
+   dpn-glossary.forbiddenParentClasses: 'tx_dpn_glossary_exclude,my_search_results'
 
 Content wrapped with one of these classes will be excluded from parsing.
 
-Content can also dynamically excluded from parsing by content properties
-:guilabel:`Content Properties > Appearance > Settings for DPN Glossary`.
+Content can also be dynamically excluded from parsing by content properties
+:guilabel:`Content Properties > Appearance > Settings for dreipunktnull Glossar`.
 
-This only works if the default Fluid layout has been overriden to wrap the
+This only works if the default Fluid layout has been overridden to wrap the
 content with the HTML class :html:`tx_dpn_glossary_exclude`  and this class is
-still found in the :typoscript:`settings.forbiddenParsingTagClasses`.
+still found in the ``dpn-glossary.forbiddenParentClasses`` site setting.
 
-You can set the following TypoScript constant to let this extension override
-the Fluid Styled Content default layout::
+You can set the following site setting to let this extension override the Fluid
+Styled Content default layout:
 
-    plugin.tx_dpnglossary {
-        settings.overrideFluidStyledContentLayout = 1
-    }
+.. code-block:: yaml
+   :caption: config/sites/<your-site>/settings.yaml
+
+   dpn-glossary.overrideFluidStyledContentLayout: true
 
 If you need to override the layout yourself make sure to add the following to the
 surrounding tags class:

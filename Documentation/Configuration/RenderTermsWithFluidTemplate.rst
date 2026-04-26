@@ -9,7 +9,7 @@ See this `GitHub Issue <https://github.com/featdd/dpn_glossary/issues/228>`_ for
 
 **Example:**
 
-..  code-block:: TypoScript
+..  code-block:: typoscript
     :caption: Your TypoScript template
 
   plugin.tx_dpnglossary.settings {

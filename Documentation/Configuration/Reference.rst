@@ -1,311 +1,174 @@
-﻿=========
+.. _configuration-reference:
+
+=========
 Reference
 =========
 
-Extension Settings
+Extension settings
 ------------------
 
-.. ### BEGIN~OF~TABLE ###
-
-.. container:: table-row
-
-  Key
-    termSlugEvaluation
-
-  Data Type
-    string
-
-  Description
-    Set the evaluation type for the term slug.
-
-  Default
-    uniqueInSite
-
-.. ###### END~OF~TABLE ######
-
-TypoScript
-----------
-
-.. ### BEGIN~OF~TABLE ###
-
-.. container:: table-row
-
-  Constant
-    settings.detailPage
-
-  Data Type
-    integer
-
-  Description
-    Page ID of the detailpage plugin (parser will link to this)
-
-.. container:: table-row
-
-  Constant
-    settings.parsingPids
-
-  Data Type
-    string
-
-  Description
-    Comma list of pages which should be parsed (0 for all)
-
-  Default
-    0
-
-.. container:: table-row
-
-  Constant
-    settings.parsingExcludePidList
-
-  Data Type
-    string
-
-  Description
-    Comma list of pages which should not be parsed. Can be used to :ref:`exclude
-    pages from being pages <example-exclude-content>`
-
-
-.. container:: table-row
-
-  Constant
-    settings.maxReplacementPerPage
-
-  Data Type
-    integer
-
-  Description
-    Maximum replacements for each term (-1 = any)
-
-  Default
-    -1
-
-.. container:: table-row
-
-  Constant
-    settings.maxReplacementPerPageRespectSynonyms
-
-  Data Type
-    boolean
-
-  Description
-    Respect replacement counter when parsing synonyms
-
-  Default
-    0
-
-.. container:: table-row
-
-  Constant
-    settings.limitParsingId
-
-  Data Type
-    string
-
-  Description
-    Limits parsing for terms to the *one* node/tag having this ID (e.g. 'content' for a `<div id="content">`)
-
-.. container:: table-row
-
-  Constant
-    settings.parsingTags
-
-  Data Type
-    string
-
-  Description
-    Comma list of Tags which content will be parsed for terms
-
-  Default
-    p
-
-.. container:: table-row
-
-  Constant
-    settings.forbiddenParentTags
-
-  Data Type
-    string
-
-  Description
-    Comma list of Tags which are not allowed as parents for a parsing tag
-
-  Default
-    a,script
-
-.. container:: table-row
-
-  Constant
-    settings.forbiddenParsingTagClasses
-
-  Data Type
-    string
-
-  Description
-    Comma list of classes which are not allowed for the parsing tag
-
-.. container:: table-row
-
-  Constant
-    settings.forbiddenParentClasses
-
-  Data Type
-    string
-
-  Default
-    tx_dpn_glossary_exclude
-
-  Description
-    Comma list of classes which are not allowed on any parent of the parsing tag.
-    can be used to :ref:` exclude content from being parsed
-    <example-exclude-content>`
-
-.. container:: table-row
-
-  Constant
-    settings.listmode
-
-  Data Type
-    options
-
-  Description
-    Listmode of the listpage (normal, character, pagination)
-
-  Default
-    normal
-
-.. container:: table-row
-
-  Constant
-    settings.previewmode
-
-  Data Type
-    options
-
-  Description
-    Previewmode for the preview plugin (newest or random)
-
-  Default
-    newest
-
-.. container:: table-row
-
-  Constant
-    settings.previewlimit
-
-  Data Type
-    integer
-
-  Description
-    Limit for preview list
-
-  Default
-    5
-
-.. container:: table-row
-
-  Constant
-    settings.disableParser
-
-  Data Type
-    boolean
-
-  Description
-    Disable the parser
-
-  Default
-    0
-
-.. container:: table-row
-
-  Constant
-    settings.parseSynonyms
-
-  Data Type
-    boolean
-
-  Description
-    Enable the parsing of terms synonyms
-
-  Default
-    1
-
-.. container:: table-row
-
-  Constant
-    settings.priorisedSynonymParsing
-
-  Data Type
-    boolean
-
-  Description
-    Parse for synonyms before the actual term
-
-  Default
-    1
-
-.. container:: table-row
-
-  Constant
-    settings.parsingSpecialWrapCharacters
-
-  Data Type
-    string
-
-  Description
-    Comma list of special characters allowed to wrap the term
-
-.. container:: table-row
-
-  Constant
-    settings.parserRepositoryClass
-
-  Data Type
-    string
-
-  Description
-    | The repository class the parser service should use, for example the normal TermRepository instead of the ParserTermRepository.
-    | This can be useful for advanced scenarios like using the first description meaning as a tooltip text.
-    | Example:
-
-    ..  code-block:: typoscript
-
-        plugin.tx_dpnglossary.settings {
-          termWraps {
-            default.typolink.ATagParams.dataWrap = title="{field:descriptions|0|meaning}" class="dpnglossary link"
-          }
-        }
-
-
-.. container:: table-row
-
-  Constant
-    settings.overrideFluidStyledContentLayout
-
-  Data Type
-    boolean
-
-  Description
-    If set the default layout of FluidStyledContent is overriden by this
-    extension. Can be used to :ref:`exclude content from being parsed
-    <example-exclude-content>`
-
-  Default
-    0
-
-
-.. container:: table-row
-
-  Constant
-    settings.excludeTermLinksTargetPages
-
-  Data Type
-    boolean
-
-  Description
-    Don't parse terms when current page is the term links target
-
-  Default
-    0
-
-.. ###### END~OF~TABLE ######
+These settings are configured globally for the extension.
+
+.. list-table::
+   :header-rows: 1
+   :widths: 30 20 20 50
+
+   * - Key
+     - Data type
+     - Default
+     - Description
+   * - ``termSlugEvaluation``
+     - string
+     - :yaml:`unique`
+     - Evaluation type for the term slug field.
+
+Site settings
+-------------
+
+When the site set :yaml:`featdd/dpn-glossary` is included, configure these
+values as TYPO3 site settings. In YAML files the keys are stored flat:
+
+.. code-block:: yaml
+   :caption: config/sites/<your-site>/settings.yaml
+
+   dpn-glossary.storagePidList: '123'
+   dpn-glossary.glossaryPage: 456
+   dpn-glossary.parsingPids: '0'
+
+.. list-table::
+   :header-rows: 1
+   :widths: 34 14 24 58
+
+   * - Key
+     - Data type
+     - Default
+     - Description
+   * - ``dpn-glossary.view.layoutRootPath``
+     - string
+     - :file:`EXT:dpn_glossary/Resources/Private/Layouts/`
+     - Fluid layout root path.
+   * - ``dpn-glossary.view.templateRootPath``
+     - string
+     - :file:`EXT:dpn_glossary/Resources/Private/Templates/`
+     - Fluid template root path.
+   * - ``dpn-glossary.view.partialRootPath``
+     - string
+     - :file:`EXT:dpn_glossary/Resources/Private/Partials/`
+     - Fluid partial root path.
+   * - ``dpn-glossary.storagePidList``
+     - string
+     - empty
+     - Comma-separated list of storage page IDs that contain glossary terms.
+   * - ``dpn-glossary.glossaryPage``
+     - page
+     - :yaml:`0`
+     - Page ID of the glossary plugin. The parser links terms to this page.
+   * - ``dpn-glossary.parsingPids``
+     - string
+     - empty
+     - Comma-separated list of pages that should be parsed. Use :yaml:`0` to parse all pages.
+   * - ``dpn-glossary.parsingExcludePidList``
+     - string
+     - empty
+     - Comma-separated list of pages that should not be parsed.
+   * - ``dpn-glossary.disableParser``
+     - bool
+     - :yaml:`false`
+     - Disable automatic parsing.
+   * - ``dpn-glossary.parsingSpecialWrapCharacters``
+     - string
+     - empty
+     - Comma-separated list of additional special characters that may wrap a term.
+   * - ``dpn-glossary.parserRepositoryClass``
+     - string
+     - :php:`Featdd\DpnGlossary\Domain\Repository\ParserTermRepository`
+     - Repository class used by the parser. Use :php:`Featdd\DpnGlossary\Domain\Repository\TermRepository` if the term wrapping TypoScript needs all term fields.
+   * - ``dpn-glossary.maxReplacementPerPage``
+     - int
+     - :yaml:`-1`
+     - Maximum replacements for each term on a page. :yaml:`-1` means unlimited.
+   * - ``dpn-glossary.maxReplacementPerPageRespectSynonyms``
+     - bool
+     - :yaml:`false`
+     - Count synonym replacements against the term replacement limit.
+   * - ``dpn-glossary.parsingTags``
+     - string
+     - :yaml:`p`
+     - Comma-separated list of HTML tags whose content should be parsed.
+   * - ``dpn-glossary.forbiddenParentTags``
+     - string
+     - :yaml:`a,script`
+     - Comma-separated list of parent tags inside which parsing is not allowed.
+   * - ``dpn-glossary.forbiddenParsingTagClasses``
+     - string
+     - empty
+     - Comma-separated list of classes that exclude the parsing tag itself.
+   * - ``dpn-glossary.forbiddenParentClasses``
+     - string
+     - :yaml:`tx_dpn_glossary_exclude`
+     - Comma-separated list of classes that exclude a parsing tag through any parent element.
+   * - ``dpn-glossary.parseSynonyms``
+     - bool
+     - :yaml:`true`
+     - Enable parsing of term synonyms.
+   * - ``dpn-glossary.priorisedSynonymParsing``
+     - bool
+     - :yaml:`true`
+     - Parse synonyms before the original term.
+   * - ``dpn-glossary.limitParsingId``
+     - string
+     - empty
+     - Limit parsing to one node with this HTML ID.
+   * - ``dpn-glossary.useTermForSynonymParsingDataWrap``
+     - bool
+     - :yaml:`false`
+     - Use the original term as content object data when rendering synonym links.
+   * - ``dpn-glossary.excludeTermLinksTargetPages``
+     - bool
+     - :yaml:`false`
+     - Do not parse a term when the current page is the target page of that term.
+   * - ``dpn-glossary.listmode``
+     - string
+     - :yaml:`normal`
+     - List mode of the glossary plugin. Supported values: :yaml:`normal`, :yaml:`character`, :yaml:`pagination`.
+   * - ``dpn-glossary.previewmode``
+     - string
+     - :yaml:`newest`
+     - Preview plugin mode. Supported values: :yaml:`newest`, :yaml:`random`.
+   * - ``dpn-glossary.previewlimit``
+     - int
+     - :yaml:`5`
+     - Number of terms rendered by preview plugins.
+   * - ``dpn-glossary.addStylesheet``
+     - bool
+     - :yaml:`true`
+     - Include the extension CSS file.
+   * - ``dpn-glossary.overrideFluidStyledContentLayout``
+     - bool
+     - :yaml:`false`
+     - Override the Fluid Styled Content layout so editors can exclude content elements from parsing.
+
+Legacy TypoScript constants
+---------------------------
+
+If you use the legacy static TypoScript include instead of the site set, use the
+old TypoScript constants:
+
+.. list-table::
+   :header-rows: 1
+   :widths: 45 45
+
+   * - Site setting
+     - Legacy TypoScript constant
+   * - ``dpn-glossary.storagePidList``
+     - :typoscript:`plugin.tx_dpnglossary.persistence.storagePid`
+   * - ``dpn-glossary.glossaryPage``
+     - :typoscript:`plugin.tx_dpnglossary.settings.detailPage`
+   * - ``dpn-glossary.view.layoutRootPath``
+     - :typoscript:`plugin.tx_dpnglossary.view.layoutRootPath`
+   * - ``dpn-glossary.view.templateRootPath``
+     - :typoscript:`plugin.tx_dpnglossary.view.templateRootPath`
+   * - ``dpn-glossary.view.partialRootPath``
+     - :typoscript:`plugin.tx_dpnglossary.view.partialRootPath`
+   * - All other ``dpn-glossary.*`` settings
+     - :typoscript:`plugin.tx_dpnglossary.settings.*`

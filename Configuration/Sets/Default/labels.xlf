@@ -45,7 +45,7 @@
 				<source>Folders PageIDs (comma list) which contains the glossary terms</source>
 			</trans-unit>
 
-			<trans-unit id="settings.dpn-glossary.dpn-glossaryPage">
+			<trans-unit id="settings.dpn-glossary.glossaryPage">
 				<source>Glossary page PageID</source>
 			</trans-unit>
 			<trans-unit id="settings.description.dpn-glossary.glossaryPage">

@@ -94,7 +94,7 @@ settings:
   dpn-glossary.forbiddenParentClasses:
     category: dpn-glossary.parser
     type: string
-    default: "tx_dpn_dpn-glossary_exclude"
+    default: "tx_dpn_glossary_exclude"
 
   dpn-glossary.parseSynonyms:
     category: dpn-glossary.parser

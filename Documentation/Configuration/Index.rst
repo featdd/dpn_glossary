@@ -2,12 +2,19 @@
 Configuration
 =============
 
-The whole linking of terms can be configured over TypoScript.
-The Parsing itself can also be defined as precise as you wish.
+When the site set :yaml:`featdd/dpn-glossary` is included, the extension is
+configured through TYPO3 site settings. These settings are passed to the
+extension TypoScript automatically.
+
+Projects that still use the legacy static TypoScript include can configure the
+same behavior through TypoScript constants.
+
+The whole linking of terms can be configured with TypoScript. The parsing
+itself can also be defined as precisely as you need.
 
 There are also example styles for the views and a tiny CSS3 Tooltip
 
-+ CSS: EXT:dpn_glossary/Resources/Public/css/styles.min.css
++ CSS: EXT:dpn_glossary/Resources/Public/Css/styles.css
 
 Special: Umlauts
 ----------------
