@@ -3,16 +3,6 @@ declare(strict_types=1);
 
 namespace Featdd\DpnGlossary\UserFunc;
 
-use TYPO3\CMS\Backend\Form\FormDataProvider\TcaSlug;
-use TYPO3\CMS\Core\Exception\SiteNotFoundException;
-use TYPO3\CMS\Core\Site\Entity\NullSite;
-use TYPO3\CMS\Core\Site\SiteFinder;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Extbase\Configuration\ConfigurationManager;
-use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
-use TYPO3\CMS\Extbase\Configuration\Exception\InvalidConfigurationTypeException;
-use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
-
 /***
  *
  * This file is part of the "dreipunktnull Glossar" Extension for TYPO3 CMS.
@@ -24,27 +14,17 @@ use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
  *
  ***/
 
-/**
- * @package Featdd\DpnGlossary\UserFunc
- */
+use Featdd\DpnGlossary\Utility\SettingsUtility;
+use TYPO3\CMS\Backend\Form\FormDataProvider\TcaSlug;
+use TYPO3\CMS\Core\Exception\SiteNotFoundException;
+use TYPO3\CMS\Core\Site\Entity\NullSite;
+use TYPO3\CMS\Core\Site\Entity\Site;
+use TYPO3\CMS\Core\Site\SiteFinder;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
+
 class SlugPreviewUserFunc
 {
-    /**
-     * @var array
-     */
-    protected array $settings = [];
-
-    public function __construct()
-    {
-        $configurationManager = GeneralUtility::makeInstance(ConfigurationManager::class);
-
-        try {
-            $this->settings = $configurationManager->getConfiguration(ConfigurationManagerInterface::CONFIGURATION_TYPE_SETTINGS, 'dpnglossary');
-        } catch (InvalidConfigurationTypeException) {
-            $this->settings = [];
-        }
-    }
-
     /**
      * @param array $parameters
      * @param \TYPO3\CMS\Backend\Form\FormDataProvider\TcaSlug $tcaSlug
@@ -52,45 +32,54 @@ class SlugPreviewUserFunc
      */
     public function slugPrefixUserFunc(array $parameters, TcaSlug $tcaSlug): ?string
     {
-        $detailPageUid = (int) ($this->settings['detailPage'] ?? null);
         $termMode = is_array($parameters['row']['term_mode'])
             ? reset($parameters['row']['term_mode'])
             : $parameters['row']['term_mode'];
 
-        if (0 < $detailPageUid && $termMode !== 'link') {
-            /** @var \TYPO3\CMS\Core\Site\Entity\Site $site */
-            $site = $parameters['site'];
-            $languageId = $parameters['languageId'];
-            $termUid = $parameters['row']['uid'];
-            $slugValue = $parameters['row']['url_segment'];
-
-            if ($site instanceof NullSite) {
-                $siteFinder = GeneralUtility::makeInstance(SiteFinder::class);
-
-                try {
-                    $site = $siteFinder->getSiteByPageId($detailPageUid);
-                } catch (SiteNotFoundException) {
-                    return LocalizationUtility::translate('tx_dpnglossary.error.slug_preview_site_missing', 'dpn_glossary');
-                }
-            }
-
-            $prefixUrl = (string) $site->getRouter()->generateUri(
-                $detailPageUid,
-                [
-                    '_language' => 0 < $languageId
-                        ? $site->getLanguageById($languageId)
-                        : $site->getDefaultLanguage(),
-                    'tx_dpnglossary_glossary' => [
-                        'action' => 'show',
-                        'controller' => 'Term',
-                        'term' => $termUid,
-                    ],
-                ]
-            );
-
-            return preg_replace('#' . preg_quote($slugValue) . '/?$#', '', $prefixUrl);
+        if ($termMode === 'link') {
+            return '#';
         }
 
-        return '#';
+        $pageId = (int) ($parameters['row']['pid'] ?? 0);
+        $site = $parameters['site'] ?? null;
+
+        if ($site instanceof NullSite) {
+            try {
+                $site = GeneralUtility::makeInstance(SiteFinder::class)->getSiteByPageId($pageId);
+            } catch (SiteNotFoundException) {
+                return LocalizationUtility::translate('tx_dpnglossary.error.slug_preview_site_missing', 'dpn_glossary');
+            }
+        }
+
+        if (!$site instanceof Site) {
+            return LocalizationUtility::translate('tx_dpnglossary.error.slug_preview_site_missing', 'dpn_glossary');
+        }
+
+
+        $detailPageUid = (int) ((new SettingsUtility($site, $pageId))->getSetting('detailPage') ?? 0);
+
+        if ($detailPageUid <= 0) {
+            return '#';
+        }
+
+        $languageId = $parameters['languageId'];
+        $termUid = $parameters['row']['uid'];
+        $slugValue = $parameters['row']['url_segment'];
+
+        $prefixUrl = (string) $site->getRouter()->generateUri(
+            $detailPageUid,
+            [
+                '_language' => 0 < $languageId
+                    ? $site->getLanguageById($languageId)
+                    : $site->getDefaultLanguage(),
+                'tx_dpnglossary_glossary' => [
+                    'action' => 'show',
+                    'controller' => 'Term',
+                    'term' => $termUid,
+                ],
+            ]
+        );
+
+        return preg_replace('#' . preg_quote($slugValue) . '/?$#', '', $prefixUrl);
     }
 }

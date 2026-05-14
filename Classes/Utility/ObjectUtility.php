@@ -14,14 +14,6 @@ namespace Featdd\DpnGlossary\Utility;
  *
  ***/
 
-use DOMDocument;
-use DOMText;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer;
-
-/**
- * @package Featdd\DpnGlossary\Utility
- */
 class ObjectUtility
 {
     /**

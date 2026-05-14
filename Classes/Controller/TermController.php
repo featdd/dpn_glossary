@@ -22,11 +22,11 @@ use Featdd\DpnGlossary\PageTitle\TermPageTitleProvider;
 use Featdd\DpnGlossary\Pagination\CharacterPagination;
 use Featdd\DpnGlossary\Pagination\CharacterPaginator;
 use Featdd\DpnGlossary\Utility\ObjectUtility;
+use Featdd\DpnGlossary\Utility\SettingsUtility;
 use Psr\Http\Message\ResponseInterface;
 use TYPO3\CMS\Core\Http\ImmediateResponseException;
 use TYPO3\CMS\Core\MetaTag\MetaTagManagerRegistry;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 use TYPO3\CMS\Extbase\Persistence\Generic\Typo3QuerySettings;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
@@ -57,14 +57,10 @@ class TermController extends ActionController
 
     public function initializeAction(): void
     {
-        $frameworkConfiguration = $this->configurationManager->getConfiguration(
-            ConfigurationManagerInterface::CONFIGURATION_TYPE_FRAMEWORK,
-            'DpnGlossary',
-        );
-
+        $storagePidList = (new SettingsUtility(request: $this->request))->getSetting('storagePid');
         $this->storagePids = GeneralUtility::intExplode(
             ',',
-            (string) $frameworkConfiguration['persistence']['storagePid'] ?? '',
+            (string) ($storagePidList ?? ''),
             true
         );
 

@@ -15,24 +15,15 @@ namespace Featdd\DpnGlossary\EventListener;
  ***/
 
 use Featdd\DpnGlossary\Service\ParserService;
-use RuntimeException;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Extbase\Configuration\ConfigurationManager;
-use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
-use TYPO3\CMS\Extbase\Configuration\Exception\InvalidConfigurationTypeException;
+use Featdd\DpnGlossary\Utility\SettingsUtility;
 use TYPO3\CMS\Frontend\Event\AfterCacheableContentIsGeneratedEvent;
 
-/**
- * @package Featdd\DpnGlossary\EventListener
- */
 class AfterCacheableContentIsGeneratedEventListener
 {
-    protected ParserService $parserService;
-
-    public function __construct(ParserService $parserService)
-    {
-        $this->parserService = $parserService;
-    }
+    public function __construct(
+        protected ParserService $parserService
+    )
+    {}
 
     /**
      * @param \TYPO3\CMS\Frontend\Event\AfterCacheableContentIsGeneratedEvent $afterCacheableContentIsGeneratedEvent
@@ -51,21 +42,7 @@ class AfterCacheableContentIsGeneratedEventListener
         }
 
         $request = $afterCacheableContentIsGeneratedEvent->getRequest();
-
-        /** @var \TYPO3\CMS\Extbase\Configuration\ConfigurationManager $configurationManager */
-        $configurationManager = GeneralUtility::makeInstance(ConfigurationManager::class);
-
-        try {
-            $settings = $configurationManager->getConfiguration(
-                ConfigurationManagerInterface::CONFIGURATION_TYPE_SETTINGS,
-                'dpnglossary'
-            );
-
-            $isDisableParser = (bool)($settings['disableParser'] ?? false);
-        } catch (InvalidConfigurationTypeException|RuntimeException) {
-            $isDisableParser = true;
-        }
-
+        $isDisableParser = (bool) ((new SettingsUtility(request: $request))->getSetting('disableParser') ?? false);
         $pageRecord = $request->getAttribute('frontend.page.information')->getPageRecord();
 
         if ($pageRecord['tx_dpnglossary_disable_parser'] ?? false) {

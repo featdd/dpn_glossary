@@ -23,16 +23,14 @@ use DOMXPath;
 use Featdd\DpnGlossary\Domain\Model\TermInterface;
 use Featdd\DpnGlossary\Domain\Repository\ParserTermRepository;
 use Featdd\DpnGlossary\Utility\ParserUtility;
+use Featdd\DpnGlossary\Utility\SettingsUtility;
 use Psr\Http\Message\ServerRequestInterface;
 use TYPO3\CMS\Core\Cache\Frontend\FrontendInterface;
 use TYPO3\CMS\Core\Context\Context;
 use TYPO3\CMS\Core\Context\Exception\AspectNotFoundException;
-use TYPO3\CMS\Core\Http\NormalizedParams;
 use TYPO3\CMS\Core\Routing\PageArguments;
 use TYPO3\CMS\Core\SingletonInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Extbase\Configuration\ConfigurationManager;
-use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
 use TYPO3\CMS\Extbase\Persistence\Generic\Typo3QuerySettings;
 use TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer;
 
@@ -85,23 +83,16 @@ class ParserService implements SingletonInterface
      */
     public function __construct(FrontendInterface $termsCache)
     {
-        // Get Configuration Manager
-        /** @var \TYPO3\CMS\Extbase\Configuration\ConfigurationManager $configurationManager */
-        $configurationManager = GeneralUtility::makeInstance(ConfigurationManager::class);
+        $settingsUtility = new SettingsUtility();
         // Inject Content Object Renderer
         $this->contentObjectRenderer = GeneralUtility::makeInstance(ContentObjectRenderer::class);
         // Get Query Settings
         /** @var \TYPO3\CMS\Extbase\Persistence\Generic\Typo3QuerySettings $querySettings */
         $querySettings = GeneralUtility::makeInstance(Typo3QuerySettings::class);
         // Get Typoscript Configuration
-        $this->typoScriptConfiguration = $configurationManager->getConfiguration(
-            ConfigurationManagerInterface::CONFIGURATION_TYPE_FULL_TYPOSCRIPT
-        );
-        // Reduce TS config to plugin
-        $this->typoScriptConfiguration = $this->typoScriptConfiguration['plugin.']['tx_dpnglossary.'] ?? [];
+        $this->typoScriptConfiguration = $settingsUtility->getExtensionTypoScript(false);
 
-        if (count($this->typoScriptConfiguration) > 0) {
-            // Save extension settings without ts dots
+        if (!empty($this->typoScriptConfiguration)) {
             $this->settings = GeneralUtility::removeDotsFromTS($this->typoScriptConfiguration['settings.'] ?? []);
 
             $parsingSpecialWrapCharacters = GeneralUtility::trimExplode(
@@ -194,11 +185,11 @@ class ParserService implements SingletonInterface
     public function pageParser(ServerRequestInterface $request, string $html): string
     {
         // extract Pids which should be parsed
-        $parsingPids = GeneralUtility::intExplode(',', $this->settings['parsingPids'] ?? '');
+        $parsingPids = GeneralUtility::intExplode(',', $this->settings['parsingPids'] ?? '', true);
         // extract Pids which should NOT be parsed
-        $excludePids = GeneralUtility::intExplode(',', $this->settings['parsingExcludePidList'] ?? '');
+        $excludePids = GeneralUtility::intExplode(',', $this->settings['parsingExcludePidList'] ?? '', true);
         // Get Tags which content should be parsed
-        $tags = GeneralUtility::trimExplode(',', $this->settings['parsingTags'] ?? '');
+        $tags = GeneralUtility::trimExplode(',', $this->settings['parsingTags'] ?? '', true);
         // Remove "a" & "script" from parsingTags if it was added unknowingly
         if (in_array(self::$alwaysIgnoreParentTags, $tags, true)) {
             $tags = array_diff($tags, self::$alwaysIgnoreParentTags);
@@ -226,13 +217,15 @@ class ParserService implements SingletonInterface
             // no terms have been found
             count($this->terms) === 0 ||
             // no config is given
-            count($this->typoScriptConfiguration) === 0 ||
+            empty($this->typoScriptConfiguration) ||
             // page is excluded
             in_array($currentPageId, $excludePids, true) ||
             (
                 // parsingPids doesn't contain 0 and...
                 !in_array(0, $parsingPids, true) &&
-                // page is not whitelisted
+                // ... is not empty and ...
+                !empty($parsingPids) &&
+                // ... page is not whitelisted
                 !in_array($currentPageId, $parsingPids, true)
             )
         ) {

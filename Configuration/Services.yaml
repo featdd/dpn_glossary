@@ -6,32 +6,25 @@ services:
 
   cache.dpnglossary_parserterms:
     class: TYPO3\CMS\Core\Cache\Frontend\FrontendInterface
-    factory: [ '@TYPO3\CMS\Core\Cache\CacheManager', 'getCache' ]
-    arguments: [ 'dpnglossary_termscache' ]
+    factory: ['@TYPO3\CMS\Core\Cache\CacheManager', "getCache"]
+    arguments: ["dpnglossary_termscache"]
 
   Featdd\DpnGlossary\:
-    resource: '../Classes/*'
-    exclude: '../Classes/{Domain/Model,Utility}'
+    resource: "../Classes/*"
+    exclude: "../Classes/{Domain/Model,Utility}"
 
   Featdd\DpnGlossary\Service\ParserService:
     arguments:
-      $termsCache: '@cache.dpnglossary_parserterms'
+      $termsCache: "@cache.dpnglossary_parserterms"
 
   Featdd\DpnGlossary\EventListener\AfterCacheableContentIsGeneratedEventListener:
     tags:
       - name: event.listener
-        identifier: 'dpnglossary-parse-content-for-terms'
+        identifier: "dpnglossary-parse-content-for-terms"
         event: TYPO3\CMS\Frontend\Event\AfterCacheableContentIsGeneratedEvent
 
   Featdd\DpnGlossary\EventListener\ModifyUrlForCanonicalTagEventListener:
-    arguments:
-      $settings: '@dpnglossary.typoscript_settings'
     tags:
       - name: event.listener
-        identifier: 'dpnglossary-canonical-url'
+        identifier: "dpnglossary-canonical-url"
         event: TYPO3\CMS\Seo\Event\ModifyUrlForCanonicalTagEvent
-
-  dpnglossary.typoscript_settings:
-    class: 'array'
-    factory: [ '@TYPO3\CMS\Extbase\Configuration\ConfigurationManager', 'getConfiguration' ]
-    arguments: [ 'Settings', 'dpnglossary' ]

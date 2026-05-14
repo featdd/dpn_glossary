@@ -16,34 +16,16 @@ namespace Featdd\DpnGlossary\EventListener;
 
 use Featdd\DpnGlossary\Domain\Repository\TermRepository;
 use Featdd\DpnGlossary\Pagination\CharacterPaginator;
+use Featdd\DpnGlossary\Utility\SettingsUtility;
 use TYPO3\CMS\Core\Site\Entity\Site;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Seo\Event\ModifyUrlForCanonicalTagEvent;
 
-/**
- * @package Featdd\DpnGlossary\EventListener
- */
 class ModifyUrlForCanonicalTagEventListener
 {
-    /**
-     * @var \Featdd\DpnGlossary\Domain\Repository\TermRepository
-     */
-    protected TermRepository $termRepository;
-
-    /**
-     * @var array
-     */
-    protected array $settings = [];
-
-    /**
-     * @param \Featdd\DpnGlossary\Domain\Repository\TermRepository $termRepository
-     * @param array $settings
-     */
-    public function __construct(TermRepository $termRepository, array $settings)
-    {
-        $this->termRepository = $termRepository;
-        $this->settings = $settings;
-    }
+    public function __construct(
+        protected readonly TermRepository $termRepository
+    ) {}
 
     /**
      * @param \TYPO3\CMS\Seo\Event\ModifyUrlForCanonicalTagEvent $modifyUrlForCanonicalTagEvent
@@ -51,45 +33,54 @@ class ModifyUrlForCanonicalTagEventListener
     public function __invoke(ModifyUrlForCanonicalTagEvent $modifyUrlForCanonicalTagEvent): void
     {
         $request = $modifyUrlForCanonicalTagEvent->getRequest();
-
-        $detailPage = (int)($this->settings["detailPage"] ?? 0);
-        $listMode = $this->settings["listmode"] ?? '';
-
-        $queryParameters = $request->getQueryParams();
-        /** @var \TYPO3\CMS\Core\Routing\PageArguments $pageArguments */
-        $pageArguments = $request->getAttribute('routing');
-        /** @var \TYPO3\CMS\Core\Site\Entity\Site $site */
         $site = $request->getAttribute('site');
 
-        if (
-            $site instanceof Site &&
-            !isset($queryParameters['tx_dpnglossary_glossary']['currentCharacter']) &&
-            !isset($queryParameters['tx_dpnglossary_glossary']['term']) &&
-            $listMode === 'pagination' &&
-            $pageArguments->getPageId() === $detailPage
-        ) {
-            $currentCharacter = null;
-            $paginationCharacters = GeneralUtility::trimExplode(',', $this->settings['pagination']['characters'] ?? '', true);
-
-            if (0 < $paginationCharacters) {
-                $paginator = new CharacterPaginator($this->termRepository->findAll(), 'name', null, ...$paginationCharacters);
-                $currentCharacter = $paginator->getCurrentCharacter();
-            }
-
-            if (!empty($currentCharacter)) {
-                $modifyUrlForCanonicalTagEvent->setUrl(
-                    (string)$site->getRouter()->generateUri(
-                        $detailPage,
-                        [
-                            'tx_dpnglossary_glossary' => [
-                                'action' => 'list',
-                                'controller' => 'Term',
-                                'currentCharacter' => $currentCharacter,
-                            ],
-                        ],
-                    )
-                );
-            }
+        if (!$site instanceof Site) {
+            return;
         }
+
+        /** @var \TYPO3\CMS\Core\Routing\PageArguments $pageArguments */
+        $pageArguments = $request->getAttribute('routing');
+        $pageId = $pageArguments->getPageId();
+        $settingsUtility = new SettingsUtility($site, $pageId, $request);
+        $detailPage = (int) ($settingsUtility->getSetting('detailPage') ?? 0);
+        $listMode = (string) ($settingsUtility->getSetting('listmode') ?? '');
+
+        $queryParameters = $request->getQueryParams();
+
+        if (
+            isset($queryParameters['tx_dpnglossary_glossary']['currentCharacter']) ||
+            isset($queryParameters['tx_dpnglossary_glossary']['term']) ||
+            $listMode !== 'pagination' ||
+            $pageId !== $detailPage
+        ) {
+            return;
+        }
+
+        $paginationCharacters = GeneralUtility::trimExplode(',', ($settingsUtility->getSetting('pagination') ?? [])['characters'] ?? '', true);
+
+        if ($paginationCharacters === []) {
+            return;
+        }
+
+        $paginator = new CharacterPaginator($this->termRepository->findAll(), 'name', null, ...$paginationCharacters);
+        $currentCharacter = $paginator->getCurrentCharacter();
+
+        if (empty($currentCharacter)) {
+            return;
+        }
+
+        $modifyUrlForCanonicalTagEvent->setUrl(
+            (string) $site->getRouter()->generateUri(
+                $detailPage,
+                [
+                    'tx_dpnglossary_glossary' => [
+                        'action' => 'list',
+                        'controller' => 'Term',
+                        'currentCharacter' => $currentCharacter,
+                    ],
+                ],
+            )
+        );
     }
 }
