@@ -46,9 +46,10 @@ call_user_func(
             'dpnglossary_glossarypreviewrandom' => 'PreviewRandom.xml',
             'dpnglossary_glossarypreviewselected' => 'PreviewSelected.xml',
         ] as $cType => $flexform) {
-            $GLOBALS['TCA']['tt_content']['types'][$cType]['columnsOverrides']['pi_flexform']['config']['ds'] = sprintf(
-                'FILE:EXT:dpn_glossary/Configuration/FlexForms/%s',
-                $flexform
+            ExtensionManagementUtility::addPiFlexFormValue(
+                '*',
+                sprintf('FILE:EXT:dpn_glossary/Configuration/FlexForms/%s', $flexform),
+                $cType
             );
 
             ExtensionManagementUtility::addToAllTCAtypes(
