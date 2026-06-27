@@ -30,6 +30,7 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 use TYPO3\CMS\Extbase\Persistence\Generic\Typo3QuerySettings;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
+use TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer;
 use TYPO3\CMS\Frontend\Controller\ErrorController;
 
 /**
@@ -200,9 +201,27 @@ class TermController extends ActionController
      */
     public function showAction(Term $term): ResponseInterface
     {
+        // Fallback for link terms, that should'nt have been linked to the detailpage
+        if ($term->getTermMode() === 'link' && !empty($term->getTermLink())) {
+            $term->getTermLink();
+
+            /** @var \TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer $contentObjectRenderer */
+            $contentObjectRenderer = GeneralUtility::makeInstance(ContentObjectRenderer::class);
+
+            $redirectUrl = $contentObjectRenderer->typoLink_URL([
+                'parameter' => $term->getTermLink(),
+                'forceAbsoluteUrl' => true,
+            ]);
+
+            return $this->redirectToUri($redirectUrl, statusCode: 301);
+        }
+
         $this->view->assign('term', $term);
 
-        if (!in_array($term->getPid(), $this->storagePids)) {
+        if (
+            !in_array($term->getPid(), $this->storagePids) ||
+            ($term->getTermMode() === 'link' && empty($term->getTermLink()))
+        ) {
             $errorResponse = GeneralUtility::makeInstance(ErrorController::class)->pageNotFoundAction(
                 $this->request,
                 LocalizationUtility::translate('tx_dpnglossary.no_term_found', 'dpn_glossary')

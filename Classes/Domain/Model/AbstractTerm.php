@@ -14,7 +14,6 @@ namespace Featdd\DpnGlossary\Domain\Model;
  *
  ***/
 
-use Featdd\DpnGlossary\Utility\LinkUtility;
 use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
 use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
 

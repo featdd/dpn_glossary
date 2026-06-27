@@ -17,6 +17,7 @@ Add the following code to you setup:
                       table = tx_dpnglossary_domain_model_term
                       sortField = name
                       lastModifiedField = tstamp
+                      additionalWhere = AND {#term_mode} != "link"
                       pid = 123 #uid of the sysfolder where your term are stored
                       url {
                           pageId = 456 #uid of the page where the glossary plugin is placed
