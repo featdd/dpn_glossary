@@ -4,6 +4,9 @@
 ChangeLog
 =========
 
+v7.0.2
+  * Add proper constraint for missing slugs in update wizard
+
 v7.0.1
   * Re-add deprecated "addPiFlexFormValue" method for v13 support
 
