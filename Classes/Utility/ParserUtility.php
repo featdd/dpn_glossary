@@ -93,7 +93,7 @@ class ParserUtility
         };
 
         return preg_replace_callback(
-            '#(?<=\s)(href|src)(=\")(?!data:.+;base64)(.*?)(\")#is',
+            '#(?<=[\s"])(href|src)(=\")(?!data:.+;base64)(.*?)(\")#is',
             $callback,
             $html
         );
@@ -113,7 +113,7 @@ class ParserUtility
         };
 
         return preg_replace_callback(
-            '#(?<=\s)(href|src)(=\")(' . preg_quote($tag, '#') . ')(.*?)(\")#is',
+            '#(?<=[\s"])(href|src)(=\")(' . preg_quote($tag, '#') . ')(.*?)(\")#is',
             $callback,
             $html
         );
