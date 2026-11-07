@@ -541,10 +541,13 @@ class ParserService implements SingletonInterface
                             $childNode->ownerDocument->saveHTML($childNode)
                         );
 
-                        ParserUtility::domTextReplacer(
-                            $childNode,
-                            $this->regexParser($text, $term, $replacements, $wrapperClosure)
-                        );
+                        $parsedText = $this->regexParser($text, $term, $replacements, $wrapperClosure);
+
+                        // Only rebuild the node if the term was found, loading
+                        // a temporary DOM per text node and term is expensive
+                        if ($parsedText !== $text) {
+                            ParserUtility::domTextReplacer($childNode, $parsedText);
+                        }
                     }
                 }
             }
