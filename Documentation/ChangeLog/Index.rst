@@ -6,7 +6,7 @@ ChangeLog
 
 v7.0.3
   * Skip DOM rebuild for text nodes without a term match (thanks to Kai Ole Hartwig)
-  + Protect only real href/src attributes from DOM (thanks to Thorsten Hersam)
+  * Protect only real href/src attributes from DOM (thanks to Thorsten Hersam)
 
 v7.0.2
   * Add proper constraint for missing slugs in update wizard

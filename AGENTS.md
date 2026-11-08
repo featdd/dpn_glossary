@@ -18,14 +18,14 @@ There is no PHP test suite, lint config, or CI in this repository — the only b
 ```bash
 # Frontend CSS (Scss → Resources/Public/Css/styles.css)
 npm install
-npm run build:development    # webpack --watch with sourcemaps
-npm run build:production     # minified bundle
+npm run build:development    # vite build --watch with sourcemaps
+npm run build:production     # minified CSS
 
 # Documentation (renders Documentation/ via the official TYPO3 render-guides container)
 make docs
 ```
 
-The webpack entry is `Resources/Private/Assets/Scss/Styles.scss`; output goes to `Resources/Public/Css/styles.css`. There is no JS bundle — empty JS chunks are stripped by `webpack-remove-empty-scripts`.
+Vite compiles `Resources/Private/Assets/Scss/styles.scss` to `Resources/Public/Css/styles.css`. There is no JS bundle. `build:production` minifies the CSS; `build:development` watches the SCSS sources and writes an external source map.
 
 ## Architecture
 
