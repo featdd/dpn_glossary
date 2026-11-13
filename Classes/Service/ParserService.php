@@ -48,9 +48,20 @@ class ParserService implements SingletonInterface
     ];
 
     /**
+     * Regex alternatives for characters which may wrap a term, for all
+     * instances. The "parsingSpecialWrapCharacters" of the settings are
+     * kept per instance and do not end up here.
+     *
      * @var string
      */
     public static string $additionalRegexWrapCharacters = '';
+
+    /**
+     * Regex alternatives for the "parsingSpecialWrapCharacters" of the settings
+     *
+     * @var string
+     */
+    protected string $settingsRegexWrapCharacters = '';
 
     /**
      * @var \TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer
@@ -103,7 +114,7 @@ class ParserService implements SingletonInterface
 
             if (count($parsingSpecialWrapCharacters) > 0) {
                 foreach ($parsingSpecialWrapCharacters as $parsingSpecialWrapCharacter) {
-                    self::$additionalRegexWrapCharacters .= '|' . str_replace('#', '\#', $parsingSpecialWrapCharacter);
+                    $this->settingsRegexWrapCharacters .= '|' . str_replace('#', '\#', $parsingSpecialWrapCharacter);
                 }
             }
 
@@ -616,10 +627,12 @@ class ParserService implements SingletonInterface
          * Flags:
          * i = ignores camel case
          */
+        $additionalRegexWrapCharacters = self::$additionalRegexWrapCharacters . $this->settingsRegexWrapCharacters;
+
         $regex = '#' .
-            '(^|\G|[\s>[:punct:]]|<br*>' . self::$additionalRegexWrapCharacters . ')' .
+            '(^|\G|[\s>[:punct:]]|<br*>' . $additionalRegexWrapCharacters . ')' .
             '(' . $quotedTerm . ')' .
-            '($|[\s<[:punct:]]|<br*>' . self::$additionalRegexWrapCharacters . ')' .
+            '($|[\s<[:punct:]]|<br*>' . $additionalRegexWrapCharacters . ')' .
             '(?![^<]*>|[^<>]*</)' .
             '#' .
             ($term->isCaseSensitive() ? '' : 'i');
