@@ -41,6 +41,7 @@ class ParserService implements SingletonInterface
 {
     /**
      * @var string[]
+     * @deprecated This variable will be removed in v8.0 and shouldn't be used anymore, this should be a constant
      */
     public static array $alwaysIgnoreParentTags = [
         'a',
@@ -53,6 +54,7 @@ class ParserService implements SingletonInterface
      * kept per instance and do not end up here.
      *
      * @var string
+     * @deprecated This variable will be removed in v8.0 and shouldn't be used anymore
      */
     public static string $additionalRegexWrapCharacters = '';
 
