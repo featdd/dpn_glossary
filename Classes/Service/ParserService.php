@@ -33,6 +33,7 @@ use TYPO3\CMS\Core\SingletonInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Persistence\Generic\Typo3QuerySettings;
 use TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer;
+use WeakMap;
 
 /**
  * @package Featdd\DpnGlossary\Service
@@ -84,6 +85,35 @@ class ParserService implements SingletonInterface
      * @var array
      */
     protected array $settings = [];
+
+    /**
+     * Case-folded markup of all parsing tags, only set while pageParser() runs
+     *
+     * @var string|null
+     */
+    protected ?string $foldedPageMarkup = null;
+
+    /**
+     * Case-folded markup per parsing tag, only set while pageParser() runs
+     *
+     * @var \WeakMap<\DOMNode, string>|null
+     */
+    protected ?WeakMap $foldedTagMarkup = null;
+
+    /**
+     * Matches the opening of a parsing tag in the markup of a wrapped term,
+     * only set while pageParser() runs
+     *
+     * @var string|null
+     */
+    protected ?string $parsingTagPattern = null;
+
+    /**
+     * Whether a wrapped term brought a new parsing tag into the document
+     *
+     * @var bool
+     */
+    protected bool $hasNewParsingTags = false;
 
     /**
      * Boots up:
@@ -367,6 +397,28 @@ class ParserService implements SingletonInterface
 
         $currentUrl = strtok((string)$request->getUri(), '?');
 
+        // Neither the tags to parse nor their forbidden parents depend on the term
+        $xpathQuery = $this->buildTagsXpathQuery(
+            $tags,
+            $forbiddenParsingTagClasses,
+            $forbiddenParentClasses,
+            $forbiddenParentTags
+        );
+        $DOMTags = $DOMXPath->query($xpathQuery, $DOMNodeToParse);
+
+        // A term can only be found in the markup of these tags
+        $this->foldedPageMarkup = '';
+        $this->foldedTagMarkup = new WeakMap();
+
+        foreach ($DOMTags as $DOMTag) {
+            $this->foldedPageMarkup .= ' ' . $this->getFoldedTagMarkup($DOMTag);
+        }
+
+        $this->parsingTagPattern = '#<(?:' .
+            implode('|', array_map(static fn(string $tag): string => preg_quote($tag, '#'), $tags)) .
+            ')(?=[\s/>])#i';
+        $this->hasNewParsingTags = false;
+
         foreach ($this->terms as $term) {
             /** @var \Featdd\DpnGlossary\Domain\Model\TermInterface $termObject */
             $termObject = clone $term['term'];
@@ -398,52 +450,15 @@ class ParserService implements SingletonInterface
                 continue;
             }
 
-            $xpathQuery = '';
-
-            // iterate over tags which are defined to be parsed
-            foreach ($tags as $tag) {
-                if (!empty($xpathQuery)) {
-                    $xpathQuery .= ' | ';
-                }
-
-                $xpathQuery .= '//' . $tag;
-
-                // if forbidden parsing tag classes given add them to xpath query
-                if (count($forbiddenParsingTagClasses) > 0) {
-                    $xpathQuery .= '[not(contains(@class, \'' .
-                        implode(
-                            '\') or contains(@class, \'',
-                            $forbiddenParsingTagClasses
-                        ) .
-                        '\'))';
-
-                    $xpathQuery = count($forbiddenParentClasses) > 0 ? $xpathQuery . ' and ' : $xpathQuery . ']';
-                }
-
-                /*
-                 * Due to PHP still uses XPath 1.0 up to its latest versions we still have to use "contains" here.
-                 * It would make more sense to use the function "matches", but this is only supported from version 2.0.
-                 * This inevitably leads to the problem that contains also matches if the class is concatenated.
-                 * Example: class="example-andmore" using "contains" for "example" still matches, although it's different
-                 */
-
-                // if forbidden parent classes given add them to xpath query
-                if (count($forbiddenParentClasses) > 0) {
-                    $xpathQuery .= (count($forbiddenParsingTagClasses) > 0 ? '' : '[') .
-                        'not(./ancestor::*[contains(@class, \'' .
-                        implode(
-                            '\')] or ./ancestor::*[contains(@class, \'',
-                            $forbiddenParentClasses
-                        ) .
-                        '\')])]';
-                }
+            // Query the tags again only after a wrapped term added a tag that is
+            // parsed itself (a wrap with a "span" while "span" is a parsing tag)
+            if ($this->hasNewParsingTags) {
+                $DOMTags = $DOMXPath->query($xpathQuery, $DOMNodeToParse);
+                $this->hasNewParsingTags = false;
             }
 
-            // extract the tags
-            $DOMTags = $DOMXPath->query($xpathQuery, $DOMNodeToParse);
-
-            if (!$isPriorisedSynonymParsing) {
-                $this->domTagsParser($DOMTags, $termObject, $replacements, $wrapperClosure, $forbiddenParentTags);
+            if (!$isPriorisedSynonymParsing && $this->occursInParsedMarkup($termObject->getParsingName())) {
+                $this->domTagsParser($DOMTags, $termObject, $replacements, $wrapperClosure, []);
             }
 
             if ($isParseSynonyms) {
@@ -458,13 +473,17 @@ class ParserService implements SingletonInterface
                         $synonym->getName()
                     );
 
+                    if (!$this->occursInParsedMarkup($synonymTermObject->getParsingName())) {
+                        continue;
+                    }
+
                     if ($isMaxReplacementPerPageRespectSynonyms) {
                         $this->domTagsParser(
                             $DOMTags,
                             $synonymTermObject,
                             $replacements,
                             $wrapperClosure,
-                            $forbiddenParentTags
+                            []
                         );
                     } else {
                         $noReplacementCount = -1;
@@ -473,16 +492,20 @@ class ParserService implements SingletonInterface
                             $synonymTermObject,
                             $noReplacementCount,
                             $wrapperClosure,
-                            $forbiddenParentTags
+                            []
                         );
                     }
                 }
             }
 
-            if ($isPriorisedSynonymParsing) {
-                $this->domTagsParser($DOMTags, $termObject, $replacements, $wrapperClosure, $forbiddenParentTags);
+            if ($isPriorisedSynonymParsing && $this->occursInParsedMarkup($termObject->getParsingName())) {
+                $this->domTagsParser($DOMTags, $termObject, $replacements, $wrapperClosure, []);
             }
         }
+
+        $this->foldedPageMarkup = null;
+        $this->foldedTagMarkup = null;
+        $this->parsingTagPattern = null;
 
         if (!$isLimitToXpath) {
             $parsedHtml = $DOM->saveHTML();
@@ -519,7 +542,7 @@ class ParserService implements SingletonInterface
      * @param \Featdd\DpnGlossary\Domain\Model\ParserTerm $term
      * @param int $replacements
      * @param \Closure $wrapperClosure
-     * @param string[] $forbiddenParentTags
+     * @param string[] $forbiddenParentTags pageParser() passes none, its tags are already filtered by the query
      */
     protected function domTagsParser(
         DOMNodeList $domTags,
@@ -528,43 +551,201 @@ class ParserService implements SingletonInterface
         Closure $wrapperClosure,
         array $forbiddenParentTags
     ): void {
+        // Compared like the "simple search" of the regexParser, see foldMarkup()
+        $foldedParsingName = mb_convert_case($term->getParsingName(), MB_CASE_FOLD_SIMPLE);
+
         // call the nodereplacer for each node to parse its content
         /** @var \DOMNode $DOMTag */
         foreach ($domTags as $DOMTag) {
-            // get parent tags from root tree string
-            $parentTags = explode(
-                '/',
-                preg_replace(
-                    '#\[([^]]*)]#',
-                    '',
-                    substr($DOMTag->parentNode->getNodePath(), 1)
-                )
-            );
+            // Nothing is replaced anymore once the replacements are used up
+            if ($replacements === 0) {
+                return;
+            }
 
-            // check if element is children of a forbidden parent
-            if (0 === count(array_intersect($parentTags, $forbiddenParentTags))) {
-                /** @var \DOMNode $childNode */
-                for ($i = 0; $i < $DOMTag->childNodes->length; $i++) {
-                    $childNode = $DOMTag->childNodes->item($i);
+            if (count($forbiddenParentTags) > 0) {
+                // get parent tags from root tree string
+                $parentTags = explode(
+                    '/',
+                    preg_replace(
+                        '#\[([^]]*)]#',
+                        '',
+                        substr($DOMTag->parentNode->getNodePath(), 1)
+                    )
+                );
 
-                    if ($childNode instanceof DOMText) {
-                        $text = preg_replace(
-                            '#\x{00a0}#u',
-                            '&nbsp;',
-                            $childNode->ownerDocument->saveHTML($childNode)
-                        );
+                // check if element is children of a forbidden parent
+                if (0 !== count(array_intersect($parentTags, $forbiddenParentTags))) {
+                    continue;
+                }
+            }
 
-                        $parsedText = $this->regexParser($text, $term, $replacements, $wrapperClosure);
+            // A term which is not in the markup of the tag is in none of its text nodes
+            if (!str_contains($this->getFoldedTagMarkup($DOMTag), $foldedParsingName)) {
+                continue;
+            }
 
-                        // Only rebuild the node if the term was found, loading
-                        // a temporary DOM per text node and term is expensive
-                        if ($parsedText !== $text) {
-                            ParserUtility::domTextReplacer($childNode, $parsedText);
+            /** @var \DOMNode $childNode */
+            for ($i = 0; $i < $DOMTag->childNodes->length; $i++) {
+                $childNode = $DOMTag->childNodes->item($i);
+
+                if ($childNode instanceof DOMText) {
+                    $text = preg_replace(
+                        '#\x{00a0}#u',
+                        '&nbsp;',
+                        $childNode->ownerDocument->saveHTML($childNode)
+                    );
+
+                    $parsedText = $this->regexParser($text, $term, $replacements, $wrapperClosure);
+
+                    // Only rebuild the node if the term was found, loading
+                    // a temporary DOM per text node and term is expensive
+                    if ($parsedText !== $text) {
+                        ParserUtility::domTextReplacer($childNode, $parsedText);
+                        $this->registerReplacement($DOMTag, $parsedText);
+
+                        if ($replacements === 0) {
+                            return;
                         }
                     }
                 }
             }
         }
+    }
+
+    /**
+     * The XPath query for the tags to parse
+     *
+     * @param string[] $tags
+     * @param string[] $forbiddenParsingTagClasses
+     * @param string[] $forbiddenParentClasses
+     * @param string[] $forbiddenParentTags
+     * @return string
+     */
+    protected function buildTagsXpathQuery(
+        array $tags,
+        array $forbiddenParsingTagClasses,
+        array $forbiddenParentClasses,
+        array $forbiddenParentTags
+    ): string {
+        $xpathQuery = '';
+
+        // Tags below a forbidden parent tag, quotes cannot be part of a tag name
+        $forbiddenParentTags = array_filter(
+            $forbiddenParentTags,
+            static fn(string $tag): bool => !str_contains($tag, '\'')
+        );
+        $forbiddenParentTagsCondition = count($forbiddenParentTags) > 0
+            ? '[not(./ancestor::*[name()=\'' . implode('\' or name()=\'', $forbiddenParentTags) . '\'])]'
+            : '';
+
+        // iterate over tags which are defined to be parsed
+        foreach ($tags as $tag) {
+            if (!empty($xpathQuery)) {
+                $xpathQuery .= ' | ';
+            }
+
+            $xpathQuery .= '//' . $tag;
+
+            // if forbidden parsing tag classes given add them to xpath query
+            if (count($forbiddenParsingTagClasses) > 0) {
+                $xpathQuery .= '[not(contains(@class, \'' .
+                    implode(
+                        '\') or contains(@class, \'',
+                        $forbiddenParsingTagClasses
+                    ) .
+                    '\'))';
+
+                $xpathQuery = count($forbiddenParentClasses) > 0 ? $xpathQuery . ' and ' : $xpathQuery . ']';
+            }
+
+            /*
+             * Due to PHP still uses XPath 1.0 up to its latest versions we still have to use "contains" here.
+             * It would make more sense to use the function "matches", but this is only supported from version 2.0.
+             * This inevitably leads to the problem that contains also matches if the class is concatenated.
+             * Example: class="example-andmore" using "contains" for "example" still matches, although it's different
+             */
+
+            // if forbidden parent classes given add them to xpath query
+            if (count($forbiddenParentClasses) > 0) {
+                $xpathQuery .= (count($forbiddenParsingTagClasses) > 0 ? '' : '[') .
+                    'not(./ancestor::*[contains(@class, \'' .
+                    implode(
+                        '\')] or ./ancestor::*[contains(@class, \'',
+                        $forbiddenParentClasses
+                    ) .
+                    '\')])]';
+            }
+
+            $xpathQuery .= $forbiddenParentTagsCondition;
+        }
+
+        return $xpathQuery;
+    }
+
+    /**
+     * Whether the name can be in a text node of a parsing tag at all. The
+     * regexParser only replaces in a text which contains the name without
+     * regard to case, and the markup of a tag contains that of its text nodes.
+     *
+     * @param string $parsingName
+     * @return bool
+     */
+    protected function occursInParsedMarkup(string $parsingName): bool
+    {
+        return $this->foldedPageMarkup === null
+            || str_contains($this->foldedPageMarkup, mb_convert_case($parsingName, MB_CASE_FOLD_SIMPLE));
+    }
+
+    /**
+     * @param \DOMNode $DOMTag
+     * @return string
+     */
+    protected function getFoldedTagMarkup(DOMNode $DOMTag): string
+    {
+        // Outside of pageParser() nothing tells when the document changes
+        if ($this->foldedTagMarkup === null) {
+            return $this->foldMarkup($DOMTag->ownerDocument->saveHTML($DOMTag));
+        }
+
+        return $this->foldedTagMarkup[$DOMTag] ??= $this->foldMarkup($DOMTag->ownerDocument->saveHTML($DOMTag));
+    }
+
+    /**
+     * A wrapped term changes the markup of its tag: it may add text which
+     * contains further terms, or a tag which is parsed itself
+     *
+     * @param \DOMNode $DOMTag
+     * @param string $parsedText
+     */
+    protected function registerReplacement(DOMNode $DOMTag, string $parsedText): void
+    {
+        if ($this->foldedTagMarkup === null) {
+            return;
+        }
+
+        unset($this->foldedTagMarkup[$DOMTag]);
+        $this->foldedPageMarkup .= ' ' . $this->getFoldedTagMarkup($DOMTag);
+
+        if (!$this->hasNewParsingTags && preg_match($this->parsingTagPattern, $parsedText) === 1) {
+            $this->hasNewParsingTags = true;
+        }
+    }
+
+    /**
+     * Markup in the form the regexParser gets its texts in, folded the way
+     * mb_stripos() folds both of its arguments. A name mb_stripos() finds in
+     * the text of a node is therefore a plain substring of the folded markup
+     * around that node.
+     *
+     * @param string|false $markup
+     * @return string
+     */
+    protected function foldMarkup(string|false $markup): string
+    {
+        return mb_convert_case(
+            str_replace("\u{00a0}", '&nbsp;', (string)$markup),
+            MB_CASE_FOLD_SIMPLE
+        );
     }
 
     /**
