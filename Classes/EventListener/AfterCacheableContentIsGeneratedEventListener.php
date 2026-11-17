@@ -16,12 +16,14 @@ namespace Featdd\DpnGlossary\EventListener;
 
 use Featdd\DpnGlossary\Service\ParserService;
 use Featdd\DpnGlossary\Utility\SettingsUtility;
+use TYPO3\CMS\Core\TimeTracker\TimeTracker;
 use TYPO3\CMS\Frontend\Event\AfterCacheableContentIsGeneratedEvent;
 
 class AfterCacheableContentIsGeneratedEventListener
 {
     public function __construct(
-        protected ParserService $parserService
+        protected ParserService $parserService,
+        protected TimeTracker $timeTracker
     )
     {}
 
@@ -50,7 +52,11 @@ class AfterCacheableContentIsGeneratedEventListener
         }
 
         if (!$isDisableParser) {
+            $this->timeTracker->incStackPointer();
+            $this->timeTracker->push('Parsing via EXT:dpn_glossary');
             $parsedHTML = $this->parserService->pageParser($request, $content);
+            $this->timeTracker->pull();
+            $this->timeTracker->decStackPointer();
 
             if (is_string($parsedHTML)) {
                 $setContentCallback($parsedHTML);
